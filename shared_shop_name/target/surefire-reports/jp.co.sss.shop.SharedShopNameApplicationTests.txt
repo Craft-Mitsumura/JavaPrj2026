@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: jp.co.sss.shop.SharedShopNameApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.958 s - in jp.co.sss.shop.SharedShopNameApplicationTests

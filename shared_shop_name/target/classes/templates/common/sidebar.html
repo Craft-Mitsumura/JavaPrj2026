@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+<aside th:fragment="layout-sidebar" th:class="${session.user == null or session.user.authority == 2} ? ${'search'} : ${'admin_menu'}" >
+	<!--/* 検索メニュー(非会員、一般会員用) */-->
+	<div  class="search_area" th:if="${session.user == null or session.user.authority == 2}">
+		<h2 th:class="title" th:text="#{category.select.title}"></h2>
+		<div class="form">
+			<!-- 商品一覧画面以外で表示 -->
+			<form th:if="${sortType == null}" th:action="@{/client/item/list/1}">
+				<select name="categoryId">
+					<option th:value="#{constants.category.select.none.no}" th:text="#{constants.category.select.none}"></option>
+					<option th:each="category: ${categories}"
+						th:value="${category.id}" th:text="${category.name}"></option>
+				</select> <input type="submit" th:value="#{select}" />
+			</form>
+			<!-- 商品一覧画面上で表示 -->
+			<form th:unless="${sortType == null}" th:action="@{/client/item/list/} + ${sortType}">
+				<select name="categoryId">
+					<option th:value="#{constants.category.select.none.no}" th:text="#{constants.category.select.none}"></option>
+					<option th:each="category: ${categories}"
+						th:value="${category.id}" th:text="${category.name}" th:selected="${category.id} == ${categoryId}"></option>
+				</select> <input type="submit" th:value="#{select}" />
+			</form>
+		</div>
+	</div>
+
+	<!--/* メニュー(運用管理者、及びシステム管理者用) */-->
+	<div th:if="${session.user != null and session.user.authority != 2}">
+
+		<h2 th:class="title" th:text="#{admin.menu}"></h2>
+		<ul class="menu">
+			<li>
+				<a th:href="@{/admin/user/list}" th:class="display_list" th:text="#{admin.menu.user.list}"></a>
+			</li>
+			<li th:if="${session.user.authority == 1}">
+				<a th:href="@{/admin/order/list}" th:class="display_list" th:text="#{admin.menu.order.list}"></a>
+			</li>
+			<li th:if="${session.user.authority == 1}">
+				<a th:href="@{/admin/item/list}" th:class="display_list" th:text="#{admin.menu.item.list}"></a>
+			</li>
+			<li th:if="${session.user.authority == 1}">
+				<a th:href="@{/admin/category/list}" th:class="display_list" th:text="#{admin.menu.category.list}"></a>
+			</li>
+		</ul>
+	</div>
+</aside>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{order}+#{title.detail}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="user">
+	<h2 th:class="title" th:text="#{order}+#{title.detail}"></h2>
+
+	<div class="info_form_area">
+		<table class="detail_table payment">
+			<tr>
+				<th>[[#{data.client.order.date}]]</th>
+				<td th:text="${order.insertDate}"></td>
+			</tr>
+			<tr>
+				<th>[[#{paymethod.str}]]</th>
+				<td th:switch="${order.payMethod}">
+					<span th:case="1">[[#{paymethod.credit.str}]]</span>
+					<span th:case="2">[[#{paymethod.bank.str}]]</span>
+					<span th:case="3">[[#{paymethod.onarrival.str}]]</span>
+					<span th:case="4">[[#{paymethod.emoney.str}]]</span>
+					<span th:case="5">[[#{paymethod.convenience.str}]]</span>
+				</td>
+			</tr>
+			<tr>
+				<th>[[#{data.address}+#{data.address.postalcode}]]</th>
+				<td th:text="${order.postalCode}"></td>
+			</tr>
+			<tr>
+				<th>[[#{data.address}+#{data.address.address}]]</th>
+				<td th:text="${order.address}"></td>
+			</tr>
+			<tr>
+				<th>[[#{data.address}+#{data.address.name}]]</th>
+				<td th:text="${order.name}"></td>
+			</tr>
+			<tr>
+				<th>[[#{data.address}+#{data.address.phonenumber}]]</th>
+				<td th:text="${order.phoneNumber}"></td>
+			</tr>
+		</table>
+		<table class="list_table detail">
+			<tr>
+				<th>[[#{data.item.name}]]</th>
+				<th>[[#{data.unit.price}]]</th>
+				<th>[[#{data.order.num}]]</th>
+				<th>[[#{data.subtotal}]]</th>
+			</tr>
+			<tr th:each="orderItem: ${orderItemBeans}">
+				<td th:text="${orderItem.name}"></td>
+				<td th:text="${orderItem.price}"></td>
+				<td th:text="${orderItem.orderNum}"></td>
+				<td th:text="${orderItem.subtotal}"></td>
+			</tr>
+			<tr>
+				<td colspan="2"></td>
+				<td class="total">[[#{data.total}]]</td>
+				<td class="total" th:text="${total}"></td>
+			</tr>
+		</table>
+		<form th:action="@{/client/order/list}" method="post" class="detail_button_area">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

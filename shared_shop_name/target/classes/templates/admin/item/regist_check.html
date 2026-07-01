@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{item}+#{title.input.check}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin item_regist_check">
+	<h2 th:class="title" th:text="#{item}+#{title.input.check}"></h2>
+	<p th:class="check_message" th:text="#{msg.regist.check}"></p>
+
+	<div class="user_info_form_area">
+		<ul class="input_list" th:object="${itemForm}">
+			<li>
+				<span class="input_title">[[#{itemForm.name}]]</span>
+				<span class="input_value" th:text="*{name}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{itemForm.price}]]</span>
+				<span class="input_value" th:text="*{price}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{data.category}]]</span>
+				<span class="input_value" th:text="*{categoryName}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{itemForm.stock}]]</span>
+				<span class="input_value" th:text="*{stock}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{itemForm.description}]]</span>
+				<span class="input_value" th:text="*{description}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{data.item.image}]]</span>
+				<span class="input_value">
+					<img th:if="*{image != null}" th:src="@{/images/{itemFileName}(itemFileName=*{image})}"></img>
+					<img th:if="*{image == null}"th:src="@{/images/common/no_image.jpg}"></img>
+				</span>
+			</li>
+		</ul>
+
+		<form th:action="@{/admin/item/regist/complete}" method="post" class="user_info_form">
+			<input type="submit" value="登録" class="send_button" />
+		</form>
+		<form th:action="@{/admin/item/regist/input}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

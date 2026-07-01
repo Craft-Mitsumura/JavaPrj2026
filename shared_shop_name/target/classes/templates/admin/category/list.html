@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.list}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin category_list">
+
+	<h2 th:class="title" th:text="#{category}+#{title.list}"></h2>
+	<!--/* 追加登録不可メッセージ */-->
+	<ul class="error_message" th:unless="${registrable}">
+	<br/>
+		<li class="error_msg">
+			<span th:text="#{msg.admin.cannot.regist(#{category})}"></span>
+		</li>
+	</ul>
+	<!--/* 登録なしメッセージ */-->
+	<div th:if="${#lists.isEmpty(categories)}">
+		<p th:text="#{msg.admin.list.none(#{category})}"></p>
+	</div>
+	<form th:action="@{/admin/category/regist/input}" method="post" class="sign_up_form">
+		<input type="submit" value="カテゴリ新規登録" class="menu_button" th:if="${registrable}" />
+	</form>
+	
+	<table class="list_table category_list" th:if="!${#lists.isEmpty(categories)}">
+		<tr>
+			<th>[[#{data.id}]]</th>
+			<th>[[#{categoryForm.name}]]</th>
+			<th>[[#{data.operate}]]</th>
+		</tr>
+		<tr th:each="category: ${categories}">
+			<td th:text="${category.id}"></td>
+			<td>
+				<a th:href="@{/admin/category/detail/{id}(id=${category.id})}" th:text="${category.name}"></a>
+			</td>
+			<td>
+				<form th:action="@{/admin/category/update/input/{id}(id=${category.id})}" method="post">
+					<input type="submit" value="変更" />
+				</form>
+				<form th:action="@{/admin/category/delete/check/{id}(id=${category.id})}" method="post">
+					<input type="submit" value="削除" class="delete" />
+				</form>
+			</td>
+		</tr>
+	</table>
+	<!--/* ページング */-->
+	<ul class="paging" th:if="!${#lists.isEmpty(categories)}">
+		<!-- 先頭のページリンク表示処理 --> 
+		<!--1ページ目の場合はクラスの名前をdisabledに設定-->
+		<li th:class="${pages.first} ? 'disabled':''">
+			<!--1ページ目の場合は<<を表示-->
+			<span th:if="${pages.first}">&lt;&lt;</span>
+			<!-- 1ページ目ではない場合、１ページ目のリンクを表示-->
+			<a th:if="${not pages.first}" th:href="@{${url}(page=0)}">&lt;&lt;</a>
+		</li>
+		<!--ページ番号指定のリンク表示処理--> 
+		<!-- #numbersのsequence()メソッドを使用して配列を作成し、被繰り返し変数として利用 -->
+		<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}' th:class="(${i}==${pages.number})? 'active' : ''">
+			<span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
+			<a th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}">
+				<span th:text='${i+1}'>1</span>
+			</a>
+		</li>
+		<!-- 末尾ページのリンク --> 
+		<!--1ページ目の場合はクラスの名前をdisabledに設定--> 
+		<li th:class="${pages.last} ? 'disabled':''">
+			<!--末尾のページの場合は>>を表示-->
+			<span th:if="${pages.last}">&gt;&gt;</span>
+			<!-- 末尾ページではない場合、末尾ページへのリンクを表示-->
+			<a th:if="${not pages.last}" th:href="@{${url}(page=(${pages.totalPages}-1))}">&gt;&gt;</a>
+		</li>
+	</ul>
+
+</body>
+
+</html>

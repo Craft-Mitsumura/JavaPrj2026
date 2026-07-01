@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{user}+#{title.update.input}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body th:object="${userForm}" class="admin user_update_input_admin">
+	<h2 th:class="title" th:text="#{user}+#{title.update.input}"></h2>
+	<p th:class="input_message" th:text="#{msg.update.input}"></p>
+	<div class="user_info_form_area" th:object="${userForm}">
+		<form th:action="@{/admin/user/update/check}" method="post" class="user_info_form">
+			<th:block th:if="${#fields.hasErrors()}">
+				<ul class="error_list">
+					<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+				</ul>
+				<br />
+			</th:block>
+			</th:block>
+			<ul class="input_list">
+				<li>
+					<label><span class="input_title">[[#{userForm.email}]]</span></label>
+					<input type="text" th:field="*{email}" />
+				</li>
+				<li>
+					<label><span class="input_title">[[#{userForm.password}]]</span></label>
+					<input type="password" th:field="*{password}" />
+				</li>
+				<li>
+					<label><span class="input_title">[[#{userForm.name}]]</span></label>
+					<input type="text" th:field="*{name}" />
+				</li>
+				<li>
+					<label><span class="input_title">[[#{userForm.postalCode}]]</span></label>
+					<input type="text" th:field="*{postalCode}" />
+				</li>
+				<li>
+					<label><span class="input_title">[[#{userForm.address}]]</span></label>
+					<textarea rows="6" th:field="*{address}"></textarea>
+				</li>
+				<li>
+					<label><span class="input_title">[[#{userForm.phoneNumber}]]</span></label>
+					<input type="text" th:field="*{phoneNumber}" />
+				</li>
+
+				<li th:if="${session.user.authority == 0 or session.user.authority == 1}">
+					<label><span class="input_title">[[#{data.authority}]]</span></label>
+					<div class="radio_label" th:if="${session.user.authority == 0 and session.user.id!=userForm.id}">
+						<input type="radio" name="authority" value="0"
+							th:checked="*{authority == 0}" />[[#{auth.system.str}]]
+						<input type="radio" name="authority" value="1"
+							th:checked="*{authority == 1}" />[[#{auth.admin.str}]]
+						<input type="radio" name="authority" value="2"
+							th:checked="*{authority == 2}" />[[#{auth.client.str}]]
+					</div>
+					<th:block th:if="${session.user.authority == 1 or session.user.id==userForm.id}">
+						<th:block th:switch="*{authority}">
+							<span class="input_value" th:case="0">[[#{auth.system.str}]]</span>
+							<span class="input_value" th:case="1">[[#{auth.admin.str}]]</span>
+							<span class="input_value" th:case="2">[[#{auth.client.str}]]</span>
+					</th:block>
+				</li>
+			</ul>
+			<input type="hidden" th:field="*{id}" />
+			<input type="submit" value="確認" class="send_button" />
+		</form>
+		<form th:action="@{/admin/user/detail/{id}(id=*{id})}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

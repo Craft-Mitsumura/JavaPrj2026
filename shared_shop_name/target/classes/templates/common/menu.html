@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<ul th:fragment="layout-menu" th:class="navi_menu">
+		<li><a th:href="@{/}" th:text="#{top}"></a></li>
+		<li><a th:href="@{/client/item/list/1}" th:text="#{item}+#{title.list}"></a></li>
+		<li><a th:href="@{/client/basket/list}" th:text="#{basket}"></a></li>
+		<th:block th:if="${session.user != null}">
+			<li><a th:href="@{/client/order/list}" th:text="#{order}+#{title.list}"></a></li>
+		</th:block>
+	</ul>
+</body>
+
+</html>

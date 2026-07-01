@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.delete.check}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin category_delete_check">
+	<h2 th:class="title" th:text="#{category}+#{title.delete.check}"></h2>
+	<p th:class="check_message" th:text="#{msg.delete.check}"></p>
+
+	<div class="user_info_form_area" th:object=${categoryForm}>
+		<ul class="input_list">
+			<li>
+				<span class="input_title">[[#{categoryForm.name}]]</span>
+				<span class="input_value" th:text="*{name}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{categoryForm.description}]]</span>
+				<span class="input_value" th:text="*{description}"></span>
+			</li>
+		</ul>
+		<form th:action="@{/admin/category/delete/complete}" method="post">
+			<input type="submit" value="削除" class="delete" />
+		</form>
+		<form th:action="@{/admin/category/detail/{id}(id=*{id})}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

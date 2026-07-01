@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+<head>
+	<title th:text="#{user}+#{title.input.complete}+' | '+ #{shop.title}"> </title>
+<meta charset="UTF-8" />
+</head>
+<body class="user user_regist_complete">
+	<h2 th:class="title" th:text="#{user}+#{title.input.complete}"></h2>
+	<p class="complete_message" th:text="#{user}+#{msg.regist.complete}"></p>
+		<p class="complete_link"><a th:href="@{/}" th:text="#{msg.back.to.top}"></a></p>
+</body>
+</html>

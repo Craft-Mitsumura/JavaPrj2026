@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{user}+#{title.update.check}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="user user_update_check">
+
+	<h2 th:class="title" th:text="#{user}+#{title.update.check}"></h2>
+	<p th:class="check_message" th:text="#{msg.update.check}"></p>
+	<div class="user_info_form_area"  th:object="${userForm}">
+		<ul class="input_list">
+			<li>
+				<span class="input_title">[[#{userForm.email}]]</span>
+				<span class="input_value" th:text="*{email}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.password}]]</span>
+				<span class="input_value">********</span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.name}]]</span>
+				<span class="input_value" th:text="*{name}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.postalCode}]]</span>
+				<span class="input_value" th:text="*{postalCode}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.address}]]</span>
+				<span class="input_value" th:text="*{address}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.phoneNumber}]]</span>
+				<span class="input_value" th:text="*{phoneNumber}"></span>
+			</li>
+		</ul>
+
+		<form th:action="@{/client/user/update/complete}" method="post">
+			<input type="submit" value="登録" class="send_button" />
+		</form>
+		<form th:action="@{/client/user/update/input}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{user}+#{title.detail}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin user_detail_admin">
+	<h2 th:class="title" th:text="#{user}+#{title.detail}"></h2>
+	<div class="info_form_area" th:object="${userBean}">
+		<div class="detail_area">
+			<ul class="input_list">
+				<li>
+					<span class="input_title">[[#{userForm.email}]]</span>
+					<span class="input_value" th:text="*{email}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{userForm.name}]]</span>
+					<span class="input_value" th:text="*{name}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{userForm.postalCode}]]</span>
+					<span class="input_value" th:text="*{postalCode}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{userForm.address}]]</span>
+					<span class="input_value" th:text="*{address}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{userForm.phoneNumber}]]</span>
+					<span class="input_value" th:text="*{phoneNumber}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{data.authority}]]</span>
+					<span class="input_value" th:switch="*{authority}">
+						<span th:case="0">[[#{auth.system.str}]]</span>
+						<span th:case="1">[[#{auth.admin.str}]]</span>
+						<span th:case="2">[[#{auth.client.str}]]</span>
+					</span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="detail_button_area">
+			<form th:action="@{/admin/user/list}" method="post">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+			<form th:action="@{/admin/user/update/input/{id}(id=*{id})}" method="post">
+				<input type="submit" value="変更" />
+			</form>
+			<form th:action="@{/admin/user/delete/check/{id}(id=*{id})}" method="post">
+				<input type="submit" value="削除" class="delete" disabled th:if="${userBean.id==session.user.id}" />
+				<input type="submit" value="削除" class="delete" th:unless="${userBean.id==session.user.id}" />
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

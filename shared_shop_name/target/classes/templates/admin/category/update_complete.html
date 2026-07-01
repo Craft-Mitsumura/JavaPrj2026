@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.update.complete}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin category_update_complete">
+	<h2 th:class="title" th:text="#{category}+#{title.update.complete}"></h2>
+	<p th:class="complete_message" th:text="#{category}+#{msg.update.complete}"></p>
+
+	<p class="complete_link"><a th:href="@{/admin/category/list}" th:text="#{category}+#{msg.back.to.list}"></a></p>
+</body>
+
+</html>

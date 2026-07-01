@@ -1,0 +1,719 @@
+﻿@charset "UTF-8";
+
+body {
+	color: #12526d;
+	font-size: 14px;
+}
+
+/* ---- テキスト系 ---- */
+.container .text {
+	font-weight: bold;
+	clear: both;
+}
+
+p {
+	margin: 15px 0;
+}
+/* --- トップ画面 ---*/
+.navi_area~.container {
+	display: flex;
+}
+
+/* ---- 入力フォーム(ログイン) ---- */
+
+.user_container{
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
+
+.login_form_area ul{
+	margin-left:20px;
+}
+
+.login_form {
+	margin-top: 30px;
+}
+
+.login_form .label {
+	width: 35%;
+	padding: 8px 0;
+	text-align: right;
+	
+}
+
+.login_form .input {
+	width: 55%;
+	padding: 8px 5px;
+	text-align: left;
+}
+
+.login_form input [type=submit] {
+	padding: 3px 10px;
+	    
+}
+.login_form .error_list {
+	display:flex; 
+	justify-content:center;
+}
+
+/* ---- ページタイトル ---- */
+.page_title {
+	margin: 0;
+	padding-left: 20px;
+}
+.login .page_title {
+	font-weight: bold;
+}
+.main .page_title {
+	padding-left: 10px;
+}
+.user_container>.page_title{
+	position: absolute; 
+	left: 0;
+	padding-left: 30px;
+}
+/* ---- 会員登録入力画面へのリンク ---- */
+.regist_link {
+	margin-top: 25px;
+	padding-right: 10px;
+	text-align: right;
+}
+
+.description {
+	margin-top: 30px;
+	text-align: center;
+}
+
+/* ---- ボタン(機能呼出) ---- */
+[type=submit].menu_button {
+	width: 120px;
+	height: 35px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #808080;
+	padding: 0px 10px;
+	margin: 15px 10px 15px 10px;
+	border-radius: 6px;
+	font-weight: bold;
+}
+
+/* ---- ボタン(一覧からの編集、削除) ---- */
+[type=submit].list {
+	width: 80px;
+}
+
+/* ---- ボタン(削除) ---- */
+[type=submit].delete {
+	background: #d22222;
+	color: white;
+}
+[type=submit].delete:disabled {
+  background: #ccc;
+}
+/* ---- ボタン(商品個数指定) ---- */
+[type=button] {
+	width: 80px;
+	height: 35px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #808080;
+	padding: 0px 10px;
+	margin: 15px 5px 15px 5px;
+	border-radius: 6px;
+	font-weight: bold;
+}
+
+/* ---- 商品情報 ---- */
+.item {
+	width: 48.5%;
+	height: 200px;
+	border: 1px solid gray;
+	border-radius: 6px;
+	box-sizing: border-box;
+	text-decoration: none;
+	margin-top: 20px;
+	position: relative;
+	overflow: hidden;
+}
+
+.main>.item_list{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.item:nth-of-type(odd) {
+	margin-right: 3%;
+}
+
+.item .item_name {
+	padding: 5px 10px;
+	color: #3d98bf;
+	font-weight: bold;
+	position: absolute;
+	top: 5px;
+	left: 0;
+	background: rgba(255, 255, 255, 0.8);
+	z-index: 2;
+	width: 100%;
+}
+
+.item img {
+	width: auto;
+	height: 100%;
+	display: block;
+	margin: auto;
+	transition: 0.4s;
+	position: relative;
+	z-index: 1;
+}
+
+.item:hover img {
+	-webkit-transform: scale(1.2, 1.2);
+	-moz-transform: scale(1.2, 1.2);
+	-ms-transform: scale(1.2, 1.2);
+	-o-transform: scale(1.2, 1.2);
+	transform: scale(1.2, 1.2)
+}
+
+.item .description {
+	padding: 5px;
+	color: #4169e1;
+	font-weight: bold;
+}
+
+.sorted_by {
+	margin-top: 23px;
+	font-size: 1.1em;
+	
+}
+
+/* ---- 入力フォーム(検索、登録、変更、削除) ---- */
+.emp_form {
+	margin: 0px auto 30px;
+}
+
+.emp_form .label {
+	width: 45%;
+	text-align: right;
+	padding: 10px 0;
+}
+
+.emp_form .input {
+	width: 55%;
+	text-align: left;
+	padding: 10px 5px;
+}
+
+.user_info_form_area,
+.detail_area {
+	display: block;
+	width: 70%;
+	margin-top:	30px;
+	margin-left:50px;
+}
+.info_form_area {
+	margin-top:	30px;
+	margin-left:50px;
+}
+.payment_method_select {
+	margin-bottom: 40px;
+}
+
+.input_list {
+	width: 100%;
+	font-size: 1.1rem;
+	margin-bottom: 30px;
+}
+
+.input_list li,
+.input_list dd {
+	margin-bottom: 20px;
+}
+.payment_method_select li{
+	margin-bottom: 10px;
+}
+
+.input_list label {
+	display: block;
+}
+
+.input_list .input_title,
+.input_list .input_value {
+	display: block;
+	line-height: 1.1rem;
+}
+
+.input_list .input_value {
+	margin-top: 5px;
+	padding-left: 1rem;
+	color: #2a2a2a;
+}
+
+.input_list input,
+.input_list textarea {
+	width: 100%;
+	padding: 5px;
+	box-sizing: border-box;
+	font-size: 1rem;
+}
+.input_list img {
+	width: 45%;
+}
+.input_list .comments {
+	font-size: 0.8rem;
+	display: block;
+	margin-top: -5px;
+}
+.input_list .radio_label,
+.payment_method_select .radio_label {
+	font-size: 1.1rem;
+}
+.input_list .radio_label{
+	display: inline-block;
+	padding-left: 0.5em;
+}
+.input_list [type="radio"] {
+	display: inline;
+	width: auto;
+}
+
+.input_list .error_message {
+
+	display: block;
+	line-height: 0.9em;
+	font-size: 0.9rem;
+	color: #C00;
+
+}
+
+ ul.error_list{
+ 	margin-left:35px;
+	margin-bottom:5px;
+ }
+ 
+ /* ---- エラー表示 ---- */
+li.error_msg  {
+	display: list-item;
+	line-height: 1.0em;
+	font-size: 0.9rem;
+	color: #FF0000;
+}
+.error_list li{
+	color:#C00;
+	padding-left: 10px;
+	list-style:disc;
+}
+
+.error_list_no_mark li{
+	color:#C00;
+	padding-left: 10px;
+	list-style:none;
+}
+
+.user_info_form_area [type="submit"],
+.info_form_area [type="submit"] {
+	line-height: 2.8rem;
+	min-width: 7rem;
+	margin-right: 20px;
+	font-size: 1rem;
+}
+
+.user_info_form_area .send_button,
+.info_form_area .send_button {
+	background: #edf9fe;
+}
+.user_info_form_area .back_button,
+.info_form_area .back_button {
+	background: #ddd;
+}
+
+.shopping_button{
+	width: 100%;
+}
+
+.detail_button_area {
+	display: block;
+	width: 100%;
+	margin-top:30px;
+}
+.detail_button_area form {
+	 /* display: inline-block; */
+	width:25%;
+	/* margin-left:5%; */
+	text-align: center;
+}
+.detail_button_area form:first-of-type{
+	text-align: right;
+}
+.detail_button_area form:last-of-type{
+	text-align: left;
+}
+.detail_button_area [type="submit"]{
+	/* padding: 0.6em 1.8em; */
+	font-size: 1.2em;
+}
+.card_info {
+	padding-top: 10px;
+	border-top: 1px solid #e8e8e8;
+}
+
+.item_detail_area {
+	overflow: hidden;
+	margin: 30px auto 0;
+}
+.item_image_area {
+	width: 45%;
+}
+.item_image_area img{
+	width: 100%;
+	max-width: 300px;	
+	height: auto;
+	max-height: 300px;
+}
+.item_input_area img{
+	width: 100%;
+	max-width: 300px;	
+	height: auto;
+	max-height: 300px;
+}
+.item_detail_list {
+	width: 50%;
+}
+
+.item_detail_area + .user_info_form {
+	clear: both;
+}
+
+/* スキルアップテクニック9
+ * :first-of-typeは擬似クラスの一種で、
+ * 設定した同要素複数の中から最初に現れる要素に対し設定を行います。
+ * 最初に現れるform要素内のボタンに対しmarginを設定し位置を決めています。
+ */
+.emp_date_area form:first-of-type input[type=submit] {
+	margin-left: 37.5%;
+}
+
+/* ---- 検索フォーム ---- */
+.search [type=text] {
+	width: 115px;
+}
+
+.search select {
+	width: 125px;
+}
+
+/* ---- 処理完了メッセージの出力箇所 ---- */
+.message {
+	clear: both;
+	margin-top: 80px;
+	text-align: center;
+}
+
+.back_to_top_link {
+	margin-top: 30px;
+}
+
+/* ---- 入力欄全般 ---- */
+[type=text], [type=password] {
+	padding: 3px;
+}
+
+[type=date] {
+	padding: 1px 3px;
+}
+
+/* ---- セレクトボックス ---- */
+select {
+	padding: 2px 5px 5px;
+	color: #12526d;
+}
+
+/* ---- ボタン全般 ---- */
+[type=submit] {
+	border: 1px solid #808080;
+	border-radius: 6px;
+	padding: 2px 10px;
+	color: #12526d;
+	background: #fff;
+	box-shadow: 1px 2px 2px #eee;
+	text-shadow: 1px 1px 1px #d8d8d8;
+}
+
+/* スキルアップテクニック10
+ * background-imageプロパティの値linear-gradientによってグラデーションを設定しています。
+ * ブラウザの実装状況によりベンダープレフィックスを設定。
+ * 最後にプレフィックス無しを記述することで上書きを行い実装後にも対応できる順番としています。
+ * またlinear-gradientが解釈できないブラウザのために背景色を設定しています。
+ * このような、誰にでも同様のデザインを届ける考え方を『プログレッシブエンハンスメント』と言います。
+ */
+[type=submit].delete {
+	background: #d44444;
+	background-image: -webkit-linear-gradient(top, #d44444, #9e1818);
+	background-image: -moz-linear-gradient(top, #d44444, #9e1818);
+	background-image: -ms-linear-gradient(top, #d44444, #9e1818);
+	background-image: -o-linear-gradient(top, #d44444, #9e1818);
+	background-image: linear-gradient(to bottom, #d44444, #9e1818);
+	color: #fff;
+	text-shadow: 1px 1px 1px #616161;
+}
+
+/* ---- テーブル ---- */
+/* ---- 共通 ---- */
+.list_table,
+.detail_table {
+	border-bottom: 1px solid #f0f8fb;
+	background-color: #fff;
+	border-collapse: collapse;
+	margin: 50px auto 20px;
+}
+.list_table th,
+.detail_table th {
+	white-space: nowrap;
+	padding: 5px;
+    background: #add8e6;
+    font-weight: normal;
+    position: relative;
+}
+.list_table td,
+.detail_table td {
+	padding: 10px;
+}
+
+/* ---- 個別 ---- */
+/* ---- 一覧テーブル ---- */
+.list_table {
+	width: 100%;
+	text-align: center;
+}
+.list_table tr:nth-of-type(odd) {
+    background: #f0f8fb;
+}
+.admin .list_table tr:nth-of-type(odd) {
+    background: #fff0ec;
+}
+.admin .list_table th{
+	background: #ffc6b9;
+}
+.list_table th:after {
+    content: "";
+    display: block;
+    height: 90%;
+    width: 1px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 5%;
+}
+
+/* ---- 詳細テーブル ---- */
+.detail_table {
+	width: 80%;
+}
+.detail_table caption {
+	text-align: left;
+	font-size: 1.1rem;
+}
+.detail_table th{
+	border-bottom: 1px solid #fff;
+	text-align: right;
+	padding-right: 10px;
+}
+.admin .detail_table th{
+	background: #ffc6b9;
+}
+.detail_table td{
+	border-bottom: 1px solid #f0f8fb;
+}
+
+/* ---- 会員一覧 ---- */
+.sign_up_form {
+	display:flex;
+	flex-direction: row-reverse;
+}
+.sign_up_form ~.list_table{
+	margin: 20px auto 20px;
+}
+.sign_up_form .menu_button{
+	margin-right: 0px;
+	margin-bottom:8px;
+}
+.category_list .sign_up_form .menu_button{
+	width:auto;
+}
+.list_table.user {
+	clear: both;
+}
+
+/* ---- 商品一覧 ---- */
+.list_table.item_list th:last-of-type {
+	width:20%;
+}
+.list_table.item_list{
+	margin: 0px auto 20px;
+}
+
+.list_table.item_list>tbody th,.list_table.item_list>tbody td{
+	flex-basis: 100%
+}
+
+.admin > .container{
+	display: flex;
+}
+
+/* ---- 商品詳細 ---- */
+.list_table.item_detail{
+	margin: 10px auto 20px;
+}
+.item_detail_area{
+	display: flex;
+	justify-content: space-between;
+}
+/* ---- 注文一覧 ---- */
+.list_table.order{
+	margin-top: 50px;
+}
+.list_table.order a{
+	text-decoration: underline;
+}
+
+/* ---- カテゴリ一覧 ---- */
+.list_table.category_list th:last-of-type {
+	width:30%;
+}
+.list_table.category_list{
+	margin: 10px auto 20px;
+}
+
+/* ---- 注文詳細 ---- */
+.list_table .total {
+	font-weight: bold;
+}
+.detail_table.payment{
+	margin: 10px auto 20px;
+}
+/* ---- 注文最終確認 ---- */
+.list_table.item_detail td:first-of-type{
+	width: 20%;
+}
+.list_table.item_detail img{
+	height: 70px;
+	width: auto;
+	max-width:150px;
+	vertical-align:middle;
+}
+.detail_table.address,
+.detail_table.pay {
+	width: 100%;
+}
+.detail_table.pay {
+	margin-bottom: 50px;
+}
+.detail_table.address{
+	margin:10px auto 20px;
+}
+/* ---- 買物カゴ ---- */
+.list_table.basket {
+	margin: 40px auto 21px;
+}
+.list_table.basket th:first-of-type {
+	width: 45%;
+}
+.list_table.basket th:last-of-type {
+	width: 42%;
+}
+.list_table.basket td:first-of-type {
+	padding-left: 20px;
+	text-align: left;
+}
+.list_table.basket [type="button"],
+.list_table.basket .delete {
+	margin: 0 3px;
+}
+.list_table.basket .delete{
+	width: 80px;
+	height: 35px;
+	padding: 0px 10px;
+	border-radius: 6px;
+	font-weight: bold;
+}
+
+
+/* ---- 商品一覧(運用管理者向け) ---- */
+
+
+
+
+/* ---- 支払い方法入力 ---- */
+.container #checkButton {
+	margin: 10px 0;
+}
+
+#card .deadline {
+	display: flex;
+}
+
+#card .deadline input[type=text] {
+	width: 14%;
+	height: 30px;
+	border-radius: 6px;
+	border: 1px solid gray;
+	margin: 10px 0;
+}
+
+.deadline .text {
+	width: 5px;
+	line-height: 51px;
+	margin: 0 7px;
+}
+
+/* ---- 買い物かご ---- */
+.itemController {
+	width: 40%;
+}
+
+.itemController form {
+	display: inline;
+}
+
+form.add {
+	margin-left: 15px;
+}
+
+form.delete {
+	margin-left: 30px;
+}
+
+.buy input[type=submit] {
+	margin-right: 10px;
+}
+
+/* ---- 商品画像(詳細、編集、削除) ---- */
+.value img {
+	width: 100%;
+	height: auto;
+}
+
+/* ---- リンク表示(ブロック中央寄せ) ---- */
+p.link_center {
+	text-align: center;
+}
+
+/* ---- 一覧表示全般 ---- */
+.paging {
+	text-align: center;
+	margin: 15px 0;
+	font-size: 1rem;
+}
+.paging li{
+	display: inline-block;
+}
+.paging .current,
+.paging a{
+	padding: 0 3px;
+}
+.paging a{
+	display: block;
+}
+
+

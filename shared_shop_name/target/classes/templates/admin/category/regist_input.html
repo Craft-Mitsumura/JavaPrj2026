@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.input}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin category_regist_input">
+	<h2 th:class="title" th:text="#{category}+#{title.input}"></h2>
+	<p th:class="input_message" th:text="#{msg.regist.input}"></p>
+
+	<div class="user_info_form_area">
+		<form th:action="@{/admin/category/regist/check}" method="post" class="user_info_form"
+			th:object="${categoryForm}">
+
+			<th:block th:if="${#fields.hasErrors()}">
+				<ul class="error_list">
+					<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+				</ul>
+				<br />
+			</th:block>
+
+			<ul class="input_list">
+				<li><label> <span class="input_title">[[#{categoryForm.name}]]</span></label>
+					<input type="text" th:field="*{name}" />
+				</li>
+				<li><label> <span class="input_title">[[#{categoryForm.description}]]</span></label> 
+				 <textarea
+					name="description" th:inline="text" rows="6"
+					th:text="*{description}"></textarea>
+				</li>
+			</ul>
+			<input type="submit" value="確認" class="send_button" />
+		</form>
+		<form th:action="@{/admin/category/list}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

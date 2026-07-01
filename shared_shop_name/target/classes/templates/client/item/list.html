@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{item}+#{title.list}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body th:object="${loginForm}" class="user item_list">
+
+	<h2 th:class="title" th:text="#{item}+#{title.list}"></h2>
+
+	<div class="sorted_by">
+		<span th:if="${sortType==1}" th:text="#{sort.latest.str}"></span>
+		<a th:unless="${sortType==1}" th:href="@{/client/item/list/1(categoryId=${categoryId})}"
+			th:text="#{sort.latest.str}"></a>
+		<span th:if="${sortType==2}" th:text="#{sort.hotsell.str}"></span>
+		<a th:unless="${sortType==2}" th:href="@{/client/item/list/2(categoryId=${categoryId})}"
+			th:text="#{sort.hotsell.str}"></a>
+
+		<p th:text="#{msg.client.item.list.none}" th:if="${#lists.isEmpty(items)}"></p>
+
+	</div>
+
+
+	<th:block th:if="!${#lists.isEmpty(items)}">
+		<table class="list_table item_detail">
+			<tr>
+				<th th:text="#{data.item.image}"></th>
+				<th th:text="#{data.item.name}"></th>
+				<th th:text="#{data.item.price}"></th>
+				<th th:text="#{category}"></th>
+			</tr>
+			<!--/* 商品一覧 */-->
+			<tr th:each="item, status: ${items}">
+				<td class="image">
+					<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />
+					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
+
+				</td>
+				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
+				<td th:text="${item.price}"></td>
+				<td th:text="${item.categoryName}"></td>
+			</tr>
+		</table>
+	</th:block>
+
+</body>
+
+</html>

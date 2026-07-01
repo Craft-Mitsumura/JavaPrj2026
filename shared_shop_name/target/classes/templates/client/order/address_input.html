@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<script th:src="@{/js/payment_input.js}" type="text/javascript"></script>
+	<title th:text="#{title.order.address.input}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="user order_address_input">
+	<h2 th:class="title" th:text="#{title.order.address.input}"></h2>
+	<p th:class="input_message" th:text="#{msg.order.address.input}"></p>
+	<div class="user_info_form_area">
+		<form th:action="@{/client/order/payment/input}" method="post" th:object="${orderForm}">
+			<th:block th:if="${#fields.hasErrors()}">
+				<ul class="error_list">
+					<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+				</ul>
+				<br />
+			</th:block>
+
+			<ul class="input_list">
+				<li>
+					<label><span class="input_title">[[#{orderForm.postalCode}]]</span></label>
+					<input type="text" th:field="*{postalCode}" />
+				</li>
+				<li>
+					<label><span class="input_title">[[#{orderForm.address}]]</span></label>
+					<textarea rows="6" th:field="*{address}"></textarea>
+				</li>
+				<li>
+					<label><span class="input_title">[[#{orderForm.name}]]</span></label>
+					<input type="text" th:field="*{name}" />
+				</li>
+				<li>
+					<label><span class="input_title">[[#{orderForm.phoneNumber}]]</span></label>
+					<input type="text" th:field="*{phoneNumber}" />
+				</li>
+			</ul>
+			<input type="hidden" th:field="*{id}" />
+			<input type="hidden" th:field="*{payMethod}" />
+			<input type="submit" value="次へ" class="send_button" />
+		</form>
+		<form th:action="@{/client/basket/list}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>
