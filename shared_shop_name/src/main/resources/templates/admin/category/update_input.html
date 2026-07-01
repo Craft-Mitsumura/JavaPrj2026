@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.update.input}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin category_update_input">
+	<h2 th:class="title" th:text="#{category}+#{title.update.input}"></h2>
+	<p th:class="input_message" th:text="#{msg.update.input}"></p>
+
+	<div class="user_info_form_area">
+		<form th:action="@{/admin/category/update/check}" method="post" class="user_info_form" th:object="${categoryForm}">
+			<th:block th:if="${#fields.hasErrors()}">
+				<ul class="error_list">
+					<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+				</ul>
+				<br />
+			</th:block>
+
+			<ul class="input_list">
+				<li>
+					<label>
+						<span class="input_title">[[#{categoryForm.name}]]</span>
+						<input type="text" name="name" th:value="*{name}" />
+					</label>
+				</li>
+				<li>
+					<label>
+						<span class="input_title">[[#{categoryForm.description}]]</span>
+						<textarea name="description" th:inline="text" rows="6"
+							th:text="*{description}"></textarea>
+					</label>
+				</li>
+			</ul>
+			<input type="hidden" th:field="*{id}" />
+			<input type="submit" value="確認" class="send_button" />
+		</form>
+		<form th:action="@{/admin/category/detail/{id}(id=${categoryForm.id})}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

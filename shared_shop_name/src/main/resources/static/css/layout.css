@@ -1,0 +1,379 @@
+﻿@charset "UTF-8";
+
+/* ---- 共通 ---- */
+/* スキルアップテクニック1-1
+ * html要素に対しmin-heightプロパティを付けることで、
+ * 最小でも表示領域が画面の高さを持つことになります。
+ * これにより画面の一番下まで表示領域を拡大し、
+ * footerを画面下に配置することができます。
+ * positionプロパティは絶対位置表示を可能にし、
+ * 値relativeを設定することで子要素(今回はfooter要素)の配置基準になります。
+ */
+html {
+	min-height: 100%;
+	position: relative;
+}
+
+/* スキルアップテクニック1-2
+ * 下方向にmarginの余白を設定することでfooterの表示領域を確保します。
+ * paddingプロパティの値0は、body要素が持つ枠の領域を取り消します。
+ */
+body {
+	margin: 0 0 30px;
+	padding: 0;
+}
+
+h2,
+h3 {
+	font-size: 1em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
+
+/* スキルアップテクニック2
+ * displayプロパティでは表示方式を変更することができます。
+ * block表示だったform要素をinline表示に変更することで、
+ * ボタンを横並びにすることができます。
+ */
+form {
+	display: inline;
+}
+
+table {
+	width:100%;
+	background-color: #fff;
+	border-collapse: collapse;
+	margin: 0px auto 20px;
+}
+
+ul,
+li {
+	margin: 0;
+	padding: 0;
+}
+li {
+	list-style-type: none;
+	
+}
+
+
+
+.container {
+	width: 960px;
+	margin: 0 auto;
+	justify-content: space-between;
+}
+body > .container {
+	margin-top: 15px;
+}
+.content {
+	padding:30px 0 60px;
+}
+
+/* ---- ヘッダー ---- */
+header .container {
+	display: flex;
+	justify-content: space-between;
+}
+header {
+	background: #87ceeb;
+	padding: 10px 0;
+}
+.admin header {
+	background: #ff8669;
+}
+
+/* スキルアップテクニック3
+ * font-sizeの単位emは親要素に設定されたfont-sizeの相対指定となります。
+ * 親要素のfont-sizeが16px設定だとしたら、1.8emでは1.8倍、即ち28.8pxの大きさとなります。
+ * デザインにはジャンプ率の考え方があり、基本の大きさからの倍率で文字サイズを決めることが多々あります。
+ * その様な場合、em指定をしておくと便利です。
+ * 基本サイズが変更になったとしても、比例して大きさが変化します。
+ */
+.site_title {
+	font-size: 1.8em;
+	font-weight: normal;
+	margin:0;
+}
+
+/* スキルアップテクニック4
+ * 横幅の％指定はブロックの数が決まっている際、設定が容易に行えます。
+ * また、レスポンシブにも対応できるため、px指定と比べ柔軟性に優れます。
+ */
+.user_info {
+	text-align: right;
+	padding-top: 15px;
+}
+.user_info a {
+	text-decoration: none;
+}
+
+/* スキルアップテクニック5
+ * :hoverは擬似クラスの一種で、カーソルをその要素に重ねることで動作します。
+ * user_infoクラスがつけられた要素の子要素であるa要素にカーソルが重なると、
+ * 下線が表示されます。
+ */
+.user_info a:hover {
+	text-decoration: underline;
+}
+
+.user_info .pipeline {
+	padding:0 8px;
+}
+
+
+
+/* ---- タイトル共通 ---- */
+.search_area .title,
+.main .title
+ {
+	background-color: #3d98bf;
+	margin: 0;
+	padding: 5px 8px;
+	color: #fff;
+	text-shadow: 1px 1px 1px #12526d;
+}
+
+
+/* ---- ナビゲーションバー ---- */
+.navi_area {
+	background: #edf9fe;
+}
+.navi_menu {
+	width: 960px;
+	padding:12px 0;
+	margin: 0 auto;
+}
+.navi_menu li {
+	display: inline-block;
+	width: 24%;
+}
+.navi_menu a {
+	display: inline-block;
+	width: 100%;
+	font-size: 1.5em;
+	line-height: 2.5em;
+	border: 1px solid #5fb4d9;
+	text-align: center;
+	text-decoration: none;
+	background: #fff;
+	transition: 0.18s;
+}
+.navi_menu a:hover {
+	background: #3d98bf;
+	color: #fff;
+	text-shadow: 1px 1px 1px #12526d;
+	border-color : #3d98bf;
+}
+.navi_menu li:first-of-type a{
+	border-radius: 6px 0px 0px 6px;
+}
+.navi_menu li:last-of-type a{
+	border-radius: 0px 6px 6px 0px;
+}
+
+/* ---- サイドバー ---- */
+.search .search_area{
+	flex:1;
+}
+.search,
+aside.admin_menu {
+	width: 20%;
+}
+
+.search .title,
+.admin_menu .title {
+	border-radius: 6px 6px 0 0;
+	text-align: center;
+	font-size: 1.1em;
+}
+.search_area .title{
+	border-radius: 6px 6px 6px 6px;
+	text-align: center;
+	font-size: 1.1em;
+}
+
+.admin_menu .title {
+	background: #ff6c49;
+	padding: 5px;
+}
+.admin_menu_list .title {
+	background: #ff6c49;
+}
+.search .form {
+	padding: 15px 0 50px 5px;
+}
+.admin_menu .display_list {
+	display: block;
+	padding: 10px;
+	border-right: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+	text-align: center;
+	text-decoration: none;
+	transition: background-color 0.18s;
+}
+
+.admin_menu .display_list:link,
+.admin_menu .display_list:visited,
+.admin_menu .display_list:hover,
+.admin_menu .display_list:active {
+	color: #2a2a2a;
+}
+
+.admin_menu .display_list:hover {
+	background: #ffc6b9;
+}
+.admin_menu li:last-of-type .display_list {
+	border-radius: 0 0 6px 6px;
+}
+
+/* ---- メイン ---- */
+.main {
+	width: 76%;
+	padding-bottom: 80px;
+
+}
+
+.container content{
+	display: flex;
+}
+
+.admin > .container.content{
+	display: flex;
+	justify-content: center;
+}
+
+.admin_menu .main {
+	width: 100%;
+}
+
+.user .main .title,
+.admin .main .title {
+	padding: 8px 15px;
+	position: relative;
+	font-size: 1.5rem;
+	}
+.main .title::before,
+.admin .main .title::before {
+	position: absolute;
+	content: '';
+	top: 100%;
+	left: 0;
+	border: none;
+	border-bottom: solid 10px transparent;
+	border-right: solid 20px rgb(149, 158, 155);
+}
+.admin .main .title.no_shadow::before {
+	display: none;
+}
+.admin .main .title {
+	background: #ff6c49;
+}
+
+.container.content > .admin_menu{
+	display: flex;
+	width: 50%;
+}
+.admin_menu .admin_menu_list{
+	padding: 5px 10px;
+	font-size: 1.5em;
+	margin: 80px auto 0;
+	flex: 1;
+	
+}
+
+.admin_menu_list .title_area {
+	background: #ff6c49;
+	text-align: center;
+	border: 1px solid #ff6c49;
+	border-radius: 6px 6px 0 0;
+	font-size: 1.2em;
+	color: #fff;
+	text-shadow: 1px 1px 1px #333;
+	padding: 5px 0;
+}
+.admin_menu_list .title_area_no_shadow {
+	background: #ff6c49;
+	text-align: center;
+	border: 1px solid #ff6c49;
+	border-radius: 6px 6px 0 0;
+	font-size: 1.2em;
+	padding: 5px 0;
+}
+
+.admin_menu_list .link_area {
+	margin: 0;
+}
+.admin_menu_list .link_area a{
+    display: block;
+    padding: 10px;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    border-left: 1px solid #aaa;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.18s;
+}
+
+.admin_menu_list .link_area a:hover{
+	background: #ffc6b9;
+}
+.admin_menu_list .link_area:last-of-type a{
+	border-radius: 0 0 6px 6px;
+}
+
+.error_mess_maintenance,
+.input_message,
+.complete_message,
+.check_message {
+	padding-top: 20px;
+	font-size: 1.2em;
+}
+.check_error_message {
+	padding-top: 20px;
+	font-size: 1.2em;
+	color:#C00;
+}
+.complete_message,
+.complete_link {
+	font-size: 1.2em;
+	margin-top: 30px;
+	padding-left: 30px;
+}
+.complete_link a:hover {
+	color: #d34320;
+}
+
+/* ---- フッター ---- */
+
+/* スキルアップテクニック1-3
+ * footer要素の表示位置は画面下、もしくはページ下に設定すると見やすいでしょう。
+ * その為に1-1ではhtml要素の表示位置を広げ、配置基準としました。
+ * 1-2では他の表示とfooter要素が被らないよう余白を設定しました。
+ * ここではfooter要素にpositionプロパティの値をabsoluteにすることで絶対位置表示を行います。
+ * 絶対位置表示の基準はpositionプロパティの値を持つ親要素となり、
+ * 今回は画面いっぱいのhtml要素がそれになります。
+ * bottomプロパティは基準からの配置位置を決定し、今回は0px。
+ * つまりhtml要素の一番下から0pxの位置に表示されることとなり、
+ * footer要素は画面、もしくはページの最下部に表示されるようになります。
+ */
+footer {
+	background-color: #87ceeb;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+.admin footer {
+	background: #ff8669;
+}
+
+small {
+	height: 30px;
+	line-height:30px;
+	text-shadow: 1px 1px 1px #fff;
+	font-size: 8pt;
+}

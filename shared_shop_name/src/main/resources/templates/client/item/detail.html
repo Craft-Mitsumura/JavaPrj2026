@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{item}+#{title.detail}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="user">
+
+	<h2 th:class="title" th:text="#{item}+#{title.detail}"></h2>
+
+	<div class="info_form_area" th:object="${item}">
+		<div class="item_detail_area">
+			<div class="item_image_area">
+				<img th:if="*{image != null}" th:src="@{/images/{image}(image=*{image})}"></img>
+				<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"></img>
+			</div>
+			<dl class="item_detail_list">
+				<dt>[[#{data.item.name}]]</dt>
+				<dd th:text="*{name}"></dd>
+				<dt>[[#{data.item.price}]]</dt>
+				<dd th:text="*{price}"></dd>
+				<dt>[[#{data.item.stock}]]</dt>
+				<dd th:if="*{stock > 5}" th:text="#{data.in.stock}"></dd>
+				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
+				<dd th:if="*{stock == 0}" th:text="#{data.out.of.stock}"></dd>
+				<dt>[[#{data.category}]]</dt>
+				<dd th:text="*{categoryName}"></dd>
+				<dt>[[#{data.description}]]</dt>
+				<dd th:text="*{description}"></dd>
+			</dl>
+		</div>
+		<div class="detail_button_area">
+			<form th:action="@{/client/basket/add}" method="post" class="user_info_form" th:if="*{stock > 0}">
+				<input type="hidden" th:field="*{id}" />
+				<input type="submit" value="買い物かごに入れる" class="send_button" />
+			</form>
+			<form th:action="@{/client/item/list/1}" method="post">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+		</div>
+	</div>
+
+</body>
+
+</html>

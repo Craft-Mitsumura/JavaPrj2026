@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+<head>
+<title th:text="#{top}+' | '+ #{shop.title}"> </title>
+<meta charset="UTF-8" />
+</head>
+<body class="user index">
+	<div>
+		<h2 class="title">
+				<span th:if="${sortType==1}" th:text="#{sort.latest.title}"></span>
+				<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.hotsell.title}"></span>
+		</h2>
+	</div>
+	<div th:if="${#lists.isEmpty(items)}">
+		<p th:text="#{msg.client.item.list.none}"></p>
+	</div>
+	<div class="item_list">
+	<th:block th:each="item, status: ${items}" th:if="${status.count le 10}">
+		<!--/* 1件分の商品情報 */-->
+		<div class="item">
+			<div class="item_name" th:text="${item.name}"></div>
+			<a th:href="@{/client/item/detail/}+${item.id}">
+			    <img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />
+			    <img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
+			</a>
+		</div>
+	</div>
+	</th:block>
+</body>
+</html>

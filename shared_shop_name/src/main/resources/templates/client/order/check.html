@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{title.order.check}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="user order_check">
+	<h2 th:class="title" th:text="#{title.order.check}"></h2>
+	<p th:class="check_message" th:text="#{msg.order.check}" th:if="${orderItemBeans != null}"></p>
+	<p th:class="check_error_message" th:text="#{msg.order.stop}" th:if="${orderItemBeans == null}"></p>
+
+	<!-- 在庫不足のメッセージ -->
+	<th:block th:if="${itemNameListLessThan != null || itemNameListZero != null}">
+	<div>
+		<br />
+		<ul class="error_list_no_mark" th:if="${itemNameListLessThan != null}">
+			<li th:each="err : ${itemNameListLessThan}" th:text="#{msg.order.item.stock.short(${err})}"></li>
+		</ul>
+		<ul class="error_list_no_mark" th:if="${itemNameListZero != null}">
+			<li th:each="err : ${itemNameListZero}" th:text="#{msg.order.item.stock.none(${err})}"></li>
+		</ul>
+		<br />
+	</div>
+	</th:block>
+
+	<!-- 注文情報 -->
+	<th:block th:if="${orderItemBeans != null}">
+	<table class="list_table item_detail">
+		<tr>
+			<th>[[#{data.item.name}]]</th>
+			<th>[[#{data.item.image}]]</th>
+			<th>[[#{data.unit.price}]]</th>
+			<th>[[#{data.order.num}]]</th>
+			<th>[[#{data.subtotal}]]</th>
+		</tr>
+		<tr th:each="orderItem: ${orderItemBeans}">
+			<td th:text="${orderItem.name}"></td>
+			<td>
+				<img th:src="@{/images/{image}(image=${orderItem.image})}" th:if="${orderItem.image != null}" />
+				<img th:src="@{/images/common/no_image.jpg}" th:if="${orderItem.image == null}" />
+			</td>
+			<td th:text="${orderItem.price}"></td>
+			<td th:text="${orderItem.orderNum}"></td>
+			<td th:text="${orderItem.subtotal}"></td>
+		</tr>
+		<tr>
+			<td colspan="3"></td>
+			<td class="total">[[#{data.total}]]</td>
+			<td class="total" th:text="${total}"></td>
+		</tr>
+	</table>
+	<div class="user_info_form_area">
+		<table class="detail_table address">
+			<caption class="table_caption">[[#{data.address}]]</caption>
+			<tr>
+				<th>[[#{data.address.postalcode}]]</th>
+				<td th:text="${orderForm.postalCode}"></td>
+			</tr>
+			<tr>
+				<th>[[#{data.address.address}]]</th>
+				<td th:text="${orderForm.address}"></td>
+			</tr>
+			<tr>
+				<th>[[#{data.address.name}]]</th>
+				<td th:text="${orderForm.name}"></td>
+			</tr>
+			<tr>
+				<th>[[#{data.address.phonenumber}]]</th>
+				<td th:text="${orderForm.phoneNumber}"></td>
+			</tr>
+		</table>
+		<table class="detail_table pay">
+			<caption class="table_caption">[[#{paymethod.str}]]</caption>
+			<tr>
+				<th>[[#{paymethod.str}]]</th>
+				<td th:switch="${orderForm.payMethod}">
+					<span th:case="1">[[#{paymethod.credit.str}]]</span>
+					<span th:case="2">[[#{paymethod.bank.str}]]</span>
+					<span th:case="3">[[#{paymethod.onarrival.str}]]</span>
+					<span th:case="4">[[#{paymethod.emoney.str}]]</span>
+					<span th:case="5">[[#{paymethod.convenience.str}]]</span>
+				</td>
+			</tr>
+		</table>
+		<form th:action="@{/client/order/complete}" method="post">
+			<input class="send_button" type="submit" value="ご注文の確定" th:if="${orderItemBeans != null}"/>
+		</form>
+		<form th:action="@{/client/order/payment/back}" method="post" class="update">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+	</th:block>
+	
+	<!-- 注文情報がない場合、トップへ戻る -->
+	<th:block  th:unless="${orderItemBeans != null}">
+	<p class="complete_link"><a th:href="@{/}" th:text="#{msg.back.to.top}"></a></p>	
+	</th:block>
+</body>
+
+</html>

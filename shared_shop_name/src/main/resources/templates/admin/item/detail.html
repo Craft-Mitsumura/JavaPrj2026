@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{item}+#{title.detail}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin item_detail_admin">
+	<h2 th:class="title" th:text="#{item}+#{title.detail}"></h2>
+
+	<div class="info_form_area" th:object="${item}">
+		<div class="item_detail_area">
+			<div class="item_image_area">
+				<span th:if="*{image != null}">
+					<img th:src="@{/images/{image}(image=*{image})}"></img>
+				</span>
+				<span th:if="*{image == null}">
+					<img th:src="@{/images/common/no_image.jpg}"></img>
+				</span>
+			</div>
+			<dl class="item_detail_list">
+				<dt>[[#{itemForm.name}]]</dt>
+				<dd th:text="*{name}"></dd>
+				<dt>[[#{itemForm.price}]]</dt>
+				<dd th:text="*{price}"></dd>
+				<dt>[[#{itemForm.stock}]]</dt>
+				<dd th:text="*{stock}"></dd>
+				<dt>[[#{data.category}]]</dt>
+				<dd th:text="*{categoryName}"></dd>
+				<dt>[[#{itemForm.description}]]</dt>
+				<dd th:text="*{description}"></dd>
+			</dl>
+		</div>
+
+		<div class="detail_button_area">
+			<form th:action="@{/admin/item/list}" method="post">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+
+			<form th:action="@{/admin/item/update/input/{id}(id=*{id})}" method="post">
+				<input type="submit" value="変更" />
+			</form>
+
+			<form th:action="@{/admin/item/delete/check/{id}(id=*{id})}" method="post">
+				<input type="submit" value="削除" class="delete" />
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

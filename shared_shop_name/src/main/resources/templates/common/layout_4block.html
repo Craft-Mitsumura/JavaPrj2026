@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:fragment="layout(title,body)">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
+<title th:replace="${title}">シェアードショップ</title>
+</head>
+<body class="admin">
+	<!--/* ヘッダー */-->
+	<header>
+		<div th:replace="~{common/header :: layout-header}"></div>
+	</header>
+	<div class="container">
+		<!--/* サイドバー */-->
+		<aside th:replace="~{common/sidebar :: layout-sidebar}">
+		</aside>
+		<!--/* メイン */-->
+		<article class="main">
+			<div th:replace="${body}"></div>
+		</article>
+	</div>
+	<!--/* フッター */-->
+	<footer>
+		<div th:replace="~{common/footer :: layout-footer}"></div>
+	</footer>
+</body>
+</html>

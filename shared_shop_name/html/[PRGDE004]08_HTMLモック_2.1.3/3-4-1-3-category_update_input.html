@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)http://localhost:55000/shared_shop/admin/category/update/input -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>カテゴリ変更入力 | シェアードショップ</title>
+</head>
+<body class="admin">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/admin/user/detail/2">運用管理二郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+</div>
+	</header>
+	<div class="container">
+		
+		<aside class="admin_menu">
+	
+	
+
+	
+	<div>
+
+		<h2 class="title">管理者用メニュー</h2>
+		<ul class="menu">
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/user/list" class="display_list">会員一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/order/list" class="display_list">注文一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/item/list" class="display_list">商品一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/category/list" class="display_list">カテゴリ一覧表示</a>
+			</li>
+		</ul>
+	</div>
+</aside>
+		
+		<article class="main">
+			
+	<h2 class="title">カテゴリ変更入力</h2>
+	<p class="input_message">変更する情報を入力してください。 </p>
+
+	<div class="user_info_form_area">
+		<form action="http://localhost:55000/shared_shop/admin/category/update/check" method="post" class="user_info_form">
+			
+
+			<ul class="input_list">
+				<li>
+					<label>
+						<span class="input_title">カテゴリ名</span>
+						<input type="text" name="name" value="化粧品">
+					</label>
+				</li>
+				<li>
+					<label>
+						<span class="input_title">説明文</span>
+						<textarea name="description" rows="6"></textarea>
+					</label>
+				</li>
+			</ul>
+			<input type="hidden" id="id" name="id" value="6">
+			<input type="submit" value="確認" class="send_button">
+		</form>
+		<form action="http://localhost:55000/shared_shop/admin/category/detail/6" method="post">
+			<input type="submit" value="戻る" class="back_button">
+		</form>
+	</div>
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>
