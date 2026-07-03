@@ -19,7 +19,7 @@ import jp.co.sss.shop.util.Constant;
 /**
  * ランキングコントローラー
  * @author 小松原愛
- */ 
+ */
 
 @Controller
 public class ClientItemRankingShowController {
@@ -29,7 +29,7 @@ public class ClientItemRankingShowController {
 	 */
 	@Autowired
 	ItemRepository itemrepo;
-	
+
 	@Autowired
 	CategoryRepository caterepo;
 
@@ -48,43 +48,32 @@ public class ClientItemRankingShowController {
 		model.addAttribute("categories", caterepo.findByIdAndDeleteFlag(Constant.NOT_DELETED, categoryId));
 		//		全件ランキング表示
 		if (categoryId == null) {
-			
+
 			// 通常の全体用NamedQueryを呼び出す
 			findByRanking = itemrepo.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
 
-//				 画面の見出しを「〇〇年〇月度 」にする
-				model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
-//			
-							}
-						
-					
+			//				 画面の見出しを「〇〇年〇月度 」にする
+			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
+			//			
+		}
 
+		else {
 
-		else{
-	
 			//		カテゴリー別ランキング表示
-			findByRanking = itemrepo.findItemsOrderBycateRanking(firstDateOfMonth,categoryId,PageRequest.of(0,10));
+			findByRanking = itemrepo.findItemsOrderBycateRanking(firstDateOfMonth, categoryId, PageRequest.of(0, 10));
 
-		// 画面の見出しを「〇〇年〇月度 [カテゴリー名]」にする
-		caterepo.findById(categoryId).ifPresent(c -> {
-			model.addAttribute("currentMonthText",
-					today.getYear() + "年" + today.getMonthValue() + "月度 [" + c.getName() + "]");
-		});
+			// 画面の見出しを「〇〇年〇月度 [カテゴリー名]」にする
+			caterepo.findById(categoryId).ifPresent(c -> {
+				model.addAttribute("currentMonthText",
+						today.getYear() + "年" + today.getMonthValue() + "月度 [" + c.getName() + "]");
+			});
 
+			//  正しいデータが入ったリストを画面に渡す
+			model.addAttribute("rankkings", findByRanking);
 
-	
+		}
+		return "client/item/Ranking";
 
-		
-
-		//  正しいデータが入ったリストを画面に渡す
-	model.addAttribute("rankkings", findByRanking);
-
-		
 	}
-		return "client/item/ranking/list";	
-		
-	
-}
 
 }
-
