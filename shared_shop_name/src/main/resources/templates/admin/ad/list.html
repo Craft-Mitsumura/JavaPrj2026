@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>広告一覧 | 管理画面</title>
+</head>
+
+<body>
+	<div th:fragment="content" class="admin ad_list">
+		<script th:if="${param.deleted != null and param.deleted[0] == 'true'}" th:inline="javascript">
+			window.onload = function () {
+				alert('広告を削除しました。');
+			};
+		</script>
+		
+		<h2 class="title">広告一覧</h2>
+
+		<form th:action="@{/admin/ad/regist/input}" method="post" class="sign_up_form">
+			<input type="submit" value="新規広告追加" class="menu_button" />
+		</form>
+
+		<p th:if="${promotions == null or #lists.isEmpty(promotions)}" th:text="'登録されている広告はありません。'"></p>
+
+		<table class="list_table" th:if="!${#lists.isEmpty(promotions)}">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>広告名（タイトル）</th>
+					<th>状態</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ad : ${promotions}">
+					<td th:text="${ad.id}"></td>
+					<td th:text="${ad.adTitle}"></td>
+					<td>
+						<span th:text="${ad.isActive == 1 ? '有効' : '無効'}">有効</span>
+					</td>
+					<td>
+						<form th:action="@{/admin/ad/update/input(id=${ad.id})}" method="post" style="display:inline;">
+							<input type="submit" value="変更" />
+						</form>
+						<form th:action="@{/admin/ad/delete/execute}" method="post" style="display:inline;"
+							onsubmit="return confirm('本当にこの広告を削除しますか？');">
+
+							<input type="hidden" name="id" th:value="${ad.id}" />
+
+							<input type="submit" value="削除" class="delete" />
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
