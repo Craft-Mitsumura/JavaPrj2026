@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    th:fragment="layout(title,body)">
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title,body)">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
-<title  th:replace="${title}"></title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
+	<title th:replace="${title}"></title>
 </head>
+
 <body class="user">
 	<!--/* ヘッダー */-->
 	<header>
@@ -15,8 +16,10 @@
 	</header>
 	<!--/* ナビゲーションバー */-->
 	<nav th:if="${session.user == null or session.user.authority == 2}" class="navi_area">
-	<!-- 	<div th:replace="~{common/menu :: layout-menu}"></div> -->
+		<!-- 	<div th:replace="~{common/menu :: layout-menu}"></div> -->
 	</nav>
+	<!--/* カルーセル広告 */-->
+	<div th:replace="~{common/carousel :: layout-carousel}"></div>
 	<div class="container">
 		<!--/* サイドバー */-->
 		<aside th:replace="~{common/sidebar :: layout-sidebar}"></aside>
@@ -30,4 +33,5 @@
 		<div th:replace="~{common/footer :: layout-footer}"></div>
 	</footer>
 </body>
+
 </html>
