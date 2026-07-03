@@ -13,7 +13,7 @@
 				<a th:href="@{/client/user/detail}" th:text="${session.user.name}"></a>さん
 				| <a th:href="@{/logout}" th:text="#{logout}"></a>
 			</div>
-			<img alt="avoir" th:src="#{shop.logo}" >
+			<img id="mainLogo" alt="avoir" th:src="#{shop.logo}" >
              <button id="toggleBtn"  > カテゴリー覧</button>
 			<div id="categoryList" class="hidden" >
 				<ul>

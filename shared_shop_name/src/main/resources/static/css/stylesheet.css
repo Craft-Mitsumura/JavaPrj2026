@@ -736,3 +736,7 @@ text-align:center;
  #categoryList {
     display: none;
 }
+#mainLogo {
+	height:100px;
+	weight:100px;
+}
