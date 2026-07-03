@@ -57,19 +57,24 @@
 
 				<div class="next_point">
 				    <p>次の景品まで</p>
-				    <p>○○pt</p>
+				    <p th:text="${remainPoint} + ' pt'"></p>
 				</div>
 
-				<div class="next_prize">
+				<div class="next_prize" th:if="${nextPrizeName != null}">
 				    <a th:href="@{/client/prize/list}">
 				        <p class="title">次の景品</p>
 
-				        <img th:src="${nextPrizeImage}" alt="景品画像">
+				       <img th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
 
-				        <p class="prize_name" th:text="${nextPrizeName}">マグカップ</p>
+				        <p class="prize_name" th:text="${nextPrizeName}"></p>
 
-				        <p class="prize_point" th:text="${nextPrizePoint} + 'ptで交換'"></p>
+				        <p class="prize_point"
+				           th:text="${nextPrizePoint} + 'ptで交換'"></p>
 				    </a>
+				</div>
+
+				<div th:if="${nextPrizeName == null}">
+				    <p>すべての景品を獲得済みです！</p>
 				</div>
 
 				</div> <!-- point_area -->
