@@ -51,7 +51,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * ランキングクエリ
 	 * @return ランキングエンティティ
 	 */
-	@Query("SELECT i FROM Item i JOIN FETCH i.Category c JOIN Rankings r ON r.item.id = i.id ORDER BY r.total DESC")
+	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id ORDER BY r.total DESC")
 	List<Rankings> findByRanking();
 	
 	/**

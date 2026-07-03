@@ -16,12 +16,11 @@ import jp.co.sss.shop.config.interceptor.CarouselInterceptor;
  */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/uploads/**")
-                .addResourceLocations("file:" + System.getProperty("user.dir") + "/images/uploads/");
-    }
-    
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	    registry.addResourceHandler("/images/**")
+	            .addResourceLocations("file:" + System.getProperty("user.dir") + "/images/");
+	}
     /** カルーセルインターセプター */
     @Autowired
     private CarouselInterceptor carouselInterceptor;
@@ -31,4 +30,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // ルートパス（トップ画面）だけに広告データを仕込む
         registry.addInterceptor(carouselInterceptor).addPathPatterns("/");
     }
+    
+    
 }
