@@ -104,4 +104,15 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	        String name,
 	        int deleteFlag);
 	
+	/**
+	 * 売れ筋順（注文個数の多い順）で未削除の商品一覧を取得します。（チームF:臨時追加）
+	 *
+	 * @return 売れ筋順の商品リスト
+	 */
+	@Query("SELECT i FROM Item i LEFT JOIN i.orderItemList oi WHERE i.deleteFlag = 0 GROUP BY i ORDER BY COALESCE(SUM(oi.quantity), 0) DESC")
+	List<Item> findAllOrderBySales();
+	
 }
+
+
+
