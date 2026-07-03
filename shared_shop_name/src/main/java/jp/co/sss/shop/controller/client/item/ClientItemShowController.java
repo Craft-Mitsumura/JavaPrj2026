@@ -49,13 +49,25 @@ public class ClientItemShowController {
 	//	StockCalc stockCalc;
 
 	/**
-	 * トップ画面 表示処理
-	 *
-	 * @param model    Viewとの値受渡し
-	 * @return "index" トップ画面
+	 * トップ画面を表示します。
+	 * 売れ筋順に商品を取得し、上位4件をピックアップして画面に渡します。
+	 * @author 塚倉（チームF)
+	 * @param model 画面へデータを渡すためのModelオブジェクト
+	 * @return トップ画面のHTMLパス ("index")
 	 */
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
+		// 売れ筋順で全商品を取得
+		List<Item> items = itemRepository.findAllOrderBySales();
+
+		// トップ画面用に最大4件に絞り込む
+		if (items.size() > 4) {
+			items = items.subList(0, 4);
+		}
+
+		model.addAttribute("items", items);
+		model.addAttribute("sortType", 2); // デフォルトは売れ筋順(2)として扱う
+		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
 
 		return "index";
 	}

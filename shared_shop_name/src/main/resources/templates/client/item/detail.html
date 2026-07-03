@@ -27,7 +27,7 @@
 				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
 				<dd th:if="*{stock == 0}" th:text="#{data.out.of.stock}"></dd>
 				<dt>[[#{data.category}]]</dt>
-				<dd th:text="*{categoryName}"></dd>
+				<dd th:text="*{category.name}"></dd>
 				<dt>[[#{data.description}]]</dt>
 				<dd th:text="*{description}"></dd>
 			</dl>

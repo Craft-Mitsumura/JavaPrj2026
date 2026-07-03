@@ -18,8 +18,6 @@
 	<nav th:if="${session.user == null or session.user.authority == 2}" class="navi_area">
 		<!-- 	<div th:replace="~{common/menu :: layout-menu}"></div> -->
 	</nav>
-	<!--/* カルーセル広告 */-->
-	<div th:replace="~{common/carousel :: layout-carousel}"></div>
 	<div class="container">
 		<!--/* サイドバー */-->
 		<aside th:replace="~{common/sidebar :: layout-sidebar}"></aside>
