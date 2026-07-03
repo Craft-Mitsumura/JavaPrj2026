@@ -730,13 +730,88 @@ text-align:center;
 
 /* /// headerMain サガルから修正 */
 
-#headerMain .container h1 {
-	color:red;
+  #categoryList {
+    display: show;
 }
- #categoryList {
-    display: none;
-}
+
 #mainLogo {
 	height:100px;
-	weight:100px;
+	width:110px;
+	cursor:pointer ;
+}
+
+#try {
+	display :grid;
+	grid-template-columns:auto, auto, auto ,auto;
+	
+}
+/* ------------- */
+#containerd{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 40px;
+    background:#111827;
+}
+
+ #containerd .header-left{
+    flex:1;
+}
+
+#mainLogo{
+    width:120px;
+    height:auto;
+    cursor:pointer;
+}
+
+#containerd .header-center{
+    flex:2;
+    display:flex;
+    justify-content:center;
+}
+
+ #containerd .menu-list{
+    display:flex;
+    gap:30px;
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+ #containerd .menu-list a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+}
+
+ #containerd .header-right{
+    flex:1;
+    display:flex;
+    justify-content:flex-end;
+}
+
+ #containerd .user_info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:white;
+}
+
+ #containerd .user_info a{
+    color:white;
+    text-decoration:none;
+}
+
+ #containerd .login-btn,
+.signup-btn{
+    padding:10px 18px;
+    border-radius:8px;
+}
+
+ #containerd .login-btn{
+    border:1px solid white;
+}
+
+ #containerd .signup-btn{
+    background:#2563eb;
 }
