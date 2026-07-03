@@ -80,6 +80,12 @@ public class User {
 	 */
 	@Column(insertable = false)
 	private Date insertDate;
+	
+	/**
+	 * ポイント
+	 */
+	@Column
+	private Integer point;
 
 	/**
 	 * 会員IDの取得
@@ -239,5 +245,16 @@ public class User {
 	 */
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
+	}
+	
+	/**
+	 * ポイント
+	 */
+	public Integer getPoint() {
+	    return point;
+	}
+
+	public void setPoint(Integer point) {
+	    this.point = point;
 	}
 }

@@ -23,28 +23,73 @@
 
 	</div>
 
+	<!-- 検索結果0件 -->
+	<p class="no_item" th:if="${#lists.isEmpty(items)}" th:text="#{msg.client.item.list.none}">
+	</p>
 
+	<!--	<th:block th:if="!${#lists.isEmpty(items)}">-->
+	<!--		<table class="list_table item_detail">-->
+	<!--			<tr>-->
+	<!--				<th th:text="#{data.item.image}"></th>-->
+	<!--				<th th:text="#{data.item.name}"></th>-->
+	<!--				<th th:text="#{data.item.price}"></th>-->
+	<!--				<th th:text="#{category}"></th>-->
+	<!--			</tr>-->
+	<!--			/* 商品一覧 */-->
+	<!--			<tr th:each="item, status: ${items}">-->
+	<!--				<td class="image">-->
+	<!--					<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />-->
+	<!--					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />-->
+
+	<!--				</td>-->
+	<!--				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>-->
+	<!--				<td th:text="${item.price}"></td>-->
+	<!--				<td th:text="${item.categoryName}"></td>-->
+	<!--			</tr>-->
+	<!--		</table>-->
+	<!--	</th:block>-->
+
+	<!-- 商品一覧 -->
 	<th:block th:if="!${#lists.isEmpty(items)}">
-		<table class="list_table item_detail">
-			<tr>
-				<th th:text="#{data.item.image}"></th>
-				<th th:text="#{data.item.name}"></th>
-				<th th:text="#{data.item.price}"></th>
-				<th th:text="#{category}"></th>
-			</tr>
-			<!--/* 商品一覧 */-->
-			<tr th:each="item, status: ${items}">
-				<td class="image">
-					<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />
-					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
 
-				</td>
-				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
-				<td th:text="${item.price}"></td>
-				<td th:text="${item.category.Name}"></td>
-			</tr>
-		</table>
+		<div class="item-list">
+
+			<div class="item-card" th:each="item : ${items}">
+
+				<!-- 商品画像 -->
+				<div class="item-card-image">
+					<a th:href="@{/client/item/detail/{id}(id=${item.id})}">
+						<img th:if="${item.image != null}" th:src="@{/images/{image}(image=${item.image})}"
+							class="item-image" />
+
+						<img th:unless="${item.image != null}" th:src="@{/images/common/no_image.jpg}"
+							class="item-image" />
+					</a>
+				</div>
+
+				<!-- 商品情報 -->
+				<div class="item-card-body">
+
+					<div class="item-category">
+						<span th:text="${item.categoryName}"></span>
+					</div>
+
+					<div class="item-name">
+						<a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a>
+					</div>
+
+					<div class="item-price">
+						￥<span th:text="${item.price}"></span>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
 	</th:block>
+
 
 </body>
 

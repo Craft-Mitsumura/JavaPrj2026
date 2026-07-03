@@ -2,21 +2,20 @@ package jp.co.sss.shop.controller.client.item;
 
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.sss.shop.bean.UserBean;
-import jp.co.sss.shop.entity.Favorite;
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
-import jp.co.sss.shop.service.FavoriteService;
+//import jp.co.sss.shop.service.StockCalc;
+import jp.co.sss.shop.util.Constant;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -32,22 +31,22 @@ public class ClientItemShowController {
 	ItemRepository itemRepository;
 
 	/**
+	 * カテゴリ情報
+	 */
+	@Autowired
+	CategoryRepository categoryRepository;
+
+	/**
 	 * Entity、Form、Bean間のデータコピーサービス
 	 */
 	@Autowired
 	BeanTools beanTools;
 
 	/**
-	 * お気に入り情報を操作するためのサービス部材
+	 * 商品在庫数計算サービス
 	 */
-	@Autowired
-	FavoriteService favoriteService;
-
-	/**
-	 * ログインユーザーのセッション情報を管理するオブジェクト
-	 */
-	@Autowired
-	HttpSession session;
+	//	@Autowired
+	//	StockCalc stockCalc;
 
 	/**
 	 * トップ画面 表示処理
@@ -61,43 +60,92 @@ public class ClientItemShowController {
 		return "index";
 	}
 
-	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showAll(Model model) {
-		model.addAttribute("items", itemRepository.findAll());
+	/**
+	 * 商品一覧表示（カテゴリ検索）
+	 *
+	 * @param categoryId カテゴリID
+	 * @param model Viewとの値受渡し
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping(path = "/client/item/list", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showListItems(
+			@RequestParam(required = false) Integer categoryId,
+			Model model) {
+
+		List<Item> items;
+
+		// 全商品
+		if (categoryId == null || categoryId == 0) {
+
+			items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(
+					Constant.NOT_DELETED);
+
+		} else {
+
+			// カテゴリ検索
+			items = itemRepository.findAllByDeleteFlagAndCategoryIdOrderByInsertDateDesc(
+					Constant.NOT_DELETED,
+					categoryId);
+		}
+
+		model.addAttribute("items", items);
+
+		model.addAttribute("categories",
+				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
+						Constant.NOT_DELETED));
+
+		model.addAttribute("categoryId", categoryId);
+
 		return "client/item/list";
 	}
 
 	/**
-	 * 指定された商品IDの詳細画面を表示します。
-	 * ログイン状態であれば、該当商品が既にお気に入りに登録されているかの判定も合わせて行います。
-	 * @author 吉浜, 田中（チームF）
-	 * @param id    表示対象の商品ID
-	 * @param model 画面へデータを渡すためのModelオブジェクト
-	 * @return 商品詳細画面のHTMLパス ("client/item/detail")
+	 * 商品詳細表示
+	 *
+	 * @param model 商品情報を渡すため
+	 * @param id 商品ID
+	 * @return 商品詳細画面
 	 */
-	@RequestMapping(path = "/client/item/detail/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable Integer id, Model model) {
+	@RequestMapping(path = "/client/item/detail/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String details(Model model, @PathVariable Integer id) {
 
-		// 削除フラグが立っていない該当商品を取得
-		Item item = itemRepository.findByIdAndDeleteFlag(id, 0);
-		model.addAttribute("item", item);
+		Item detailItem = itemRepository.findById(id).orElse(null);
 
-		// セッションからログインユーザー情報を取得
-		UserBean loginUser = (UserBean) session.getAttribute("user");
-		boolean isFavorite = false;
+		// 商品在庫数を設定
+		//			stockCalc.updateOneItemStock(detailItem);
 
-		// ログイン状態の場合のみ、お気に入り登録済みかチェック
-		if (loginUser != null) {
-			List<Favorite> favorites = favoriteService.getFavoriteList(loginUser.getId());
-			if (favorites != null) {
-				isFavorite = favorites.stream()
-						.anyMatch(f -> f.getItem().getId().equals(id));
-			}
-		}
-
-		model.addAttribute("isFavorite", isFavorite);
+		model.addAttribute("item", detailItem);
 
 		return "client/item/detail";
+	}
+
+	/**
+	 * 商品検索
+	 *
+	 * @param searchItems 検索文字
+	 * @param model Viewとの値受渡し
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping(path = "/client/item/list/search/")
+	public String topSearch(
+			@RequestParam String searchItems,
+			Model model) {
+
+		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlag(
+				searchItems,
+				Constant.NOT_DELETED);
+
+		//		            stockCalc.updateManyItemStock(items);
+
+		model.addAttribute("searchItems", searchItems);
+
+		model.addAttribute("items", items);
+
+		model.addAttribute("categories",
+				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
+						Constant.NOT_DELETED));
+
+		return "client/item/list";
 	}
 
 }

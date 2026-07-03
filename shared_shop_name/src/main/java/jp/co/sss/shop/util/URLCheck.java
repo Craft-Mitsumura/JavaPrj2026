@@ -39,7 +39,6 @@ public class URLCheck {
 				|| requestURL.indexOf("admin/menu") != -1
 				|| requestURL.indexOf("/admin/admin_menu") != -1
 				|| requestURL.indexOf("admin/user") != -1
-				|| requestURL.indexOf("/admin/ad/") != -1 // 追加機能：広告機能の追加：金城（チームF）
 				|| requestURL.endsWith("/logout")) {
 			// URLのリクエスト先がフィルタ実行対象である場合
 			isCheckURLOK = true;
@@ -115,7 +114,6 @@ public class URLCheck {
 				&& requestURL.indexOf("/client/item/list/") == -1
 				&& requestURL.indexOf("/client/item/detail/") == -1
 				&& requestURL.indexOf("/client/user/delete/") == -1
-				&& requestURL.indexOf("/client/ad/page/") == -1 //広告用；金城（チームF）
 				&& !requestURL.endsWith("/client/user/regist/input/init")
 				&& !requestURL.endsWith("/client/user/regist/input")
 				&& !requestURL.endsWith("/client/user/regist/input/check")

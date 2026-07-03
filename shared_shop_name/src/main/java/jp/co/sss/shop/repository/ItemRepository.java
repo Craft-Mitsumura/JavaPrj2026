@@ -44,6 +44,35 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品エンティティ
 	 */
 	public Item findByNameAndDeleteFlag(String name, int notDeleted);
-	List<Item>findAll();
+	
+	/**
+	 * 商品情報を登録日付順に取得（一般会員用）
+	 *
+	 * @param deleteFlag 削除フラグ
+	 * @return 商品エンティティのリスト
+	 */
+	List<Item> findAllByDeleteFlagOrderByInsertDateDesc(int deleteFlag);
 
+	/**
+	 * カテゴリを指定して商品情報を登録日付順に取得
+	 *
+	 * @param deleteFlag 削除フラグ
+	 * @param categoryId カテゴリID
+	 * @return 商品エンティティのリスト
+	 */
+	List<Item> findAllByDeleteFlagAndCategoryIdOrderByInsertDateDesc(
+	        int deleteFlag,
+	        Integer categoryId);
+	
+	/**
+	 * 商品名を部分一致検索
+	 *
+	 * @param name 商品名
+	 * @param deleteFlag 削除フラグ
+	 * @return 商品エンティティのリスト
+	 */
+	List<Item> findAllByNameContainingAndDeleteFlag(
+	        String name,
+	        int deleteFlag);
+	
 }

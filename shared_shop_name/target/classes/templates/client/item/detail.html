@@ -8,61 +8,6 @@
 </head>
 
 <body class="user">
-	<!-- お気に入りボタン用 -->
-	<style>
-		/* お気に入り追加ボタン配置 */
-		.detail_button_area {
-			display: flex;
-			/* */
-			align-items: center;
-			gap: 10px;
-		}
-
-		.favorite-btn {
-			background: none;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-			cursor: pointer;
-			outline: none;
-			font-size: 16px;
-			color: #FFFFFF;
-			transition: all 0.2s;
-
-			height: 50px;
-			padding: 0 80px;
-			white-space: nowrap;
-
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-
-			background-color: #000000;
-		}
-
-		/* お気に入り登録済みの赤色のスタイル */
-		.favorite-btn.active {
-			color: #000000;
-			border-color: #D4AF37;
-			background-color: #D4AF37;
-
-
-		}
-
-		.item_detail_list dt,
-		.item_detail_list dd {
-			font-size: 20px !important;
-			/* 18px〜24pxあたりでお好みの大きさに調整してください */
-			line-height: 1.8 !important;
-			/* 文字が大きくなった分、行間を広げて見やすくします */
-		}
-
-		/* 項目名（商品名、価格、在庫数など）の文字を太字にしてメリハリをつける */
-		.item_detail_list dt {
-			font-weight: bold !important;
-			color: #333333 !important;
-			/* 項目名の文字色（お好みで変更可） */
-		}
-	</style>
 
 	<h2 th:class="title" th:text="#{item}+#{title.detail}"></h2>
 
@@ -82,7 +27,7 @@
 				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
 				<dd th:if="*{stock == 0}" th:text="#{data.out.of.stock}"></dd>
 				<dt>[[#{data.category}]]</dt>
-				<dd th:text="*{category.Name}"></dd>
+				<dd th:text="*{categoryName}"></dd>
 				<dt>[[#{data.description}]]</dt>
 				<dd th:text="*{description}"></dd>
 			</dl>
@@ -95,73 +40,8 @@
 			<form th:action="@{/client/item/list/1}" method="post">
 				<input type="submit" value="戻る" class="back_button" />
 			</form>
-
-			<!-- お気に入りボタン -->
-			<form th:action="@{/client/favorite/add}" method="post" id="favoriteForm" th:if="${session.user != null}"
-				style="display:inline;">
-				<button type="button" id="favoriteBtn" th:data-itemid="*{id}"
-					th:class="${isFavorite} ? 'favorite-btn active' : 'favorite-btn'">
-					<span th:text="${isFavorite} ? '♥ お気に入り済み' : '♡ お気に入り'">♡ お気に入り</span>
-				</button>
-			</form>
 		</div>
 	</div>
-
-	<!-- お気に入りボタン-javascript -->
-	<script th:inline="javascript">
-		// HTMLを読み込み終わったら処理スタート
-		document.addEventListener("DOMContentLoaded", function () {
-
-			// お気に入り用のフォームとボタンを取得
-			const form = document.getElementById("favoriteForm");
-			const btn = document.getElementById("favoriteBtn");
-
-			//もしボタンがなければ処理終了
-			if (!form || !btn) return;
-
-			// ボタンがクリックされたら
-			btn.addEventListener("click", function (event) {
-				// ページのリロードと別の画面に飛ぶのを防止
-				event.preventDefault();
-				//商品ID取得
-				const itemId = btn.dataset.itemid;
-				//不正な送信を防ぐためCSRFをフォーム内から探して取得
-				const csrfToken = form.querySelector('input[name="_csrf"]')?.value;
-
-				// 送信データを安全に組み立てる
-				const params = new URLSearchParams();
-				// 商品IDを入れる
-				params.append("itemId", itemId);
-				if (csrfToken) {
-					// 合言葉を入れる
-					params.append("_csrf", csrfToken);
-				}
-
-				//非同期通信開始
-				fetch(/*[[@{/client/favorite/add}]]*/ '/client/favorite/add', {
-					method: "POST",
-					body: params
-				})
-					// お気に入りボタンの画面切り替え
-					.then(response => response.text())
-					.then(data => {
-						if (data === "added") {
-							btn.innerHTML = "♥ お気に入り済み";
-							btn.classList.add("active");
-						} else if (data === "detached") {
-							btn.innerHTML = "♡ お気に入り";
-							btn.classList.remove("active");
-						} else if (data === "ng") {
-							alert("セッションが切れました。再度ログインしてください。");
-							window.location.href = "/login";
-						}
-					})
-					.catch(error => {
-						console.error("通信エラー:", error);
-					});
-			});
-		});
-	</script>
 
 </body>
 
