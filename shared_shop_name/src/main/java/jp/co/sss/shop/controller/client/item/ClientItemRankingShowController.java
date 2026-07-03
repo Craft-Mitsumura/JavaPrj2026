@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.entity.Rankings;
 import jp.co.sss.shop.repository.CategoryRepository;
-import jp.co.sss.shop.repository.RankingRepository;
+import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.util.Constant;
 
 /**
@@ -25,50 +25,38 @@ import jp.co.sss.shop.util.Constant;
  */ 
 @Controller
 public class ClientItemRankingShowController {
-	/**
-	 * ランキングリポジトリ
-	 */
-	@Autowired
-	RankingRepository repoRanking;
 
 	/**
-	 * カテゴリレポジトリ
+	 * アイテムレポジトリ
 	 */
 	@Autowired
-	CategoryRepository repoCategory;
-
-	/**
-	 * エンティティの永続化を行う
-	 */
+	ItemRepository itemrepo;
+	
 	@Autowired
-	EntityManager entityManager;
+	CategoryRepository caterepo;
 
 	/**
-	 * @param genderType 性別を判別するため
-	 * @param categoryId カテゴリを取得するため
 	 * @param model リクエストスコープ
 	 * @return /client/item/ranking/list ランキング表示
 	 */
 	@GetMapping("/client/item/ranking/{genderType}")
-	public String showItemList(@PathVariable Integer genderType,@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
+	public String showItemList(@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
 
 		LocalDate today = LocalDate.now();
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
 		Query query;
 		List<Rankings> rankingItems = new ArrayList<>();
 		// 画面のカテゴリー一覧に表示するため、すべてのカテゴリーを取得してModelにセット
-		model.addAttribute("categories", repoCategory.findAllByDeleteFlag(Constant.NOT_DELETED));
-		// 画面の性別一覧に表示するため、すべての性別を取得してModelにセット
-		model.addAttribute("genderType", repoRanking.findAll());
+		model.addAttribute("categories", caterepo.findByIdAndDeleteFlag(Constant.NOT_DELETED, categoryId));
 		//		全件ランキング表示
-		if (genderType == 0 && categoryId != null) {
-			// カテゴリー別のNamedQueryを呼び出し、検索パラメータをセット
+		if (categoryId != null) {
+//			 カテゴリー別のNamedQueryを呼び出し、検索パラメータをセット
 			query = entityManager.createNamedQuery("findBySalesMonthAndCategoryNamedQuery");
 			query.setParameter("salesMonth", firstDateOfMonth);
 			query.setParameter("categoryId", categoryId);
 
 			// 画面の見出しを「〇〇年〇月度 [カテゴリー名]」にする
-			repoCategory.findById(categoryId).ifPresent(c -> {
+			caterepo.findById(categoryId).ifPresent(c -> {
 				model.addAttribute("currentMonthText",
 						today.getYear() + "年" + today.getMonthValue() + "月度 [" + c.getName() + "]");
 			});
@@ -91,7 +79,7 @@ public class ClientItemRankingShowController {
 				Integer itemId = idNum.intValue();
 
 				// 主キー検索(findById)をやめ、商品IDをキーにListで取得する（最初に見つかった1件をベースにする）
-				List<Rankings> dbRankings = repoRanking.findByItemsId(itemId);
+				List<Rankings> dbRankings = itemrepo.findByRanking();
 
 				if (dbRankings != null && !dbRankings.isEmpty()) {
 					// ベースとなる商品情報を1件目から取得
@@ -110,13 +98,13 @@ public class ClientItemRankingShowController {
 			}
 		}
 		//		カテゴリー別ランキング表示
-		else if (genderType == 0) {
+		else{
 			// 通常の全体用NamedQueryを呼び出す
 			query = entityManager.createNamedQuery("findBySalesMonthNamedQuery");
 			query.setParameter("salesMonth", firstDateOfMonth);
 
 			// 画面の見出しを「〇〇年〇月度 」にする
-			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度");
+//			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度");
 
 			//  データベースからの最大取得件数を10件（10位まで）に制限
 			query.setMaxResults(10);
@@ -153,30 +141,29 @@ public class ClientItemRankingShowController {
 			}
 		}
 		//		男性のランキング表示
-		else if (genderType == 1) {
-			// 通常の全体用NamedQueryを呼び出す
-			query = entityManager.createNamedQuery("findBySalesMonthAndGenderNamedQuery");
-			query.setParameter("salesMonth", firstDateOfMonth);
-			query.setParameter("gender", genderType);
-			rankingItems = query.getResultList();
-			// 画面の見出しを「〇〇年〇月度 [性別]」にする
-			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [男性]");
-		}
-		//		女性のランキング表示
-		else {
-			// 通常の全体用NamedQueryを呼び出す
-			query = entityManager.createNamedQuery("findBySalesMonthAndGenderNamedQuery");
-			query.setParameter("salesMonth", firstDateOfMonth);
-			query.setParameter("gender", genderType);
-			rankingItems = query.getResultList();
-			// 画面の見出しを「〇〇年〇月度 [性別]」にする
-			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [女性]");
+//		else if (genderType == 1) {
+//			// 通常の全体用NamedQueryを呼び出す
+//			query = entityManager.createNamedQuery("findBySalesMonthAndGenderNamedQuery");
+//			query.setParameter("salesMonth", firstDateOfMonth);
+//			query.setParameter("gender", genderType);
+//			rankingItems = query.getResultList();
+//			// 画面の見出しを「〇〇年〇月度 [性別]」にする
+//			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [男性]");
+//		}
+//		//		女性のランキング表示
+//		else {
+//			// 通常の全体用NamedQueryを呼び出す
+//			query = entityManager.createNamedQuery("findBySalesMonthAndGenderNamedQuery");
+//			query.setParameter("salesMonth", firstDateOfMonth);
+//			query.setParameter("gender", genderType);
+//			rankingItems = query.getResultList();
+//			// 画面の見出しを「〇〇年〇月度 [性別]」にする
+//			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [女性]");
 		}
 
 		// 3. 正しいデータが入ったリストを画面に渡す
 		model.addAttribute("rankingItems", rankingItems);
-		model.addAttribute("genderType", genderType);
+//		model.addAttribute("genderType", genderType);
 		model.addAttribute("categoryId_", categoryId);
 		return "client/item/ranking/list";
-	}
-}
+	}}
