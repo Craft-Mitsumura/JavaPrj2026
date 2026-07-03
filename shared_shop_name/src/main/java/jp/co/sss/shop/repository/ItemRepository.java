@@ -76,7 +76,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	
 	/**
 	 * 商品情報を登録日付順に取得（一般会員用）
-	 *
+	 * @author 手塚
 	 * @param deleteFlag 削除フラグ
 	 * @return 商品エンティティのリスト
 	 */
@@ -84,7 +84,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	/**
 	 * カテゴリを指定して商品情報を登録日付順に取得
-	 *
+	 * @author 手塚
 	 * @param deleteFlag 削除フラグ
 	 * @param categoryId カテゴリID
 	 * @return 商品エンティティのリスト
@@ -94,13 +94,13 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	        Integer categoryId);
 	
 	/**
-	 * 商品名を部分一致検索
-	 *
+	 * 商品名を部分一致検索（新着順）
+	 * @author 手塚
 	 * @param name 商品名
 	 * @param deleteFlag 削除フラグ
 	 * @return 商品エンティティのリスト
 	 */
-	List<Item> findAllByNameContainingAndDeleteFlag(
+	List<Item> findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
 	        String name,
 	        int deleteFlag);
 	
