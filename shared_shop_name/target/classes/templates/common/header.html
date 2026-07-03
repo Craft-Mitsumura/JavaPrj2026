@@ -4,17 +4,45 @@
 <meta charset="UTF-8" />
 </head>
 <body>
-<div th:fragment="layout-header" class="container">
-	<h1 th:class="site_title" th:text="#{shop.title}"></h1>
-	<div th:if="${session.user != null and session.user.authority == 2}" class="user_info">
-		<a th:href="@{/client/user/detail}" th:text="${session.user.name}"></a>さん | <a th:href="@{/logout}" th:text="#{logout}"></a>
+	<div id="headerMain">
+		<div th:fragment="layout-header" class="container">
+
+			<!-- <h1 th:class="site_title"  th:text="#{shop.title.customize}"></h1> -->
+			<div th:if="${session.user != null and session.user.authority == 2}"
+				class="user_info">
+				<a th:href="@{/client/user/detail}" th:text="${session.user.name}"></a>さん
+				| <a th:href="@{/logout}" th:text="#{logout}"></a>
+			</div>
+			<img alt="avoir" th:src="#{shop.logo}" >
+             <button id="toggleBtn"  > カテゴリー覧</button>
+			<div id="categoryList" class="hidden" >
+				<ul>
+					<li><a th:href="@{/}" th:text="#{top}"></a></li>
+					<li><a th:href="@{/client/item/list/1}"
+						th:text="#{item}+#{title.list}"></a></li>
+					<li><a th:href="@{/client/basket/list}" th:text="#{basket}"></a></li>
+					<th:block th:if="${session.user != null}">
+						<li><a th:href="@{/client/order/list}"
+							th:text="#{order}+#{title.list}"></a></li>
+					</th:block>
+				</ul>
+
+			</div>
+
+			<div
+				th:if="${session.user != null and (session.user.authority == 0 or session.user.authority == 1)}"
+				class="user_info">
+				<a th:href="@{/admin/user/detail/{id}(id=${session.user.id})}"
+					th:text="${session.user.name}"></a>さん | <a th:href="@{/logout}"
+					th:text="#{logout}"></a>
+			</div>
+			<div th:if="${session.user == null}" class="user_info">
+				<a th:href="@{/login}" th:text="#{login}"></a> | <a
+					th:href="@{/client/user/regist/input/init}"
+					th:text="#{client.regist}"></a>
+			</div>
+		</div>
+
 	</div>
-	<div th:if="${session.user != null and (session.user.authority == 0 or session.user.authority == 1)}" class="user_info">
-		<a th:href="@{/admin/user/detail/{id}(id=${session.user.id})}" th:text="${session.user.name}"></a>さん | <a th:href="@{/logout}" th:text="#{logout}"></a>
-	</div>
-	<div th:if="${session.user == null}" class="user_info">
-		<a th:href="@{/login}" th:text="#{login}"></a> | <a th:href="@{/client/user/regist/input/init}" th:text="#{client.regist}"></a>
-	</div>
-</div>
 </body>
 </html>
