@@ -15,7 +15,7 @@
 	</header>
 	<!--/* ナビゲーションバー */-->
 	<nav th:if="${session.user == null or session.user.authority == 2}" class="navi_area">
-		<div th:replace="~{common/menu :: layout-menu}"></div>
+	<!-- 	<div th:replace="~{common/menu :: layout-menu}"></div> -->
 	</nav>
 	<div class="container">
 		<!--/* サイドバー */-->

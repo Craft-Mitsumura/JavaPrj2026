@@ -716,4 +716,23 @@ p.link_center {
 	display: block;
 }
 
+/* サガルから修正 */
+#userLogin h2{
+	
+text-align:center;
 
+}
+
+#userLogin 
+
+
+
+
+/* /// headerMain サガルから修正 */
+
+#headerMain .container h1 {
+	color:red;
+}
+ #categoryList {
+    display: none;
+}
