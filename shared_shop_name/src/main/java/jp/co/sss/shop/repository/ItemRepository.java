@@ -1,5 +1,6 @@
 package jp.co.sss.shop.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -46,13 +47,32 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	public Item findByNameAndDeleteFlag(String name, int notDeleted);
 	
+	/**
+	 * 全件ランキング検索
+	 * @param salesMonth 売上月
+	 * @param pageable 最大10件
+	 * @return ランキングエンティティ
+	 * @author 小松原愛
+	 */
+	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id " +
+	       "WHERE r.salesMonth = :salesMonth ORDER BY r.total DESC")
+	List<Rankings> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
 	
 	/**
-	 * ランキングクエリ
+	 * カテゴリ別ランキング検索
+	 * @param salesMonth 売上月
+	 * @param categoryId カテゴリ
+	 * @param pageable 最大10件
 	 * @return ランキングエンティティ
+	 * @author 小松原愛
 	 */
-	@Query("SELECT i FROM Item i JOIN FETCH i.Category c JOIN Rankings r ON r.item.id = i.id ORDER BY r.total DESC")
-	List<Rankings> findByRanking();
+
+	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id " +
+		    "WHERE r.salesMonth = :salesMonth AND c.id = :categoryId ORDER BY r.total DESC")
+		List<Rankings> findItemsOrderBycateRanking(@Param("salesMonth") LocalDate salesMonth, @Param("categoryId") Integer categoryId, Pageable pageable);
+
+		
+
 	
 	/**
 	 * 商品情報を登録日付順に取得（一般会員用）
