@@ -55,17 +55,6 @@ public class Rankings {
 	@JoinColumn(name = "ITEMS_ID", referencedColumnName = "ID")
 	private Item item;
 
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
-	@Column(name = "ITEMS_ID")
-	private Integer itemId;
-
 	public Integer getId() {
 		return id;
 	}
@@ -90,12 +79,12 @@ public class Rankings {
 		this.total = total;
 	}
 
-	public Integer getItemId() {
-		return itemId;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setItemId(Integer itemId) {
-		this.itemId = itemId;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }
