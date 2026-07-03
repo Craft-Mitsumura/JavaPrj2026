@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.entity.Rankings;
 
 /**
  * itemsテーブル用リポジトリ
@@ -44,6 +45,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品エンティティ
 	 */
 	public Item findByNameAndDeleteFlag(String name, int notDeleted);
+	
+	@Query("SELECT i FROM Item i JOIN FETCH i.Category c JOIN Rankings r ON r.item.id = i.id ORDER BY r.total DESC")
+	List<Rankings> findByRanking();
 	
 	/**
 	 * 商品情報を登録日付順に取得（一般会員用）
