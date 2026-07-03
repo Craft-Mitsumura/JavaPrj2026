@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>広告登録確認 | シェアードショップ</title>
+</head>
+
+<body class="admin ad_regist_check">
+	<div th:fragment="content" class="admin ad_list">
+		<h2 class="title">広告追加-確認</h2>
+
+		<div class="update ad_form" th:object="${promotionsForm}">
+			<div class="form">
+				<div class="label">ページ名：</div>
+				<div class="input" th:text="*{pageName}"></div>
+			</div>
+			<div class="form">
+				<div class="label">サムネイル：</div>
+				<div class="input">
+					<img th:if="*{tempImageName != null}" th:src="@{'/images/image_tmp/' + *{tempImageName}}"
+						style="width: 150px;" />
+				</div>
+			</div>
+
+			<div class="form">
+				<div class="label">遷移先URL：</div>
+				<div class="input" th:text="*{targetUrl}"></div>
+			</div>
+			<div class="form">
+				<div class="label">見出し：</div>
+				<div class="input" th:text="*{adTitle}"></div>
+			</div>
+
+			<div class="form">
+				<div class="label">タイトル画像：</div>
+				<div class="input">
+					<img th:if="*{tempHeadingImage != null}" th:src="@{'/images/image_tmp/' + *{tempHeadingImage}}"
+						style="width: 150px;" />
+				</div>
+			</div>
+
+			<div class="form" th:if="*{tempImageSrcs != null and !tempImageSrcs.isEmpty()}">
+				<div class="label">詳細画像：</div>
+				<div class="input">
+					<div th:each="img, iter : *{tempImageSrcs}">
+						<img th:src="@{'/images/image_tmp/' + ${img}}" style="width: 100px;" />
+						<p th:text="'説明: ' + *{imageTexts[__${iter.index}__]}"></p>
+						<p th:text="'ALT: ' + *{imageAlts[__${iter.index}__]}"></p>
+					</div>
+				</div>
+			</div>
+
+			<div class="form">
+				<div class="label">本文：</div>
+				<div class="input" th:text="*{body}"></div>
+			</div>
+
+			<div class="form">
+				<div class="label">リンクリスト：</div>
+				<div class="input">
+					<div th:if="*{linkTexts != null}">
+						<div th:each="text, iter : *{linkTexts}"
+							style="margin-bottom: 10px; border-bottom: 1px solid #eee;">
+							<p th:text="'リンクテキスト: ' + ${text}"></p>
+							<p th:text="'URL: ' + *{linkUrls[__${iter.index}__]}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<form th:action="@{/admin/ad/regist/complete}" method="post" th:object="${promotionsForm}">
+				<input type="hidden" th:field="*{pageName}" />
+				<input type="hidden" th:field="*{layoutType}" />
+				<input type="hidden" th:field="*{tempImageName}" />
+				<input type="hidden" th:field="*{targetUrl}" />
+				<input type="hidden" th:field="*{adTitle}" />
+				<input type="hidden" th:field="*{tempHeadingImage}" />
+				<input type="hidden" th:field="*{body}" />
+				<input type="hidden" th:field="*{isActive}" />
+
+				<div th:each="img, iter : *{tempImageSrcs}">
+					<input type="hidden" name="tempImageSrcs" th:value="${img}" />
+					<input type="hidden" name="imageTexts" th:value="*{imageTexts[__${iter.index}__]}" />
+					<input type="hidden" name="imageAlts" th:value="*{imageAlts[__${iter.index}__]}" />
+				</div>
+
+				<div th:each="text, iter : *{linkTexts}">
+					<input type="hidden" name="linkTexts" th:value="${text}" />
+					<input type="hidden" name="linkUrls" th:value="*{linkUrls[__${iter.index}__]}" />
+				</div>
+
+				<input type="submit" value="登録" />
+			</form>
+
+			<form th:action="@{/admin/ad/regist/input}" method="post" th:object="${promotionsForm}">
+				<input type="hidden" th:field="*{pageName}" />
+				<input type="hidden" th:field="*{layoutType}" />
+				<input type="hidden" th:field="*{tempImageName}" />
+				<input type="hidden" th:field="*{targetUrl}" />
+				<input type="hidden" th:field="*{adTitle}" />
+				<input type="hidden" th:field="*{tempHeadingImage}" />
+				<input type="hidden" th:field="*{body}" />
+				<input type="hidden" th:field="*{isActive}" />
+
+				<div th:each="img, iter : *{tempImageSrcs}">
+					<input type="hidden" name="tempImageSrcs" th:value="${img}" />
+					<input type="hidden" name="imageTexts" th:value="*{imageTexts[__${iter.index}__]}" />
+					<input type="hidden" name="imageAlts" th:value="*{imageAlts[__${iter.index}__]}" />
+				</div>
+				<div th:each="text, iter : *{linkTexts}">
+					<input type="hidden" name="linkTexts" th:value="${text}" />
+					<input type="hidden" name="linkUrls" th:value="*{linkUrls[__${iter.index}__]}" />
+				</div>
+
+				<input type="submit" value="戻る" />
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

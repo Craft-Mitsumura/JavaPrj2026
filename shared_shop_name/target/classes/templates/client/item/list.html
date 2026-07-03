@@ -41,7 +41,7 @@
 				</td>
 				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
 				<td th:text="${item.price}"></td>
-				<td th:text="${item.categoryName}"></td>
+				<td th:text="${item.category.Name}"></td>
 			</tr>
 		</table>
 	</th:block>
