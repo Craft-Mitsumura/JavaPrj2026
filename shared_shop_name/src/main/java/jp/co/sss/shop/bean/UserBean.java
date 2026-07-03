@@ -167,4 +167,17 @@ public class UserBean {
 		this.authority = authority;
 	}
 
+	/**
+	 * ポイント
+	 */
+	private Integer point;
+
+	public Integer getPoint() {
+		return point;
+	}
+
+	public void setPoint(Integer point) {
+		this.point = point;
+	}
+
 }
