@@ -131,9 +131,9 @@ public class ClientItemShowController {
 			@RequestParam String searchItems,
 			Model model) {
 
-		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlag(
-				searchItems,
-				Constant.NOT_DELETED);
+		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
+		        searchItems,
+		        Constant.NOT_DELETED);
 
 		//		            stockCalc.updateManyItemStock(items);
 
