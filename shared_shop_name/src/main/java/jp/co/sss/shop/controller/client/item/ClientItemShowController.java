@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Rankings;
 import jp.co.sss.shop.repository.CategoryRepository;
@@ -182,6 +183,17 @@ public class ClientItemShowController {
 		model.addAttribute("items", items);
 		return "client/item/list";
 	}
+	
+	@RequestMapping(path ="/client/category/lists/{id}")
+	public String categorySearch (@PathVariable Integer id ,
+			Model model) {
+		List<Category> categories = categoryRepository.findAll();
+		List<Item>items = itemRepository.findByCategoryId(id);
+		model.addAttribute("items", items);
+		model.addAttribute("categories",categories);
+		return"client/item/list";
+	}
+	
 	 
 	}
 

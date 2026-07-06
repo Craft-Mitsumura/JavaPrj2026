@@ -111,7 +111,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT i FROM Item i LEFT JOIN i.orderItemList oi WHERE i.deleteFlag = 0 GROUP BY i ORDER BY COALESCE(SUM(oi.quantity), 0) DESC")
 	List<Item> findAllOrderBySales();
-	
+	List<Item> findByCategoryId(int id);
 }
 
 
