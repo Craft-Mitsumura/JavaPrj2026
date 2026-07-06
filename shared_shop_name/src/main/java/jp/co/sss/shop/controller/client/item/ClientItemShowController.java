@@ -29,8 +29,8 @@ public class ClientItemShowController {
 	 */
 	@Autowired
 	ItemRepository itemRepository;
-
 	/**
+
 	 * カテゴリ情報
 	 */
 	@Autowired
@@ -67,37 +67,35 @@ public class ClientItemShowController {
 	 * @param model Viewとの値受渡し
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping(path = "/client/item/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showListItems(
-			@RequestParam(required = false) Integer categoryId,
-			Model model) {
-
-		List<Item> items;
-
-		// 全商品
-		if (categoryId == null || categoryId == 0) {
-
-			items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(
-					Constant.NOT_DELETED);
-
-		} else {
-
-			// カテゴリ検索
-			items = itemRepository.findAllByDeleteFlagAndCategoryIdOrderByInsertDateDesc(
-					Constant.NOT_DELETED,
-					categoryId);
-		}
-
-		model.addAttribute("items", items);
-
-		model.addAttribute("categories",
-				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
-						Constant.NOT_DELETED));
-
-		model.addAttribute("categoryId", categoryId);
-
-		return "client/item/list";
-	}
+	/*
+	 * @RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET,
+	 * RequestMethod.POST }) public String showListItems(
+	 * 
+	 * @RequestParam(required = false) Integer categoryId, Model model) {
+	 * 
+	 * List<Item> items;
+	 * 
+	 * // 全商品 if (categoryId == null || categoryId == 0) {
+	 * 
+	 * items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(
+	 * Constant.NOT_DELETED);
+	 * 
+	 * } else {
+	 * 
+	 * // カテゴリ検索 items =
+	 * itemRepository.findAllByDeleteFlagAndCategoryIdOrderByInsertDateDesc(
+	 * Constant.NOT_DELETED, categoryId); }
+	 * 
+	 * model.addAttribute("items", items);
+	 * 
+	 * model.addAttribute("categories",
+	 * categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
+	 * Constant.NOT_DELETED));
+	 * 
+	 * model.addAttribute("categoryId", categoryId);
+	 * 
+	 * return "client/item/list"; }
+	 */
 
 	/**
 	 * 商品詳細表示
@@ -148,14 +146,12 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
-	@RequestMapping(path="/client/item/list/{id}/{keyword}" , method = {RequestMethod.GET, RequestMethod.POST })
-	public String search(
-			@PathVariable String keyword ,
-			@PathVariable int id
-			) {
-		System.out.println(keyword +" " + id);
-		return"client/item/list";
+	
+	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showAll( Model model) {
+		List<Item> items = itemRepository.findAll();
+		model.addAttribute("items", items);
+		return "client/item/list";
 	}
-	
-	
-}
+	 
+	}
