@@ -7,10 +7,10 @@ body{
 }
 
 /* 全体 */
-#prize {
-	max-width: 1200px;
-	margin: 40px auto;
-	padding: 20px;
+#prize .prize_card img {
+	width: 140px !important;
+	height: 140px !important;
+	object-fit: cover;
 }
 
 /* 上部 */
@@ -92,10 +92,10 @@ body{
 }
 
 .prize_card img {
-	width: 180px;
-	height: 180px;
+	width: 100%;
+	max-width: 160px;
+	height: auto;
 	object-fit: contain;
-	margin-bottom: 15px;
 }
 
 .prize_card h4 {
@@ -129,4 +129,34 @@ body{
 .notice li {
 	margin-bottom: 8px;
 	line-height: 1.6;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #1f1f2e;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+table th {
+	background: #3d98bf;
+	color: #fff;
+	font-weight: normal;
+}
+
+table th {
+	background: #3d98bf;
+	color: #fff;
+	font-weight: normal;
+}
+
+table tr:hover {
+	background: rgba(255, 255, 255, 0.05);
+}
+
+table img {
+	width: 80px;
+	height: auto;
+	border-radius: 6px;
 }
