@@ -1,8 +1,11 @@
 package jp.co.sss.shop.controller.client.item;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,16 +14,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.entity.Rankings;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
 
+
+
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
  *
- * @author SystemShared
+ * @author SystemShared 	小松原愛
  */
 @Controller
 public class ClientItemShowController {
@@ -54,8 +60,19 @@ public class ClientItemShowController {
 	 * @param model    Viewとの値受渡し
 	 * @return "index" トップ画面
 	 */
+
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
+		LocalDate today = LocalDate.now();
+		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
+		List<Rankings> findByRanking = new ArrayList<>();
+
+
+			// 通常の全体用NamedQueryを呼び出す
+			findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
+
+//							 画面の見出しを「〇〇年〇月度 」にする
+			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
 
 		return "index";
 	}
