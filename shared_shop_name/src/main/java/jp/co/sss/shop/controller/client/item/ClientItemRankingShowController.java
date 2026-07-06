@@ -37,9 +37,35 @@ public class ClientItemRankingShowController {
 	 * @param model リクエストスコープ
 	 * @return 
 	 */
-
+//	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
+//	public String showItemList(@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
+//
+//		LocalDate today = LocalDate.now();
+//		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
+//		List<Rankings> findByRanking = new ArrayList<>();
+//		// 画面のカテゴリー一覧に表示するため、すべてのカテゴリーを取得してModelにセット
+//		model.addAttribute("categories", caterepo.findByIdAndDeleteFlag(Constant.NOT_DELETED, categoryId));
+//		//		全件ランキング表示
+//		if (categoryId == null) {
+//
+//			// 通常の全体用NamedQueryを呼び出す
+//			findByRanking = itemrepo.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
+//
+//			//				 画面の見出しを「〇〇年〇月度 」にする
+//			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
+//			//			
+//		}
+//
+//		return "index";
+//	}
+	
+	/**
+	 * @param categoryId カテゴリ
+	 * @param model リクエストスコープ
+	 * @return
+	 */
 	@GetMapping("/client/item/ranking/{genderType}")
-	public String showItemList(@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
+	public String showRankingList(@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
 
 		LocalDate today = LocalDate.now();
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
@@ -73,6 +99,7 @@ public class ClientItemRankingShowController {
 
 		}
 		return "client/item/Ranking";
+		
 
 	}
 
