@@ -51,73 +51,95 @@
 			<div class="point_area">
 
 				<div class="current_point">
-				    <p>現在ポイント</p>
-				    <p th:text="${userBean.point} + ' pt'"></p>
+					<p>現在ポイント</p>
+					<p th:text="${userBean.point} + ' pt'"></p>
 				</div>
 
 				<div class="next_point">
-				    <p>次の景品まで</p>
-				    <p th:text="${remainPoint} + ' pt'"></p>
+					<p>次の景品まで</p>
+					<p th:text="${remainPoint} + ' pt'"></p>
 				</div>
 
 				<div class="next_prize" th:if="${nextPrizeName != null}">
-				    <a th:href="@{/client/prize/list}">
-				        <p class="title">次の景品</p>
+					<a th:href="@{/client/prize/list}">
+						<p class="title">次の景品</p>
 
-				       <img th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
+						<img th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
 
-				        <p class="prize_name" th:text="${nextPrizeName}"></p>
+						<p class="prize_name" th:text="${nextPrizeName}"></p>
 
-				        <p class="prize_point"
-				           th:text="${nextPrizePoint} + 'ptで交換'"></p>
-				    </a>
+						<p class="prize_point" th:text="${nextPrizePoint} + 'ptで交換'"></p>
+					</a>
 				</div>
 
 				<div th:if="${nextPrizeName == null}">
-				    <p>すべての景品を獲得済みです！</p>
+					<p>すべての景品を獲得済みです！</p>
 				</div>
 
-				</div> <!-- point_area -->
-			</div> <!-- top_area -->
+			</div> <!-- point_area -->
+		</div> <!-- top_area -->
 
-	<!-- 注文一覧 -->
-	<div class="order_history">
+		<!-- 注文一覧 -->
+		<div class="order_history">
 
-		<h3>注文一覧</h3>
+			<h3>注文一覧</h3>
 
-		<table>
-			<thead>
-				<tr>
-					<th>購入日時</th>
-					<th>支払方法</th>
-					<th>購入数</th>
-					<th>購入金額</th>
-				</tr>
-			</thead>
+			<table>
+				<thead>
+					<tr>
+						<th>購入日時</th>
+						<th>支払方法</th>
+						<th>購入数</th>
+						<th>購入金額</th>
+					</tr>
+				</thead>
 
-			<tbody>
-				<!-- 後でth:each -->
-			</tbody>
-		</table>
+				<tbody>
+					<tr th:each="order : ${orderList}">
+						<!-- 購入日時 -->
+						<td>
+						    <a th:href="@{/client/order/detail/{id}(id=${order.id})}"
+						       th:text="${order.insertDate}"></a>
+						</td>
 
-	</div>
+						<!-- 支払方法 -->
+						<td th:text="${order.payMethod == 1 ? 'クレジットカード' : '銀行振込'}"></td>
 
-	<!-- ボタン -->
-	<div class="detail_button_area">
+						<!-- 購入数 -->
+						<td>
+							<div th:each="orderItem : ${order.orderItemsList}">
+								<span th:text="${orderItem.quantity}"></span>個
+							</div>
+						</td>
 
-		<form th:action="@{/}" method="post">
-			<input type="submit" value="戻る" class="back_button" />
-		</form>
+						<!-- 購入金額 -->
+						<td>
+							<div th:each="orderItem : ${order.orderItemsList}">
+								<span th:text="${orderItem.price * orderItem.quantity}"></span>円
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-		<form th:action="@{/client/user/update/input}" method="post">
-			<input type="submit" value="変更" />
-		</form>
+		</div>
 
-		<form th:action="@{/client/user/delete/check}" method="post">
-			<input type="submit" value="退会" class="delete" />
-		</form>
+		<!-- ボタン -->
+		<div class="detail_button_area">
 
-	</div>
+			<form th:action="@{/}" method="post">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+
+			<form th:action="@{/client/user/update/input}" method="post">
+				<input type="submit" value="変更" />
+			</form>
+
+			<form th:action="@{/client/user/delete/check}" method="post">
+				<input type="submit" value="退会" class="delete" />
+			</form>
+
+		</div>
 
 	</div>
 </body>
