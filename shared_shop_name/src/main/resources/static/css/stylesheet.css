@@ -770,14 +770,17 @@ text-align:center;
     justify-content:center;
 }
 
- #containerd .menu-list{
+#categoryLists{
+    display:none;
+}
+
+#containerd .menu-list{
     display:flex;
     gap:30px;
     list-style:none;
     margin:0;
     padding:0;
 }
-
  #containerd .menu-list a{
     text-decoration:none;
     color:white;
@@ -1042,4 +1045,10 @@ grid-template-columns:1fr;
 
 }
 
+}
+
+/* カテゴリー一覧修正サガルから */
+#containerd #categoryListBtn {
+max-height:fit-content;
+max-width:fit-content;
 }
