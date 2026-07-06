@@ -13,15 +13,9 @@
 			<h2 th:text="${currentMonthText}" class="text-gray-400"></h2>
 			<div class="text-xs text-gray-400">人気の商品をランキング形式でご紹介します</div>
 		</div>
-<!--			性別の表示-->
-<!--		<div class="text-center mt-8">-->
-<!--			<div>-->
-<!--				<a th:href="@{/client/item/ranking}" th:if="${categoryId_ == null}"-->
-<!--					class=" text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md ">すべて</a>-->
-<!--				<a th:href="@{/client/item/ranking}" th:unless="${categoryId_ == null}"-->
-<!--					class=" text-xs mx-2 px-8 py-1 rounded-2xl border border-gray-100 hover:bg-[#FFF7F4] transition duration-300">すべて</a>-->
 
-<!--			</div>-->
+
+
 			<!--	 カテゴリーの表示 -->
 			<div class="text-center mt-6">
 				<th:block th:each="category : ${categories}">
@@ -56,9 +50,9 @@
 								class="w-full h-75 object-cover" />
 
 							<div class="absolute top-4 left-4">
-								<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
-									1位
-								</span>
+<!--								<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">-->
+<!--									1位-->
+<!--								</span>-->
 							</div>
 							<img th:src="@{/images/common/crone.png}" class="w-5 absolute top-5 left-6">
 						</div>
