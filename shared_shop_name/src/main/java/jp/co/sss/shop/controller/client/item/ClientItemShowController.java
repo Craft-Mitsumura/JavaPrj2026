@@ -147,7 +147,7 @@ public class ClientItemShowController {
 
 		return "client/item/detail";
 	}
-
+ 
 	/**
 	 * 商品検索
 	 *
@@ -178,8 +178,9 @@ public class ClientItemShowController {
 	}
 
 
-	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showAll( Model model) {
+	@RequestMapping(path = "/client/item/list/{sortType}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showAll( Model model , @PathVariable Integer sortType
+			, @RequestParam (required = false) Integer CategoryId) {
 		List<Item> items = itemRepository.findAll();
 		model.addAttribute("items", items);
 		return "client/item/list";
