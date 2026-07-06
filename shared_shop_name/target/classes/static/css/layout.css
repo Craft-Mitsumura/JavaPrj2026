@@ -21,7 +21,7 @@ html {
 body {
 	margin: 0 0 30px;
 	padding: 0;
-	background:#4b0082;
+	background:#0000;
 }
 
 h2,
@@ -47,6 +47,7 @@ table {
 	border-collapse: collapse;
 	margin: 0px auto 20px;
 }
+
 
 ul,
 li {

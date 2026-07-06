@@ -186,9 +186,10 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 	
-	@RequestMapping(path ="/client/category/lists/{id}")
+	@RequestMapping(path ="/client/category/lists/{id}", method= {RequestMethod.GET,RequestMethod.POST})
 	public String categorySearch (@PathVariable Integer id ,
 			Model model) {
+		System.out.println("Category Controller Hit");
 		List<Category> categories = categoryRepository.findAll();
 		List<Item>items = itemRepository.findByCategoryId(id);
 		model.addAttribute("items", items);
