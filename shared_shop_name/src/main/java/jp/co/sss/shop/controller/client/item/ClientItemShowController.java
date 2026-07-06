@@ -148,4 +148,14 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
+	@RequestMapping(path="/client/item/list/{id}/{keyword}" , method = {RequestMethod.GET, RequestMethod.POST })
+	public String search(
+			@PathVariable String keyword ,
+			@PathVariable int id
+			) {
+		System.out.println(keyword +" " + id);
+		return"client/item/list";
+	}
+	
+	
 }

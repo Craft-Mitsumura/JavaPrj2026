@@ -21,6 +21,7 @@ html {
 body {
 	margin: 0 0 30px;
 	padding: 0;
+	background:#4b0082;
 }
 
 h2,
@@ -76,14 +77,17 @@ header .container {
 	display: flex;
 	justify-content: space-between;
 }
-header {
-	background: #87ceeb;
-	padding: 10px 0;
-}
+
 .admin header {
 	background: #ff8669;
 }
 
+header {
+	background: #111827;
+	color: white;
+	margin-bottom: 2%;
+	height: 140px;
+}
 /* スキルアップテクニック3
  * font-sizeの単位emは親要素に設定されたfont-sizeの相対指定となります。
  * 親要素のfont-sizeが16px設定だとしたら、1.8emでは1.8倍、即ち28.8pxの大きさとなります。
@@ -360,7 +364,7 @@ aside.admin_menu {
  * footer要素は画面、もしくはページの最下部に表示されるようになります。
  */
 footer {
-	background-color: #87ceeb;
+	background-color:black;
 	text-align: center;
 	position: absolute;
 	bottom: 0;
