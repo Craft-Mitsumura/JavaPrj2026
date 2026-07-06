@@ -1,5 +1,7 @@
 package jp.co.sss.shop.controller.client.user;
 
+import java.util.List;
+
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sss.shop.bean.UserBean;
+import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.Prize;
 import jp.co.sss.shop.entity.User;
+import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.PrizeRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
@@ -34,6 +38,12 @@ public class ClientUserShowController {
 	PrizeRepository prizeRepository;
 	
 	/**
+	 * 注文一覧リポジトリ
+	 */
+	@Autowired
+	OrderRepository orderRepository;
+	
+	/**
 	 * 会員情報詳細画面
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
@@ -47,6 +57,9 @@ public class ClientUserShowController {
 		
 		// DBから取得
 		User userEntity = userRepository.findById(loginUser.getId()).orElse(null);
+		
+		List<Order> orderList = orderRepository.findByUserIdOrderByInsertDateDesc(userEntity.getId());
+		model.addAttribute("orderList", orderList);
 		
 		Prize nextPrize =
 			    prizeRepository.findFirstByRequiredPointGreaterThanOrderByRequiredPointAsc(userEntity.getPoint());
