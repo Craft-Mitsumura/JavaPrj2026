@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.entity.Item;
-import jp.co.sss.shop.entity.Rankings;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
@@ -79,7 +78,7 @@ public class ClientItemShowController {
 		
 		LocalDate today = LocalDate.now();
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
-		List<Rankings> findByRanking = new ArrayList<>();
+		List<Item> findByRanking = new ArrayList<>();
 
 		// 通常の全体用NamedQueryを呼び出す
 		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));

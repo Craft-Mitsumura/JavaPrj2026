@@ -33,23 +33,25 @@ public class ClientItemRankingShowController {
 	@Autowired
 	CategoryRepository caterepo;
 
-	
 	/**
 	 * @param categoryId カテゴリ
 	 * @param model リクエストスコープ
 	 * @return ランキング一覧画面
 	 */
 	@GetMapping("/client/item/ranking")
-	public String showRankingList(@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
+	public String showRankingList(@RequestParam(name = "categoryId", required = false) Integer categoryId,
+			Model model) {
 
 		LocalDate today = LocalDate.now();
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
 		List<Rankings> findByRanking = new ArrayList<>();
 		// 画面のカテゴリー一覧に表示するため、すべてのカテゴリーを取得してModelにセット
-		model.addAttribute("categories", caterepo.findByIdAndDeleteFlag(Constant.NOT_DELETED, categoryId));
-		//		全件ランキング表示
-		if (categoryId == null) {
+		model.addAttribute("categories", caterepo.findByDeleteFlagOrderByInsertDateDescIdDesc(Constant.NOT_DELETED));
 
+		//		//		全件ランキング表示
+		if (categoryId == null) {
+			categoryId = 0;
+			//		全件ランキング表示
 			// 通常の全体用NamedQueryを呼び出す
 			findByRanking = itemrepo.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
 
@@ -59,6 +61,7 @@ public class ClientItemRankingShowController {
 		}
 
 		else {
+			//		全件ランキング表示
 
 			//		カテゴリー別ランキング表示
 			findByRanking = itemrepo.findItemsOrderBycateRanking(firstDateOfMonth, categoryId, PageRequest.of(0, 10));
@@ -69,12 +72,10 @@ public class ClientItemRankingShowController {
 						today.getYear() + "年" + today.getMonthValue() + "月度 [" + c.getName() + "]");
 			});
 
-			//  正しいデータが入ったリストを画面に渡す
-			model.addAttribute("rankings", findByRanking);
-
 		}
+		//  正しいデータが入ったリストを画面に渡す
+		model.addAttribute("rankings", findByRanking);
 		return "client/item/Ranking";
-		
 
 	}
 
