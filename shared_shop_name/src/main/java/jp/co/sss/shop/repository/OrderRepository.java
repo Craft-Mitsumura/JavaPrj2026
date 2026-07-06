@@ -16,6 +16,8 @@ import jp.co.sss.shop.entity.Order;
  */
 @Repository
 
+
+
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
 	/**
