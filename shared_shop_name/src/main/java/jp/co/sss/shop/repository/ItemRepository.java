@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import jp.co.sss.shop.entity.Item;
-import jp.co.sss.shop.entity.Rankings;
 
 /**
  * itemsテーブル用リポジトリ
@@ -56,7 +55,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id " +
 	       "WHERE r.salesMonth = :salesMonth ORDER BY r.total DESC")
-	List<Rankings> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
+	List<Item> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
 	
 	/**
 	 * カテゴリ別ランキング検索
@@ -69,7 +68,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id " +
 		    "WHERE r.salesMonth = :salesMonth AND c.id = :categoryId ORDER BY r.total DESC")
-		List<Rankings> findItemsOrderBycateRanking(@Param("salesMonth") LocalDate salesMonth, @Param("categoryId") Integer categoryId, Pageable pageable);
+		List<Item> findItemsOrderBycateRanking(@Param("salesMonth") LocalDate salesMonth, @Param("categoryId") Integer categoryId, Pageable pageable);
 
 		
 
