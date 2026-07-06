@@ -21,10 +21,10 @@
 		<th:block th:each="item, status: ${items}" th:if="${status.count le 10}">
 			<!--/* 1件分の商品情報 */-->
 			<div class="item">
-				<div class="item_name" th:text="${item.name}"></div>
+				<div class="item_name" th:text="${name}"></div>
 				<a th:href="@{/client/item/detail/}+${item.id}">
-					<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />
-					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
+					<img th:src="@{/images/{image}(image=${image})}" th:if="${image != null}" />
+					<img th:src="@{/images/common/no_image.jpg}" th:if="${image == null}" />
 				</a>
 			</div>
 	</div>
@@ -44,15 +44,15 @@
 				class="flex mt-15 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
 
 
-				<a th:href="@{/client/item/detail/}+*{item.id}">
+				<a th:href="@{/client/item/detail/}+*{id}">
 					<div class="relative">
 
 
-						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{item.image != null}"
+						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
 							class="w-full h-75 object-cover" />
 
 
-						<img th:src="@{/images/common/no_image.jpg}" th:if="*{item.image == null}"
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
 							class="w-full h-75 object-cover" />
 
 						<div class="absolute top-4 left-4">
@@ -65,26 +65,26 @@
 
 					<div class="pt-3 pb-3 px-6 text-left">
 
-						<h2 class="text-lg mb-2" th:text="*{item.name}"></h2>
+						<h2 class="text-lg mb-2" th:text="*{name}"></h2>
 					</div>
 				</a>
 
 			</div>
-			<!-- Rank 1  -->
-			<!--			データが1件以上ある場合のみ表示-->
+<!--			 Rank 1  -->
+<!--						データが1件以上ある場合のみ表示-->
 			<div th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}"
 				class="flex mt-15 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
 
 
-				<a th:href="@{/client/item/detail/}+*{item.id}">
+				<a th:href="@{/client/item/detail/}+*{id}">
 					<div class="relative">
 
 
-						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{item.image != null}"
+						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
 							class="w-full h-75 object-cover" />
 
 
-						<img th:src="@{/images/common/no_image.jpg}" th:if="*{item.image == null}"
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
 							class="w-full h-75 object-cover" />
 
 						<div class="absolute top-4 left-4">
@@ -97,26 +97,26 @@
 
 					<div class="pt-3 pb-3 px-6 text-left">
 
-						<h2 class="text-lg mb-2" th:text="*{item.name}"></h2>
+						<h2 class="text-lg mb-2" th:text="*{name}"></h2>
 					</div>
 				</a>
 
 			</div>
-			<!-- Rank 3  -->
-			<!--			データが3件以上ある場合のみ表示-->
-			<div th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[12}"
+<!--			 Rank 3  -->
+<!--						データが3件以上ある場合のみ表示-->
+			<div th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[2}"
 				class="flex mt-15 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
 
 
-				<a th:href="@{/client/item/detail/}+*{item.id}">
+				<a th:href="@{/client/item/detail/}+*{id}">
 					<div class="relative">
 
 
-						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{item.image != null}"
+						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{image != null}"
 							class="w-full h-75 object-cover" />
 
 
-						<img th:src="@{/images/common/no_image.jpg}" th:if="*{item.image == null}"
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
 							class="w-full h-75 object-cover" />
 
 						<div class="absolute top-4 left-4">
@@ -129,7 +129,7 @@
 
 					<div class="pt-3 pb-3 px-6 text-left">
 
-						<h2 class="text-lg mb-2" th:text="*{item.name}"></h2>
+						<h2 class="text-lg mb-2" th:text="*{name}"></h2>
 					</div>
 				</a>
 
@@ -138,7 +138,7 @@
 
 
 		<!-- 今月のランキング商品がない場合の表示 -->
-		<div th:if="${#lists.isEmpty(rankingItems)}" class="flex justify-center items-center min-h-100">
+		<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">
 			<p>今月のランキングデータはありません。</p>
 		</div>
 		<!-- ランキング一覧へ -->
