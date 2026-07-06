@@ -66,13 +66,14 @@ if(getComputedStyle(category).display==='none'){
 			<form th:unless="${sortType == null}"
 				th:action="@{/client/item/list/} + ${sortType}">
 
-				<select name="categoryId">
-					<option th:value="#{constants.category.select.none.no}"
+			<!-- 	<select name="categoryId"> -->
+				<input type="text" name="keyword" placeholder="キーワード">
+					<!-- <option th:value="#{constants.category.select.none.no}"
 						th:text="#{constants.category.select.none}"></option>
 
 					<option th:each="category: ${categories}" th:value="${category.id}"
 						th:text="${category.name}"
-						th:selected="${category.id} == ${categoryId}"></option>
+						th:selected="${category.id} == ${categoryId}"></option> -->
 				</select> <input type="submit" th:value="#{select}" />
 			</form>
 		</div>
