@@ -33,27 +33,6 @@ public class ClientItemRankingShowController {
 	@Autowired
 	CategoryRepository caterepo;
 
-//	/**
-//	 * @param model リクエストスコープ
-//	 * @return トップ画面
-//	 */
-//	
-//	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
-//	public String showItemList() {
-//
-//		LocalDate today = LocalDate.now();
-//		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
-//		List<Rankings> findByRanking = new ArrayList<>();
-//
-//			findByRanking = itemrepo.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
-//
-//			//				 画面の見出しを「〇〇年〇月度 」にする
-////			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
-//			//			
-////		}
-//
-//		return "index";
-//	}
 	
 	/**
 	 * @param categoryId カテゴリ
