@@ -14,56 +14,54 @@
 			<div class="text-xs text-gray-400">人気の商品をランキング形式でご紹介します</div>
 		</div>
 
-
-
-			<!--	 カテゴリーの表示 -->
-			<div class="text-center mt-6">
-				<th:block th:each="category : ${categories}">
-					<!--  クリック時にカテゴリーIDをURLパラメータとして送信するリンクに変更 -->
-					<a th:href="@{/client/item/ranking/(categoryId=${category.id})}" th:text="${category.name}"
-						th:if="${categoryId_ == category.id}"
-						class="text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md "></a>
-				
-				</th:block>
-			</div>
-
-			<!--				 ランキング商品の表示 -->
-			<th:block th:each="rankings: ${rankings}" th:if="${stat.index &lt; 10}">
-
-
-					<a th:href="@{/client/item/detail/}+*{id}">
-						<div class="relative">
-						<div th:text="${stat.count}"></div>
-
-
-							<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
-								class="w-full h-75 object-cover" />
-
-
-							<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
-								class="w-full h-75 object-cover" />
-
-							<div class="absolute top-4 left-4">
-
-							</div>
-							<img th:src="@{/images/common/crone.png}" class="w-5 absolute top-5 left-6">
-						</div>
-
-						<div class="pt-3 pb-3 px-6 text-left">
-
-							<h2 class="text-lg mb-2" th:text="*{name}"></h2>
-						</div>
-					</a>
-
-				</div>
+		<!-- カテゴリ表示 -->
+		<div class="text-center mt-6">
+			<th:block th:each="category : ${categories}">
+				<!-- クリック時にカテゴリIDをURLパラメータとして送信するリンク -->
+				<a th:href="@{/client/item/ranking/(categoryId=${category.id})}" th:text="${category.name}"
+					class="text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md inline-block">
+				</a>
 			</th:block>
-			
-
-			<!-- 今月のランキング商品がない場合の表示 -->
-			<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">
-				<p>今月のランキングデータはありません。</p>
-			</div>
 		</div>
+
+		<!-- ランキング商品表示-->
+		<div class="flex flex-row justify-center min-h-100 flex-wrap gap-6 mt-10" th:if="${!#lists.isEmpty(rankings)}">
+
+			<div th:each="item, stat : ${rankings}" th:if="${stat.index &lt; 10}"
+				class="flex mt-5 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+
+				<a th:href="@{/client/item/detail/}+${item.id}" class="w-full">
+					<div class="relative">
+						<!-- 商品画像がある場合 -->
+						<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}"
+							class="w-full h-75 object-cover" />
+
+						<!-- 商品画像がない場合 -->
+						<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}"
+							class="w-full h-75 object-cover" />
+
+						<!-- 順位バッジの表示 -->
+						<div class="absolute top-4 left-4">
+							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold"
+								th:text="${stat.count} + '位'">
+
+							</span>
+						</div>
+
+					</div>
+
+
+			</div>
+			</a>
+
+		</div>
+	</div>
+
+	<!-- 今月のランキング商品がない場合の表示 -->
+	<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100 mt-10">
+		<p class="text-gray-400 text-lg">今月のランキングデータはありません。</p>
+	</div>
+	</div>
 </body>
 
 </html>
