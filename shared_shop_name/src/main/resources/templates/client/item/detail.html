@@ -27,11 +27,48 @@
 				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
 				<dd th:if="*{stock == 0}" th:text="#{data.out.of.stock}"></dd>
 				<dt>[[#{data.category}]]</dt>
-				<dd th:text="*{categoryName}"></dd>
+				<dd th:text="*{category.name}"></dd>
 				<dt>[[#{data.description}]]</dt>
 				<dd th:text="*{description}"></dd>
 			</dl>
 		</div>
+		<!--刻印サービス-->
+		<div class="option_checkbox_area" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+			<h3 style="background-color: #a4d5ee; margin: -10px -10px 10px -10px; padding: 5px;">オプション</h3>
+			<label>
+				<input type="checkbox" id="engraving_trigger" name="engravingRequested" value="true" />
+				刻印サービスを希望する
+			</label>
+		</div>
+		<div id="engraving_form_container" class="hidden_form_area">
+			<div style="margin-bottom: 10px;">
+				<label><strong>刻印文字列（最大15文字）</strong></label>
+				<input type="text" name="engravingText" id="engraving_text" maxlength="15" style="width: 100%;" />
+			</div>
+
+			<div style="margin-bottom: 10px;">
+				<label><strong>フォント</strong></label>
+				<select name="engravingFont" id="engraving_font" style="width: 100%;">
+					<option value="">--</option>
+					<option value="Serif">Serif</option>
+					<option value="Script">Script</option>
+					<option value="Sans">Sans</option>
+				</select>
+			</div>
+			<!--刻印サービス終わり-->
+			<div class="preview_area">
+				<label><strong>シミュレーションイメージ</strong></label>
+				<div style="position: relative; text-align: center;">
+					<img th:src="@{/images/common/preview_base.jpg}" alt="Preview" style="width: 100%;">
+					<div id="preview_text_overlay"
+						style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-weight: bold;">
+					</div>
+				</div>
+				<small style="color: #666;">テキストを入力してプレビュー</small>
+			</div>
+		</div>
+
+
 		<div class="detail_button_area">
 			<form th:action="@{/client/basket/add}" method="post" class="user_info_form" th:if="*{stock > 0}">
 				<input type="hidden" th:field="*{id}" />
@@ -42,6 +79,37 @@
 			</form>
 		</div>
 	</div>
+	
+	<!--JavaScript-->
+	<script th:inline="javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+			const trigger = document.getElementById('engraving_trigger');
+			const formContainer = document.getElementById('engraving_form_container');
+			const engravingInput = document.getElementById('engraving_text');
+			const previewOverlay = document.getElementById('preview_text_overlay');
+
+			formContainer.style.display = 'none';
+			// チェックボックスの状態に合わせて表示・非表示を切り替える関数
+			function toggleEngravingForm() {
+				if (trigger.checked) {
+					formContainer.style.display = 'block'; // 表示
+				} else {
+					formContainer.style.display = 'none';  // 非表示
+					// チェックを外したときは入力値をクリアする（親切設計）
+					engravingInput.value = '';
+					previewOverlay.textContent = '';
+				}
+			}
+
+			// イベントリスナーの登録（クリックされたら実行）
+			trigger.addEventListener('change', toggleEngravingForm);
+
+			// 文字が入力されたらプレビューエリアに反映する簡易ギミック
+			engravingInput.addEventListener('input', function () {
+				previewOverlay.textContent = this.value;
+			});
+		});
+	</script>
 
 </body>
 

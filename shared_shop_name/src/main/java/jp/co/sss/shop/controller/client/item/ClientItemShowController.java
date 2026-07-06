@@ -21,8 +21,6 @@ import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
 
-
-
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
  *
@@ -67,12 +65,25 @@ public class ClientItemShowController {
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
 		List<Rankings> findByRanking = new ArrayList<>();
 
+		// 通常の全体用NamedQueryを呼び出す
+		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
 
-			// 通常の全体用NamedQueryを呼び出す
-			findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
+		//							 画面の見出しを「〇〇年〇月度 」にする
+		model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
 
-//							 画面の見出しを「〇〇年〇月度 」にする
-			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
+		//売れ筋順の仮表示用
+		// 売れ筋順で全商品を取得
+		List<Item> items = itemRepository.findAllOrderBySales();
+
+		// トップ画面用に最大4件に絞り込む
+		if (items.size() > 4) {
+			items = items.subList(0, 4);
+		}
+
+		model.addAttribute("items", items);
+		model.addAttribute("sortType", 2); // デフォルトは売れ筋順(2)として扱う
+		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
+		//売れ筋順の仮表示用　ここまで
 
 		return "index";
 	}
@@ -149,8 +160,8 @@ public class ClientItemShowController {
 			Model model) {
 
 		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
-		        searchItems,
-		        Constant.NOT_DELETED);
+				searchItems,
+				Constant.NOT_DELETED);
 
 		//		            stockCalc.updateManyItemStock(items);
 
@@ -165,14 +176,12 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
-	@RequestMapping(path="/client/item/list/{id}/{keyword}" , method = {RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(path = "/client/item/list/{id}/{keyword}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String search(
-			@PathVariable String keyword ,
-			@PathVariable int id
-			) {
-		System.out.println(keyword +" " + id);
-		return"client/item/list";
+			@PathVariable String keyword,
+			@PathVariable int id) {
+		System.out.println(keyword + " " + id);
+		return "client/item/list";
 	}
-	
-	
+
 }
