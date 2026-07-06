@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title>景品一覧</title>
+	<meta charset="UTF-8">
+</head>
+
+<body class="user prize">
+
+<div id="prize">
+
+	<!-- タイトル -->
+	<div class="prize_header">
+
+		<p class="shop_name">ペン専門店</p>
+
+		<h1>ポイントごとにもらえる景品一覧</h1>
+
+		<p class="sub_title">
+			お買い物でポイントが貯まると、素敵な景品をプレゼント！
+		</p>
+
+	</div>
+
+	<!-- ポイント説明 -->
+	<div class="point_info">
+
+		<div class="point_left">
+
+			<h3>ポイントのため方</h3>
+
+			<p>
+				お買い物200円（税込）ごとに
+				<strong>1pt</strong>
+				貯まります。
+			</p>
+
+			<p class="small">
+				※ポイントはお買い物時に自動で加算されます。
+			</p>
+
+		</div>
+
+		<div class="point_right">
+
+			<h3>景品交換について</h3>
+
+			<p>
+				貯まったポイントは
+				景品と交換できます。
+			</p>
+
+			<p class="small">
+				※ポイントはお買い物には利用できません。
+			</p>
+
+		</div>
+
+	</div>
+
+	<!-- 景品一覧 -->
+	<div class="prize_list">
+
+	    <div class="prize_card" th:each="prize : ${prizeList}">
+
+	        <h2 th:text="${prize.requiredPoint} + ' pt'"></h2>
+
+	        <img th:src="@{/images/{file}(file=${prize.image})}"
+	             alt="景品画像">
+
+	        <h4 th:text="${prize.name}"></h4>
+
+	        <p th:text="${prize.description}"></p>
+
+	    </div>
+
+	</div>
+
+	<!-- 注意事項 -->
+	<div class="notice">
+
+		<h3>ポイントについて</h3>
+
+		<ul>
+			<li>200円（税込）ごとに1pt付与されます。</li>
+			<li>ポイントは自動で加算されます。</li>
+			<li>一定ポイントで景品と交換できます。</li>
+			<li>お買い物には利用できません。</li>
+		</ul>
+
+	</div>
+
+</div>
+
+</body>
+</html>
