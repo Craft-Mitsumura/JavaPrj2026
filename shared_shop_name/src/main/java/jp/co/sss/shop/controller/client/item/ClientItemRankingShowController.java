@@ -39,7 +39,7 @@ public class ClientItemRankingShowController {
 	 * @param model リクエストスコープ
 	 * @return ランキング一覧画面
 	 */
-	@GetMapping("/client/item/ranking/{genderType}")
+	@GetMapping("/client/item/ranking")
 	public String showRankingList(@RequestParam(name = "categoryId", required = false) Integer categoryId, Model model) {
 
 		LocalDate today = LocalDate.now();
@@ -70,7 +70,7 @@ public class ClientItemRankingShowController {
 			});
 
 			//  正しいデータが入ったリストを画面に渡す
-			model.addAttribute("rankkings", findByRanking);
+			model.addAttribute("rankings", findByRanking);
 
 		}
 		return "client/item/Ranking";

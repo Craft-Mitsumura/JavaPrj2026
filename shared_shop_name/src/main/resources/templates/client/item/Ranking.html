@@ -18,7 +18,7 @@
 			<div>
 				<a th:href="@{/client/item/ranking}" th:if="${categoryId_ == null}"
 					class=" text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md ">すべて</a>
-				<a th:href="@{/client/item/ranking/0}" th:unless="${categoryId_ == null}"
+				<a th:href="@{/client/item/ranking}" th:unless="${categoryId_ == null}"
 					class=" text-xs mx-2 px-8 py-1 rounded-2xl border border-gray-100 hover:bg-[#FFF7F4] transition duration-300">すべて</a>
 
 			</div>
