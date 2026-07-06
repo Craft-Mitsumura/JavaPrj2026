@@ -8,89 +8,72 @@
 </head>
 
 <body th:object="${loginForm}" class="user item_list">
+<div id="itemList">
 
-	<h2 th:class="title" th:text="#{item}+#{title.list}"></h2>
+    <h2 class="title" th:text="#{item}+#{title.list}"></h2>
 
-	<div class="sorted_by">
-		<span th:if="${sortType==1}" th:text="#{sort.latest.str}"></span>
-		<a th:unless="${sortType==1}" th:href="@{/client/item/list/1(categoryId=${categoryId})}"
-			th:text="#{sort.latest.str}"></a>
-		<span th:if="${sortType==2}" th:text="#{sort.hotsell.str}"></span>
-		<a th:unless="${sortType==2}" th:href="@{/client/item/list/2(categoryId=${categoryId})}"
-			th:text="#{sort.hotsell.str}"></a>
+    <div class="sorted_by">
 
-		<p th:text="#{msg.client.item.list.none}" th:if="${#lists.isEmpty(items)}"></p>
+        <span th:if="${sortType==1}" th:text="#{sort.latest.str}"></span>
+        <a th:unless="${sortType==1}"
+           th:href="@{/client/item/list/1(categoryId=${categoryId})}"
+           th:text="#{sort.latest.str}"></a>
 
-	</div>
+        <span th:if="${sortType==2}" th:text="#{sort.hotsell.str}"></span>
+        <a th:unless="${sortType==2}"
+           th:href="@{/client/item/list/2(categoryId=${categoryId})}"
+           th:text="#{sort.hotsell.str}"></a>
 
-	<!-- 検索結果0件 -->
-	<p class="no_item" th:if="${#lists.isEmpty(items)}" th:text="#{msg.client.item.list.none}">
-	</p>
+    </div>
 
-	<!--	<th:block th:if="!${#lists.isEmpty(items)}">-->
-	<!--		<table class="list_table item_detail">-->
-	<!--			<tr>-->
-	<!--				<th th:text="#{data.item.image}"></th>-->
-	<!--				<th th:text="#{data.item.name}"></th>-->
-	<!--				<th th:text="#{data.item.price}"></th>-->
-	<!--				<th th:text="#{category}"></th>-->
-	<!--			</tr>-->
-	<!--			/* 商品一覧 */-->
-	<!--			<tr th:each="item, status: ${items}">-->
-	<!--				<td class="image">-->
-	<!--					<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />-->
-	<!--					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />-->
+    <p class="noItem"
+       th:if="${#lists.isEmpty(items)}"
+       th:text="#{msg.client.item.list.none}">
+    </p>
 
-	<!--				</td>-->
-	<!--				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>-->
-	<!--				<td th:text="${item.price}"></td>-->
-	<!--				<td th:text="${item.categoryName}"></td>-->
-	<!--			</tr>-->
-	<!--		</table>-->
-	<!--	</th:block>-->
+    <div class="item-grid" th:if="!${#lists.isEmpty(items)}">
 
-	<!-- 商品一覧 -->
-	<th:block th:if="!${#lists.isEmpty(items)}">
+        <div class="item-card"
+             th:each="item : ${items}">
 
-		<div class="item-list">
+            <a class="item-image"
+               th:href="@{/client/item/detail/{id}(id=${item.id})}">
 
-			<div class="item-card" th:each="item : ${items}">
+                <img th:if="${item.image!=null}"
+                     th:src="@{/images/{image}(image=${item.image})}">
 
-				<!-- 商品画像 -->
-				<div class="item-card-image">
-					<a th:href="@{/client/item/detail/{id}(id=${item.id})}">
-						<img th:if="${item.image != null}" th:src="@{/images/{image}(image=${item.image})}"
-							class="item-image" />
+                <img th:unless="${item.image!=null}"
+                     th:src="@{/images/common/no_image.jpg}">
 
-						<img th:unless="${item.image != null}" th:src="@{/images/common/no_image.jpg}"
-							class="item-image" />
-					</a>
-				</div>
+            </a>
 
-				<!-- 商品情報 -->
-				<div class="item-card-body">
+            <div class="item-info">
 
-					<div class="item-category">
-						<span th:text="${item.categoryName}"></span>
-					</div>
+                <div class="category"
+                     th:text="${item.category.Name}">
+                </div>
 
-					<div class="item-name">
-						<a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a>
-					</div>
+                <div class="name">
 
-					<div class="item-price">
-						￥<span th:text="${item.price}"></span>
-					</div>
+                    <a th:href="@{/client/item/detail/{id}(id=${item.id})}"
+                       th:text="${item.name}">
+                    </a>
 
-				</div>
+                </div>
 
-			</div>
+                <div class="price">
 
-		</div>
+                    ¥<span th:text="${item.price}"></span>
 
-	</th:block>
+                </div>
 
+            </div>
 
+        </div>
+
+    </div>
+
+</div>
 </body>
 
 </html>
