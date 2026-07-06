@@ -16,9 +16,9 @@
 		<!--	性別の表示-->
 		<div class="text-center mt-8">
 			<div>
-				<a th:href="@{/client/item/ranking/0}" th:if="${categoryId_ == null}"
+				<a th:href="@{/client/item/ranking}" th:if="${categoryId_ == null}"
 					class=" text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md ">すべて</a>
-				<a th:href="@{/client/item/ranking/0}" th:unless="${categoryId_ == null}"
+				<a th:href="@{/client/item/ranking}" th:unless="${categoryId_ == null}"
 					class=" text-xs mx-2 px-8 py-1 rounded-2xl border border-gray-100 hover:bg-[#FFF7F4] transition duration-300">すべて</a>
 
 			</div>
@@ -161,7 +161,7 @@
 <!--				</div>-->
 
 				<th:block th:each="rankingItem, stat : ${rankingItems}" th:if="${stat.index &lt; 10}">
-					<!--4位から10位まで-->
+					<!--1位から10位まで-->
 					<div class="mt-4">
 						<div class="flex justify-center ">
 							<div th:if="${stat.count > 3}">

@@ -1,31 +1,153 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+
 <head>
-<title th:text="#{top}+' | '+ #{shop.title}"> </title>
-<meta charset="UTF-8" />
+	<title th:text="#{top}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
 </head>
+
 <body class="user index">
 	<div>
 		<h2 class="title">
-				<span th:if="${sortType==1}" th:text="#{sort.latest.title}"></span>
-				<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.hotsell.title}"></span>
+			<span th:if="${sortType==1}" th:text="#{sort.latest.title}"></span>
+			<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.hotsell.title}"></span>
 		</h2>
 	</div>
 	<div th:if="${#lists.isEmpty(items)}">
 		<p th:text="#{msg.client.item.list.none}"></p>
 	</div>
 	<div class="item_list">
-	<th:block th:each="item, status: ${items}" th:if="${status.count le 10}">
-		<!--/* 1件分の商品情報 */-->
-		<div class="item">
-			<div class="item_name" th:text="${item.name}"></div>
-			<a th:href="@{/client/item/detail/}+${item.id}">
-			    <img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />
-			    <img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
-			</a>
-		</div>
+		<th:block th:each="item, status: ${items}" th:if="${status.count le 10}">
+			<!--/* 1件分の商品情報 */-->
+			<div class="item">
+				<div class="item_name" th:text="${item.name}"></div>
+				<a th:href="@{/client/item/detail/}+${item.id}">
+					<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}" />
+					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
+				</a>
+			</div>
 	</div>
 	</th:block>
+	<div>
+		<h2 class="title">
+			<span th:if="${sortType==1}" th:text="#{sort.ranking.title}"></span>
+			<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.ranking.title}"></span>
+		</h2>
+
+		<!-- ランキング表示 -->
+		<div class="flex-col mt-15" th:if="${! (#lists.isEmpty(rankings))}">
+
+			<!-- Rank 2  -->
+			<!--			データが2件以上ある場合のみ表示-->
+			<div th:if="${#lists.size(rankings) >= 2}" th:object="${rankings[1]}"
+				class="flex mt-15 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+
+
+				<a th:href="@{/client/item/detail/}+*{item.id}">
+					<div class="relative">
+
+
+						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{item.image != null}"
+							class="w-full h-75 object-cover" />
+
+
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{item.image == null}"
+							class="w-full h-75 object-cover" />
+
+						<div class="absolute top-4 left-4">
+							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
+								2位
+							</span>
+						</div>
+						<img th:src="@{/images/common/crone.png}" class="w-5 absolute top-5 left-6">
+					</div>
+
+					<div class="pt-3 pb-3 px-6 text-left">
+
+						<h2 class="text-lg mb-2" th:text="*{item.name}"></h2>
+					</div>
+				</a>
+
+			</div>
+			<!-- Rank 1  -->
+			<!--			データが1件以上ある場合のみ表示-->
+			<div th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}"
+				class="flex mt-15 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+
+
+				<a th:href="@{/client/item/detail/}+*{item.id}">
+					<div class="relative">
+
+
+						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{item.image != null}"
+							class="w-full h-75 object-cover" />
+
+
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{item.image == null}"
+							class="w-full h-75 object-cover" />
+
+						<div class="absolute top-4 left-4">
+							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
+								1位
+							</span>
+						</div>
+						<img th:src="@{/images/common/crone.png}" class="w-5 absolute top-5 left-6">
+					</div>
+
+					<div class="pt-3 pb-3 px-6 text-left">
+
+						<h2 class="text-lg mb-2" th:text="*{item.name}"></h2>
+					</div>
+				</a>
+
+			</div>
+			<!-- Rank 3  -->
+			<!--			データが3件以上ある場合のみ表示-->
+			<div th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[12}"
+				class="flex mt-15 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+
+
+				<a th:href="@{/client/item/detail/}+*{item.id}">
+					<div class="relative">
+
+
+						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{item.image != null}"
+							class="w-full h-75 object-cover" />
+
+
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{item.image == null}"
+							class="w-full h-75 object-cover" />
+
+						<div class="absolute top-4 left-4">
+							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
+								3位
+							</span>
+						</div>
+						<img th:src="@{/images/common/crone.png}" class="w-5 absolute top-5 left-6">
+					</div>
+
+					<div class="pt-3 pb-3 px-6 text-left">
+
+						<h2 class="text-lg mb-2" th:text="*{item.name}"></h2>
+					</div>
+				</a>
+
+			</div>
+		</div>
+
+
+		<!-- 今月のランキング商品がない場合の表示 -->
+		<div th:if="${#lists.isEmpty(rankingItems)}" class="flex justify-center items-center min-h-100">
+			<p>今月のランキングデータはありません。</p>
+		</div>
+		<!-- ランキング一覧へ -->
+				<div class="detail_button_area">
+
+					<a th:href="@{/client/item/ranking}">
+						<input type="button" value="ランキング一覧へ" />
+					</a>
+		</th:block>
 </body>
+
 </html>

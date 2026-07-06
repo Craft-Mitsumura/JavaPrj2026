@@ -61,16 +61,7 @@ public class ClientItemShowController {
 
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
-		LocalDate today = LocalDate.now();
-		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
-		List<Rankings> findByRanking = new ArrayList<>();
-
-		// 通常の全体用NamedQueryを呼び出す
-		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
-
-		//							 画面の見出しを「〇〇年〇月度 」にする
-		model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
-
+		
 		//売れ筋順の仮表示用
 		// 売れ筋順で全商品を取得
 		List<Item> items = itemRepository.findAllOrderBySales();
@@ -84,7 +75,19 @@ public class ClientItemShowController {
 		model.addAttribute("sortType", 2); // デフォルトは売れ筋順(2)として扱う
 		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
 		//売れ筋順の仮表示用　ここまで
+//		ランキング表示用
+		
+		LocalDate today = LocalDate.now();
+		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
+		List<Rankings> findByRanking = new ArrayList<>();
 
+		// 通常の全体用NamedQueryを呼び出す
+		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
+
+		
+		//  正しいデータが入ったリストを画面に渡す
+		model.addAttribute("rankings", findByRanking);
+//		ランキング表示用ここまで
 		return "index";
 	}
 
@@ -144,7 +147,7 @@ public class ClientItemShowController {
 
 		return "client/item/detail";
 	}
-
+ 
 	/**
 	 * 商品検索
 	 *
@@ -175,8 +178,9 @@ public class ClientItemShowController {
 	}
 
 
-	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showAll( Model model) {
+	@RequestMapping(path = "/client/item/list/{sortType}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showAll( Model model , @PathVariable Integer sortType
+			, @RequestParam (required = false) Integer CategoryId) {
 		List<Item> items = itemRepository.findAll();
 		model.addAttribute("items", items);
 		return "client/item/list";
