@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.sss.shop.entity.Rankings;
+import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.util.Constant;
@@ -44,7 +44,7 @@ public class ClientItemRankingShowController {
 
 		LocalDate today = LocalDate.now();
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
-		List<Rankings> findByRanking = new ArrayList<>();
+		List<Item> findByRanking = new ArrayList<>();
 		// 画面のカテゴリー一覧に表示するため、すべてのカテゴリーを取得してModelにセット
 		model.addAttribute("categories", caterepo.findByDeleteFlagOrderByInsertDateDescIdDesc(Constant.NOT_DELETED));
 
