@@ -61,8 +61,6 @@ public class ClientItemRankingShowController {
 		}
 
 		else {
-			//		全件ランキング表示
-
 			//		カテゴリー別ランキング表示
 			findByRanking = itemrepo.findItemsOrderBycateRanking(firstDateOfMonth, categoryId, PageRequest.of(0, 10));
 
