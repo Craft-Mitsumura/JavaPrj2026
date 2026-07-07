@@ -15,10 +15,16 @@
 		</div>
 
 		<!-- カテゴリ表示 -->
+		<div>
+			<a th:href="@{/client/item/ranking}" th:if="${categoryId_ == null}"
+				class=" text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md ">すべて</a>
+			<a th:href="@{/client/item/ranking}" th:unless="${categoryId_ == null}"
+				class=" text-xs mx-2 px-8 py-1 rounded-2xl border border-gray-100 hover:bg-[#FFF7F4] transition duration-300">すべて</a>
+		</div>
 		<div class="text-center mt-6">
 			<th:block th:each="category : ${categories}">
 				<!-- クリック時にカテゴリIDをURLパラメータとして送信するリンク -->
-				<a th:href="@{/client/item/ranking/(categoryId=${category.id})}" th:text="${category.name}"
+				<a th:href="@{/client/item/ranking(categoryId=${category.id})}" th:text="${category.name}"
 					class="text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md inline-block">
 				</a>
 			</th:block>

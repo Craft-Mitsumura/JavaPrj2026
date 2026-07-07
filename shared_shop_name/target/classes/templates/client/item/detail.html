@@ -15,7 +15,7 @@
 		<div class="item_detail_area">
 			<div class="item_image_area">
 				<img th:if="*{image != null}" th:src="@{/images/{image}(image=*{image})}"></img>
-				<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"></img>
+				<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg escape}"></img>
 			</div>
 			<dl class="item_detail_list">
 				<dt>[[#{data.item.name}]]</dt>
@@ -28,11 +28,45 @@
 				<dd th:if="*{stock == 0}" th:text="#{data.out.of.stock}"></dd>
 				<dt>[[#{data.category}]]</dt>
 				<dd th:text="*{category.name}"></dd>
+				<dt>[[#{data.category}]]</dt>
+				<dd th:text="*{category.name}"></dd>
+
+				<th:block th:if="*{category.name == 'シャープペン'}">
+					<dt>芯の太さ</dt>
+					<dd th:text="*{leadDiameter} + 'mm'"></dd>
+				</th:block>
+
+				<th:block th:if="*{category.name == 'ボールペン'}">
+					<dt>ペン先の太さ</dt>
+					<dd th:text="*{tipDiameter} + 'mm'"></dd>
+				</th:block>
+
+				<dt>色</dt>
+				<dd>
+					<div style="margin-bottom: 8px;">選択中: <strong id="color_label">ブラック</strong></div>
+
+					<div class="color_circle_container"
+						style="display: flex; gap: 12px; align-items: center; margin: 5px 0 15px 0;">
+						<div class="color_dot active" data-color-name="ブラック" data-single-price="830"
+							data-pack-price="7500"
+							style="width: 24px; height: 24px; border-radius: 50%; background-color: #333333; cursor: pointer; border: 2px solid transparent; box-shadow: 0 0 0 2px #333, 0 0 0 4px #1a5fb4; box-sizing: border-box;">
+						</div>
+						<div class="color_dot" data-color-name="レッド" data-single-price="823" data-pack-price="7400"
+							style="width: 24px; height: 24px; border-radius: 50%; background-color: #dc3545; cursor: pointer; border: 2px solid transparent; box-shadow: 0 0 0 1px #ccc; box-sizing: border-box;">
+						</div>
+						<div class="color_dot" data-color-name="ブルー" data-single-price="980" data-pack-price="8800"
+							style="width: 24px; height: 24px; border-radius: 50%; background-color: #0d6efd; cursor: pointer; border: 2px solid transparent; box-shadow: 0 0 0 1px #ccc; box-sizing: border-box;">
+						</div>
+					</div>
+					<input type="hidden" name="selectedColor" id="selected_color" value="ブラック" />
+				</dd>
+
 				<dt>[[#{data.description}]]</dt>
 				<dd th:text="*{description}"></dd>
 			</dl>
 		</div>
-		<!--刻印サービス-->
+
+
 		<div class="option_checkbox_area" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
 			<h3 style="background-color: #a4d5ee; margin: -10px -10px 10px -10px; padding: 5px;">オプション</h3>
 			<label>
@@ -40,6 +74,7 @@
 				刻印サービスを希望する
 			</label>
 		</div>
+
 		<div id="engraving_form_container" class="hidden_form_area">
 			<div style="margin-bottom: 10px;">
 				<label><strong>刻印文字列（最大15文字）</strong></label>
@@ -55,62 +90,229 @@
 					<option value="Sans">Sans</option>
 				</select>
 			</div>
-			<!--刻印サービス終わり-->
-			<div class="preview_area">
+
+			<div class="preview_area" style="margin-top: 15px;">
 				<label><strong>シミュレーションイメージ</strong></label>
-				<div style="position: relative; text-align: center;">
-					<img th:src="@{/images/common/preview_base.jpg}" alt="Preview" style="width: 100%;">
-					<div id="preview_text_overlay"
-						style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-weight: bold;">
+
+				<div class="preview_main_layout"
+					style="display: flex; gap: 20px; align-items: stretch; margin-top: 10px;">
+
+					<div class="preview_left_block" style="flex: 0 0 auto; text-align: center;">
+						<div class="preview_window"
+							style="width: 280px; height: 280px; overflow: hidden; position: relative; border: 1px solid #ccc; background-color: #ffffff; border-radius: 4px; box-shadow: inset 0 0 8px rgba(0,0,0,0.05);">
+
+							<div id="preview_canvas_container"
+								style="width: 280px; height: 280px; position: absolute; top: 0; left: 0; transform-origin: center center;">
+
+								<img th:src="@{/images/common/preview_base.jpg}" alt="Preview" id="preview_base_img"
+									style="width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; transition: all 0.1s ease;">
+
+								<div id="preview_text_overlay"
+									style="position: absolute; top: 50%; left: 50%; transform-origin: center center; color: #ffffff; font-weight: bold; font-size: 14px; white-space: nowrap; pointer-events: none; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); letter-spacing: 0.1em; transition: all 0.1s ease;">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="preview_controllers"
+						style="flex: 1; background: #f5f5f5; border: 1px solid #ddd; padding: 16px; border-radius: 4px; min-width: 280px; box-sizing: border-box;">
+
+						<div style="margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+							<label style="font-size: 13px;"><strong>文字色:</strong></label>
+							<select id="engraving_color" style="padding: 3px 8px;">
+								<option value="#ffffff">ホワイト</option>
+								<option value="#000000">ブラック</option>
+								<option value="#gold" style="color: #b8860b;">ゴールド調</option>
+								<option value="#silver" style="color: #7f8c8d;">シルバー調</option>
+							</select>
+						</div>
+
+						<div style="display: flex; gap: 50px; justify-content: center;">
+
+						    <div style="text-align: center;">
+						        <span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">📷 画像の位置</span>
+						        <div style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
+						            <button type="button" id="btn_img_up" style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
+						            <button type="button" id="btn_img_left" style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
+						            <button type="button" id="btn_img_down" style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
+						            <button type="button" id="btn_img_right" style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
+						            <button type="button" id="btn_img_l_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
+						            <button type="button" id="btn_img_reset" style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
+						            <button type="button" id="btn_img_r_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
+						        </div>
+						    </div>
+
+						    <div style="text-align: center;">
+						        <span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">✍ 文字の位置</span>
+						        <div style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
+						            <button type="button" id="btn_txt_up" style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
+						            <button type="button" id="btn_txt_left" style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
+						            <button type="button" id="btn_txt_down" style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
+						            <button type="button" id="btn_txt_right" style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
+						            <button type="button" id="btn_txt_l_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
+						            <button type="button" id="btn_txt_reset" style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
+						            <button type="button" id="btn_txt_r_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
+						        </div>
+						    </div>
+						</div>
 					</div>
 				</div>
-				<small style="color: #666;">テキストを入力してプレビュー</small>
 			</div>
 		</div>
 
+		<div class="detail_button_area" style="margin-top: 20px;">
+			<th:block th:if="*{stock > 0}">
+				<form th:action="@{/client/basket/add}" method="post" class="user_info_form"
+					style="display: inline-block; margin-right: 10px;">
+					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" name="purchaseType" value="single" />
+					<input type="hidden" name="formColor" class="form_color_input" value="ブラック" />
+					<input type="hidden" name="engravingText" class="form_engraving_text" value="" />
+					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
+					<input type="submit" value="買い物かごに入れる" class="send_button" />
+				</form>
 
-		<div class="detail_button_area">
-			<form th:action="@{/client/basket/add}" method="post" class="user_info_form" th:if="*{stock > 0}">
-				<input type="hidden" th:field="*{id}" />
-				<input type="submit" value="買い物かごに入れる" class="send_button" />
-			</form>
-			<form th:action="@{/client/item/list/1}" method="post">
+				<form th:action="@{/client/basket/add}" method="post" class="user_info_form"
+					style="display: inline-block; margin-right: 10px;">
+					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" name="purchaseType" value="bulk" />
+					<input type="hidden" name="formColor" class="form_color_input" value="ブラック" />
+					<input type="hidden" name="engravingText" class="form_engraving_text" value="" />
+					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
+					<input type="submit" value="10本まとめ買いする" class="send_button" style="background-color: #e67e22;" />
+				</form>
+			</th:block>
+
+			<form th:action="@{/client/item/list/1}" method="post" style="display: inline-block;">
 				<input type="submit" value="戻る" class="back_button" />
 			</form>
 		</div>
 	</div>
-	
-	<!--JavaScript-->
+
 	<script th:inline="javascript">
 		document.addEventListener('DOMContentLoaded', function () {
 			const trigger = document.getElementById('engraving_trigger');
 			const formContainer = document.getElementById('engraving_form_container');
 			const engravingInput = document.getElementById('engraving_text');
+			const fontSelect = document.getElementById('engraving_font');
 			const previewOverlay = document.getElementById('preview_text_overlay');
+			const previewImg = document.getElementById('preview_base_img');
+			const colorSelect = document.getElementById('engraving_color');
+
+			const hiddenTexts = document.querySelectorAll('.form_engraving_text');
+			const hiddenFonts = document.querySelectorAll('.form_engraving_font');
+
+			let imgPos = {x: 0, y: 0};
+			let imgRotate = 0;
+
+			let txtPos = {x: 0, y: 0};
+			let txtRotate = 0;
+
+			const MOVE_STEP = 4;
+			const ROTATE_STEP = 2;
 
 			formContainer.style.display = 'none';
-			// チェックボックスの状態に合わせて表示・非表示を切り替える関数
+
+			function updatePreview() {
+				const textValue = engravingInput.value;
+				const fontValue = fontSelect.value;
+
+				previewOverlay.textContent = textValue;
+
+				if (fontValue === 'Serif') {
+					previewOverlay.style.fontFamily = "'Times New Roman', Times, serif";
+					previewOverlay.style.fontStyle = "normal";
+				} else if (fontValue === 'Script') {
+					previewOverlay.style.fontFamily = "'Brush Script MT', cursive, sans-serif";
+					previewOverlay.style.fontStyle = "italic";
+				} else if (fontValue === 'Sans') {
+					previewOverlay.style.fontFamily = "'Arial', Helvetica, sans-serif";
+					previewOverlay.style.fontStyle = "normal";
+				} else {
+					previewOverlay.style.fontFamily = "inherit";
+					previewOverlay.style.fontStyle = "normal";
+				}
+
+				const selectedColor = colorSelect.value;
+				if (selectedColor === '#gold') {
+					previewOverlay.style.color = '#dfb76c';
+					previewOverlay.style.textShadow = '1px 1px 0px #5c4014, -1px -1px 1px rgba(255,255,255,0.6)';
+				} else if (selectedColor === '#silver') {
+					previewOverlay.style.color = '#e0e0e0';
+					previewOverlay.style.textShadow = '1px 1px 0px #555555, -1px -1px 1px rgba(255,255,255,0.6)';
+				} else {
+					previewOverlay.style.color = selectedColor;
+					previewOverlay.style.textShadow = selectedColor === '#000000'
+						? '1px 1px 2px rgba(255,255,255,0.6)'
+						: '1px 1px 2px rgba(0,0,0,0.8)';
+				}
+
+				hiddenTexts.forEach(input => input.value = textValue);
+				hiddenFonts.forEach(input => input.value = fontValue);
+			}
+
+			function applyPositions() {
+				previewImg.style.transform = `translate(${imgPos.x}px, ${imgPos.y}px) rotate(${imgRotate}deg)`;
+				previewOverlay.style.transform = `translate(calc(-50% + ${txtPos.x}px), calc(-50% + ${txtPos.y}px)) rotate(${txtRotate}deg)`;
+			}
+
+			// === 📷 画像(ペン)側のコントローラーイベント ===
+			document.getElementById('btn_img_up').addEventListener('click', () => {imgPos.y -= MOVE_STEP; applyPositions();});
+			document.getElementById('btn_img_down').addEventListener('click', () => {imgPos.y += MOVE_STEP; applyPositions();});
+			document.getElementById('btn_img_left').addEventListener('click', () => {imgPos.x -= MOVE_STEP; applyPositions();});
+			document.getElementById('btn_img_right').addEventListener('click', () => {imgPos.x += MOVE_STEP; applyPositions();});
+			document.getElementById('btn_img_l_rot').addEventListener('click', () => {imgRotate -= ROTATE_STEP; applyPositions();});
+			document.getElementById('btn_img_r_rot').addEventListener('click', () => {imgRotate += ROTATE_STEP; applyPositions();});
+			document.getElementById('btn_img_reset').addEventListener('click', () => {imgPos = {x: 0, y: 0}; imgRotate = 0; applyPositions();});
+
+			// === ✍ 文字側のコントローラーイベント ===
+			document.getElementById('btn_txt_up').addEventListener('click', () => {txtPos.y -= MOVE_STEP; applyPositions();});
+			document.getElementById('btn_txt_down').addEventListener('click', () => {txtPos.y += MOVE_STEP; applyPositions();});
+			document.getElementById('btn_txt_left').addEventListener('click', () => {txtPos.x -= MOVE_STEP; applyPositions();});
+			document.getElementById('btn_txt_right').addEventListener('click', () => {txtPos.x += MOVE_STEP; applyPositions();});
+			document.getElementById('btn_txt_l_rot').addEventListener('click', () => {txtRotate -= ROTATE_STEP; applyPositions();});
+			document.getElementById('btn_txt_r_rot').addEventListener('click', () => {txtRotate += ROTATE_STEP; applyPositions();});
+			document.getElementById('btn_txt_reset').addEventListener('click', () => {txtPos = {x: 0, y: 0}; txtRotate = 0; applyPositions();});
+
 			function toggleEngravingForm() {
 				if (trigger.checked) {
-					formContainer.style.display = 'block'; // 表示
+					formContainer.style.display = 'block';
 				} else {
-					formContainer.style.display = 'none';  // 非表示
-					// チェックを外したときは入力値をクリアする（親切設計）
+					formContainer.style.display = 'none';
 					engravingInput.value = '';
-					previewOverlay.textContent = '';
+					fontSelect.value = '';
+					imgPos = {x: 0, y: 0}; imgRotate = 0;
+					txtPos = {x: 0, y: 0}; txtRotate = 0;
+					applyPositions();
+					updatePreview();
 				}
 			}
 
-			// イベントリスナーの登録（クリックされたら実行）
 			trigger.addEventListener('change', toggleEngravingForm);
+			engravingInput.addEventListener('input', updatePreview);
+			fontSelect.addEventListener('change', updatePreview);
+			colorSelect.addEventListener('change', updatePreview);
 
-			// 文字が入力されたらプレビューエリアに反映する簡易ギミック
-			engravingInput.addEventListener('input', function () {
-				previewOverlay.textContent = this.value;
+			const colorDots = document.querySelectorAll('.color_dot');
+			const colorInput = document.getElementById('selected_color');
+			const colorLabel = document.getElementById('color_label');
+			const formColorInputs = document.querySelectorAll('.form_color_input');
+
+			colorDots.forEach(dot => {
+				dot.addEventListener('click', function () {
+					colorDots.forEach(d => {d.style.boxShadow = '0 0 0 1px #ccc';});
+					const baseColor = this.style.backgroundColor;
+					this.style.boxShadow = `0 0 0 2px ${baseColor}, 0 0 0 4px #1a5fb4`;
+
+					const colorName = this.getAttribute('data-color-name');
+					colorLabel.textContent = colorName;
+					colorInput.value = colorName;
+
+					formColorInputs.forEach(input => {input.value = colorName;});
+				});
 			});
 		});
 	</script>
-
 </body>
 
 </html>
