@@ -36,7 +36,7 @@
 		</h2>
 
 		<!-- ランキング表示 -->
-		<div class="flex-col mt-15" th:if="${! (#lists.isEmpty(rankings))}">
+		<div class="flex flex-row justify-center flex-wrap gap-6 mt-15" th:if="${! (#lists.isEmpty(rankings))}">
 
 			<!-- Rank 2  -->
 			<!--			データが2件以上ある場合のみ表示-->
@@ -112,7 +112,7 @@
 					<div class="relative">
 
 
-						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{image != null}"
+						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
 							class="w-full h-75 object-cover" />
 
 
