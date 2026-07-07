@@ -1,8 +1,11 @@
 package jp.co.sss.shop.controller.client.item;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
+import org.springframework.data.domain.Page;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -31,7 +35,7 @@ public class ClientItemShowController {
 	@Autowired
 	ItemRepository itemRepository;
 	/**
-
+	
 	 * カテゴリ情報
 	 */
 	@Autowired
@@ -58,20 +62,30 @@ public class ClientItemShowController {
 
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
-	    
-	    // 新着商品順の表示用
-	    // 【変更点】新着順（例：登録日の新しい順）で全商品を取得するメソッドに差し替え
+
+		// 新着商品順の表示用
+		// 【変更点】新着順（例：登録日の新しい順）で全商品を取得するメソッドに差し替え
 		List<Item> items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED);
 
-	    // トップ画面用に最大4件に絞り込む（ここはそのまま使えます！）
-	    if (items.size() > 4) {
-	        items = items.subList(0, 4);
-	    }
+		// トップ画面用に最大4件に絞り込む（ここはそのまま使えます！）
+		if (items.size() > 4) {
+			items = items.subList(0, 4);
+		}
 
-	    model.addAttribute("items", items);
-	    model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
-	    model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
-	    
+		model.addAttribute("items", items);
+		model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
+		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
+
+		//	    ランキング表示用
+		//	    購入日をすべて1日に変更する
+		LocalDate today = LocalDate.now();
+		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
+		List<Item> findByRanking = new ArrayList<>();
+		// 通常の全体用NamedQueryを呼び出す
+		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
+		//  正しいデータが入ったリストを画面に渡す
+		model.addAttribute("rankings", findByRanking);
+
 		return "index";
 	}
 
@@ -131,7 +145,7 @@ public class ClientItemShowController {
 
 		return "client/item/detail";
 	}
- 
+
 	/**
 	 * 商品検索
 	 *
@@ -161,25 +175,51 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
-
 	@RequestMapping(path = "/client/item/list/{sortType}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showAll( Model model , @PathVariable Integer sortType
-			, @RequestParam (required = false) Integer CategoryId) {
-		List<Item> items = itemRepository.findAll();
-		model.addAttribute("items", items);
-		return "client/item/list";
-	}
-	
-	@RequestMapping(path ="/client/category/lists/{id}")
-	public String categorySearch (@PathVariable Integer id ,
-			Model model) {
-		List<Category> categories = categoryRepository.findAll();
-		List<Item>items = itemRepository.findByCategoryId(id);
-		model.addAttribute("items", items);
-		model.addAttribute("categories",categories);
-		return"client/item/list";
-	}
-	
-	 
-	}
+	public String showAll(
+	        Model model,
+	        @PathVariable Integer sortType,
+	        @RequestParam(defaultValue = "0") int page) {
 
+	    Page<Item> itemPage = itemRepository.findAll(
+	            PageRequest.of(page, 20)
+	    );
+
+	    model.addAttribute("items", itemPage.getContent());
+	    model.addAttribute("page", itemPage);
+
+	    model.addAttribute("categories", categoryRepository.findAll());
+
+	    return "client/item/list";
+	}
+	
+	/**
+	 * カテゴリ検索
+	 *
+	 * @param id カテゴリID
+	 * @param page ページ番号
+	 * @param model Viewとの値受渡し
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping(path = "/client/category/lists/{id}")
+	public String categorySearch(
+	        @PathVariable Integer id,
+	        @RequestParam(defaultValue = "0") int page,
+	        Model model) {
+
+	    Page<Item> itemPage = itemRepository.findByCategoryId(
+	            id,
+	            PageRequest.of(page, 20)
+	    );
+
+	    model.addAttribute("items", itemPage.getContent());
+	    model.addAttribute("page", itemPage);
+
+	    model.addAttribute("categories", categoryRepository.findAll());
+
+	    // ページ移動時にカテゴリを保持する
+	    model.addAttribute("categoryId", id);
+
+	    return "client/item/list";
+	}
+}
