@@ -133,7 +133,7 @@
 					<div class="relative">
 
 
-						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{image != null}"
+						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
 							class="w-full h-75 object-cover" />
 
 
@@ -168,8 +168,7 @@
 					<a th:href="@{/client/item/ranking}">
 						<input type="button" value="ランキング一覧へ" />
 					</a>
-				</div>
-		</th:block>
+				</div>		</th:block>
 </body>
 
 </html>
