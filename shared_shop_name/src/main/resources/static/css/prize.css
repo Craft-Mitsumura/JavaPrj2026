@@ -10,6 +10,23 @@ body {
 	padding:30px;
 }
 
+/* 景品ページだけメイン領域を広くする */
+body.prize .container {
+    width: 1200px;
+}
+
+body.prize .main {
+    width: 100%;
+}
+
+body.prize .container {
+    width: 95%;
+    max-width: 1400px;
+}
+
+body.prize .main {
+    width: 100%;
+}
 /* 全体 */
 #prize .prize_card img {
 	width: 120px !important;
@@ -19,8 +36,9 @@ body {
 
 /* 上部 */
 .prize_header {
-	text-align: center;
-	margin-bottom: 40px;
+    max-width: 1300px;
+    margin: 0 auto 40px;
+    text-align: center;
 }
 
 .shop_name {
@@ -42,9 +60,11 @@ body {
 
 /* ポイント説明 */
 .point_info {
-	display: flex;
-	gap: 30px;
-	margin-bottom: 50px;
+    display: flex;
+    gap: 30px;
+
+    max-width: 1300px;
+    margin: 0 auto 50px;
 }
 
 .point_left,
@@ -131,6 +151,12 @@ body {
 .prize_card:nth-child(6) .timeline::before {
 	left: 10%;
 	width: 40%;
+}
+
+.user.prize #prize {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .timeline_dot {
