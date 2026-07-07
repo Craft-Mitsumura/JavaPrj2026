@@ -1,8 +1,11 @@
 package jp.co.sss.shop.controller.client.item;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,6 +74,16 @@ public class ClientItemShowController {
 	    model.addAttribute("items", items);
 	    model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
 	    model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
+	    
+//	    ランキング表示用
+//	    購入日をすべて1日に変更する
+		LocalDate today = LocalDate.now();
+		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
+		List<Item> findByRanking = new ArrayList<>();
+		// 通常の全体用NamedQueryを呼び出す
+		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
+		//  正しいデータが入ったリストを画面に渡す
+		model.addAttribute("rankings", findByRanking);
 	    
 		return "index";
 	}

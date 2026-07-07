@@ -66,15 +66,15 @@
 
 
 				<a th:href="@{/client/item/detail/}+*{id}">
-					<div class="relative">
+					<div class="relative w-full h-75">
 
 
 						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
-							class="w-full h-75 object-cover" />
+							class="w-full h-full object-cover" />
 
 
 						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
-							class="w-full h-75 object-cover" />
+							class="w-full h-full object-cover" />
 
 						<div class="absolute top-4 left-4">
 							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
@@ -98,15 +98,15 @@
 
 
 				<a th:href="@{/client/item/detail/}+*{id}">
-					<div class="relative">
+					<div class="relative w-full h-75">
 
 
 						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
-							class="w-full h-75 object-cover" />
+							class="w-full h-full object-cover" />
 
 
 						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
-							class="w-full h-75 object-cover" />
+							class="w-full h-full object-cover" />
 
 						<div class="absolute top-4 left-4">
 							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
@@ -130,15 +130,15 @@
 
 
 				<a th:href="@{/client/item/detail/}+*{id}">
-					<div class="relative">
+					<div class="relative w-full h-75">
 
 
 						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
-							class="w-full h-75 object-cover" />
+							class="w-full h-full object-cover" />
 
 
 						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
-							class="w-full h-75 object-cover" />
+							class="w-full h- object-cover" />
 
 						<div class="absolute top-4 left-4">
 							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold">
@@ -168,7 +168,7 @@
 					<a th:href="@{/client/item/ranking}">
 						<input type="button" value="ランキング一覧へ" />
 					</a>
-				</div>		</th:block>
+				</div>	
 </body>
 
 </html>
