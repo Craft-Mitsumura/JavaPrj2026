@@ -109,6 +109,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT i FROM Item i LEFT JOIN i.orderItemList oi WHERE i.deleteFlag = 0 GROUP BY i ORDER BY COALESCE(SUM(oi.quantity), 0) DESC")
 	List<Item> findAllOrderBySales();
+
+	List <Item> findByCategoryId(Integer id);
+	
+	List<Item> findByNameContaining(String items );
+
 	
 	/**
 	 * カテゴリ指定の商品一覧（ページング対応）
@@ -118,6 +123,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品ページ
 	 */
 	Page<Item> findByCategoryId(Integer id, Pageable pageable);
+
 }
 
 
