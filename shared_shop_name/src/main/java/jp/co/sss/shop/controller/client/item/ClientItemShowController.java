@@ -20,6 +20,8 @@ import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -175,21 +177,20 @@ public class ClientItemShowController {
 	}
 
 	@RequestMapping(path = "/client/item/list/{sortType}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showAll(Model model, @PathVariable Integer sortType,
-			@RequestParam(required = false) Integer CategoryId) {
-		List<Item> items = itemRepository.findAll();
-		model.addAttribute("items", items);
-		return "client/item/list";
-	}
+	public String showAll(
+	        Model model,
+	        @PathVariable Integer sortType,
+	        @RequestParam(defaultValue = "0") int page) {
 
-	@RequestMapping(path = "/client/category/lists/{id}")
-	public String categorySearch(@PathVariable Integer id,
-			Model model) {
-		List<Category> categories = categoryRepository.findAll();
-		List<Item> items = itemRepository.findByCategoryId(id);
-		model.addAttribute("items", items);
-		model.addAttribute("categories", categories);
-		return "client/item/list";
-	}
+	    Page<Item> itemPage = itemRepository.findAll(
+	            PageRequest.of(page, 20)
+	    );
 
+	    model.addAttribute("items", itemPage.getContent());
+	    model.addAttribute("page", itemPage);
+
+	    model.addAttribute("categories", categoryRepository.findAll());
+
+	    return "client/item/list";
+	}
 }
