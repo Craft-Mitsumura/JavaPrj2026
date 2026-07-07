@@ -875,6 +875,7 @@ Cart
     color:#ffffff;
     margin-left:12px;
     transition:.3s;
+    crusor:pointer;
 }
 
 #containerd #cart svg{
@@ -1536,7 +1537,7 @@ Dropdown
     display:flex;
     align-items:center;
     justify-content:flex-end;
-    gap:14px;
+    gap:4px;
     min-width:280px;
 }
 
@@ -1555,6 +1556,8 @@ Dropdown
 
 #containerd .profile{
     position:relative;
+    height:fit-content;
+    width:2%;
 }
 
 /*=========================================
@@ -1563,7 +1566,7 @@ Dropdown
 
 #containerd #userBtn{
 
-    height:44px;
+    height:fit-content;
 
     padding:0 18px;
 
@@ -1585,7 +1588,7 @@ Dropdown
 
     transition:.25s;
 
-    font-size:14px;
+    font-size:7px;
 
     font-weight:600;
 
@@ -1601,27 +1604,6 @@ Dropdown
             AVATAR
 =========================================*/
 
-#containerd .user-avatar{
-
-    width:32px;
-
-    height:32px;
-
-    border-radius:50%;
-
-    background:#2563eb;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    color:white;
-
-    font-size:15px;
-
-}
 
 /*=========================================
             PROFILE DROPDOWN
@@ -1673,17 +1655,15 @@ Dropdown
 
 #containerd #profileMenu a{
 
-    display:block;
+    DISPLAY:BLOCK; 
 
     text-decoration:none;
 
     color:#374151;
 
-    padding:15px 18px;
-
     transition:.25s;
 
-    font-size:14px;
+    font-size:10px;
 
 }
 
@@ -1800,7 +1780,7 @@ Dropdown
     background:rgba(255,255,255,.08);
 
     transition:.25s;
-
+ cursor:pointer;
 }
 
 #containerd #cart:hover{
@@ -1841,5 +1821,95 @@ Dropdown
     width:380px;
 
     opacity:1;
+
+}
+
+/* --------------- */
+
+#containerd #dropDown{
+    position:relative;
+    display:flex;
+    align-items:center;
+}
+
+#containerd .profile{
+    position:relative;
+}
+
+#containerd #userBtn{
+    min-width:120px;
+    height:42px;
+    padding:0 18px;
+    border:none;
+    border-radius:25px;
+    background:rgba(255,255,255,.08);
+    color:white;
+    cursor:pointer;
+    transition:.25s;
+}
+
+#containerd #userBtn:hover{
+    background:#2563eb;
+}
+
+/* Hide */
+
+#containerd #profileMenu{
+
+    position:absolute;
+
+    top:50px;
+
+    right:0;
+
+    width:180px;
+
+    background:#fff;
+
+    border-radius:10px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(-10px);
+
+    transition:.25s;
+
+    z-index:999;
+
+}
+
+/* Hover गर्दा खुल्ने */
+
+#containerd .profile:hover #profileMenu{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+#containerd #profileMenu a{
+
+    display:block;
+
+    padding:14px 18px;
+
+    text-decoration:none;
+
+    color:#374151;
+
+}
+
+#containerd #profileMenu a:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
 
 }

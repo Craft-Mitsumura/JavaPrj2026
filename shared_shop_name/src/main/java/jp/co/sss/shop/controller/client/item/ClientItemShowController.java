@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
@@ -176,82 +175,81 @@ public class ClientItemShowController {
 	}
 
 
-	
-	@RequestMapping(path ="/client/category/lists/{id}", method= {RequestMethod.GET,RequestMethod.POST})
-	public String categorySearch (@PathVariable Integer id ,
-			Model model) {
-		System.out.println("Category Controller Hit");
-		List<Category> categories = categoryRepository.findAll();
-		List<Item> items = itemRepository.findByCategoryId(id);
-		model.addAttribute("items", items);
-		model.addAttribute("categories",categories);
-		return"client/item/list";
-	}
-
-	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String itemSearch(Model model, @RequestParam(required = false) String items) {
-
-		List<Item> item = itemRepository.findByNameContaining(items);
-    if(items != null) {
-    	model.addAttribute("items", item);
-    	
-    }else {
-   
-		model.addAttribute("items", items);
-    }
-	
-
-		return "client/item/list";
-	}
-
-
-
-
-	public String showAll(
-	        Model model,
-	        @PathVariable Integer sortType,
-	        @RequestParam(defaultValue = "0") int page) {
-
-	    Page<Item> itemPage = itemRepository.findAll(
-	            PageRequest.of(page, 20)
-	    );
-
-	    model.addAttribute("items", itemPage.getContent());
-	    model.addAttribute("page", itemPage);
-
-	    model.addAttribute("categories", categoryRepository.findAll());
-
-	    return "client/item/list";
-	}
-	
 	/**
-	 * カテゴリ検索
+	 * 商品一覧表示（カテゴリ検索）
 	 *
 	 * @param id カテゴリID
 	 * @param page ページ番号
 	 * @param model Viewとの値受渡し
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping(path = "/client/category/lists/{id}")
+	@RequestMapping(path = "/client/category/lists/{id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String categorySearch(
-	        @PathVariable Integer id,
-	        @RequestParam(defaultValue = "0") int page,
-	        Model model) {
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "0") int page,
+			Model model) 
+	{
 
-	    Page<Item> itemPage = itemRepository.findByCategoryId(
-	            id,
-	            PageRequest.of(page, 20)
-	    );
+		Page<Item> itemPage = itemRepository.findByCategoryId(
+				id,
+				PageRequest.of(page, 20));
 
-	    model.addAttribute("items", itemPage.getContent());
-	    model.addAttribute("page", itemPage);
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
 
-	    model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute("categories", categoryRepository.findAll());
 
-	    // ページ移動時にカテゴリを保持する
-	    model.addAttribute("categoryId", id);
+		// ページ移動時にカテゴリを保持する
+		model.addAttribute("categoryId", id);
 
-	    return "client/item/list";
+		return "client/item/list";
 	}
-}
 
+	/**
+	 * 商品検索結果表示
+	 *
+	 * @param model Viewとの値受渡し
+	 * @param items 検索する商品名
+	 * @return "client/item/list" 商品一覧画面
+	 */
+	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
+	public String itemSearch(Model model, @RequestParam(required = false) String items) {
+
+		List<Item> item = itemRepository.findByNameContaining(items);
+		if (items != null) {
+			model.addAttribute("items", item);
+
+		} else {
+
+			model.addAttribute("items", items);
+		}
+
+		return "client/item/list";
+	}
+
+	/**
+	 * 商品一覧表示（全商品）
+	 *
+	 * @param model Viewとの値受渡し
+	 * @param page ページ番号
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showAll(
+			Model model,
+			//@PathVariable Integer sortType,
+			@RequestParam(defaultValue = "0") int page) {
+
+		Page<Item> itemPage = itemRepository.findAll(
+				PageRequest.of(page, 20));
+
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
+
+		model.addAttribute("categories", categoryRepository.findAll());
+
+		return "client/item/list";
+
+	}
+
+}
