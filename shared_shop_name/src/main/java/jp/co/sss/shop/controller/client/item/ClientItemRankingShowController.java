@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
-import jp.co.sss.shop.util.Constant;
 
 /**
  * ランキングコントローラー
@@ -46,9 +45,9 @@ public class ClientItemRankingShowController {
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
 		List<Item> findByRanking = new ArrayList<>();
 		// 画面のカテゴリー一覧に表示するため、すべてのカテゴリーを取得してModelにセット
-		model.addAttribute("categories", caterepo.findByDeleteFlagOrderByInsertDateDescIdAsc(Constant.NOT_DELETED));
+		model.addAttribute("categories", caterepo.findAll());
 
-		//		//		全件ランキング表示
+		//		全件ランキング表示
 		if (categoryId == null) {
 			categoryId = 0;
 			//		全件ランキング表示
