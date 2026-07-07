@@ -76,12 +76,21 @@ public class ClientItemShowController {
 	    model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
 	    
 //	    ランキング表示用
-//	    購入日をすべて1日に変更する
+//	    購入日をすべて同月の1日に変更する
 		LocalDate today = LocalDate.now();
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
 		List<Item> findByRanking = new ArrayList<>();
 		// 通常の全体用NamedQueryを呼び出す
 		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
+//		System.out.println("====== [デバッグ] ランキングデータ確認開始 ======");
+//		System.out.println("取得できた件数: " + findByRanking.size() + "件");
+//
+//		for (Item item : findByRanking) {
+//		    System.out.println("商品ID: " + item.getId() 
+//		                     + " | 商品名: " + item.getName() 
+//		                     + " | 画像: " + item.getImage());
+//		}
+//		System.out.println("====== [デバッグ] ランキングデータ確認終了 ======");
 		//  正しいデータが入ったリストを画面に渡す
 		model.addAttribute("rankings", findByRanking);
 	    

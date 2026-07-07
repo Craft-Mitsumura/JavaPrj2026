@@ -56,7 +56,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id " +
 	       "WHERE r.salesMonth = :salesMonth ORDER BY r.total DESC")
 	List<Item> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
-	
+
 	/**
 	 * カテゴリ別ランキング検索
 	 * @param salesMonth 売上月
