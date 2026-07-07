@@ -8,72 +8,107 @@
 </head>
 
 <body th:object="${loginForm}" class="user item_list">
-<div id="itemList">
+	<div id="itemList">
 
-    <h2 class="title" th:text="#{item}+#{title.list}"></h2>
+		<!-- 商品一覧タイトル -->
+		<h2 class="title" th:text="#{item}+#{title.list}"></h2>
 
-    <div class="sorted_by">
+		<!-- 並び替えメニュー -->
+		<div class="sorted_by">
 
-        <span th:if="${sortType==1}" th:text="#{sort.latest.str}"></span>
-        <a th:unless="${sortType==1}"
-           th:href="@{/client/item/list/1(categoryId=${categoryId})}"
-           th:text="#{sort.latest.str}"></a>
+			<!-- カテゴリ絞り込み -->
+			<div class="category-list">
 
-        <span th:if="${sortType==2}" th:text="#{sort.hotsell.str}"></span>
-        <a th:unless="${sortType==2}"
-           th:href="@{/client/item/list/2(categoryId=${categoryId})}"
-           th:text="#{sort.hotsell.str}"></a>
+				<a th:href="@{/client/item/list/1}">
+					すべて
+				</a>
 
-    </div>
+				<th:block th:each="category : ${categories}">
+					<a th:href="@{/client/category/lists/{id}(id=${category.id})}" th:text="${category.name}">
+					</a>
+				</th:block>
 
-    <p class="noItem"
-       th:if="${#lists.isEmpty(items)}"
-       th:text="#{msg.client.item.list.none}">
-    </p>
+			</div>
 
-    <div class="item-grid" th:if="!${#lists.isEmpty(items)}">
+			<!-- ランキング -->
+			<a th:href="@{/client/item/ranking}">ランキング</a>
 
-        <div class="item-card"
-             th:each="item : ${items}">
+		</div>
 
-            <a class="item-image"
-               th:href="@{/client/item/detail/{id}(id=${item.id})}">
+		<!-- 商品が存在しない場合のメッセージ -->
+		<p class="noItem" th:if="${#lists.isEmpty(items)}" th:text="#{msg.client.item.list.none}">
+		</p>
 
-                <img th:if="${item.image!=null}"
-                     th:src="@{/images/{image}(image=${item.image})}">
+		<!-- 商品一覧表示 -->
+		<div class="item-grid" th:if="!${#lists.isEmpty(items)}">
 
-                <img th:unless="${item.image!=null}"
-                     th:src="@{/images/common/no_image.jpg}">
+			<!-- 商品情報を繰り返し表示 -->
+			<div class="item-card" th:each="item : ${items}">
 
-            </a>
+				<!-- 商品画像（クリックで商品詳細へ） -->
+				<a class="item-image" th:href="@{/client/item/detail/{id}(id=${item.id})}">
 
-            <div class="item-info">
+					<!-- 商品画像が登録されている場合 -->
+					<img th:if="${item.image!=null}" th:src="@{/images/{image}(image=${item.image})}">
 
-                <div class="category"
-                     th:text="${item.category.Name}">
-                </div>
+					<!-- 商品画像が未登録の場合 -->
+					<img th:unless="${item.image!=null}" th:src="@{/images/common/no_image.jpg}">
 
-                <div class="name">
+				</a>
 
-                    <a th:href="@{/client/item/detail/{id}(id=${item.id})}"
-                       th:text="${item.name}">
-                    </a>
+				<!-- 商品情報 -->
+				<div class="item-info">
 
-                </div>
+					<!-- カテゴリ名 -->
+					<div class="category" th:text="${item.category.Name}">
+					</div>
 
-                <div class="price">
+					<!-- 商品名 -->
+					<div class="name">
 
-                    ¥<span th:text="${item.price}"></span>
+						<a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}">
+						</a>
 
-                </div>
+					</div>
 
-            </div>
+					<!-- 商品価格 -->
+					<div class="price">
 
-        </div>
+						¥<span th:text="${item.price}"></span>
 
-    </div>
+					</div>
 
-</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+	<div class="page-button">
+
+		<div class="page-button">
+			<!-- 前へ -->
+			<a th:if="${page.hasPrevious()}" th:href="${categoryId != null} ?
+		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number-1})} :
+		       @{/client/item/list/1(page=${page.number-1})}">
+				前へ
+			</a>
+
+			<!--現在ページ-->
+			<span th:text="${page.number + 1} + ' / ' + ${page.totalPages} + 'ページ'"></span>
+
+			<!-- 次へ -->
+			<a th:if="${page.hasNext()}" th:href="${categoryId != null} ?
+		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number+1})} :
+		       @{/client/item/list/1(page=${page.number+1})}">
+				次へ
+			</a>
+
+		</div>
+
+	</div>
 </body>
+
 
 </html>

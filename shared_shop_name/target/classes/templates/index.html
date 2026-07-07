@@ -36,7 +36,11 @@
 		</h2>
 
 		<!-- ランキング表示 -->
+<<<<<<< HEAD
+		<div class="flex-col mt-15" th:if="${! (#lists.isEmpty(rankings))}">
+=======
 		<div class="flex flex-row justify-center flex-wrap gap-6 mt-15" th:if="${! (#lists.isEmpty(rankings))}">
+>>>>>>> 1bbda7a2092f5e9e82bb4cc4c4a65a71be475d40
 
 			<!-- Rank 2  -->
 			<!--			データが2件以上ある場合のみ表示-->
@@ -112,7 +116,11 @@
 					<div class="relative">
 
 
+<<<<<<< HEAD
+						<img th:src="@{/images/{image}(image=*{item.image})}" th:if="*{image != null}"
+=======
 						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
+>>>>>>> 1bbda7a2092f5e9e82bb4cc4c4a65a71be475d40
 							class="w-full h-75 object-cover" />
 
 

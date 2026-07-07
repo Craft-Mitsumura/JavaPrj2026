@@ -55,7 +55,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT r.item FROM Rankings r WHERE r.salesMonth = :salesMonth ORDER BY r.total DESC")
 	List<Item> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
-
+	
 	/**
 	 * カテゴリ別ランキング検索
 	 * @param salesMonth 売上月
@@ -109,7 +109,21 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT i FROM Item i LEFT JOIN i.orderItemList oi WHERE i.deleteFlag = 0 GROUP BY i ORDER BY COALESCE(SUM(oi.quantity), 0) DESC")
 	List<Item> findAllOrderBySales();
-	List<Item> findByCategoryId(int id);
+
+	List <Item> findByCategoryId(Integer id);
+	
+	List<Item> findByNameContaining(String items );
+
+	
+	/**
+	 * カテゴリ指定の商品一覧（ページング対応）
+	 * @author 手塚
+	 * @param id カテゴリID
+	 * @param pageable ページ情報
+	 * @return 商品ページ
+	 */
+	Page<Item> findByCategoryId(Integer id, Pageable pageable);
+
 }
 
 

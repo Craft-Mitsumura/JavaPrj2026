@@ -583,6 +583,7 @@ select {
 }
 .list_table.category_list{
 	margin: 10px auto 20px;
+	
 }
 
 /* ---- 注文詳細 ---- */
@@ -723,7 +724,6 @@ text-align:center;
 
 }
 
-#userLogin 
 
 
 
@@ -746,7 +746,7 @@ text-align:center;
 	
 }
 /* ------------- */
-#containerd{
+/* #containerd{
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -770,6 +770,10 @@ text-align:center;
     justify-content:center;
 }
 
+#categoryBtn {
+font-size:10px;	
+}
+
 #categoryLists{
     display:none;
 }
@@ -787,37 +791,103 @@ text-align:center;
     font-size:18px;
 }
 
- #containerd .header-right{
+ 
+==========================
+   RIGHT SIDE ONLY
+==========================
+
+#containerd .header-right{
     flex:1;
     display:flex;
     justify-content:flex-end;
+    align-items:center;
+    gap:18px;
 }
 
- #containerd .user_info{
+#containerd .user_info{
     display:flex;
     align-items:center;
-    gap:12px;
-    color:white;
+    gap:10px;
+    color:#ffffff;
+    
 }
 
- #containerd .user_info a{
-    color:white;
+#containerd .user_info a{
+    color:black;
     text-decoration:none;
+    font-size:10px;
+    font-weight:500;
+    transition:0.25s ease;
 }
 
- #containerd .login-btn,
-.signup-btn{
-    padding:10px 18px;
+#containerd .user_info a:hover{
+    color:#fbbf24;
+}
+
+Login Button
+
+#containerd .login-btn{
+    padding:8px 16px;
+    border:1px solid rgba(255,255,255,.7);
     border-radius:8px;
+    background:transparent;
+    color:#ffffff !important;
+    margin-left:8px;
+    transition:.3s;
 }
 
- #containerd .login-btn{
-    border:1px solid white;
+#logoutBtn ,
+#userBtn{
+	color:black;
+	background:white;
+	border-radius:8px;
+}
+#logoutBtn a{
+	color:black;
+
+}
+#containerd .login-btn:hover{
+    background:#ffffff;
+    color:#111827 !important;
 }
 
- #containerd .signup-btn{
+Signup Button
+
+#containerd .signup-btn{
+    padding:8px 16px;
+    margin-left:8px;
+    border-radius:8px;
     background:#2563eb;
+    color:black !important;
+    transition:.3s;
 }
+
+#containerd .signup-btn:hover{
+    background:#1d4ed8;
+}
+
+Cart
+
+#containerd #cart{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#ffffff;
+    margin-left:12px;
+    transition:.3s;
+}
+
+#containerd #cart svg{
+    width:28px;
+    height:28px;
+}
+
+#containerd #cart:hover{
+    color:#fbbf24;
+    transform:scale(1.12);
+} */
+
+
 
 
 /* サガルから編集 */
@@ -1046,9 +1116,730 @@ grid-template-columns:1fr;
 }
 
 }
+/* #searchBtn{
+	cursor:pointer;
+}
+#searchInputBar input{
+	display:none;
+}
 
-/* カテゴリー一覧修正サガルから */
-#containerd #categoryListBtn {
-max-height:fit-content;
-max-width:fit-content;
+#categoryLists{
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 1.4s ease, opacity 1.3s ease;
+}
+
+#categoryLists.show{
+    max-height: 500px; 
+    opacity: 1;
+} */
+/* \\\\\\\\\------------------ */
+/* #containerd .header-center{
+    position:relative;
+}
+
+Button
+
+#categoryBtn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+#categoryBtn:hover{
+    background:#1d4ed8;
+}
+
+Dropdown
+
+#categoryLists{
+    position:absolute;
+    top:48px;
+    left:0;
+    width:240px;
+
+    background:white;
+    border-radius:10px;
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-10px);
+
+    transition:.3s;
+    z-index:999;
+}
+
+#categoryLists.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+#category{
+    list-style:none;
+    margin:0;
+    padding:8px 0;
+}
+
+#category li{
+    border-bottom:1px solid #eee;
+}
+
+#category li:last-child{
+    border-bottom:none;
+}
+
+#category a{
+    display:block;
+    padding:12px 18px;
+    text-decoration:none;
+    color:#333;
+    transition:.2s;
+}
+
+#category a:hover{
+    background:#f5f5f5;
+    color:#2563eb;
+    padding-left:25px;
+}
+ */
+ 
+ 
+ /* tryout top page  */
+/*=====================================================
+                HEADER MAIN
+======================================================*/
+/* ==========================================
+            HEADER
+========================================== */
+
+#containerd{
+    width:100%;
+    height:82px;
+    background:#111827;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    box-sizing:border-box;
+    box-shadow:0 3px 15px rgba(0,0,0,.18);
+    position:relative;
+    z-index:999;
+}
+
+/* ==========================================
+            LEFT
+========================================== */
+
+#containerd .left-section{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+#containerd .header-left{
+    display:flex;
+    align-items:center;
+}
+
+#containerd #mainLogo{
+    display:block;
+    cursor:pointer;
+}
+
+/* ==========================================
+        CATEGORY BUTTON
+========================================== */
+
+#containerd .header-center{
+
+    position:relative;
+
+}
+
+#containerd #categoryBtn{
+
+    width:180px;
+    height:44px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:14px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    transition:.25s;
+
+}
+
+#containerd #categoryBtn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================
+        CATEGORY DROPDOWN
+========================================== */
+
+#containerd #categoryLists{
+
+    position:absolute;
+
+    top:58px;
+
+    left:0;
+
+    width:250px;
+
+    background:#ffffff;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(-10px);
+
+    transition:.28s;
+
+}
+
+#containerd #categoryLists.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+#containerd #category{
+
+    list-style:none;
+
+    margin:0;
+
+    padding:8px 0;
+
+}
+
+#containerd #category li{
+
+    border-bottom:1px solid #ececec;
+
+}
+
+#containerd #category li:last-child{
+
+    border-bottom:none;
+
+}
+
+#containerd #category li a{
+
+    display:block;
+
+    text-decoration:none;
+
+    color:#374151;
+
+    padding:14px 20px;
+
+    transition:.2s;
+
+    font-size:14px;
+
+}
+
+#containerd #category li a:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    padding-left:28px;
+
+}
+
+/* ==========================================
+            SEARCH
+========================================== */
+
+#containerd .header-search{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+/* Search Icon */
+
+#containerd #searchBtn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:white;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    transition:.25s;
+
+}
+
+#containerd #searchBtn:hover{
+
+    background:rgba(255,255,255,.12);
+
+}
+
+/* Search Form Hidden */
+
+#containerd #searchInputBar{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    max-width:0;
+
+    opacity:0;
+
+    overflow:hidden;
+
+    transition:
+
+        max-width .45s ease,
+
+        opacity .35s ease;
+
+}
+
+/* JS le .show add garne */
+
+#containerd #searchInputBar.show{
+
+    max-width:420px;
+
+    opacity:1;
+
+}
+
+/* ==========================================
+        SEARCH INPUT
+========================================== */
+
+#containerd .search-wrapper{
+
+    background:white;
+
+    border-radius:30px;
+
+    overflow:hidden;
+
+}
+
+#containerd .search-wrapper input{
+
+    width:250px;
+
+    height:42px;
+
+    border:none;
+
+    outline:none;
+
+    padding:0 18px;
+
+    font-size:14px;
+
+}
+
+/* ==========================================
+        SEARCH BUTTON
+========================================== */
+
+#containerd .search-btn{
+
+    height:42px;
+
+    padding:0 18px;
+
+    border:none;
+
+    border-radius:25px;
+
+    background:#f59e0b;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+#containerd .search-btn:hover{
+
+    background:#d97706;
+
+}
+/*=========================================
+            RIGHT SECTION
+=========================================*/
+
+#containerd .header-right{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:14px;
+    min-width:280px;
+}
+
+/*=========================================
+            USER INFO
+=========================================*/
+
+#containerd .user_info{
+    display:flex;
+    align-items:center;
+}
+
+/*=========================================
+            PROFILE
+=========================================*/
+
+#containerd .profile{
+    position:relative;
+}
+
+/*=========================================
+            PROFILE BUTTON
+=========================================*/
+
+#containerd #userBtn{
+
+    height:44px;
+
+    padding:0 18px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+#containerd #userBtn:hover{
+
+    background:rgba(255,255,255,.15);
+
+}
+
+/*=========================================
+            AVATAR
+=========================================*/
+
+#containerd .user-avatar{
+
+    width:32px;
+
+    height:32px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+/*=========================================
+            PROFILE DROPDOWN
+=========================================*/
+
+#containerd #profileMenu{
+
+    position:absolute;
+
+    top:55px;
+
+    right:0;
+
+    width:210px;
+
+    background:white;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+
+    overflow:hidden;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:translateY(-10px);
+
+    transition:.28s;
+
+}
+
+/* JS will add .show */
+
+#containerd #profileMenu.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:translateY(0);
+
+}
+
+/*=========================================
+            PROFILE LINKS
+=========================================*/
+
+#containerd #profileMenu a{
+
+    display:block;
+
+    text-decoration:none;
+
+    color:#374151;
+
+    padding:15px 18px;
+
+    transition:.25s;
+
+    font-size:14px;
+
+}
+
+#containerd #profileMenu a:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    padding-left:24px;
+
+}
+
+/*=========================================
+            GUEST BUTTONS
+=========================================*/
+
+#containerd .guest-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+/*=========================================
+            LOGIN
+=========================================*/
+
+#containerd .login-btn{
+
+    padding:10px 18px;
+
+    border:1px solid rgba(255,255,255,.35);
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    color:white;
+
+    transition:.25s;
+
+}
+
+#containerd .login-btn:hover{
+
+    background:white;
+
+    color:#111827 !important;
+
+}
+
+/*=========================================
+            SIGNUP
+=========================================*/
+
+#containerd .signup-btn{
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+#containerd .signup-btn:hover{
+
+    background:#1d4ed8;
+
+}
+
+/*=========================================
+            CART
+=========================================*/
+
+#containerd .cart-box{
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+#containerd #cart{
+
+    width:44px;
+
+    height:44px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:white;
+
+    text-decoration:none;
+
+    background:rgba(255,255,255,.08);
+
+    transition:.25s;
+
+}
+
+#containerd #cart:hover{
+
+    background:#2563eb;
+
+    transform:translateY(-2px);
+
+}
+
+#containerd #cart svg{
+
+    width:22px;
+
+    height:22px;
+
+}
+/* Smooth Search Width */
+
+#containerd #searchInputBar{
+
+    width:0;
+
+    opacity:0;
+
+    overflow:hidden;
+
+    transition:
+
+    width .4s ease,
+
+    opacity .25s ease;
+
+}
+
+#containerd #searchInputBar.show{
+
+    width:380px;
+
+    opacity:1;
+
 }
