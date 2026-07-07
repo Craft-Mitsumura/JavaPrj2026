@@ -175,7 +175,38 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
-	@RequestMapping(path = "/client/item/list/{sortType}", method = { RequestMethod.GET, RequestMethod.POST })
+
+	
+	@RequestMapping(path ="/client/category/lists/{id}", method= {RequestMethod.GET,RequestMethod.POST})
+	public String categorySearch (@PathVariable Integer id ,
+			Model model) {
+		System.out.println("Category Controller Hit");
+		List<Category> categories = categoryRepository.findAll();
+		List<Item> items = itemRepository.findByCategoryId(id);
+		model.addAttribute("items", items);
+		model.addAttribute("categories",categories);
+		return"client/item/list";
+	}
+
+	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
+	public String itemSearch(Model model, @RequestParam(required = false) String items) {
+
+		List<Item> item = itemRepository.findByNameContaining(items);
+    if(items != null) {
+    	model.addAttribute("items", item);
+    	
+    }else {
+   
+		model.addAttribute("items", items);
+    }
+	
+
+		return "client/item/list";
+	}
+
+
+
+
 	public String showAll(
 	        Model model,
 	        @PathVariable Integer sortType,
@@ -223,3 +254,4 @@ public class ClientItemShowController {
 	    return "client/item/list";
 	}
 }
+

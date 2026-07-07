@@ -1,110 +1,294 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 </head>
+
 <body>
 
 	<div th:fragment="layout-header" id="containerd">
 
-		<!-- Left : Logo -->
-		<div class="header-left">
-			<a th:href="@{/}"> <img id="mainLogo" alt="avoir"
-				th:src="@{/images/common/newLogo.png}">
-			</a>
-		</div>
+		<!-- ===================== -->
+		<!-- Logo + Category -->
+		<!-- ===================== -->
 
-		<!-- Center : Menu -->
-		<div class="header-center">
-			<button 
-				onclick="
-const category=document.getElementById('categoryLists');
+		<div class="left-section">
 
-if(getComputedStyle(category).display==='none'){
-    category.style.display='block';
-}else{
-    category.style.display='none';
-}
-">
-				カテゴリー一覧</button>
-			<div id="categoryLists">
-				<ul id="category" class="menu-list" >
-					<li th:each="category :${categories}"
-					><a th:href="@{/client/category/lists/{id}(id=${category.id})}"
-           th:text="${category.name}">
-        </a></li>
+			<div class="header-left">
 
-					<li><a th:href="@{/client/item/list/1}"
-						th:text="#{item}+#{title.list}"></a></li> 
+				<a th:href="@{/}"> <img id="mainLogo"
+					th:src="@{/images/common/newLogo.png}" alt="AVOIR">
+				</a>
 
-					
-
-					<!-- <th:block th:if="${session.user != null}">
-						<li><a th:href="@{/client/order/list}"
-							th:text="#{order}+#{title.list}"></a></li>
-					</th:block> -->
-				</ul>
 			</div>
+
+			<div class="header-center">
+
+				<button id="categoryBtn" type="button"
+					onclick="
+event.stopPropagation();
+document.getElementById('categoryLists').classList.toggle('show');
+">
+
+					<span>カテゴリー一覧</span> <span class="arrow">▼</span>
+
+				</button>
+
+				<div id="categoryLists">
+
+					<ul id="category">
+
+						<li th:each="category:${categories}"><a
+							th:href="@{/client/category/lists/{id}(id=${category.id})}"
+							th:text="${category.name}"> </a></li>
+
+						<li><a th:href="@{/client/item/list/1}"
+							th:text="#{item}+#{title.list}"> </a></li>
+
+					</ul>
+
+				</div>
+
+			</div>
+
 		</div>
 
-		<!-- Search Section (sidebar bata moved) -->
-		<div class="header-search"
-			th:if="${session.user == null or session.user.authority == 2}">
 
-			<form th:if="${sortType == null}" th:action="@{/client/item/list/1}">
-				<input type="text" name="keyword" placeholder="キーワード">
-				<!-- <select name="categoryId">
-                <option th:value="#{constants.category.select.none.no}"
-                        th:text="#{constants.category.select.none}"></option>
 
-                <option th:each="category: ${categories}"
-                        th:value="${category.id}"
-                        th:text="${category.name}"></option>
-            </select>  -->
 
-				<input type="submit" th:value="#{select}" />
+
+		<!-- ===================== -->
+		<!-- Search -->
+		<!-- ===================== -->
+
+		<div class="header-search">
+
+			<button type="button" id="searchBtn"
+				onclick="
+        event.stopPropagation();
+        document.getElementById('searchInputBar').classList.toggle('show');
+    ">
+				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+					fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+
+            <path
+						d="M11.742 10.344a6.5 6.5 0 1 0-1.397
+            1.398h-.001q.044.06.098.115l3.85
+            3.85a1 1 0 0 0
+            1.415-1.414l-3.85-3.85a1
+            1 0 0 0-.115-.1zM12
+            6.5a5.5 5.5 0 1
+            1-11 0a5.5 5.5
+            0 0 1 11 0" />
+
+        </svg>
+			</button>
+
+			<form id="searchInputBar" th:action="@{/client/item/list/}">
+
+				<div class="search-wrapper">
+
+					<input type="text" name="items" placeholder="商品を検索">
+
+				</div>
+
+				<button class="search-btn" type="submit">検索</button>
+
 			</form>
 
-			<form th:unless="${sortType == null}"
-				th:action="@{/client/item/list/} + ${sortType}">
-
-			<!-- 	<select name="categoryId"> -->
-				<input type="text" name="keyword" placeholder="キーワード">
-					<!-- <option th:value="#{constants.category.select.none.no}"
-						th:text="#{constants.category.select.none}"></option>
-
-					<option th:each="category: ${categories}" th:value="${category.id}"
-						th:text="${category.name}"
-						th:selected="${category.id} == ${categoryId}"></option> -->
-				</select> <input type="submit" th:value="#{select}" />
-			</form>
 		</div>
 
-		<!-- Right : User -->
+
+
+
+
+
+		<!-- ===================== -->
+		<!-- Right -->
+		<!-- ===================== -->
+
 		<div class="header-right">
 
-			<div th:if="${session.user != null and session.user.authority == 2}"
-				class="user_info">
-				<a th:href="@{/client/user/detail}" th:text="${session.user.name}"></a>さん
-				| <a th:href="@{/logout}" th:text="#{logout}"></a>
+
+
+			<!-- CLIENT -->
+
+			<div class="user_info"
+				th:if="${session.user != null and session.user.authority == 2}">
+
+				<div class="profile">
+
+					<button id="userBtn" type="button">
+
+						<span class="user-avatar">👤</span> <span
+							th:text="${session.user.name}+#{name.polite}"></span> ▼
+
+					</button>
+
+					<div id="profileMenu">
+
+						<a th:href="@{/client/user/detail}"> マイページ </a> <a
+							th:href="@{/logout}"> ログアウト </a>
+
+					</div>
+
+				</div>
+
 			</div>
 
-			<div
-				th:if="${session.user != null and (session.user.authority == 0 or session.user.authority == 1)}"
-				class="user_info">
-				<a th:href="@{/admin/user/detail/{id}(id=${session.user.id})}"
-					th:text="${session.user.name}"></a>さん | <a th:href="@{/logout}"
-					th:text="#{logout}"></a>
+
+
+			<!-- ADMIN -->
+
+			<div class="user_info"
+				th:if="${session.user != null and
+     (session.user.authority==0 or session.user.authority==1)}">
+
+				<div class="profile">
+
+					<button id="userBtn" type="button">
+
+						<span class="user-avatar">👤</span> <span
+							th:text="${session.user.name}+#{name.polite}"></span> ▼
+
+					</button>
+
+					<div id="profileMenu">
+
+						<a th:href="@{/admin/user/detail/{id}(id=${session.user.id})}">
+							マイページ </a> <a th:href="@{/logout}"> ログアウト </a>
+
+					</div>
+
+				</div>
+
 			</div>
 
-			<div th:if="${session.user == null}" class="user_info">
-				<a class="login-btn" th:href="@{/login}" th:text="#{login}"></a> <a
+
+
+			<!-- Guest -->
+
+			<div class="guest-buttons" th:if="${session.user==null}">
+
+				<a class="login-btn" th:href="@{/login}" th:text="#{login}"> </a> <a
 					class="signup-btn" th:href="@{/client/user/regist/input/init}"
-					th:text="#{client.regist}"></a>
+					th:text="#{client.regist}"> </a>
+
+			</div>
+
+
+
+
+			<!-- Cart -->
+
+			<div class="cart-box" th:unless="${session.user==null}">
+
+				<a id="cart" th:href="@{/client/basket/list}"> <svg
+						xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+						fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
+
+                    <path
+							d="M0 2.5A.5.5
+                    0 0 1 .5 2H2a.5.5
+                    0 0 1 .485.379L2.89
+                    4H14.5a.5.5
+                    0 0 1 .485.621l-1.5
+                    6A.5.5 0 0 1
+                    13 11H4a.5.5
+                    0 0 1-.485-.379L1.61
+                    3H.5a.5.5
+                    0 0 1-.5-.5" />
+
+                    <path
+							d="M5 13a2
+                    2 0 1 0 0
+                    4a2 2 0 0
+                    0 0-4m7
+                    0a2 2 0
+                    1 0 0
+                    4a2 2
+                    0 0 0
+                    0-4" />
+
+                </svg>
+
+				</a>
+
 			</div>
 
 		</div>
-	</div>
 
+	</div>
+	<script>
+
+
+
+
+document.onclick = function () {
+    document.getElementById("searchInputBar").classList.remove("show");
+}
+
+
+
+
+
+    /* ===========================
+            PROFILE
+    ============================ */
+
+    const profileBtn=document.getElementById("userBtn");
+
+    const profileMenu=document.getElementById("profileMenu");
+
+    if(profileBtn){
+
+        profileBtn.addEventListener("click",function(e){
+
+            e.stopPropagation();
+
+            profileMenu.classList.toggle("show");
+
+            categoryMenu.classList.remove("show");
+
+        });
+
+    }
+
+
+
+
+    /* ===========================
+        OUTSIDE CLICK
+    ============================ */
+
+    document.addEventListener("click",function(e){
+
+        /* Category */
+
+        if(categoryMenu && !categoryMenu.contains(e.target)
+            && !categoryBtn.contains(e.target)){
+
+            categoryMenu.classList.remove("show");
+
+        }
+
+        /* Profile */
+
+        if(profileMenu && profileBtn){
+
+            if(!profileMenu.contains(e.target)
+                && !profileBtn.contains(e.target)){
+
+                profileMenu.classList.remove("show");
+
+            }
+
+        }
+
+    });
+
+
+
+</script>
 </body>
 </html>
