@@ -21,7 +21,6 @@ import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -190,6 +189,36 @@ public class ClientItemShowController {
 	    model.addAttribute("page", itemPage);
 
 	    model.addAttribute("categories", categoryRepository.findAll());
+
+	    return "client/item/list";
+	}
+	
+	/**
+	 * カテゴリ検索
+	 *
+	 * @param id カテゴリID
+	 * @param page ページ番号
+	 * @param model Viewとの値受渡し
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping(path = "/client/category/lists/{id}")
+	public String categorySearch(
+	        @PathVariable Integer id,
+	        @RequestParam(defaultValue = "0") int page,
+	        Model model) {
+
+	    Page<Item> itemPage = itemRepository.findByCategoryId(
+	            id,
+	            PageRequest.of(page, 20)
+	    );
+
+	    model.addAttribute("items", itemPage.getContent());
+	    model.addAttribute("page", itemPage);
+
+	    model.addAttribute("categories", categoryRepository.findAll());
+
+	    // ページ移動時にカテゴリを保持する
+	    model.addAttribute("categoryId", id);
 
 	    return "client/item/list";
 	}

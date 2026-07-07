@@ -87,21 +87,25 @@
 	</div>
 	<div class="page-button">
 
-		<a th:if="${page.hasPrevious()}" th:href="@{/client/item/list/1(page=${page.number-1})}">
-			前へ
-		</a>
+		<div class="page-button">
+			<!-- 前へ -->
+			<a th:if="${page.hasPrevious()}" th:href="${categoryId != null} ?
+		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number-1})} :
+		       @{/client/item/list/1(page=${page.number-1})}">
+				前へ
+			</a>
 
-		<div>
-			<span th:text="${page.number + 1}"></span>
-			/
-			<span th:text="${page.totalPages}"></span>
-			ページ
+			<!--現在ページ-->
+			<span th:text="${page.number + 1} + ' / ' + ${page.totalPages} + 'ページ'"></span>
+
+			<!-- 次へ -->
+			<a th:if="${page.hasNext()}" th:href="${categoryId != null} ?
+		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number+1})} :
+		       @{/client/item/list/1(page=${page.number+1})}">
+				次へ
+			</a>
+
 		</div>
-
-
-		<a th:if="${page.hasNext()}" th:href="@{/client/item/list/1(page=${page.number+1})}">
-			次へ
-		</a>
 
 	</div>
 </body>
