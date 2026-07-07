@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,6 @@ import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
-import org.springframework.data.domain.Page;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -74,7 +74,7 @@ public class ClientItemShowController {
 
 		model.addAttribute("items", items);
 		model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
-		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
+		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(0));
 
 		//	    ランキング表示用
 		//	    購入日をすべて1日に変更する
@@ -169,7 +169,7 @@ public class ClientItemShowController {
 		model.addAttribute("items", items);
 
 		model.addAttribute("categories",
-				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
+				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
 						Constant.NOT_DELETED));
 
 		return "client/item/list";
