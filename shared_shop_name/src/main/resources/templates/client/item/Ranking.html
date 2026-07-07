@@ -18,8 +18,7 @@
 		<div>
 			<a th:href="@{/client/item/ranking}" th:if="${categoryId_ == null}"
 				class=" text-xs mx-2 px-8 py-1 bg-[#FFF7F4] rounded-2xl shadow-md ">すべて</a>
-			<a th:href="@{/client/item/ranking}" th:unless="${categoryId_ == null}"
-				class=" text-xs mx-2 px-8 py-1 rounded-2xl border border-gray-100 hover:bg-[#FFF7F4] transition duration-300">すべて</a>
+
 		</div>
 		<div class="text-center mt-6">
 			<th:block th:each="category : ${categories}">
@@ -36,31 +35,32 @@
 			<div th:each="item, stat : ${rankings}" th:if="${stat.index &lt; 10}"
 				class="flex mt-5 w-65 bg-white rounded-3xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
 
-				<a th:href="@{/client/item/detail/}+${item.id}" class="w-full">
-					<div class="relative">
-						<!-- 商品画像がある場合 -->
-						<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}"
-							class="w-full h-75 object-cover" />
 
-						<!-- 商品画像がない場合 -->
-						<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}"
-							class="w-full h-75 object-cover" />
+				<a th:href="@{/client/item/detail/}+${item.id}"
+					style="display: block; width: 150px; height: 150px; overflow: hidden; background-color: #f5f5f5;">
+					<!--										商品画像がある場合-->
+					<img th:if="${item.image != null}" th:src="@{|/images/${item.image}|}"
+						style="width: 100%; height: 100%; object-fit: cover;" />
+					<!--												 画像がない場合-->
+					<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}"
+						style="width: 100%; height: 100%; object-fit: cover;" />
 
-						<!-- 順位バッジの表示 -->
-						<div class="absolute top-4 left-4">
-							<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold"
-								th:text="${stat.count} + '位'">
 
-							</span>
-						</div>
+					<!-- 順位バッジの表示 -->
+					<div class="absolute top-4 left-4">
+						<span class="bg-white pr-3 pl-7 py-2 rounded-full shadow-md font-bold"
+							th:text="${stat.count} + '位'">
 
+						</span>
 					</div>
 
-
 			</div>
-			</a>
+
 
 		</div>
+		</a>
+
+	</div>
 	</div>
 
 	<!-- 今月のランキング商品がない場合の表示 -->

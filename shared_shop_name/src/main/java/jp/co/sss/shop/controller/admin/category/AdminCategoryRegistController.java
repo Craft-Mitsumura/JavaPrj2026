@@ -172,7 +172,7 @@ public class AdminCategoryRegistController {
 
 		// カテゴリ情報を全件検索
 		List<Category> categoryList = categoryRepository
-				.findByDeleteFlagOrderByInsertDateDescIdDesc(Constant.NOT_DELETED);
+				.findByDeleteFlagOrderByInsertDateDescIdAsc(Constant.NOT_DELETED);
 
 		// エンティティ内の検索結果をJavaBeansにコピー
 		List<CategoryBean> categoryBeanList = beanTools.copyEntityListToCategoryBeanList(categoryList);
