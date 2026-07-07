@@ -73,7 +73,7 @@ public class ClientItemShowController {
 
 	    model.addAttribute("items", items);
 	    model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
-	    model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
+	    model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(0));
 	    
 //	    ランキング表示用
 //	    購入日をすべて同月の1日に変更する
@@ -177,7 +177,7 @@ public class ClientItemShowController {
 		model.addAttribute("items", items);
 
 		model.addAttribute("categories",
-				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
+				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
 						Constant.NOT_DELETED));
 
 		return "client/item/list";

@@ -40,7 +40,7 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	 * @param deleteFlag 削除フラグ
 	 * @return カテゴリエンティティのリスト
 	 */
-	List<Category> findByDeleteFlagOrderByInsertDateDescIdDesc(int deleteFlag);
+	List<Category> findByDeleteFlagOrderByInsertDateDescIdAsc(int deleteFlag);
 
 	
 	/**
@@ -49,8 +49,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	 * @param pageable ページング情報
 	 * @return カテゴリエンティティのページオブジェクト
 	 */
-	@Query("SELECT c FROM Category c WHERE c.deleteFlag =:deleteFlag ORDER BY c.insertDate DESC,c.id DESC")
-	Page<Category> findByDeleteFlagOrderByInsertDateDescIdDescPage(
+	@Query("SELECT c FROM Category c WHERE c.deleteFlag =:deleteFlag ORDER BY c.id Asc")
+	Page<Category> findByDeleteFlagOrderByIdAscPage(
 			@Param(value = "deleteFlag") int deleteFlag, Pageable pageable);
 
 }
