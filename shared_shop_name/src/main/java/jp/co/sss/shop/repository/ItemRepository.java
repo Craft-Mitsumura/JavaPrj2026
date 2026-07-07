@@ -55,7 +55,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT r.item FROM Rankings r WHERE r.salesMonth = :salesMonth ORDER BY r.total DESC")
 	List<Item> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
-	
+
 	/**
 	 * カテゴリ別ランキング検索
 	 * @param salesMonth 売上月

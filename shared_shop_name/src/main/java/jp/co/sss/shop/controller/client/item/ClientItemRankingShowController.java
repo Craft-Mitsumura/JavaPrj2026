@@ -30,6 +30,9 @@ public class ClientItemRankingShowController {
 	@Autowired
 	ItemRepository itemrepo;
 
+	/**
+	 * カテゴリレポジトリ
+	 */
 	@Autowired
 	CategoryRepository caterepo;
 
@@ -38,6 +41,7 @@ public class ClientItemRankingShowController {
 	 * @param model リクエストスコープ
 	 * @return ランキング一覧画面
 	 */
+	
 	@GetMapping("/client/item/ranking")
 	public String showRankingList(@RequestParam(name = "categoryId", required = false) Integer categoryId,
 			Model model) {
@@ -55,7 +59,7 @@ public class ClientItemRankingShowController {
 			// 通常の全体用NamedQueryを呼び出す
 			findByRanking = itemrepo.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
 
-			//				 画面の見出しを「〇〇年〇月度 」にする
+			//				 画面の見出しを「〇〇年〇月度 [総合ランキング] 」にする
 			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
 			//			
 		}
