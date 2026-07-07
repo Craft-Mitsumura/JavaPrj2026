@@ -77,11 +77,12 @@
 
 
 				<a th:href="@{/client/item/detail/}+*{id}">
-					<div class="relative w-full h-75">
+					<img th:if="*{image != null}"
+									     th:src="@{|/images/*{image}|}"
+									     style="width: 100%; height: 100%; object-fit: cover;" />
 
-
-						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"
-							class="w-full h-full object-cover" />
+<!--						<img th:src="@{/images/{image}(image=*{image})}" th:if="*{image != null}"-->
+<!--							class="w-full h-full object-cover" />-->
 
 
 						<img th:src="@{/images/common/no_image.jpg}" th:if="*{image == null}"
