@@ -1,15 +1,19 @@
 @charset "UTF-8";
 
-body{
-    margin:0;
-    padding:30px;
-    font-family: Yu Gothic;
+body {
+	margin: 0;
+	padding: 30px;
+	font-family: Yu Gothic;
+}
+
+#prize{
+	padding:30px;
 }
 
 /* 全体 */
 #prize .prize_card img {
-	width: 140px !important;
-	height: 140px !important;
+	width: 120px !important;
+	height: 120px !important;
 	object-fit: cover;
 }
 
@@ -49,7 +53,11 @@ body{
 	background: #f7f7f7;
 	padding: 25px;
 	border-radius: 10px;
-	box-shadow: 0 3px 8px rgba(0,0,0,.1);
+	box-shadow: 0 3px 8px rgba(0, 0, 0, .1);
+}
+
+.point {
+	margin-bottom: 20px;
 }
 
 .point_info h3 {
@@ -65,21 +73,27 @@ body{
 
 /* 景品一覧 */
 .prize_list {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 30px;
-	margin-bottom: 50px;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 50px;
+	max-width: 1300px;
+	margin: 0 auto 60px;
+	padding: 0 20px;
 }
 
 .prize_card {
-	width: 280px;
+	width: 100%;
+	min-height: 330px;
 	background: white;
 	border-radius: 12px;
-	box-shadow: 0 4px 12px rgba(0,0,0,.15);
-	padding: 20px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+	padding: 30px 20px;
 	text-align: center;
 	transition: .2s;
+}
+
+.prize_card:first-child .timeline::before {
+	display: none;
 }
 
 .prize_card:hover {
@@ -92,9 +106,9 @@ body{
 }
 
 .prize_card img {
-	width: 100%;
+	width: 120px;
 	max-width: 160px;
-	height: auto;
+	height: 120px;
 	object-fit: contain;
 }
 
@@ -109,11 +123,60 @@ body{
 	line-height: 1.6;
 }
 
+.prize_card:nth-child(6) .timeline::before,
+.prize_card:nth(6) .timeline::before {
+	display: none;
+}
+
+.prize_card:nth-child(6) .timeline::before {
+	left: 10%;
+	width: 40%;
+}
+
+.timeline_dot {
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #1f3b64;
+	margin: 15px auto;
+}
+
+.timeline {
+	position: relative;
+	height: 24px;
+	margin-bottom: 20px 0 24px;
+}
+
+.timeline::before {
+	content: "";
+	position: absolute;
+	top: 8px;
+	left: -77%;
+	width: 131%;
+	height: 4px;
+	background: #1f3b64;
+	transform: translateY(-50%);
+	z-index: 0;
+}
+
+.timeline_dot {
+	position: relative;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #1f3b64;
+	margin: 0 auto;
+	z-index: 1;
+}
+
 /* 注意事項 */
 .notice {
-	background: #fff8e8;
-	padding: 25px;
-	border-radius: 10px;
+	margin: 60px auto;
+	padding: 35px 55px;
+	background: #17365d;
+	color: white;
+	border-radius: 16px;
+	border-left: none;
 	border-left: 6px solid #d4af37;
 }
 

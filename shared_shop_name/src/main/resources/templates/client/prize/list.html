@@ -65,7 +65,12 @@
 
 	    <div class="prize_card" th:each="prize : ${prizeList}">
 
-	        <h2 th:text="${prize.requiredPoint} + ' pt'"></h2>
+	        <div class="point"
+	             th:text="${prize.requiredPoint} + ' pt'">
+	        </div>
+			
+			<div class="timeline">
+			        <div class="timeline_dot"></div>
 
 	        <img th:src="@{/images/{file}(file=${prize.image})}"
 	             alt="景品画像">
@@ -76,6 +81,8 @@
 
 	    </div>
 
+	</div>
+	
 	</div>
 
 	<!-- 注意事項 -->
