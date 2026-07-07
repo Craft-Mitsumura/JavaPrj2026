@@ -1,11 +1,8 @@
 package jp.co.sss.shop.controller.client.item;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,33 +58,20 @@ public class ClientItemShowController {
 
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
-		
-		//売れ筋順の仮表示用
-		// 売れ筋順で全商品を取得
-		List<Item> items = itemRepository.findAllOrderBySales();
+	    
+	    // 新着商品順の表示用
+	    // 【変更点】新着順（例：登録日の新しい順）で全商品を取得するメソッドに差し替え
+		List<Item> items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED);
 
-		// トップ画面用に最大4件に絞り込む
-		if (items.size() > 4) {
-			items = items.subList(0, 4);
-		}
+	    // トップ画面用に最大4件に絞り込む（ここはそのまま使えます！）
+	    if (items.size() > 4) {
+	        items = items.subList(0, 4);
+	    }
 
-		model.addAttribute("items", items);
-		model.addAttribute("sortType", 2); // デフォルトは売れ筋順(2)として扱う
-		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
-		//売れ筋順の仮表示用　ここまで
-//		ランキング表示用
-		
-		LocalDate today = LocalDate.now();
-		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
-		List<Item> findByRanking = new ArrayList<>();
-
-		// 通常の全体用NamedQueryを呼び出す
-		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
-
-		
-		//  正しいデータが入ったリストを画面に渡す
-		model.addAttribute("rankings", findByRanking);
-//		ランキング表示用ここまで
+	    model.addAttribute("items", items);
+	    model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
+	    model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(0));
+	    
 		return "index";
 	}
 
