@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
@@ -175,21 +174,34 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
+
 	/**
 	 * 商品一覧表示（カテゴリ検索）
 	 *
 	 * @param id カテゴリID
+	 * @param page ページ番号
 	 * @param model Viewとの値受渡し
-	 * @return "client/item/list" 商品一覧画面
+	 * @return 商品一覧画面
 	 */
 	@RequestMapping(path = "/client/category/lists/{id}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String categorySearch(@PathVariable Integer id,
-			Model model) {
-		System.out.println("Category Controller Hit");
-		List<Category> categories = categoryRepository.findAll();
-		List<Item> items = itemRepository.findByCategoryId(id);
-		model.addAttribute("items", items);
-		model.addAttribute("categories", categories);
+	public String categorySearch(
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "0") int page,
+			Model model) 
+	{
+
+		Page<Item> itemPage = itemRepository.findByCategoryId(
+				id,
+				PageRequest.of(page, 20));
+
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
+
+		model.addAttribute("categories", categoryRepository.findAll());
+
+		// ページ移動時にカテゴリを保持する
+		model.addAttribute("categoryId", id);
+
 		return "client/item/list";
 	}
 
@@ -240,32 +252,4 @@ public class ClientItemShowController {
 
 	}
 
-	/**
-	 * カテゴリ検索
-	 *
-	 * @param id カテゴリID
-	 * @param page ページ番号
-	 * @param model Viewとの値受渡し
-	 * @return 商品一覧画面
-	 */
-	@RequestMapping(path = "/client/category/lists/{id}")
-	public String categorySearch(
-			@PathVariable Integer id,
-			@RequestParam(defaultValue = "0") int page,
-			Model model) {
-
-		Page<Item> itemPage = itemRepository.findByCategoryId(
-				id,
-				PageRequest.of(page, 20));
-
-		model.addAttribute("items", itemPage.getContent());
-		model.addAttribute("page", itemPage);
-
-		model.addAttribute("categories", categoryRepository.findAll());
-
-		// ページ移動時にカテゴリを保持する
-		model.addAttribute("categoryId", id);
-
-		return "client/item/list";
-	}
 }
