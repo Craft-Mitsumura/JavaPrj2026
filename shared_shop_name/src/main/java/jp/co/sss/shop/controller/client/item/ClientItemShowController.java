@@ -196,7 +196,22 @@ public class ClientItemShowController {
 		model.addAttribute("categories",categories);
 		return"client/item/list";
 	}
+
+	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
+	public String itemSearch(Model model, @RequestParam(required = false) String items) {
+
+		List<Item> item = itemRepository.findByNameContaining(items);
+    if(items != null) {
+    	model.addAttribute("items", item);
+    	
+    }else {
+   
+		model.addAttribute("items", items);
+    }
 	
-	 
+
+		return "client/item/list";
 	}
+
+}
 
