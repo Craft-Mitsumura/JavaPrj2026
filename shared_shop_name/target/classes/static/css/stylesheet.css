@@ -1182,103 +1182,11 @@ Cart
 
 }
 
-/* #searchBtn{
-	cursor:pointer;
-}
-#searchInputBar input{
-	display:none;
-}
 
-#categoryLists{
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 1.4s ease, opacity 1.3s ease;
-}
-
-#categoryLists.show{
-    max-height: 500px; 
-    opacity: 1;
-} */
-/* \\\\\\\\\------------------ */
-/* #containerd .header-center{
-    position:relative;
-}
-
-Button
-
-#categoryBtn{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:10px 18px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:600;
-    transition:.3s;
-}
-
-#categoryBtn:hover{
-    background:#1d4ed8;
-}
-
-Dropdown
-
-#categoryLists{
-    position:absolute;
-    top:48px;
-    left:0;
-    width:240px;
-
-    background:white;
-    border-radius:10px;
-    box-shadow:0 10px 25px rgba(0,0,0,.18);
-
-    opacity:0;
-    visibility:hidden;
-    transform:translateY(-10px);
-
-    transition:.3s;
-    z-index:999;
-}
-
-#categoryLists.show{
-    opacity:1;
-    visibility:visible;
-    transform:translateY(0);
-}
-
-#category{
-    list-style:none;
-    margin:0;
-    padding:8px 0;
-}
-
-#category li{
-    border-bottom:1px solid #eee;
-}
-
-#category li:last-child{
-    border-bottom:none;
-}
-
-#category a{
-    display:block;
-    padding:12px 18px;
-    text-decoration:none;
-    color:#333;
-    transition:.2s;
-}
-
-#category a:hover{
-    background:#f5f5f5;
-    color:#2563eb;
-    padding-left:25px;
-}
- */
+ 
+ /* tryout top page  */
 
 
-/* tryout top page  */
 /*=====================================================
                 HEADER MAIN
 ======================================================*/
@@ -1457,11 +1365,11 @@ Dropdown
 
 #containerd .header-search {
 
-	display: flex;
+    display:flex;
+    align-items:left;
+    margin-left:40%;
+    gap:12px;
 
-	align-items: center;
-
-	gap: 12px;
 
 }
 
@@ -1501,35 +1409,37 @@ Dropdown
 
 /* Search Form Hidden */
 
-#containerd #searchInputBar {
+#containerd #searchInputBar{
 
-	display: flex;
+    display:flex;
+    align-items:center;
+    gap:8px;
 
-	align-items: center;
+    position:absolute;
+    right:28%;      /* search icon को छेउमा */
+    top:50%;
+    transform:translateY(-50%) translateX(30px) scale(.8);
 
-	gap: 8px;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
 
-	max-width: 0;
-
-	opacity: 0;
-
-	overflow: hidden;
-
-	transition:
-
-		max-width .45s ease,
-
-		opacity .35s ease;
+    transition:
+        transform .45s cubic-bezier(.22,1,.36,1),
+        opacity .55s ease,
+        visibility .35s;
 
 }
-
 /* JS le .show add garne */
 
 #containerd #searchInputBar.show {
 
-	max-width: 420px;
 
-	opacity: 1;
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+
+    transform:translateY(-50%) translateX(-30) scale(1);
 
 }
 
@@ -1539,12 +1449,14 @@ Dropdown
 
 #containerd .search-wrapper {
 
-	background: white;
 
-	border-radius: 30px;
+    width:0;
+    overflow:hidden;
 
-	overflow: hidden;
+    background:#fff;
+    border-radius:30px;
 
+    transition:width .45s cubic-bezier(.22,1,.36,1);
 }
 
 #containerd .search-wrapper input {
@@ -1569,27 +1481,30 @@ Dropdown
 
 #containerd .search-btn {
 
-	height: 42px;
 
-	padding: 0 18px;
+    opacity:0;
 
-	border: none;
+    transform:translateX(-15px);
 
-	border-radius: 25px;
-
-	background: #f59e0b;
-
-	color: white;
-
-	cursor: pointer;
-
-	font-weight: 600;
-
-	transition: .25s;
+    transition:
+        opacity .25s ease .15s,
+        transform .25s ease .15s;
 
 }
+#containerd #searchInputBar.show .search-btn{
 
-#containerd .search-btn:hover {
+
+    opacity:1;
+
+    transform:translateX(0);
+
+}
+#containerd #searchInputBar.show .search-wrapper{
+
+    width:260px;
+
+}
+#containerd .search-btn:hover{
 
 	background: #d97706;
 
@@ -1727,17 +1642,20 @@ Dropdown
 
 	color: #374151;
 
-	transition: .25s;
 
-	font-size: 10px;
+    transition:.25s;
+ 
+    text-align:center;
 
 }
 
 #containerd #profileMenu a:hover {
 
-	background: #eff6ff;
 
-	color: #2563eb;
+    background:#eff6ff;
+ font-weight:200px;
+    font-size:10px;
+    color:#2563eb;
 
 	padding-left: 24px;
 
@@ -1885,9 +1803,9 @@ Dropdown
 
 #containerd #searchInputBar.show {
 
-	width: 380px;
 
-	opacity: 1;
+    width:380px;
+    opacity:1;
 
 }
 
@@ -1925,9 +1843,10 @@ Dropdown
 
 	position: absolute;
 
-	top: 50px;
 
-	right: 0;
+    top:60px;
+
+    left:0;
 
 	width: 180px;
 
