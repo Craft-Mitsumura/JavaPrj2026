@@ -107,8 +107,8 @@ header {
  * また、レスポンシブにも対応できるため、px指定と比べ柔軟性に優れます。
  */
 .user_info {
-	text-align: right;
-	padding-top: 15px;
+	text-align: center;
+	padding-top: 25px;
 }
 .user_info a {
 	text-decoration: none;
