@@ -354,7 +354,9 @@ li.error_msg {
 	display: block;
 	width: 100%;
 	margin-top: 30px;
+	
 }
+
 
 .detail_button_area form {
 	/* display: inline-block; */
@@ -1898,4 +1900,103 @@ Cart
 
 	color: #2563eb;
 
+}
+/* 新着順 */
+
+
+/* 商品一覧全体のコンテナ（横並びにする） */
+#itemList .item_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* カード間の隙間 */
+    padding: 20px;
+    align-items: stretch;
+}
+
+/* 1件分の商品カード（枠線とサイズ） */
+#itemList .itemList {
+    display: flex;
+    flex-direction: column;
+    width: 250px; /* カードの横幅（お好みで調整してください） */
+    border: 2px solid #a38c5c; /* 金色・茶色系の枠線 */
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* 1. 商品画像エリア */
+#itemList .itemList a:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    overflow: hidden;
+}
+
+/* 画像自体のサイズ調整 */
+#itemList .itemList img {
+   width: 100%;
+height: 100%;
+    object-fit: cover;
+    transition:0.4s;
+    
+}
+#itemList .itemList img:hover {
+	  transition: transform .25s ease, box-shadow .25s ease;
+transform: translatex(-4px); 
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);	
+	}
+/* 2. 商品名と3. 値段の共通テキストエリア（濃い紺色の背景） */
+#itemList .item_name, 
+#itemList .item_price {
+    background-color: #0b2240; /* 濃い紺色 */
+    text-align: center;
+    padding: 10px 5px;
+    height:50px;
+}
+
+/* 商品名のリンク文字（白。上下の余白調整） */
+#itemList .item_name {
+    padding-top: 20px;
+}
+
+#itemList .item_name a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+}
+
+/* 値段の文字（金色・黄色。太字） */
+#itemList .item_price {
+    color: #e5c158; /* 金色・黄色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    margin-top: auto; /* 下部に固定 */
+}
+
+/* 下部にある「すべての商品をみる」ボタンエリアの調整 */
+#itemList .detail_button_area {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    
+}
+
+#itemList .itemList {
+   height:330px;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#itemList .itemList:hover {
+transform: translateY(-6px);
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
+}
+
+#moreBtn{
+	width:20%;
 }
