@@ -173,23 +173,22 @@ public class ClientItemShowController {
 	 * @param page ページ番号
 	 * @return 商品一覧画面
 	 */
-	/*
-	 * @RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET,
-	 * RequestMethod.POST }) public String showAll( Model model, //@PathVariable
-	 * Integer sortType,
-	 * 
-	 * @RequestParam(defaultValue = "0") int page) {
-	 * 
-	 * Page<Item> itemPage = itemRepository.findAll( PageRequest.of(page, 20));
-	 * 
-	 * model.addAttribute("items", itemPage.getContent());
-	 * model.addAttribute("page", itemPage);
-	 * 
-	 * model.addAttribute("categories", categoryRepository.findAll());
-	 * 
-	 * return "client/item/list";
-	 * 
-	 * }
-	 */
+	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showAll(
+			Model model,
+			//@PathVariable Integer sortType,
+			@RequestParam(defaultValue = "0") int page) {
+
+		Page<Item> itemPage = itemRepository.findAll(
+				PageRequest.of(page, 20));
+
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
+
+		model.addAttribute("categories", categoryRepository.findAll());
+
+		return "client/item/list";
+
+	}
 
 }
