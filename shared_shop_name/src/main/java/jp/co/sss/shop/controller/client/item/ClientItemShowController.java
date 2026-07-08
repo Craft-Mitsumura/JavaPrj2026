@@ -152,27 +152,27 @@ public class ClientItemShowController {
 	 * @param model Viewとの値受渡し
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping(path = "/client/item/list/search/")
-	public String topSearch(
-			@RequestParam String searchItems,
-			Model model) {
-
-		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
-				searchItems,
-				Constant.NOT_DELETED);
-
-		//		            stockCalc.updateManyItemStock(items);
-
-		model.addAttribute("searchItems", searchItems);
-
-		model.addAttribute("items", items);
-
-		model.addAttribute("categories",
-				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
-						Constant.NOT_DELETED));
-
-		return "client/item/list";
-	}
+//	@RequestMapping(path = "/client/item/list/search/")
+//	public String topSearch(
+//			@RequestParam String searchItems,
+//			Model model) {
+//
+//		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
+//				searchItems,
+//				Constant.NOT_DELETED);
+//
+//		//		            stockCalc.updateManyItemStock(items);
+//
+//		model.addAttribute("searchItems", searchItems);
+//
+//		model.addAttribute("items", items);
+//
+//		model.addAttribute("categories",
+//				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
+//						Constant.NOT_DELETED));
+//
+//		return "client/item/list";
+//	}
 
 
 	/**
@@ -213,18 +213,25 @@ public class ClientItemShowController {
 	 * @return "client/item/list" 商品一覧画面
 	 */
 	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String itemSearch(Model model, @RequestParam(required = false) String items) {
+	public String itemSearch(
+	        Model model,
+	        @RequestParam(required = false) String items) {
+		
+	    List<Item> itemList = new ArrayList<>();
 
-		List<Item> item = itemRepository.findByNameContaining(items);
-		if (items != null) {
-			model.addAttribute("items", item);
+	    if (items != null && !items.isEmpty()) {
+	    	itemList = itemRepository.findByNameOrCategoryContaining(
+	    	        items,
+	    	        Constant.NOT_DELETED);
+	    }
+	   
+	    model.addAttribute("items", itemList);
 
-		} else {
+	    model.addAttribute("categories",
+	            categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
+	                    Constant.NOT_DELETED));
 
-			model.addAttribute("items", items);
-		}
-
-		return "client/item/list";
+	    return "client/item/list";
 	}
 
 	/**
