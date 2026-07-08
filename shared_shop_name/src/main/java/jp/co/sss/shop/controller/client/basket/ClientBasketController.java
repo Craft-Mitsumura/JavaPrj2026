@@ -111,7 +111,7 @@ public class ClientBasketController {
 			}
 		}
 		// 商品一覧のところ移動する	
-		return "redirect:/client/order/list";
+		return "redirect:/client/basket/list";
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class ClientBasketController {
 	// sessionスコープにの値削除する
 		session.removeAttribute("basketBeans");
 	// 商品一覧のところ移動する
-		return "redirect:/client/order/list";
+		return "redirect:/client/basket/list";
 	}
 
 }
