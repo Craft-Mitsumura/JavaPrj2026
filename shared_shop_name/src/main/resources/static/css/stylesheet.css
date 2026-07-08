@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+﻿﻿@charset "UTF-8";
 
 body {
 	color: #12526d;
@@ -127,7 +127,7 @@ p {
 	border-style: solid;
 	border-color: #808080;
 	padding: 0px 10px;
-	margin: 15px 5px 15px 5px;
+	
 	border-radius: 6px;
 	font-weight: bold;
 }
@@ -1216,6 +1216,7 @@ Cart
 	display: flex;
 	align-items: center;
 	gap: 22px;
+	margin-top:4%;
 }
 
 #containerd .header-left {
@@ -1364,7 +1365,7 @@ Cart
 ========================================== */
 
 #containerd .header-search {
-
+    margin-top:2%;
     display:flex;
     align-items:left;
     margin-left:40%;
@@ -1452,7 +1453,7 @@ Cart
 
     width:0;
     overflow:hidden;
-
+    margin-top:5%;
     background:#fff;
     border-radius:30px;
 
@@ -1483,7 +1484,7 @@ Cart
 
 
     opacity:0;
-
+    margin-top:5%;
     transform:translateX(-15px);
 
     transition:
@@ -1738,7 +1739,7 @@ Cart
 #containerd .cart-box {
 
 	display: flex;
-
+    margin-top:10%;
 	align-items: center;
 
 }
@@ -1868,7 +1869,6 @@ Cart
 
 }
 
-/* Hover गर्दा खुल्ने */
 
 #containerd .profile:hover #profileMenu {
 
