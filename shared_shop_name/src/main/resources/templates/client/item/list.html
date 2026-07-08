@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
 	<title th:text="#{item}+#{title.list}+' | '+ #{shop.title}"> </title>
@@ -85,18 +85,17 @@
 		</div>
 
 	</div>
-	<div class="page-button">
+	<div class="page-button" th:if="${page != null}">
 
 		<div class="page-button">
 			<!-- 前へ -->
 			<a th:if="${page.hasPrevious()}" th:href="${categoryId != null} ?
 		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number-1})} :
 		       @{/client/item/list/1(page=${page.number-1})}">
-				前へ
-			</a>
+				前へ</a>
 
 			<!--現在ページ-->
-			<span th:text="${page.number + 1} + ' / ' + ${page.totalPages} + 'ページ'"></span>
+			<span th:text="${page.number + 1 + ' / ' + page.totalPages + 'ページ'}"></span>
 
 			<!-- 次へ -->
 			<a th:if="${page.hasNext()}" th:href="${categoryId != null} ?

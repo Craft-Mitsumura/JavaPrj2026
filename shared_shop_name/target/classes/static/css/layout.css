@@ -80,7 +80,7 @@ header .container {
 }
 
 .admin header {
-	background: #ff8669;
+	background: #12526d;
 }
 
 header {
@@ -107,8 +107,8 @@ header {
  * また、レスポンシブにも対応できるため、px指定と比べ柔軟性に優れます。
  */
 .user_info {
-	text-align: right;
-	padding-top: 15px;
+	text-align: center;
+	padding-top: 25px;
 }
 .user_info a {
 	text-decoration: none;
@@ -200,11 +200,11 @@ aside.admin_menu {
 }
 
 .admin_menu .title {
-	background: #ff6c49;
+	background: #12526d;
 	padding: 5px;
 }
 .admin_menu_list .title {
-	background: #ff6c49;
+	background: #12526d;
 }
 .search .form {
 	padding: 15px 0 50px 5px;
@@ -274,7 +274,7 @@ aside.admin_menu {
 	display: none;
 }
 .admin .main .title {
-	background: #ff6c49;
+	background: #12526d;
 }
 
 .container.content > .admin_menu{
@@ -373,7 +373,7 @@ footer {
 }
 
 .admin footer {
-	background: #ff8669;
+	background: #12526d;
 }
 
 small {
