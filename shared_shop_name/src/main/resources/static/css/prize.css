@@ -7,26 +7,39 @@ body {
 }
 
 #prize{
-	padding:30px;
+    width:100%;
+    max-width:1200px;
+    margin:0 auto;
+    padding:30px;
+    box-sizing:border-box;
 }
 
 /* 景品ページだけメイン領域を広くする */
-body.prize .container {
-    width: 1200px;
-}
 
 body.prize .main {
     width: 100%;
 }
 
-body.prize .container {
-    width: 95%;
-    max-width: 1400px;
-}
 
 body.prize .main {
     width: 100%;
 }
+
+body.prize #prize {
+    text-align: center;
+}
+
+body.prize #prize h2,
+body.prize #prize h3 {
+    text-align: center;
+}
+
+body.prize .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /* 全体 */
 #prize .prize_card img {
 	width: 120px !important;
@@ -36,7 +49,6 @@ body.prize .main {
 
 /* 上部 */
 .prize_header {
-    max-width: 1300px;
     margin: 0 auto 40px;
     text-align: center;
 }
@@ -45,6 +57,11 @@ body.prize .main {
 	color: #777;
 	font-size: 14px;
 	margin-bottom: 10px;
+}
+
+.prize_wrapper {
+    position: relative;
+    width: 100%;
 }
 
 .prize_header h1 {
@@ -61,23 +78,27 @@ body.prize .main {
 /* ポイント説明 */
 .point_info {
     display: flex;
-    gap: 30px;
-
-    max-width: 1300px;
+    justify-content: center;
+    gap: 60px;
     margin: 0 auto 50px;
 }
 
 .point_left,
 .point_right {
-	flex: 1;
-	background: #f7f7f7;
-	padding: 25px;
-	border-radius: 10px;
-	box-shadow: 0 3px 8px rgba(0, 0, 0, .1);
+    width: 420px;
+    flex: none;
+
+    background: #f7f7f7;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,.1);
 }
 
-.point {
-	margin-bottom: 20px;
+.point{
+    color:#1f3b64;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:12px;
 }
 
 .point_info h3 {
@@ -92,28 +113,23 @@ body.prize .main {
 }
 
 /* 景品一覧 */
-.prize_list {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	gap: 50px;
-	max-width: 1300px;
-	margin: 0 auto 60px;
-	padding: 0 20px;
+.prize_list{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:30px;
+    justify-items:center;
+    margin:60px auto;
 }
 
-.prize_card {
-	width: 100%;
-	min-height: 330px;
-	background: white;
-	border-radius: 12px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
-	padding: 30px 20px;
-	text-align: center;
-	transition: .2s;
-}
-
-.prize_card:first-child .timeline::before {
-	display: none;
+.prize_card{
+    width:190px;
+    min-height:330px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    padding:25px 15px;
+    text-align:center;
+    transition:.2s;
 }
 
 .prize_card:hover {
@@ -143,60 +159,18 @@ body.prize .main {
 	line-height: 1.6;
 }
 
-.prize_card:nth-child(6) .timeline::before,
-.prize_card:nth(6) .timeline::before {
-	display: none;
-}
 
-.prize_card:nth-child(6) .timeline::before {
-	left: 10%;
-	width: 40%;
-}
-
-.user.prize #prize {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.timeline_dot {
-	width: 18px;
-	height: 18px;
-	border-radius: 50%;
-	background: #1f3b64;
-	margin: 15px auto;
-}
-
-.timeline {
-	position: relative;
-	height: 24px;
-	margin-bottom: 20px 0 24px;
-}
-
-.timeline::before {
-	content: "";
-	position: absolute;
-	top: 8px;
-	left: -77%;
-	width: 131%;
-	height: 4px;
-	background: #1f3b64;
-	transform: translateY(-50%);
-	z-index: 0;
-}
-
-.timeline_dot {
-	position: relative;
-	width: 16px;
-	height: 16px;
-	border-radius: 50%;
-	background: #1f3b64;
-	margin: 0 auto;
-	z-index: 1;
+.timeline_dot{
+    width:16px;
+    height:16px;
+    background:#1f3b64;
+    border-radius:50%;
+    margin:0 auto 20px;
 }
 
 /* 注意事項 */
 .notice {
+	width: 100%;
 	margin: 60px auto;
 	padding: 35px 55px;
 	background: #17365d;
@@ -248,4 +222,13 @@ table img {
 	width: 80px;
 	height: auto;
 	border-radius: 6px;
+}
+
+.container {
+    width: 1200px !important;
+    max-width: 1200px !important;
+}
+
+.main {
+    width: 100% !important;
 }
