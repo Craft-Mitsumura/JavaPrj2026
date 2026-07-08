@@ -113,12 +113,15 @@ public class URLCheck {
 				&& !requestURL.endsWith("/login")
 				&& !requestURL.endsWith(contextPath + "/")
 				&& requestURL.indexOf("/client/item/list/") == -1
+			
+				&& requestURL.indexOf("/client/category/lists/") == -1
 				&& requestURL.indexOf("/client/item/detail/") == -1
 				&& requestURL.indexOf("/client/user/delete/") == -1
 				&& requestURL.indexOf("/client/ad/page/") == -1 //広告用；金城
 				&& !requestURL.endsWith("/client/user/regist/input/init")
 				&& !requestURL.endsWith("/client/user/regist/input")
 				&& !requestURL.endsWith("/client/user/regist/input/check")
+				&& !requestURL.endsWith("/client/item/ranking")
 				&& !requestURL.endsWith("/client/user/regist/check")
 				&& !requestURL.endsWith("/client/user/regist/check/back")
 				&& !requestURL.endsWith("/client/user/regist/complete")) {
