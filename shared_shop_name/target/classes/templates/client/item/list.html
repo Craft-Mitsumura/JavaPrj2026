@@ -85,7 +85,7 @@
 		</div>
 
 	</div>
-	<div class="page-button">
+	<div class="page-button" th:if="${page != null}">
 
 		<div class="page-button">
 			<!-- 前へ -->
@@ -93,11 +93,19 @@
 		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number-1})} :
 		       @{/client/item/list/1(page=${page.number-1})}">
 				前へ</a>
+<<<<<<< HEAD
 				
 				<!--現在ページ-->
 				<span th:text="${page.number + 1 + ' / ' + page.totalPages + 'ページ'}"></span>
 				
 				<!-- 次へ -->
+=======
+
+			<!--現在ページ-->
+			<span th:text="${page.number + 1 + ' / ' + page.totalPages + 'ページ'}"></span>
+
+			<!-- 次へ -->
+>>>>>>> 958fb647462688fb9adcf78431eff6f2a78cbbc6
 			<a th:if="${page.hasNext()}" th:href="${categoryId != null} ?
 		       @{/client/category/lists/{id}(id=${categoryId},page=${page.number+1})} :
 		       @{/client/item/list/1(page=${page.number+1})}">

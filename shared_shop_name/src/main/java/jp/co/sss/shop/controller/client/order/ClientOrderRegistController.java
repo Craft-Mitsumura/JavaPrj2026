@@ -1,6 +1,5 @@
 package jp.co.sss.shop.controller.client.order;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +20,7 @@ import jp.co.sss.shop.bean.OrderItemBean;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Order;
+import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.OrderForm;
 import jp.co.sss.shop.repository.ItemRepository;
@@ -383,12 +383,31 @@ public class ClientOrderRegistController {
 		order.setPayMethod(orderForm.getPayMethod());
 		
 		// 注文テーブルおよび注文商品テーブルのDB 登録実施
+		// 注文情報を保存
 		orderRepository.save(order);
-		
-		// 今日の日付取得
-		LocalDate today = LocalDate.now();
-		
-		
+
+		// 注文商品情報を保存
+		for (BasketBean basket : basketBeans) {
+
+		    // 商品情報取得
+		    Item item = itemRepository.getReferenceById(basket.getId());
+
+		    // 注文商品エンティティ作成
+		    OrderItem orderItem = new OrderItem();
+
+		    orderItem.setOrder(order);
+		    orderItem.setItem(item);
+		    orderItem.setQuantity(basket.getOrderNum());
+		    orderItem.setPrice(item.getPrice());
+
+		    // 保存
+		    orderItemRepository.save(orderItem);
+
+		    // 在庫更新
+		    item.setStock(item.getStock() - basket.getOrderNum());
+		    itemRepository.save(item);
+		}
+			
 		session.removeAttribute("orderForm");
 		session.removeAttribute("basketBeans");
 		

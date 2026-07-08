@@ -89,43 +89,6 @@ public class ClientItemShowController {
 	}
 
 	/**
-	 * 商品一覧表示（カテゴリ検索）
-	 *
-	 * @param categoryId カテゴリID
-	 * @param model Viewとの値受渡し
-	 * @return 商品一覧画面
-	 */
-	/*
-	 * @RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET,
-	 * RequestMethod.POST }) public String showListItems(
-	 * 
-	 * @RequestParam(required = false) Integer categoryId, Model model) {
-	 * 
-	 * List<Item> items;
-	 * 
-	 * // 全商品 if (categoryId == null || categoryId == 0) {
-	 * 
-	 * items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(
-	 * Constant.NOT_DELETED);
-	 * 
-	 * } else {
-	 * 
-	 * // カテゴリ検索 items =
-	 * itemRepository.findAllByDeleteFlagAndCategoryIdOrderByInsertDateDesc(
-	 * Constant.NOT_DELETED, categoryId); }
-	 * 
-	 * model.addAttribute("items", items);
-	 * 
-	 * model.addAttribute("categories",
-	 * categoryRepository.findByDeleteFlagOrderByInsertDateDescIdDesc(
-	 * Constant.NOT_DELETED));
-	 * 
-	 * model.addAttribute("categoryId", categoryId);
-	 * 
-	 * return "client/item/list"; }
-	 */
-
-	/**
 	 * 商品詳細表示
 	 *
 	 * @param model 商品情報を渡すため
@@ -146,36 +109,6 @@ public class ClientItemShowController {
 	}
 
 	/**
-	 * 商品検索
-	 *
-	 * @param searchItems 検索文字
-	 * @param model Viewとの値受渡し
-	 * @return 商品一覧画面
-	 */
-	@RequestMapping(path = "/client/item/list/search/")
-	public String topSearch(
-			@RequestParam String searchItems,
-			Model model) {
-
-		List<Item> items = itemRepository.findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
-				searchItems,
-				Constant.NOT_DELETED);
-
-		//		            stockCalc.updateManyItemStock(items);
-
-		model.addAttribute("searchItems", searchItems);
-
-		model.addAttribute("items", items);
-
-		model.addAttribute("categories",
-				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
-						Constant.NOT_DELETED));
-
-		return "client/item/list";
-	}
-
-
-	/**
 	 * 商品一覧表示（カテゴリ検索）
 	 *
 	 * @param id カテゴリID
@@ -187,8 +120,7 @@ public class ClientItemShowController {
 	public String categorySearch(
 			@PathVariable Integer id,
 			@RequestParam(defaultValue = "0") int page,
-			Model model) 
-	{
+			Model model) {
 
 		Page<Item> itemPage = itemRepository.findByCategoryId(
 				id,
@@ -213,16 +145,23 @@ public class ClientItemShowController {
 	 * @return "client/item/list" 商品一覧画面
 	 */
 	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String itemSearch(Model model, @RequestParam(required = false) String items) {
+	public String itemSearch(
+			Model model,
+			@RequestParam(required = false) String items) {
 
-		List<Item> item = itemRepository.findByNameContaining(items);
-		if (items != null) {
-			model.addAttribute("items", item);
+		List<Item> itemList = new ArrayList<>();
 
-		} else {
-
-			model.addAttribute("items", items);
+		if (items != null && !items.isEmpty()) {
+			itemList = itemRepository.findByNameOrCategoryContaining(
+					items,
+					Constant.NOT_DELETED);
 		}
+
+		model.addAttribute("items", itemList);
+
+		model.addAttribute("categories",
+				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
+						Constant.NOT_DELETED));
 
 		return "client/item/list";
 	}
