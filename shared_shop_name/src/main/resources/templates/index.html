@@ -69,21 +69,20 @@
 		<!-- ランキング表示 -->
 		<div class="ranking-area">
 
+
 			<!--  Rank 2  -->
 			<!--データが2件以上ある場合のみ表示-->
-			<div th:if="${#lists.size(rankings) >= 2}" th:object="${rankings[1]}"
+			<a th:if="${#lists.size(rankings) >= 2}" th:object="${rankings[1]}" th:href="@{/client/item/detail/}+*{id}"
 				class="rank-card">
-
 				<!-- 画像 -->
-				<a th:href="@{/client/item/detail/}+*{id}"
-				   class="rank-image">
+				<div class="rank-image">
 
 					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
 					<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"
 						class="w-full h-full object-cover" />
 
-				</a>
+				</div>
 
 				<!-- 順位 -->
 				<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
@@ -98,27 +97,27 @@
 
 				<!-- 商品情報 -->
 				<div class="rank-info">
-				    <p class="rank-name" th:text="*{name}"></p>
-				    <p class="rank-price"
-				       th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
-				    </p>
+					<p class="rank-name" th:text="*{name}"></p>
+					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+					</p>
 				</div>
 
-			</div>
+			</a>
+
+
 			<!-- Rank1 -->
-			<div th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}"
+			<a th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}" th:href="@{/client/item/detail/}+*{id}"
 				class="rank-card-first">
 
 				<!-- 画像 -->
-				<a th:href="@{/client/item/detail/}+*{id}"
-				   class="rank-image-first">
+				<div class="rank-image-first">
 
 					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
 					<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"
 						class="w-full h-full object-cover" />
 
-				</a>
+				</div>
 
 				<!-- 順位 -->
 				<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
@@ -128,66 +127,64 @@
 
 				<!-- 商品情報 -->
 				<div class="rank-info">
-				    <p class="rank-name" th:text="*{name}"></p>
-				    <p class="rank-price"
-				       th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
-				    </p>
+					<p class="rank-name" th:text="*{name}"></p>
+					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+					</p>
 				</div>
 
-			</div>
 
 
 
-			<!--  Rank 3  -->
-			<!--データが2件以上ある場合のみ表示-->
-			<div th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[2]}"
-				class="rank-card">
 
-				<!-- 画像 -->
-				<a th:href="@{/client/item/detail/}+*{id}"
-				   class="rank-image">
+				<!--  Rank 3  -->
+				<!--データが2件以上ある場合のみ表示-->
+				<a th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[2]}"
+					th:href="@{/client/item/detail/}+*{id}" class="rank-card">
 
-					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
+					<!-- 画像 -->
+					<div class="rank-image">
 
-					<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"
-						class="w-full h-full object-cover" />
+						<img th:if="*{image != null}" th:src="@{|/images/*{image}|}"
+							class="w-full h-full object-cover" />
 
-				</a>
+						<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"
+							class="w-full h-full object-cover" />
 
-				<!-- 順位 -->
-				<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
+					</div>
 
-					<img th:src="@{/images/common/crone.png}" class="w-5 h-5">
+					<!-- 順位 -->
+					<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
 
-					<span class="ml-1 font-bold">
-						3位
-					</span>
+						<img th:src="@{/images/common/crone.png}" class="w-5 h-5">
 
-				</div>
+						<span class="ml-1 font-bold">
+							3位
+						</span>
 
-				<!-- 商品情報 -->
-				<div class="rank-info">
-				    <p class="rank-name" th:text="*{name}"></p>
-				    <p class="rank-price"
-				       th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
-				    </p>
-				</div>
+					</div>
 
-			</div>
+					<!-- 商品情報 -->
+					<div class="rank-info">
+						<p class="rank-name" th:text="*{name}"></p>
+						<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+						</p>
+					</div>
 
-
-			<!-- 今月のランキング商品がない場合の表示 -->
-			<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">
-				<p>今月のランキングデータはありません。</p>
-			</div>
 		</div>
-		<!-- ランキング一覧へ -->
-		<div class="detail_button_area">
+	</div>
 
-			<a th:href="@{/client/item/ranking}">
-				<input type="button" value="ランキング一覧へ" />
-			</a>
-		</div>
+	<!-- 今月のランキング商品がない場合の表示 -->
+	<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">
+		<p>今月のランキングデータはありません。</p>
+	</div>
+	</div>
+	<!-- ランキング一覧へ -->
+	<div class="detail_button_area">
+
+		<a th:href="@{/client/item/ranking}">
+			<input type="button" value="ランキング一覧へ" />
+		</a>
+	</div>
 </body>
 
 </html>
