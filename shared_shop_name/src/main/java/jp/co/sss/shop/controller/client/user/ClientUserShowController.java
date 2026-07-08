@@ -236,8 +236,8 @@ public class ClientUserShowController {
 		User user = userRepository.findById(loginUser.getId()).orElse(null);
 
 		if (user != null) {
-			user.setDeleteFlag(1);
-			userRepository.save(user);
+		    // データベースからデータを完全に削除
+		    userRepository.delete(user);
 		}
 
 		session.invalidate();
