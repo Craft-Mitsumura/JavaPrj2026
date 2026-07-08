@@ -102,7 +102,7 @@ public class ClientUserShowController {
 
 	/**
 	 * 会員情報登録入力画面
-	 *
+	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @return client/user/regist_input 会員情報登録入力画面を表示
 	 */
@@ -121,7 +121,7 @@ public class ClientUserShowController {
 
 	/**
 	 * 会員情報登録確認画面
-	 *
+	 * @author 手塚
 	 * @param userBean 入力された会員情報
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
@@ -145,7 +145,7 @@ public class ClientUserShowController {
 
 	/**
 	 * 会員情報登録完了処理
-	 *
+	 * @author 手塚
 	 * @param session セッションスコープ
 	 * @return client/user/regist_complete 会員情報登録完了画面を表示
 	 */
@@ -183,8 +183,7 @@ public class ClientUserShowController {
 
 
 	/**
-	 * 会員情報編集画面
-	 *
+	 * 会員情報編集画面	 *
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
@@ -200,12 +199,91 @@ public class ClientUserShowController {
 		model.addAttribute("userForm", userBean);
 
 		// 編集画面へ遷移
-		return "client/user/update/input";
+		return "client/user/update_input";
+	}
+	
+	/**
+	 * 会員情報編集確認画面
+	 * @author 手塚
+	 * @param userBean 入力された会員情報
+	 * @param model リクエストスコープ
+	 * @param session セッションスコープ
+	 * @return client/user/update_check 会員情報編集確認画面を表示
+	 */
+	@RequestMapping(path = "/client/user/update/check", method = RequestMethod.POST)
+	public String updateCheck(
+			@ModelAttribute("userForm") UserBean userBean,
+			Model model,
+			HttpSession session) {
+
+		// ログイン中の情報（変更前の情報）をセッションから取得
+		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
+
+		// 【重要】メールアドレスが変更されている場合のみ重複チェックを行う
+		if (!userBean.getEmail().equals(pastUser.getEmail())) {
+			User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+			if (duplicateUser != null) {
+				model.addAttribute("errorMessage", "このメールアドレスは既に登録されています。");
+				model.addAttribute("userForm", userBean);
+				return "client/user/update_input"; // 変更入力画面へ戻す
+			}
+		}
+
+		// 編集後の会員情報をセッションに一時保存
+		session.setAttribute("updateUser", userBean);
+
+		// 確認画面へ渡す
+		model.addAttribute("userForm", userBean);
+
+		// 会員情報編集確認画面へ遷移（※HTMLファイル名に合わせて調整してください）
+		return "client/user/update_check";
 	}
 
 	/**
-	 * 会員情報削除確認画面
-	 *
+	 * 会員情報編集完了処理
+	 * @author 手塚
+	 * @param session セッションスコープ
+	 * @return client/user/update_complete 会員情報編集完了画面を表示
+	 */
+	@RequestMapping(path = "/client/user/update/complete", method = RequestMethod.POST)
+	public String updateComplete(HttpSession session, Model model) {
+
+		// セッションから編集後の会員情報および現在のログインユーザー情報を取得
+		UserBean updateUserBean = (UserBean) session.getAttribute("updateUser");
+		UserBean loginUser = (UserBean) session.getAttribute("user");
+
+		// データベースから現在のユーザーエンティティを取得
+		User user = userRepository.findById(loginUser.getId()).orElse(null);
+
+		if (user != null) {
+			// データベースのエンティティに入力された値を上書きする
+			user.setEmail(updateUserBean.getEmail());
+			user.setName(updateUserBean.getName());
+			user.setPostalCode(updateUserBean.getPostalCode());
+			user.setAddress(updateUserBean.getAddress());
+			user.setPhoneNumber(updateUserBean.getPhoneNumber());
+
+			// データベースへ保存
+			userRepository.save(user);
+
+			// セッションスコープ内のログインユーザー情報(Bean)も新しい内容に同期する
+			loginUser.setEmail(user.getEmail());
+			loginUser.setName(user.getName());
+			loginUser.setPostalCode(user.getPostalCode());
+			loginUser.setAddress(user.getAddress());
+			loginUser.setPhoneNumber(user.getPhoneNumber());
+			session.setAttribute("user", loginUser);
+		}
+
+		// 使用済みのセッション情報を削除
+		session.removeAttribute("updateUser");
+
+		// 編集完了画面
+		return "client/user/update_complete";
+	}
+
+	/**
+	 * 会員情報削除確認画面	 *
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
