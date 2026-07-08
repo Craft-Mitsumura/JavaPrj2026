@@ -129,31 +129,49 @@
 
 						<div style="display: flex; gap: 50px; justify-content: center;">
 
-						    <div style="text-align: center;">
-						        <span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">📷 画像の位置</span>
-						        <div style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
-						            <button type="button" id="btn_img_up" style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
-						            <button type="button" id="btn_img_left" style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
-						            <button type="button" id="btn_img_down" style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
-						            <button type="button" id="btn_img_right" style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
-						            <button type="button" id="btn_img_l_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
-						            <button type="button" id="btn_img_reset" style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
-						            <button type="button" id="btn_img_r_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
-						        </div>
-						    </div>
+							<div style="text-align: center;">
+								<span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">📷
+									画像の位置</span>
+								<div
+									style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
+									<button type="button" id="btn_img_up"
+										style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
+									<button type="button" id="btn_img_left"
+										style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
+									<button type="button" id="btn_img_down"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
+									<button type="button" id="btn_img_right"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
+									<button type="button" id="btn_img_l_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
+									<button type="button" id="btn_img_reset"
+										style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
+									<button type="button" id="btn_img_r_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
+								</div>
+							</div>
 
-						    <div style="text-align: center;">
-						        <span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">✍ 文字の位置</span>
-						        <div style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
-						            <button type="button" id="btn_txt_up" style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
-						            <button type="button" id="btn_txt_left" style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
-						            <button type="button" id="btn_txt_down" style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
-						            <button type="button" id="btn_txt_right" style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
-						            <button type="button" id="btn_txt_l_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
-						            <button type="button" id="btn_txt_reset" style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
-						            <button type="button" id="btn_txt_r_rot" style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
-						        </div>
-						    </div>
+							<div style="text-align: center;">
+								<span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">✍
+									文字の位置</span>
+								<div
+									style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
+									<button type="button" id="btn_txt_up"
+										style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
+									<button type="button" id="btn_txt_left"
+										style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
+									<button type="button" id="btn_txt_down"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
+									<button type="button" id="btn_txt_right"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
+									<button type="button" id="btn_txt_l_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
+									<button type="button" id="btn_txt_reset"
+										style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
+									<button type="button" id="btn_txt_r_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -185,6 +203,18 @@
 
 			<form th:action="@{/client/item/list/1}" method="post" style="display: inline-block;">
 				<input type="submit" value="戻る" class="back_button" />
+			</form>
+
+			<form id="favoriteForm" style="display: inline-block; margin-right: 10px;">
+				<input type="hidden" id="favoriteItemId" th:value="*{id}">
+
+				<button type="button" id="favoriteButton" class="send_button"
+					style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;">
+
+					<span th:if="${isFavorite}">♥ お気に入り済み</span>
+					<span th:unless="${isFavorite}">♡ お気に入り</span>
+
+				</button>
 			</form>
 		</div>
 	</div>
