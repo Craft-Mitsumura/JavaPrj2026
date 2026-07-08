@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
 	<title th:text="#{user}+#{title.input.check}+' | '+ #{shop.title}"> </title>
@@ -42,7 +42,7 @@
 		<form th:action="@{/client/user/regist/complete}" method="post" class="user_info_form">
 			<input type="submit" value="登録" class="send_button" />
 		</form>
-		<form th:action="@{/client/user/regist/input}" method="post" class="update">
+		<form th:action="@{/client/user/regist/input/init}" method="get" class="update">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
 	</div>
