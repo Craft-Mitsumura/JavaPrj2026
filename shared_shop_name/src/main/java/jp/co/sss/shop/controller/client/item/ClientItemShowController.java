@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
-import jp.co.sss.shop.service.FavoriteService;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
 
@@ -49,12 +45,6 @@ public class ClientItemShowController {
 	 */
 	@Autowired
 	BeanTools beanTools;
-	
-	@Autowired
-	private FavoriteService favoriteService;
-	
-	@Autowired
-	private HttpSession session;
 
 	/**
 	 * 商品在庫数計算サービス
@@ -114,17 +104,6 @@ public class ClientItemShowController {
 		//			stockCalc.updateOneItemStock(detailItem);
 
 		model.addAttribute("item", detailItem);
-		
-		// ログインユーザーがお気に入り登録済みか判定
-		UserBean loginUser = (UserBean) session.getAttribute("user");
-
-		boolean isFavorite = false;
-
-		if (loginUser != null) {
-		    isFavorite = favoriteService.isFavorite(loginUser.getId(), id);
-		}
-
-		model.addAttribute("isFavorite", isFavorite);
 
 		return "client/item/detail";
 	}
