@@ -84,6 +84,12 @@ public class Item {
 	 */
 	@OneToMany(mappedBy = "item")
 	private List<OrderItem> orderItemList;
+	
+	/**
+	 * バリエーション情報
+	 */
+	@Column(name = "variation_json")
+	private String variationJson;
 
 	/**
 	 * コンストラクタ
@@ -286,5 +292,23 @@ public class Item {
 	public void setOrderItemsList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
 	}
+	
+	/**
+	 * @author 金城
+	 * バリエーション情報の取得
+	 * @return variationJson
+	 */
+	public String getVariationJson() {
+		return variationJson;
+	}
 
+	/**
+	 * @author 金城
+	 * バリエーション情報のセット
+	 * @param variationJson String
+	 */
+	public void setVariationJson(String variationJson) {
+		this.variationJson = variationJson;
+	}
+	
 }

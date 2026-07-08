@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,6 @@ import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
-import org.springframework.data.domain.Page;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -175,55 +175,49 @@ public class ClientItemShowController {
 		return "client/item/list";
 	}
 
-
-	
-	@RequestMapping(path ="/client/category/lists/{id}", method= {RequestMethod.GET,RequestMethod.POST})
-	public String categorySearch (@PathVariable Integer id ,
+	@RequestMapping(path = "/client/category/lists/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+	public String categorySearch(@PathVariable Integer id,
 			Model model) {
 		System.out.println("Category Controller Hit");
 		List<Category> categories = categoryRepository.findAll();
 		List<Item> items = itemRepository.findByCategoryId(id);
 		model.addAttribute("items", items);
-		model.addAttribute("categories",categories);
-		return"client/item/list";
+		model.addAttribute("categories", categories);
+		return "client/item/list";
 	}
 
 	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String itemSearch(Model model, @RequestParam(required = false) String items) {
 
 		List<Item> item = itemRepository.findByNameContaining(items);
-    if(items != null) {
-    	model.addAttribute("items", item);
-    	
-    }else {
-   
-		model.addAttribute("items", items);
-    }
-	
+		if (items != null) {
+			model.addAttribute("items", item);
+
+		} else {
+
+			model.addAttribute("items", items);
+		}
 
 		return "client/item/list";
 	}
 
-
-
-
+	@RequestMapping(path = "/client/item/list/1", method = { RequestMethod.GET, RequestMethod.POST })
 	public String showAll(
-	        Model model,
-	        @PathVariable Integer sortType,
-	        @RequestParam(defaultValue = "0") int page) {
+			Model model,
+			//@PathVariable Integer sortType,
+			@RequestParam(defaultValue = "0") int page) {
 
-	    Page<Item> itemPage = itemRepository.findAll(
-	            PageRequest.of(page, 20)
-	    );
+		Page<Item> itemPage = itemRepository.findAll(
+				PageRequest.of(page, 20));
 
-	    model.addAttribute("items", itemPage.getContent());
-	    model.addAttribute("page", itemPage);
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
 
-	    model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute("categories", categoryRepository.findAll());
 
-	    return "client/item/list";
+		return "client/item/list";
 	}
-	
+
 	/**
 	 * カテゴリ検索
 	 *
@@ -234,24 +228,22 @@ public class ClientItemShowController {
 	 */
 	@RequestMapping(path = "/client/category/lists/{id}")
 	public String categorySearch(
-	        @PathVariable Integer id,
-	        @RequestParam(defaultValue = "0") int page,
-	        Model model) {
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "0") int page,
+			Model model) {
 
-	    Page<Item> itemPage = itemRepository.findByCategoryId(
-	            id,
-	            PageRequest.of(page, 20)
-	    );
+		Page<Item> itemPage = itemRepository.findByCategoryId(
+				id,
+				PageRequest.of(page, 20));
 
-	    model.addAttribute("items", itemPage.getContent());
-	    model.addAttribute("page", itemPage);
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
 
-	    model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute("categories", categoryRepository.findAll());
 
-	    // ページ移動時にカテゴリを保持する
-	    model.addAttribute("categoryId", id);
+		// ページ移動時にカテゴリを保持する
+		model.addAttribute("categoryId", id);
 
-	    return "client/item/list";
+		return "client/item/list";
 	}
 }
-
