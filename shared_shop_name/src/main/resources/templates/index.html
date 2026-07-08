@@ -67,16 +67,16 @@
 		</h2>
 
 		<!-- ランキング表示 -->
-		<div class="flex justify-center items-end gap-6 mt-16">
+		<div class="ranking-area">
 
 			<!--  Rank 2  -->
 			<!--データが2件以上ある場合のみ表示-->
 			<div th:if="${#lists.size(rankings) >= 2}" th:object="${rankings[1]}"
-				class="relative w-56 bg-white rounded-3xl shadow-lg">
+				class="rank-card">
 
 				<!-- 画像 -->
 				<a th:href="@{/client/item/detail/}+*{id}"
-					class="block w-[150px] h-[150px] mx-auto mt-4 overflow-hidden rounded-xl bg-gray-100">
+				   class="rank-image">
 
 					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
@@ -97,22 +97,21 @@
 				</div>
 
 				<!-- 商品情報 -->
-				<div class="p-4 text-center">
-
-					<p class="font-bold" th:text="*{name}"></p>
-
-					<p class="text-pink-600" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|"></p>
-
+				<div class="rank-info">
+				    <p class="rank-name" th:text="*{name}"></p>
+				    <p class="rank-price"
+				       th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+				    </p>
 				</div>
 
 			</div>
 			<!-- Rank1 -->
 			<div th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}"
-				class="relative w-72 bg-white rounded-3xl shadow-xl">
+				class="rank-card-first">
 
 				<!-- 画像 -->
 				<a th:href="@{/client/item/detail/}+*{id}"
-					class="block w-[220px] h-[220px] mx-auto mt-4 overflow-hidden rounded-xl bg-gray-100">
+				   class="rank-image-first">
 
 					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
@@ -128,11 +127,11 @@
 				</div>
 
 				<!-- 商品情報 -->
-				<div class="p-4 text-center">
-					<p class="font-bold text-lg" th:text="*{name}"></p>
-
-					<p class="text-pink-600 font-bold" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
-					</p>
+				<div class="rank-info">
+				    <p class="rank-name" th:text="*{name}"></p>
+				    <p class="rank-price"
+				       th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+				    </p>
 				</div>
 
 			</div>
@@ -142,11 +141,11 @@
 			<!--  Rank 3  -->
 			<!--データが2件以上ある場合のみ表示-->
 			<div th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[2]}"
-				class="relative w-56 bg-white rounded-3xl shadow-lg">
+				class="rank-card">
 
 				<!-- 画像 -->
 				<a th:href="@{/client/item/detail/}+*{id}"
-					class="block w-[150px] h-[150px] mx-auto mt-4 overflow-hidden rounded-xl bg-gray-100">
+				   class="rank-image">
 
 					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
@@ -167,12 +166,11 @@
 				</div>
 
 				<!-- 商品情報 -->
-				<div class="p-4 text-center">
-
-					<p class="font-bold" th:text="*{name}"></p>
-
-					<p class="text-pink-600" th:text="|￥${#numbers.formatInteger(price,3,'COMMA')}|"></p>
-
+				<div class="rank-info">
+				    <p class="rank-name" th:text="*{name}"></p>
+				    <p class="rank-price"
+				       th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+				    </p>
 				</div>
 
 			</div>

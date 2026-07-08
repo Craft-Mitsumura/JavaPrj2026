@@ -1899,3 +1899,80 @@ Cart
 	color: #2563eb;
 
 }
+
+/*ランキングCSS 小松原作 ここから*/
+.ranking-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.rank-card {
+    width: 220px;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.rank-card-first {
+    width: 280px;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    position: relative;
+}
+.rank-image {
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin: 20px auto 0;
+    overflow: hidden;
+    border-radius: 15px;
+    background: #f5f5f5;
+}
+
+.rank-image-first {
+    display: block;
+    width: 220px;
+    height: 220px;
+    margin: 20px auto 0;
+    overflow: hidden;
+    border-radius: 15px;
+    background: #f5f5f5;
+}
+
+.rank-image img,
+.rank-image-first img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.rank-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 5px 12px;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.rank-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.rank-name {
+    font-weight: bold;
+}
+
+.rank-price {
+  
+    font-weight: bold;
+}
+
+/*ランキングCSS 小松原作 ここまで*/
