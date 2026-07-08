@@ -28,7 +28,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT i FROM Item i INNER JOIN i.category c WHERE i.deleteFlag =:deleteFlag ORDER BY i.insertDate DESC,i.id DESC")
 	Page<Item> findByDeleteFlagOrderByInsertDateDescPage(
-	        @Param(value = "deleteFlag") int deleteFlag, Pageable pageable);
+			@Param(value = "deleteFlag") int deleteFlag, Pageable pageable);
 
 	/**
 	 * 商品IDと削除フラグを条件に検索（管理者機能で利用）
@@ -45,7 +45,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品エンティティ
 	 */
 	public Item findByNameAndDeleteFlag(String name, int notDeleted);
-	
+
 	/**
 	 * 全件ランキング検索
 	 * @param salesMonth 売上月
@@ -55,7 +55,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	@Query("SELECT r.item FROM Rankings r WHERE r.salesMonth = :salesMonth ORDER BY r.total DESC")
 	List<Item> findItemsOrderByallRanking(@Param("salesMonth") LocalDate salesMonth, Pageable pageable);
-	
+
 	/**
 	 * カテゴリ別ランキング検索
 	 * @param salesMonth 売上月
@@ -66,12 +66,10 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 
 	@Query("SELECT i FROM Item i JOIN FETCH i.category c JOIN Rankings r ON r.item.id = i.id " +
-		    "WHERE r.salesMonth = :salesMonth AND c.id = :categoryId ORDER BY r.total DESC")
-		List<Item> findItemsOrderBycateRanking(@Param("salesMonth") LocalDate salesMonth, @Param("categoryId") Integer categoryId, Pageable pageable);
+			"WHERE r.salesMonth = :salesMonth AND c.id = :categoryId ORDER BY r.total DESC")
+	List<Item> findItemsOrderBycateRanking(@Param("salesMonth") LocalDate salesMonth,
+			@Param("categoryId") Integer categoryId, Pageable pageable);
 
-		
-
-	
 	/**
 	 * 商品情報を登録日付順に取得（一般会員用）
 	 * @author 手塚
@@ -88,20 +86,23 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品エンティティのリスト
 	 */
 	List<Item> findAllByDeleteFlagAndCategoryIdOrderByInsertDateDesc(
-	        int deleteFlag,
-	        Integer categoryId);
-	
+			int deleteFlag,
+			Integer categoryId);
+
 	/**
-	 * 商品名を部分一致検索（新着順）
+	 * 商品名またはカテゴリ名で部分一致検索（新着順）
+	 *
 	 * @author 手塚
-	 * @param name 商品名
+	 * @param keyword 検索キーワード
 	 * @param deleteFlag 削除フラグ
 	 * @return 商品エンティティのリスト
 	 */
-	List<Item> findAllByNameContainingAndDeleteFlagOrderByInsertDateDesc(
-	        String name,
-	        int deleteFlag);
-	
+	@Query("SELECT i FROM Item i JOIN i.category c WHERE i.deleteFlag = "
+			+ ":deleteFlag AND ( i.name LIKE %:keyword%  OR c.name LIKE %:keyword% ) ORDER BY i.insertDate DESC ")
+	List<Item> findByNameOrCategoryContaining(
+			@Param("keyword") String keyword,
+			@Param("deleteFlag") int deleteFlag);
+
 	/**
 	 * 売れ筋順（注文個数の多い順）で未削除の商品一覧を取得します。（チームF:臨時追加）
 	 *
@@ -110,11 +111,10 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query("SELECT i FROM Item i LEFT JOIN i.orderItemList oi WHERE i.deleteFlag = 0 GROUP BY i ORDER BY COALESCE(SUM(oi.quantity), 0) DESC")
 	List<Item> findAllOrderBySales();
 
-	List <Item> findByCategoryId(Integer id);
-	
-	List<Item> findByNameContaining(String items );
+	List<Item> findByCategoryId(Integer id);
 
-	
+	List<Item> findByNameContaining(String items);
+
 	/**
 	 * カテゴリ指定の商品一覧（ページング対応）
 	 * @author 手塚
@@ -125,6 +125,3 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	Page<Item> findByCategoryId(Integer id, Pageable pageable);
 
 }
-
-
-
