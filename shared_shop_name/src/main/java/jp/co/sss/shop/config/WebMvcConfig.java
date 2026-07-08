@@ -25,11 +25,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private CarouselInterceptor carouselInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // ルートパス（トップ画面）だけに広告データを仕込む
-        registry.addInterceptor(carouselInterceptor).addPathPatterns("/");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        // ルートパス（トップ画面）だけに広告データを仕込む
+//        registry.addInterceptor(carouselInterceptor).addPathPatterns("/");
+//    }
     
     
 }
