@@ -98,6 +98,67 @@ public class ClientUserShowController {
 		
 		return "client/user/detail";
 	}
-		
+	
+	/**
+	 * 会員情報編集画面
+	 *
+	 * @author 手塚
+	 * @param model リクエストスコープ
+	 * @param session セッションスコープ
+	 * @return client/user/update/input 会員情報編集画面を表示
+	 */
+	@RequestMapping("/client/user/update/input")
+	public String updateInput(Model model, HttpSession session) {
 
+	    // セッションから変更前の会員情報を取得
+	    UserBean userBean = (UserBean) session.getAttribute("pastUser");
+
+	    // リクエストスコープに保存
+	    model.addAttribute("userForm", userBean);
+
+	    // 編集画面へ遷移
+	    return "client/user/update/input";
+	}
+	
+	/**
+	 * 会員情報削除確認画面
+	 *
+	 * @author 手塚
+	 * @param model リクエストスコープ
+	 * @param session セッションスコープ
+	 * @return client/user/delete/check 会員情報削除確認画面を表示
+	 */
+	@RequestMapping("/client/user/delete/check")
+	public String deleteCheck(Model model, HttpSession session) {
+
+	    UserBean userBean = (UserBean) session.getAttribute("pastUser");
+
+	    model.addAttribute("userBean", userBean);
+
+	    return "client/user/delete/check";
+	}
+	
+	/**
+	 * 会員情報削除処理
+	 *
+	 * @author 手塚
+	 * @param session セッションスコープ
+	 * @return トップ画面へリダイレクト
+	 */
+	@RequestMapping("/client/user/delete/complete")
+	public String deleteComplete(HttpSession session) {
+
+	    UserBean loginUser = (UserBean) session.getAttribute("user");
+
+	    User user = userRepository.findById(loginUser.getId()).orElse(null);
+
+	    if (user != null) {
+	        user.setDeleteFlag(1);
+	        userRepository.save(user);
+	    }
+
+	    session.invalidate();
+
+	    return "redirect:/";
+	}
 }
