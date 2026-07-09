@@ -19,7 +19,7 @@ html {
  * paddingプロパティの値0は、body要素が持つ枠の領域を取り消します。
  */
 body {
-	margin: 0 0 30px;
+	
 	padding: 0;
 	background:#0000;
 }
