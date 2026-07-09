@@ -1995,6 +1995,7 @@ transform: translateY(-6px);
 .rank-card,
 .rank-card-first {
     text-decoration: none;
+	border: 2px solid #c8a15a;
 	border-radius: 0;
     color: inherit;
     cursor: pointer;
@@ -2184,6 +2185,37 @@ transform: translateY(-6px);
 
 
 /*ランキングCSS 小松原作 ここまで*/
+
+/*小見出しCSS 小松原作 ここから*/
+.section-title {
+    text-align: center;
+    margin: 80px 0 60px;
+}
+
+.section-en {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0b2740;
+    margin-bottom: 10px;
+}
+
+.section-ja {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.section-text {
+    font-size: 18px;
+    color: #888;
+    font-weight: bold;
+}
+.title {
+    color: #333 !important;
+}
+
+/*小見出しCSS 小松原作 ここまで*/
 
 /* #header {
     display: flex;
