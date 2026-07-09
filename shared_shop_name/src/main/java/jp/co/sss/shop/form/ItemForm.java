@@ -77,8 +77,9 @@ public class ItemForm implements Serializable {
 	//-----------------------------------
 	/**
 	 * @author 金城
-	 * ペンの色、ペン先の太さ、芯の太さ、インクの量
+	 * バリエーション番号、ペンの色、ペン先の太さ、芯の太さ、インクの量
 	 */
+	private Integer varNumber;
 	private String colorPattern;
 	private String nibDiameter;
 	private String leadDiameter;
@@ -232,6 +233,20 @@ public class ItemForm implements Serializable {
 
 	//-----------------------------------
 
+	/**
+	 * @return バリエーション番号
+	 */
+	public Integer getVarNumber() {
+		return varNumber;
+	}
+
+	/**
+	 * @param varNumber バリエーション番号
+	 */
+	public void setVarNumber(Integer varNumber) {
+		this.varNumber = varNumber;
+	}
+	
 	/**
 	 * @return ペンの色
 	 */

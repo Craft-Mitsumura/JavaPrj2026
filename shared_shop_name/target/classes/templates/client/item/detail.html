@@ -27,9 +27,7 @@
 				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
 				<dd th:if="*{stock == 0}" th:text="#{data.out.of.stock}"></dd>
 				<dt>[[#{data.category}]]</dt>
-				<dd th:text="*{category.name}"></dd>
-				<dt>[[#{data.category}]]</dt>
-				<dd th:text="*{category.name}"></dd>
+				<dd th:text="*{categoryName}"></dd>
 
 				<th:block th:if="${not #strings.isEmpty(item.colorPattern) or 
 				                   not #strings.isEmpty(item.leadDiameter) or 
@@ -37,21 +35,30 @@
 				                   not #strings.isEmpty(item.inkVolume)}">
 					<dt>スペック</dt>
 					<dd>
-						<th:block th:if="not ${#strings.isEmpty(item.colorPattern)}">
-							色・模様: <span th:text="${item.colorPattern}"></span><br>
-						</th:block>
+						<div class="variation_group" th:if="${not #lists.isEmpty(variationList)}">
+							<th:block th:each="v : ${variationList}">
+								<a th:href="@{/client/item/detail/{id}(id=${v.id})}" th:text="${v.colorPattern}"
+									th:classappend="${v.id == item.id} ? 'selected_btn' : ''" class="var_btn"></a>
+							</th:block>
+						</div>
+						<div class="current_spec_area">
 
-						<th:block th:if="not ${#strings.isEmpty(item.leadDiameter)}">
-							芯の太さ: <span th:text="${item.leadDiameter} + 'mm'"></span><br>
-						</th:block>
+							<th:block th:if="not ${#strings.isEmpty(item.colorPattern)}">
+								色・模様: <span th:text="${item.colorPattern}"></span><br>
+							</th:block>
 
-						<th:block th:if="not ${#strings.isEmpty(item.nibDiameter)}">
-							ペン先の太さ: <span th:text="${item.nibDiameter}"></span><br>
-						</th:block>
+							<th:block th:if="not ${#strings.isEmpty(item.leadDiameter)}">
+								芯の太さ: <span th:text="${item.leadDiameter} + 'mm'"></span><br>
+							</th:block>
 
-						<th:block th:if="not ${#strings.isEmpty(item.inkVolume)}">
-							容量: <span th:text="${item.inkVolume}"></span><br>
-						</th:block>
+							<th:block th:if="not ${#strings.isEmpty(item.nibDiameter)}">
+								ペン先の太さ: <span th:text="${item.nibDiameter}"></span><br>
+							</th:block>
+
+							<th:block th:if="not ${#strings.isEmpty(item.inkVolume)}">
+								容量: <span th:text="${item.inkVolume}"></span><br>
+							</th:block>
+						</div>
 					</dd>
 				</th:block>
 
@@ -193,9 +200,9 @@
 					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
 					<input type="submit" value="10本まとめ買いする" class="send_button" style="background-color: #e67e22;" />
 				</form>
-				
+
 			</th:block>
-			
+
 			<form id="favoriteForm" style="display: inline-block; margin-left: auto; margin-right: 10px;">
 				<input type="hidden" id="favoriteItemId" th:value="*{id}">
 
@@ -340,7 +347,7 @@
 				});
 			});
 		});
-		
+
 		const favoriteButton = document.getElementById("favoriteButton");
 
 		if (favoriteButton) {

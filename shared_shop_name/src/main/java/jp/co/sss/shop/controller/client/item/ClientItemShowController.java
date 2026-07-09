@@ -130,9 +130,29 @@ public class ClientItemShowController {
 
 	    Item detailItem = itemRepository.findById(id).orElse(null);
 
-	    model.addAttribute("item", detailItem);
+		if (detailItem != null) {
+			try {
+				// メインの変換（表示用）
+				ItemForm itemForm = ItemViewConverter.convertToForm(detailItem);
+				model.addAttribute("item", itemForm);
 
-	    UserBean loginUser = (UserBean) session.getAttribute("user");
+				// 同じ名前の全バリエーションを取得
+				List<Item> sameGroupItems = itemRepository.findByName(detailItem.getName());
+				
+				// Formに変換してリスト化
+				List<ItemForm> variationList = new ArrayList<>();
+				for (Item item : sameGroupItems) {
+					variationList.add(ItemViewConverter.convertToForm(item));
+				}
+				
+				// モデルに追加（これでJSから全バリエーション情報が参照可能になる）
+				model.addAttribute("variationList", variationList);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				model.addAttribute("item", detailItem);
+			}
+		}
 
 	    boolean isFavorite = false;
 

@@ -29,7 +29,10 @@ public class ItemViewConverter {
 		form.setStock(entity.getStock());
 		form.setDescription(entity.getDescription());
 		form.setImage(entity.getImage());
-		form.setCategoryId(entity.getCategory() != null ? entity.getCategory().getId() : null);
+		if (entity.getCategory() != null) {
+			form.setCategoryId(entity.getCategory().getId());
+			form.setCategoryName(entity.getCategory().getName());
+		}
 
 		// JSON文字列を解析してFormにセット
 		// variationJsonがnullの場合は空のJSONオブジェクトとして扱う
@@ -37,26 +40,33 @@ public class ItemViewConverter {
 		JsonNode root = objectMapper.readTree(json);
 
 		// カテゴリに応じてJSONから値を取り出し、Formへセット
-		switch (entity.getCategory() != null ? entity.getCategory().getId() : 0) {
+		int categoryId = (entity.getCategory() != null) ? entity.getCategory().getId() : 0;
+		switch (categoryId) {
 		case 1: // ボールペン
+			form.setVarNumber(root.path("no").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setNibDiameter(root.path("nib_diameter").asText(""));
 			break;
 		case 2: // シャーペン
+			form.setVarNumber(root.path("no").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setLeadDiameter(root.path("lead_diameter").asText(""));
 			break;
 		case 3: // 万年筆
+			form.setVarNumber(root.path("no").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setNibDiameter(root.path("nib_diameter").asText(""));
 			break;
 		case 4: // ガラスペン
+			form.setVarNumber(root.path("no").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			break;
 		case 5: // インク
+			form.setVarNumber(root.path("no").asInt(0));
 			form.setInkVolume(root.path("ink_volume").asText(""));
 			break;
 		case 6: // その他
+			form.setVarNumber(root.path("no").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setLeadDiameter(root.path("lead_diameter").asText(""));
 			break;
