@@ -63,5 +63,17 @@ public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     List<Favorite> findByUser_IdAndDeleteFlagOrderByInsertDateDesc(
             Integer userId,
             Integer deleteFlag);
-
+    
+    /**
+     * 会員ID・商品IDからお気に入り検索
+     *
+     * @param userId 会員ID
+     * @param itemId 商品ID
+     * @param deleteFlag 削除フラグ
+     * @return お気に入り
+     */
+    Favorite findByUser_IdAndItem_IdAndDeleteFlag(
+            Integer userId,
+            Integer itemId,
+            Integer deleteFlag);
 }

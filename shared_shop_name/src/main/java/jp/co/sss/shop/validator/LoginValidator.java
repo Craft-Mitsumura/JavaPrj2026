@@ -12,6 +12,7 @@ import jp.co.sss.shop.annotation.LoginCheck;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.repository.UserRepository;
+import jp.co.sss.shop.service.FavoriteService;
 import jp.co.sss.shop.util.Constant;
 
 /**
@@ -28,6 +29,9 @@ public class LoginValidator implements ConstraintValidator<LoginCheck, Object> {
 
 	@Autowired
 	HttpSession session;
+	
+	@Autowired
+	FavoriteService favoriteService;
 
 	@Override
 	public void initialize(LoginCheck annotation) {
@@ -53,6 +57,11 @@ public class LoginValidator implements ConstraintValidator<LoginCheck, Object> {
 
 			// セッションスコープにログインしたユーザの情報を登録
 			session.setAttribute("user", userBean);
+			
+			// お気に入り一覧もセッションへ保存
+			session.setAttribute(
+			        "favoriteBeans",
+			        favoriteService.getFavoriteList(user.getId()));
 			isValidFlg = true;
 		} else {
 			//ユーザ認証に失敗

@@ -200,11 +200,12 @@
 				<input type="hidden" id="favoriteItemId" th:value="*{id}">
 
 				<button type="button" id="favoriteButton" class="send_button"
-					style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
-					width: 120px;height: 50px;padding: 0px;">
+				    style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
+				    width:120px;height:50px;padding:0;">
 
-					<span th:if="${isFavorite}">♥ お気に入り済み</span>
-					<span th:unless="${isFavorite}">♡ お気に入り</span>
+				    <span id="favoriteText"
+				          th:text="${isFavorite} ? '♥ お気に入り済み' : '♡ お気に入り'">
+				    </span>
 
 				</button>
 			</form>
@@ -340,31 +341,40 @@
 			});
 		});
 		
-		document.getElementById("favoriteButton").addEventListener("click", function () {
+		const favoriteButton = document.getElementById("favoriteButton");
 
-			const itemId = document.getElementById("favoriteItemId").value;
+		if (favoriteButton) {
 
-			fetch(/*[[@{/client/favorite/add}]]*/ , {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				body: "itemId=" + itemId
-			})
-			.then(response => response.text())
-			.then(result => {
+			favoriteButton.addEventListener("click", function () {
 
-				const button = document.getElementById("favoriteButton");
+				const itemId = document.getElementById("favoriteItemId").value;
 
-				if (result === "added") {
-					button.innerHTML = "♥ お気に入り済み";
-				} else if (result === "detached") {
-					button.innerHTML = "♡ お気に入り";
-				} else if (result === "ng") {
-					alert("ログインしてください");
-				}
+				fetch(/*[[@{/client/favorite/add}]]*/"", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					body: "itemId=" + itemId
+				})
+				.then(response => response.text())
+				.then(result => {
+
+					const favoriteText = document.getElementById("favoriteText");
+
+					if (result === "added") {
+						favoriteText.textContent = "♥ お気に入り済み";
+						location.reload();
+
+					} else if (result === "detached") {
+						favoriteText.textContent = "♡ お気に入り";
+						location.reload();
+
+					} else if (result === "ng") {
+						alert("ログインしてください");
+					}
+				});
 			});
-		});
+		}
 	</script>
 </body>
 

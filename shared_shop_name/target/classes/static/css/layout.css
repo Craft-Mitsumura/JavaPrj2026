@@ -80,7 +80,7 @@ header .container {
 }
 
 .admin header {
-	background: #12526d;
+	
 }
 
 header {
@@ -136,7 +136,7 @@ header {
 	
 	margin: auto;
 	
-	color: #fff;
+	color: #333;
 	
 }
 
@@ -241,7 +241,7 @@ aside.admin_menu {
 
 }
 
-.container content{
+.container.content{
 	display: flex;
 }
 
@@ -256,8 +256,9 @@ aside.admin_menu {
 
 .user .main .title,
 .admin .main .title {
-  margin-left:40%;
+  margin:auto;
 	font-size: 1.5rem;
+	text-align:center;
 	}
 .main .title::before,
 .admin .main .title::before {
@@ -272,9 +273,7 @@ aside.admin_menu {
 .admin .main .title.no_shadow::before {
 	display: none;
 }
-.admin .main .title {
-	background: #12526d;
-}
+
 
 .container.content > .admin_menu{
 	display: flex;
@@ -372,7 +371,7 @@ footer {
 }
 
 .admin footer {
-	background: #12526d;
+	
 }
 
 small {
@@ -382,8 +381,19 @@ small {
 	font-size: 8pt;
 }
 
-.title span {
-	color:red;
-	margin:auto;
+/* ---- 景品ページ ---- */
+
+body.prize .container {
+	width: 90%;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
+body.prize .main {
+	width: 100%;
+}
+
+body.prize #prize {
+	width: 100%;
+	text-align: center;
+}

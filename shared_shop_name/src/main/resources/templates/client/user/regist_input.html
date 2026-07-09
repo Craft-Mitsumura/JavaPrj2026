@@ -9,7 +9,7 @@
 
 <body class="user user_regist_input">
 	<h2 th:class="title" th:text="#{user}+#{title.input.new}"></h2>
-		<p th:class="input_message" th:text="#{msg.regist.input}"></p>
+	<p th:class="input_message" th:text="#{msg.regist.input}"></p>
 
 	<div class="user_info_form_area">
 
@@ -17,38 +17,44 @@
 
 			<ul class="input_list">
 				<li>
-					<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-						style="color: red; font-size: 0.9em; font-weight: bold;"></div>
+					<div th:if="${#fields.hasErrors('email')}" th:text="#{msg.regist.input}"
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.email}]]</span></label>
 					<input type="text" th:field="*{email}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-						style="color: red; font-size: 0.9em; font-weight: bold;"></div>
+					<div th:if="${#fields.hasErrors('password')}" th:text="#{msg.regist.input}"
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.password}]]</span></label>
 					<input type="password" th:field="*{password}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-						style="color: red; font-size: 0.9em; font-weight: bold;"></div>
+					<div th:if="${#fields.hasErrors('name')}" th:text="#{msg.regist.input}"
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.name}]]</span></label>
 					<input type="text" th:field="*{name}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
-						style="color: red; font-size: 0.9em; font-weight: bold;"></div>
+					<div th:if="${#fields.hasErrors('postalCode')}" th:text="#{msg.regist.input}"
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.postalCode}]]</span></label>
 					<input type="text" th:field="*{postalCode}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
-						style="color: red; font-size: 0.9em; font-weight: bold;"></div>
+					<div th:if="${#fields.hasErrors('address')}" th:text="#{msg.regist.input}"
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.address}]]</span></label>
 					<textarea rows="6" th:field="*{address}"></textarea>
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
-						style="color: red; font-size: 0.9em; font-weight: bold;"></div>
+					<div th:if="${#fields.hasErrors('phoneNumber')}" th:text="#{msg.regist.input}"
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.phoneNumber}]]</span></label>
 					<input type="text" th:field="*{phoneNumber}" />
 				</li>
