@@ -385,6 +385,8 @@ public class ClientOrderRegistController {
 		// 注文テーブルおよび注文商品テーブルのDB 登録実施
 		// 注文情報を保存
 		orderRepository.save(order);
+		
+		int totalPrice = 0;
 
 		// 注文商品情報を保存
 		for (BasketBean basket : basketBeans) {
@@ -402,11 +404,21 @@ public class ClientOrderRegistController {
 
 		    // 保存
 		    orderItemRepository.save(orderItem);
+		    
+		 // 合計金額計算
+		    totalPrice += item.getPrice() * basket.getOrderNum();
 
 		    // 在庫更新
 		    item.setStock(item.getStock() - basket.getOrderNum());
 		    itemRepository.save(item);
 		}
+		
+		// 購入ポイント加算（200円で1ポイント）
+		int addPoint = totalPrice / 200;
+
+		user.setPoint(user.getPoint() + addPoint);
+
+		userRepository.save(user);
 			
 		session.removeAttribute("orderForm");
 		session.removeAttribute("basketBeans");
