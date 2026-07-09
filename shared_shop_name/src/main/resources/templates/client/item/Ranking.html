@@ -7,6 +7,14 @@
 </head>
 
 <body class="">
+	<div class="section-ja">
+							<h2 class="title" th:text="#{sort.ranking.title}"></h2>
+
+						</div>
+
+
+						<p class="section-text">人気の商品をランキング形式でご紹介します</p>
+					</div>
 	<div class="ranking-header">
 		<h1>ランキング</h1>
 		<h2 th:text="${currentMonthText}"></h2>
@@ -15,11 +23,12 @@
 
 	<!-- カテゴリ表示 -->
 	<div class="category-area">
+		<a th:href="@{/client/item/ranking}"
+		            th:text="すべて" class="category-link">
+		        </a>
 	    <th:block th:each="category : ${categories}">
-	        <a
-	            th:href="@{/client/item/ranking(categoryId=${category.id})}"
-	            th:text="${category.name}"
-	            class="category-link">
+	        <a th:href="@{/client/item/ranking(categoryId=${category.id})}"
+	            th:text="${category.name}" class="category-link">
 	        </a>
 	    </th:block>
 	</div>
