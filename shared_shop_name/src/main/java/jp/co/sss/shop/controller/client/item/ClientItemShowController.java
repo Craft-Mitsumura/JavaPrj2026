@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.form.ItemForm;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
+import jp.co.sss.shop.service.ItemViewConverter;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
 
@@ -45,6 +47,13 @@ public class ClientItemShowController {
 	 */
 	@Autowired
 	BeanTools beanTools;
+	
+	/**
+	 * @author 金城
+	 * json用のコンバーター
+	 */
+	@Autowired
+	ItemViewConverter ItemViewConverter;
 
 	/**
 	 * 商品在庫数計算サービス
@@ -90,7 +99,7 @@ public class ClientItemShowController {
 
 	/**
 	 * 商品詳細表示
-	 *
+	 * @author 金城（微修正）
 	 * @param model 商品情報を渡すため
 	 * @param id 商品ID
 	 * @return 商品詳細画面
@@ -103,7 +112,18 @@ public class ClientItemShowController {
 		// 商品在庫数を設定
 		//			stockCalc.updateOneItemStock(detailItem);
 
-		model.addAttribute("item", detailItem);
+		// nullチェック（商品が存在しない場合の保護）
+		if (detailItem != null) {
+			try {
+				// ここでConverterを使ってEntityをFormに変換
+				ItemForm itemForm = ItemViewConverter.convertToForm(detailItem);
+				model.addAttribute("item", itemForm);
+			} catch (Exception e) {
+				// JSON変換エラー時の処理（ログ出力など）
+				e.printStackTrace();
+				model.addAttribute("item", detailItem); // 失敗時はとりあえず元のEntityを渡す
+			}
+		}
 
 		return "client/item/detail";
 	}
