@@ -378,3 +378,12 @@ small {
 }
 
 
+body.prize .main {
+	width: 100%;
+}
+
+body.prize #prize {
+	width: 100%;
+	text-align: center;
+}
+

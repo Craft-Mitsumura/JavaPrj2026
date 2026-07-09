@@ -377,4 +377,15 @@ small {
 	margin:auto;
 }
 
+<<<<<<< HEAD
 
+=======
+body.prize .main {
+	width: 100%;
+}
+
+body.prize #prize {
+	width: 100%;
+	text-align: center;
+}
+>>>>>>> aecc501a671204b1fe6404a22ae31102c23c1166
