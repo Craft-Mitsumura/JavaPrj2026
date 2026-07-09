@@ -78,11 +78,6 @@ header .container {
 	display: flex;
 	justify-content: space-between;
 }
-
-.admin header {
-	
-}
-
 header {
 	background: #111827;
 	color: white;
@@ -370,10 +365,6 @@ footer {
 	width: 100%;
 }
 
-.admin footer {
-	
-}
-
 small {
 	height: 30px;
 	line-height:30px;
@@ -385,4 +376,5 @@ small {
 	color:red;
 	margin:auto;
 }
+
 
