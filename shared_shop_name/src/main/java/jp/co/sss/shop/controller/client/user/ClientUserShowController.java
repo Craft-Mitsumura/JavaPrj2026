@@ -3,10 +3,12 @@ package jp.co.sss.shop.controller.client.user;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -99,7 +101,6 @@ public class ClientUserShowController {
 		return "client/user/detail";
 	}
 
-
 	/**
 	 * 会員情報登録入力画面
 	 * @author 手塚
@@ -108,7 +109,7 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping("/client/user/regist/input/init")
 	public String registInput(Model model) {
-		
+
 		// 入力フォーム用の会員情報を作成
 		UserBean userBean = new UserBean();
 
@@ -129,9 +130,13 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping(path = "/client/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(
-			@ModelAttribute("userForm") UserBean userBean,
+			@Valid @ModelAttribute("userForm") UserBean userBean,
+			BindingResult result,
 			Model model,
 			HttpSession session) {
+
+		// 必須項目が未入力のとき
+		if (result.hasErrors()) { return "client/user/regist_input"; }
 
 		// 登録する会員情報をセッションに保存
 		session.setAttribute("registUser", userBean);
@@ -181,7 +186,6 @@ public class ClientUserShowController {
 		return "client/user/regist_complete";
 	}
 
-
 	/**
 	 * 会員情報編集画面	 *
 	 * @author 手塚
@@ -201,7 +205,7 @@ public class ClientUserShowController {
 		// 編集画面へ遷移
 		return "client/user/update_input";
 	}
-	
+
 	/**
 	 * 会員情報編集確認画面
 	 * @author 手塚
@@ -314,8 +318,8 @@ public class ClientUserShowController {
 		User user = userRepository.findById(loginUser.getId()).orElse(null);
 
 		if (user != null) {
-		    // データベースからデータを完全に削除
-		    userRepository.delete(user);
+			// データベースからデータを完全に削除
+			userRepository.delete(user);
 		}
 
 		session.invalidate();
@@ -323,4 +327,3 @@ public class ClientUserShowController {
 		return "redirect:/";
 	}
 }
-
