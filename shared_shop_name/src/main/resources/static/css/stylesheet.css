@@ -1912,23 +1912,21 @@ Cart
 
 .rank-card {
     width: 220px;
-    background: 	#d7b56d;
-
-    border-radius: 30px;
+    background: #fff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     position: relative;
 }
 
 .rank-card-first {
-    width: 280px;
+    width: 250px;
     background: #fff;
-    border-radius: 30px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     position: relative;
 }
 .rank-card,
 .rank-card-first {
     text-decoration: none;
+	border-radius: 0;
     color: inherit;
     cursor: pointer;
     transition:
@@ -1942,9 +1940,9 @@ Cart
 }
 .rank-image {
     display: block;
-    width: 150px;
-    height: 150px;
-    margin: 20px auto 0;
+	width: 150px;
+	height: 130px;
+	margin: 20px auto 10px;
     overflow: hidden;
     border-radius: 15px;
     background: #f5f5f5;
@@ -1952,9 +1950,9 @@ Cart
 
 .rank-image-first {
     display: block;
-    width: 220px;
-    height: 220px;
-    margin: 20px auto 0;
+	width: 220px;
+	height: 190px;
+	margin: 15px auto 10px;
     overflow: hidden;
     border-radius: 15px;
     background: #f5f5f5;
@@ -1967,9 +1965,9 @@ Cart
     object-fit: cover;
 }
 .rank-label {
-    position: absolute;
-    top: 12px;
-    left: 12px;
+	position: absolute;
+	left: 10px;
+	bottom: 205px;
     display: flex;
     align-items: center;
     background: white;
@@ -1978,17 +1976,22 @@ Cart
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 .rank-info {
-    padding: 20px;
-    text-align: center;
+	background: #071d49;
+	padding: 20px 20px;
+	text-align: center;
 }
 
 .rank-name {
-    font-weight: bold;
+	color: white;
+	  font-size: 32px;
+	  font-weight: normal;
 }
 
 .rank-price {
   
-    font-weight: bold;
+	color: #d7b56d;
+	  font-size: 28px;
+	  font-weight: bold;
 }
 
 /*ranking*/
