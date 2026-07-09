@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Order;
@@ -187,6 +188,34 @@ public class ClientUserShowController {
 		// 登録完了画面へ遷移
 		return "client/user/regist_complete";
 	}
+	
+	/**
+	 * 会員情報編集画面
+	 * @author 手塚
+	 * @param model リクエストスコープ
+	 * @param session セッションスコープ
+	 * @return client/user/update_input 会員情報編集画面を表示
+	 */
+	@RequestMapping("/client/user/update/input")
+	public String updateInput(@ModelAttribute("userForm") UserBean userBean, Model model, HttpSession session) {
+
+		// ログイン中の会員情報を取得
+		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
+
+		// 各項目をセット
+		userBean.setEmail(pastUser.getEmail());
+		userBean.setPassword(pastUser.getPassword()); // 💡【追加】パスワードの初期値を引き継ぐ
+		userBean.setName(pastUser.getName());
+		userBean.setPostalCode(pastUser.getPostalCode());
+		userBean.setAddress(pastUser.getAddress());
+		userBean.setPhoneNumber(pastUser.getPhoneNumber());
+		userBean.setId(pastUser.getId());
+		userBean.setAuthority(pastUser.getAuthority());
+		userBean.setPoint(pastUser.getPoint());
+
+		// 編集画面へ遷移
+		return "client/user/update_input";
+	}
 
 	/**
 	 * 会員情報編集確認画面
@@ -197,60 +226,61 @@ public class ClientUserShowController {
 	 * @param session セッションスコープ
 	 * @return client/user/update_check 会員情報編集確認画面を表示
 	 */
+
 	@RequestMapping(path = "/client/user/update/check", method = RequestMethod.POST)
 	public String updateCheck(
 			@Valid @ModelAttribute("userForm") UserBean userBean,
 			BindingResult result,
+			@RequestParam("oldEmail") String oldEmail,
+			@RequestParam("oldPassword") String oldPassword,
+			@RequestParam("newEmail") String newEmail,
+			@RequestParam("newPassword") String newPassword,
 			Model model,
 			HttpSession session) {
-
-		// 必須項目が未入力のとき
-		if (result.hasErrors()) {
-			// 変更前の情報はそのまま利用可能
-			return "client/user/update_input";
-		}
 
 		// ログイン中の情報（変更前の情報）取得
 		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
 
-		// メールアドレスの重複チェック
-		if (!userBean.getEmail().equals(pastUser.getEmail())) {
-			User duplicateUser = userRepository.findByEmail(userBean.getEmail());
-			if (duplicateUser != null) {
-				model.addAttribute("errorMessage", "このメールアドレスは既に登録されています。");
-				model.addAttribute("userForm", userBean);
-				return "client/user/update_input";
-			}
+		// 必須項目チェック
+		if (result.hasErrors()) {
+			return "client/user/update_input";
 		}
 
-		// 編集後の会員情報を一時保存
+		// 旧メールアドレスと旧パスワードの本人確認
+		if (!oldEmail.equals(pastUser.getEmail()) || !oldPassword.equals(pastUser.getPassword())) {
+			model.addAttribute("authErrorMessage", "旧メールアドレスまたは旧パスワードが正しくありません。");
+			model.addAttribute("userForm", userBean);
+			return "client/user/update_input";
+		}
+
+		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
+		if (newEmail != null && !newEmail.trim().isEmpty()) {
+			// 他の人が使っていないか重複チェック
+			if (!newEmail.equals(pastUser.getEmail())) {
+				User duplicateUser = userRepository.findByEmail(newEmail);
+				if (duplicateUser != null) {
+					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
+					model.addAttribute("userForm", userBean);
+					return "client/user/update_input";
+				}
+			}
+			userBean.setEmail(newEmail);
+		} else {
+			userBean.setEmail(pastUser.getEmail()); 
+		}
+
+		// 新しいパスワードが入力されていたら上書き、空欄なら元のパスワードをそのまま引き継ぐ
+		if (newPassword != null && !newPassword.trim().isEmpty()) {
+			userBean.setPassword(newPassword);
+		} else {
+			userBean.setPassword(pastUser.getPassword()); // 変更なし（現在の値を設定）
+		}
+
+		// 編集後の会員情報を一時保存して確認画面へ
 		session.setAttribute("updateUser", userBean);
-
-		// 確認画面へ渡す
 		model.addAttribute("userForm", userBean);
 
-		// 会員情報編集確認画面へ遷移
 		return "client/user/update_check";
-	}
-	
-	/**
-	 * 会員情報編集画面
-	 * @author 手塚
-	 * @param model リクエストスコープ
-	 * @param session セッションスコープ
-	 * @return client/user/update_input 会員情報編集画面を表示
-	 */
-	@RequestMapping("/client/user/update/input")
-	public String updateInput(Model model, HttpSession session) {
-
-		// セッションから変更前の会員情報を取得
-		UserBean userBean = (UserBean) session.getAttribute("pastUser");
-
-		// リクエストスコープに保存
-		model.addAttribute("userForm", userBean);
-
-		// 編集画面へ遷移
-		return "client/user/update_input";
 	}
 
 	/**
