@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Favorite;
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.entity.Promotions;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.FavoriteRepository;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.repository.PromotionsRepository;
 import jp.co.sss.shop.service.BeanTools;
 import jp.co.sss.shop.service.FavoriteService;
 //import jp.co.sss.shop.service.StockCalc;
@@ -61,6 +63,9 @@ public class ClientItemShowController {
 	@Autowired
 	FavoriteService favoriteService;
 	
+	@Autowired
+	PromotionsRepository promotionsRepository;
+	
 	/**
 	 * 商品在庫数計算サービス
 	 */
@@ -99,6 +104,16 @@ public class ClientItemShowController {
 		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
 		//  正しいデータが入ったリストを画面に渡す
 		model.addAttribute("rankings", findByRanking);
+		
+		// カルーセル広告一覧
+		List<Promotions> adList =
+		        promotionsRepository.findByDeleteFlagOrderByIsActiveDescIdAsc(Constant.NOT_DELETED);
+
+		// デバッグ用
+		System.out.println("広告件数：" + adList.size());
+
+		// HTMLへ渡す
+		model.addAttribute("adList", adList);
 
 		return "index";
 	}
