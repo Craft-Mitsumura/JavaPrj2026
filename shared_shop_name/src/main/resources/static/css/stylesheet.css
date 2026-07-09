@@ -121,11 +121,10 @@ p {
 
 /* ---- ボタン(商品個数指定) ---- */
 [type=button] {
-	width: 80px;
-	height: 35px;
+
 	border-width: 1px;
 	border-style: solid;
-	border-color: #808080;
+	
 	padding: 0px 10px;
 	
 	border-radius: 6px;
@@ -1218,7 +1217,7 @@ Cart
 	display: flex;
 	align-items: center;
 	gap: 22px;
-	margin-top:4%;
+	
 }
 
 #containerd .header-left {
@@ -1367,11 +1366,11 @@ Cart
 ========================================== */
 
 #containerd .header-search {
-    margin-top:2%;
+   
     display:flex;
     align-items:left;
     margin-left:40%;
-    gap:12px;
+
 
 
 }
@@ -1437,7 +1436,9 @@ Cart
 
 #containerd #searchInputBar.show {
 
-
+  margin-right:4%;
+    width:380px;
+    opacity:1;
     opacity:1;
     visibility:visible;
     pointer-events:auto;
@@ -1457,7 +1458,7 @@ Cart
     overflow:hidden;
     margin-top:5%;
     background:#fff;
-    border-radius:30px;
+    border-radius:8px;
 
     transition:width .45s cubic-bezier(.22,1,.36,1);
 }
@@ -1465,16 +1466,11 @@ Cart
 #containerd .search-wrapper input {
 
 	width: 250px;
-
 	height: 42px;
-
 	border: none;
-
 	outline: none;
-
-	padding: 0 18px;
-
 	font-size: 14px;
+	margin-bottom:5%;
 
 }
 
@@ -1596,39 +1592,24 @@ Cart
 #containerd #profileMenu {
 
 	position: absolute;
-
 	top: 55px;
-
 	right: 0;
-
 	width: 210px;
-
 	background: white;
-
 	border-radius: 12px;
-
 	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
-
 	overflow: hidden;
-
 	opacity: 0;
-
 	visibility: hidden;
-
 	transform: translateY(-10px);
-
 	transition: .28s;
-
 }
 
 /* JS will add .show */
 
 #containerd #profileMenu.show {
-
 	opacity: 1;
-
 	visibility: visible;
-
 	transform: translateY(0);
 
 }
@@ -1640,14 +1621,9 @@ Cart
 #containerd #profileMenu a {
 
 	DISPLAY: BLOCK;
-
 	text-decoration: none;
-
 	color: #374151;
-
-
     transition:.25s;
- 
     text-align:center;
 
 }
@@ -1658,8 +1634,6 @@ Cart
     background:#eff6ff;
  font-weight:200px;
     font-size:10px;
-    color:#2563eb;
-
 	padding-left: 24px;
 
 }
@@ -1671,9 +1645,7 @@ Cart
 #containerd .guest-buttons {
 
 	display: flex;
-
 	align-items: center;
-
 	gap: 10px;
 
 }
@@ -1772,7 +1744,7 @@ Cart
 
 #containerd #cart:hover {
 
-	background: #2563eb;
+
 
 	transform: translateY(-2px);
 
@@ -1804,13 +1776,7 @@ Cart
 
 }
 
-#containerd #searchInputBar.show {
 
-
-    width:380px;
-    opacity:1;
-
-}
 
 /* --------------- */
 
@@ -2211,4 +2177,13 @@ transform: translateY(-6px);
 
 
 /*ランキングCSS 小松原作 ここまで*/
+
+/* #header {
+    display: flex;
+    align-items: center; सबैलाई vertical center मा ल्याउँछ
+    justify-content: space-between; left, center, right spacing
+    width: 100%;
+    height: 70px;
+} */
+
 

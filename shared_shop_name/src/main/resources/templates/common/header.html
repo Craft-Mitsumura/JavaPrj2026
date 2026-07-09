@@ -6,6 +6,9 @@
 
 <body>
 
+
+
+   <div id="header" >  
 	<div th:fragment="layout-header" id="containerd">
 
 		<!-- ===================== -->
@@ -24,13 +27,13 @@
 
 			<div class="header-center">
 
-				<button id="categoryBtn" type="button"
+				<button class ="login-btn" type="button"
 					onclick="
 event.stopPropagation();
 document.getElementById('categoryLists').classList.toggle('show');
 ">
 
-					<span>カテゴリー一覧</span> <span class="arrow">▼</span>
+					<span>Category</span> <span class="arrow">▼</span>
 
 				</button>
 
@@ -88,11 +91,11 @@ document.getElementById('categoryLists').classList.toggle('show');
 
 				<div class="search-wrapper">
 
-					<input type="text" name="items" placeholder="商品を検索">
+					<input type="text" name="items" placeholder="ItemSearch">
 
 				</div>
 
-				<button class="search-btn" type="submit">検索</button>
+				<button class="search-btn" type="submit">Search</button>
 
 			</form>
 			
@@ -119,7 +122,7 @@ document.getElementById('categoryLists').classList.toggle('show');
 
 				<div class="profile">
 
-					<button id="userBtn" type="button">
+					<button  class="login-btn" id="userBtn" type="button">
 
 						 <span
 							th:text="${session.user.name}+#{name.polite}"></span> 
@@ -128,8 +131,8 @@ document.getElementById('categoryLists').classList.toggle('show');
 
 					<div id="profileMenu">
 
-						<a th:href="@{/client/user/detail}"> マイページ </a> <a
-							th:href="@{/logout}"> ログアウト </a>
+						<a th:href="@{/client/user/detail}"> My Page </a> <a
+							th:href="@{/logout}"> Logout</a>
 
 					</div>
 
@@ -157,7 +160,7 @@ document.getElementById('categoryLists').classList.toggle('show');
 					<div id="profileMenu">
 
 						<a th:href="@{/admin/user/detail/{id}(id=${session.user.id})}">
-							マイページ </a> <a th:href="@{/logout}"> ログアウト </a>
+							My page </a> <a th:href="@{/logout}">Logout</a>
 
 					</div>
 
@@ -231,6 +234,7 @@ document.getElementById('categoryLists').classList.toggle('show');
 
 		</div>
 
+	</div>
 	</div>
 	<script>
 
