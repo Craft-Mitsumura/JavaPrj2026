@@ -3,12 +3,12 @@
 	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-	<title th:text="#{user}+#{title.input.update}+' | '+ #{shop.title}"> </title>
+	<title th:text="#{user}+'情報'+#{title.update.input}+' | '+#{shop.title}"></title>
 	<meta charset="UTF-8" />
 </head>
 
 <body class="user user_update_input">
-	<h2 th:class="title" th:text="#{user}+#{title.input.update}"></h2>
+	<h2 class="title" th:text="#{user}+'情報'+#{title.update.input}"></h2>
 	<p th:class="input_message" th:text="#{msg.update.input}"></p>
 
 	<div class="user_info_form_area">
@@ -66,8 +66,7 @@
 				</li>
 				<li>
 					<div th:if="${#fields.hasErrors('phoneNumber')}" th:text="#{msg.regist.input}"
-						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
-					</div>
+						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;"></div>
 					<label><span class="input_title" th:text="#{userForm.phoneNumber}"></span></label>
 					<input type="text" th:field="*{phoneNumber}" />
 				</li>
@@ -77,13 +76,13 @@
 			<input type="hidden" th:field="*{authority}" />
 			<input type="hidden" th:field="*{point}" />
 
-			<div class="button_area" style="margin-top: 20px;">
-				<input type="submit" value="確認" th:class="send_button" />
-				<a th:href="@{/client/user/detail}" class="back_button"
-					style="display: inline-block; text-align: center; text-decoration: none; line-height: 2.5;">戻る</a>
-			</div>
-		</form>
-	</div>
-</body>
+			<input type="hidden" name="authority" value="2" />
+						<input type="submit" value="確認" th:class="send_button" />
+					</form>
+					<form th:action="@{/}" method="post">
+						<input type="submit" value="戻る" class="back_button" />
+					</form>
+				</div>
+			</body>
 
 </html>
