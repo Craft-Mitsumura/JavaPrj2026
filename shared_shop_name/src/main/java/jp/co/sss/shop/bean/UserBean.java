@@ -17,37 +17,37 @@ public class UserBean {
 	/**
 	 * 会員メールアドレス
 	 */
-	@NotBlank(message = "{msg.regist.input}")
+	@NotBlank(message = "必須")
 	private String email;
 	
 	/**
 	 * パスワード
 	 */
-	@NotBlank(message = "{msg.regist.input}")
+	@NotBlank(message = "必須")
 	private String password;
 	
 	/**
 	 * 会員名
 	 */
-	@NotBlank(message = "{msg.regist.input}")
+	@NotBlank(message = "必須")
 	private String name;
 	
 	/**
 	 * 郵便番号
 	 */
-	@NotBlank(message = "{msg.regist.input}")
+	@NotBlank(message = "必須")
 	private String postalCode;
 	
 	/**
 	 * 住所
 	 */
-	@NotBlank(message = "{msg.regist.input}")
+	@NotBlank(message = "必須")
 	private String address;
 	
 	/**
 	 * 電話番号
 	 */
-	@NotBlank(message = "{msg.regist.input}")
+	@NotBlank(message = "必須")
 	private String phoneNumber;
 	
 	/**
