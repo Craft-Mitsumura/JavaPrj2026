@@ -82,13 +82,7 @@
 		<div class="ranking-area">
 		
 
-			<!--  Rank 2  -->
-			<!--データが2件以上ある場合のみ表示-->
-			<a th:if="${#lists.size(rankings) >= 2}" th:object="${rankings[1]}" th:href="@{/client/item/detail/}+*{id}"
-				class="rank-card">
 				<!-- 画像 -->
-				<div class="rank-image">
-
 					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
 					<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"
@@ -114,12 +108,12 @@
 					</p>
 				</div>
 
-			</a>
-
-
 			<!-- Rank1 -->
-			<a th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}" th:href="@{/client/item/detail/}+*{id}"
+			<div th:if="${#lists.size(rankings) >= 1}" th:object="${rankings[0]}"
 				class="rank-card-first">
+
+
+					<img th:if="*{image != null}" th:src="@{|/images/*{image}|}" class="w-full h-full object-cover" />
 
 				<!-- 画像 -->
 				<div class="rank-image-first">
@@ -146,6 +140,10 @@
 			</a>
 
 
+			<!--  Rank 3  -->
+			<!--データが2件以上ある場合のみ表示-->
+			<div th:if="${#lists.size(rankings) >= 3}" th:object="${rankings[2]}"
+				class="rank-card">
 
 
 				<!--  Rank 3  -->
@@ -185,6 +183,13 @@
 		</div>
 	</div>
 
+			<!-- 今月のランキング商品がない場合の表示 -->
+			<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">
+				<p>今月のランキングデータはありません。</p>
+			</div>
+		</div>
+		<!-- ランキング一覧へ -->
+		<div class="detail_button_area">
 
 	<!-- 今月のランキング商品がない場合の表示 -->
 	<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">

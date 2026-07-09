@@ -236,7 +236,7 @@ aside.admin_menu {
 
 }
 
-.container content{
+.container.content{
 	display: flex;
 }
 
@@ -372,9 +372,19 @@ small {
 	font-size: 8pt;
 }
 
-.title span {
-	color:red;
-	margin:auto;
+/* ---- 景品ページ ---- */
+
+body.prize .container {
+	width: 90%;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
+body.prize .main {
+	width: 100%;
+}
 
+body.prize #prize {
+	width: 100%;
+	text-align: center;
+}
