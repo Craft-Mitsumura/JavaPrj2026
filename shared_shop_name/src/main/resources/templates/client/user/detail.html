@@ -10,7 +10,7 @@
 <body class="user user_detail">
 	<div id="details">
 
-		<h2 th:class="title" th:text="#{user}+#{title.detail}"></h2>
+		<h2 th:class="title" th:text="#{user}+#{title.detail}"  style="margin-top:2%;"></h2>
 
 		<!-- 上段 -->
 		<div class="top_area">
@@ -39,7 +39,7 @@
 						<span class="input_value" th:text="*{address}"></span>
 					</li>
 
-					<li>
+					<li style="border-bottom:none;">
 						<span class="input_title">[[#{userForm.phoneNumber}]]</span>
 						<span class="input_value" th:text="*{phoneNumber}"></span>
 					</li>
@@ -50,6 +50,20 @@
 			<!-- ポイント情報 -->
 			<div class="point_area">
 
+				<div class="next_prize" th:if="${nextPrizeName != null}">
+					<a style="margin-bottom:2%;" th:href="@{/client/prize/list}">
+						<p   class="title">次の景品</p>
+                      <div id="next_price"> 
+						<img style="height:190px;" id="nextPrizeImg" th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
+
+						<p class="prize_name" th:text="${nextPrizeName}"></p>
+
+						<p class="prize_point" th:text="${nextPrizePoint} + 'ptで交換'"></p>
+					</div>
+					</a>
+					
+				</div>
+				<div id="pointDiv" > 
 				<div class="current_point">
 					<p>現在ポイント</p>
 					<p th:text="${userBean.point} + ' pt'"></p>
@@ -60,22 +74,11 @@
 					<p th:text="${remainPoint} + ' pt'"></p>
 				</div>
 
-				<div class="next_prize" th:if="${nextPrizeName != null}">
-					<a th:href="@{/client/prize/list}">
-						<p class="title">次の景品</p>
-
-						<img th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
-
-						<p class="prize_name" th:text="${nextPrizeName}"></p>
-
-						<p class="prize_point" th:text="${nextPrizePoint} + 'ptで交換'"></p>
-					</a>
-				</div>
 
 				<div th:if="${nextPrizeName == null}">
 					<p>すべての景品を獲得済みです！</p>
 				</div>
-
+               </div>
 			</div> <!-- point_area -->
 		</div> <!-- top_area -->
 
@@ -136,7 +139,7 @@
 			</form>
 
 			<form th:action="@{/client/user/delete/check}" method="post">
-				<input type="submit" value="退会" class="delete" />
+				<input id="deleteBtn" type="submit" value="退会" class="delete" />
 			</form>
 
 		</div>

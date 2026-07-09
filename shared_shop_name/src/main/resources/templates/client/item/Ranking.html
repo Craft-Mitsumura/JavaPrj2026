@@ -16,23 +16,22 @@
 	<p class="section-text">人気の商品をランキング形式でご紹介します</p>
 	
 
-
 	<!-- カテゴリ表示 -->
 	<div class="category-area">
-		<a th:href="@{/client/item/ranking}" th:text="すべて" class="category-link">
-		</a>
-		<th:block th:each="category : ${categories}">
-			<a th:href="@{/client/item/ranking(categoryId=${category.id})}" th:text="${category.name}"
-				class="category-link">
-			</a>
-		</th:block>
+	    <th:block th:each="category : ${categories}">
+	        <a
+	            th:href="@{/client/item/ranking(categoryId=${category.id})}"
+	            th:text="${category.name}"
+	            class="category-link">
+	        </a>
+	    </th:block>
 	</div>
 
 	<!-- ランキング商品表示-->
 	<div class="ranking-list">
 
-		<a th:each="item, stat : ${rankings}" th:if="${stat.index < 10}" th:href="@{/client/item/detail/}+${item.id}"
-			class="ranking-item">
+		<a th:each="item, stat : ${rankings}"  th:if="${stat.index < 10}"
+		   th:href="@{/client/item/detail/}+${item.id}" class="ranking-item">
 
 			<!-- 順位 -->
 			<div class="ranking-number">
@@ -50,7 +49,7 @@
 
 			<!-- 商品情報 -->
 			<div class="ranking-info">
-				<div class="ranking-name" th:text="${item.name}">
+				<div class="font-bold text-lg" th:text="${item.name}">
 				</div>
 
 				<div class="ranking-price" th:text="|￥${#numbers.formatInteger(item.price,3,'COMMA')}|">

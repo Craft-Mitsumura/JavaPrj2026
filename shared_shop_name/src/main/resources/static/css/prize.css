@@ -193,37 +193,6 @@ body.prize .container {
 	margin-bottom: 8px;
 	line-height: 1.6;
 }
-
-table {
-	width: 100%;
-	border-collapse: collapse;
-	background: #fff8dc;
-	border-radius: 8px;
-	overflow: hidden;
-}
-
-table th {
-	background: #3d98bf;
-	color: #fff;
-	font-weight: normal;
-}
-
-table th {
-	background: #3d98bf;
-	color: #fff;
-	font-weight: normal;
-}
-
-table tr:hover {
-	background: rgba(255, 255, 255, 0.05);
-}
-
-table img {
-	width: 80px;
-	height: auto;
-	border-radius: 6px;
-}
-
 .container {
     width: 1200px !important;
     max-width: 1200px !important;
@@ -231,4 +200,41 @@ table img {
 
 .main {
     width: 100% !important;
+}
+
+#details table {
+	width: 100%;
+	text-align:center;
+	border: 2px solid #cccc;
+	border-radius: 8px;
+}
+
+ #details table th {
+	background:black;
+	color:white;
+	font-weight: normal;
+}
+
+#details td {
+/* 	border-bottom: 1px solid #cccc;
+	border-left:1px solid #cccc; */
+	border: 1px solid #cccc;
+	
+}
+
+#details .detail_button_area form  {
+	gap:20px;
+}
+
+
+#deleteBtn {
+	background:white;
+	color:black;
+	border:1px solid black;
+	cursor:pointer;
+
+}
+ #deleteBtn:hover {
+	background:red;
+	color:white;
 }
