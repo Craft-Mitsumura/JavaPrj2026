@@ -1,4 +1,4 @@
-﻿﻿@charset "UTF-8";
+﻿@charset "UTF-8";
 
 body {
 	color: #12526d;
@@ -44,7 +44,7 @@ p {
 }
 
 .login_form .input {
-	width: 55%;
+	
 	padding: 8px 5px;
 	text-align: left;
 }
@@ -124,13 +124,13 @@ p {
 
 	border-width: 1px;
 	border-style: solid;
-	background:black;
+	background: black;
 	padding: 0px 10px;
-	    border: 1px solid rgba(255, 255, 255, .35);
+	border: 1px solid rgba(255, 255, 255, .35);
 	border-radius: 6px;
 	font-weight: bold;
-	color:white;
-	height:42px;
+	color: white;
+	height: 42px;
 }
 
 
@@ -352,13 +352,13 @@ li.error_msg {
 	width: 100%;
 }
 
-.detail_button_area {
-	display: block;
+ .detail_button_area {
+   text-align:center;
 	width: 100%;
 	margin-top: 30px;
-	
-}
 
+}
+ 
 
 .detail_button_area form {
 	/* display: inline-block; */
@@ -466,9 +466,8 @@ select {
 	border: 1px solid #808080;
 	border-radius: 6px;
 	padding: 2px 10px;
-	color: #12526d;
 	background: #fff;
-	
+
 }
 
 /* スキルアップテクニック10
@@ -784,11 +783,164 @@ p.link_center {
 }
 
 /* サガルから修正 */
-#userLogin h2 {
+/* ===========================
+        LOGIN PAGE
+=========================== */
 
-	text-align: center;
+#userLogin {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
 
 }
+
+/* Title */
+
+#userLogin .page_title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Description */
+
+#userLogin .description {
+    color: #666;
+    margin-bottom: 35px;
+    font-size: 15px;
+}
+
+/* Center */
+
+#userLogin .user_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#userLogin .login_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card */
+
+#userLogin .login_form_area {
+    width: 420px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.12);
+    border: 1px solid #e6e6e6;
+    
+}
+
+/* Table */
+
+#userLogin table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#userLogin tr {
+    display: block;
+    margin-bottom: 18px;
+   
+}
+
+#userLogin td {
+    display: block;
+}
+
+/* Input */
+
+#userLogin input[type="text"],
+#userLogin input[type="password"] {
+    width: 100%;
+    height: 50px;
+    padding: 0 18px;
+    font-size: 15px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    background: #fafafa;
+    transition: .3s;
+    box-sizing: border-box;
+}
+
+#userLogin input[type="text"]:focus,
+#userLogin input[type="password"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(74,144,226,.15);
+}
+
+/* Placeholder */
+
+#userLogin input::placeholder{
+    color:#999;
+}
+
+/* Login Button */
+
+#userLogin #loginBtn,
+#userLogin input[type="submit"]{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:10px;
+    background:#4a90e2;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#userLogin #loginBtn:hover,
+#userLogin input[type="submit"]:hover{
+    background:#2d74c4;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(74,144,226,.35);
+}
+
+/* Error */
+
+#userLogin .error_list{
+    background:#fff3f3;
+    border:1px solid #ffc7c7;
+    color:#d63031;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+#userLogin .error_list ul{
+    margin:0;
+    padding-left:20px;
+}
+
+/* Back Link */
+
+#userLogin .complete_link{
+    margin-top:30px;
+}
+
+#userLogin .complete_link a{
+    color:#4a90e2;
+    text-decoration:none;
+    font-weight:600;
+}
+
+#userLogin .complete_link a:hover{
+    text-decoration:underline;
+}
+
 
 
 
@@ -805,6 +957,7 @@ p.link_center {
 	width: 110px;
 	cursor: pointer;
 }
+
 
 #try {
 	display: grid;
@@ -832,14 +985,9 @@ p.link_center {
 /* ========================= */
 
 #itemList .title {
-
-	text-align: center;
-
-	font-size: 34px;
-
+    font-size: 34px;
 	margin-bottom: 35px;
-
-	color: #ffffff;
+	color:black;
 
 }
 
@@ -1069,7 +1217,7 @@ p.link_center {
 	display: flex;
 	align-items: center;
 	gap: 22px;
-	
+
 }
 
 #containerd .header-left {
@@ -1089,13 +1237,13 @@ p.link_center {
 #containerd .header-center {
 
 	position: relative;
-	background:transprant;
+	background: transprant;
 
 }
 
 #containerd #categoryBtns:hover {
-	color:black;
-    background:white;
+	color: black;
+	background: white;
 }
 
 #containerd #categoryBtn {
@@ -1141,7 +1289,7 @@ p.link_center {
 	top: 58px;
 	left: 0;
 	width: 250px;
-	background:white;
+	background: white;
 	border-radius: 12px;
 	box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
 	opacity: 0;
@@ -1215,10 +1363,10 @@ p.link_center {
 ========================================== */
 
 #containerd .header-search {
-   
-    display:flex;
-    align-items:left;
-    margin-left:40%;
+
+	display: flex;
+	align-items: left;
+	margin-left: 40%;
 
 
 
@@ -1253,45 +1401,45 @@ p.link_center {
 }
 
 #containerd #searchBtn:hover {
-    
+
 	background: rgba(255, 255, 255, .12);
 
 }
 
 /* Search Form Hidden */
 
-#containerd #searchInputBar{
+#containerd #searchInputBar {
 
-    display:flex;
-    align-items:center;
-    gap:8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 
-    position:absolute;
-    right:28%;     
-    top:50%;
-    transform:translateY(-50%) translateX(30px) scale(.8);
+	position: absolute;
+	right: 28%;
+	top: 50%;
+	transform: translateY(-50%) translateX(30px) scale(.8);
 
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
 
-    transition:
-        transform .45s cubic-bezier(.22,1,.36,1),
-        opacity .55s ease,
-        visibility .35s;
+	transition:
+		transform .45s cubic-bezier(.22, 1, .36, 1),
+		opacity .55s ease,
+		visibility .35s;
 
 }
 
 #containerd #searchInputBar.show {
 
-  margin-right:5%;
-    width:380px;
-    opacity:1;
-    opacity:1;
-    visibility:visible;
-    pointer-events:auto;
+	margin-right: 5%;
+	width: 380px;
+	opacity: 1;
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
 
-    transform:translateY(-50%) translateX(-30) scale(1);
+	transform: translateY(-50%) translateX(-30) scale(1);
 
 }
 
@@ -1302,13 +1450,13 @@ p.link_center {
 #containerd .search-wrapper {
 
 
-    width:0;
-    overflow:hidden;
-    margin-top:5%;
-    background:#fff;
-    border-radius:8px;
+	width: 0;
+	overflow: hidden;
+	margin-top: 5%;
+	background: #fff;
+	border-radius: 8px;
 
-    transition:width .45s cubic-bezier(.22,1,.36,1);
+	transition: width .45s cubic-bezier(.22, 1, .36, 1);
 }
 
 #containerd .search-wrapper input {
@@ -1318,7 +1466,7 @@ p.link_center {
 	border: none;
 	outline: none;
 	font-size: 14px;
-	text-align:center;
+	text-align: center;
 
 }
 
@@ -1327,35 +1475,38 @@ p.link_center {
 ========================================== */
 
 #containerd .search-btn {
-    border: 1px solid rgba(255, 255, 255, .35);
-height: 42px;
-    opacity:0;
-    margin-top:5%;
-    transform:translateX(-15px);
-   background:transparent;
-    transition:
-        opacity .25s ease .15s,
-        transform .25s ease .15s; 
-        color:white;
-       
+	border: 1px solid rgba(255, 255, 255, .35);
+	height: 42px;
+	opacity: 0;
+	margin-top: 5%;
+	transform: translateX(-15px);
+	background: transparent;
+	transition:
+		opacity .25s ease .15s,
+		transform .25s ease .15s;
+	color: white;
+
 
 }
-#containerd #searchInputBar.show .search-btn{
+
+#containerd #searchInputBar.show .search-btn {
 
 
-    opacity:1;
+	opacity: 1;
 
-    transform:translateX(0);
-
-}
-#containerd #searchInputBar.show .search-wrapper{
-
-    width:260px;
+	transform: translateX(0);
 
 }
-#containerd .search-btn:hover{
-background:white;
-color:black;
+
+#containerd #searchInputBar.show .search-wrapper {
+
+	width: 260px;
+
+}
+
+#containerd .search-btn:hover {
+	background: white;
+	color: black;
 }
 
 /*=========================================
@@ -1368,6 +1519,7 @@ color:black;
 	justify-content: flex-end;
 	gap: 4px;
 	min-width: 280px;
+	
 }
 
 /*=========================================
@@ -1428,6 +1580,9 @@ color:black;
 	background: rgba(255, 255, 255, .15);
 
 }
+#containerd #userBtn span {
+	font-size:small;
+}
 
 /*=========================================
             AVATAR
@@ -1472,17 +1627,17 @@ color:black;
 	DISPLAY: BLOCK;
 	text-decoration: none;
 	color: #374151;
-    transition:.25s;
-    text-align:center;
+	transition: .25s;
+	text-align: center;
 
 }
 
 #containerd #profileMenu a:hover {
 
 
-    background:#eff6ff;
- font-weight:200px;
-    font-size:10px;
+	background: #eff6ff;
+	font-weight: 200px;
+	font-size: 10px;
 	padding-left: 24px;
 
 }
@@ -1530,11 +1685,11 @@ color:black;
             SIGNUP
 =========================================*/
 
-#containerd .signup-btn ,
+#containerd .signup-btn,
 #containerd .login-btn {
 
 	padding: 10px 18px;
-border: 1px solid rgba(255, 255, 255, .35);
+	border: 1px solid rgba(255, 255, 255, .35);
 	border-radius: 10px;
 
 	text-decoration: none;
@@ -1546,7 +1701,7 @@ border: 1px solid rgba(255, 255, 255, .35);
 }
 
 #containerd .signup-btn:hover {
-background: white;
+	background: white;
 	color: #111827 !important;
 
 }
@@ -1558,7 +1713,7 @@ background: white;
 #containerd .cart-box {
 
 	display: flex;
-    margin-top:10%;
+	margin-top: 10%;
 	align-items: center;
 
 }
@@ -1643,9 +1798,7 @@ background: white;
 	transition: .25s;
 }
 
-#containerd #userBtn:hover {
-	
-}
+#containerd #userBtn:hover {}
 
 /* Hide */
 
@@ -1654,9 +1807,9 @@ background: white;
 	position: absolute;
 
 
-    top:60px;
+	top: 60px;
 
-    left:0;
+	left: 0;
 
 	width: 180px;
 
@@ -1713,178 +1866,199 @@ background: white;
 
 
 /* 商品一覧全体のコンテナ（横並びにする） */
+
 #itemList .item_list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* カード間の隙間 */
-    padding: 20px;
-    align-items: stretch;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	/* カード間の隙間 */
+	padding: 20px;
+	align-items: stretch;
 }
 
 /* 1件分の商品カード（枠線とサイズ） */
 #itemList .itemList {
-    display: flex;
-    flex-direction: column;
-    width: 250px; /* カードの横幅（お好みで調整してください） */
-    border: 2px solid #a38c5c; /* 金色・茶色系の枠線 */
-    background-color: #fff;
-    box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	/* カードの横幅（お好みで調整してください） */
+	border: 2px solid #a38c5c;
+	/* 金色・茶色系の枠線 */
+	background-color: #fff;
+	box-sizing: border-box;
 }
 
 /* 1. 商品画像エリア */
 #itemList .itemList a:first-child {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   
-    overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	overflow: hidden;
 }
 
 /* 画像自体のサイズ調整 */
 #itemList .itemList img {
-   width: 100%;
-height: 100%;
-    object-fit: cover;
-    transition:0.4s;
-    
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: 0.4s;
+
 }
+
 #itemList .itemList img:hover {
-	  transition: transform .25s ease, box-shadow .25s ease;
-transform: translatex(-4px); 
-
-	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);	
-	}
-/* 2. 商品名と3. 値段の共通テキストエリア（濃い紺色の背景） */
-#itemList .item_name, 
-#itemList .item_price {
-    background-color: #0b2240; /* 濃い紺色 */
-    text-align: center;
-    padding: 10px 5px;
-    height:50px;
-}
-
-/* 商品名のリンク文字（白。上下の余白調整） */
-#itemList .item_name {
-    padding-top: 20px;
-}
-
-#itemList .item_name a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    display: block;
-}
-
-/* 値段の文字（金色・黄色。太字） */
-#itemList .item_price {
-    color: #e5c158; /* 金色・黄色 */
-    font-size: 18px;
-    font-weight: bold;
-    padding-bottom: 20px;
-    margin-top: auto; /* 下部に固定 */
-}
-
-/* 下部にある「すべての商品をみる」ボタンエリアの調整 */
-#itemList .detail_button_area {
-    width: 100%;
-    text-align: center;
-    margin-top: 30px;
-    
-}
-
-#itemList .itemList {
-   height:330px;
-    cursor: pointer;
-    transition: transform .25s ease, box-shadow .25s ease;
-}
-
-#itemList .itemList:hover {
-transform: translateY(-6px);
+	transition: transform .25s ease, box-shadow .25s ease;
+	transform: translatex(-4px);
 
 	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
 }
 
-#moreBtn{
-	width:20%;
+/* 2. 商品名と3. 値段の共通テキストエリア（濃い紺色の背景） */
+#itemList .item_name,
+#itemList .item_price {
+	background-color: #0b2240;
+	/* 濃い紺色 */
+	text-align: center;
+	padding: 10px 5px;
+	height: 50px;
+}
+
+/* 商品名のリンク文字（白。上下の余白調整） */
+#itemList .item_name {
+	padding-top: 20px;
+}
+
+#itemList .item_name a {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: bold;
+	display: block;
+}
+
+/* 値段の文字（金色・黄色。太字） */
+#itemList .item_price {
+	color: #e5c158;
+	/* 金色・黄色 */
+	font-size: 18px;
+	font-weight: bold;
+	padding-bottom: 20px;
+	margin-top: auto;
+	/* 下部に固定 */
+}
+
+/* 下部にある「すべての商品をみる」ボタンエリアの調整 */
+#itemList .detail_button_area {
+	width: 100%;
+	text-align: center;
+	margin-top: 30px;
+
+}
+
+#itemList .itemList {
+	height: 330px;
+	cursor: pointer;
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#itemList .itemList:hover {
+	transform: translateY(-6px);
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
+}
+#moreBtn {
+	width: 20%;
+	display: block;
+	margin: 40px auto 0;
+	font-size: 16px;
+}
+#moreBtn:hover{
+	background:black;
+	color:white;
 }
 
 
 /*ランキングCSS 小松原作 ここから*/
 /*top ranking*/
 .ranking-area {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 30px;
-    margin-top: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	gap: 30px;
+	margin-top: 60px;
 }
 
 .rank-card {
-    width: 220px;
-    background: #fff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    position: relative;
+	width: 220px;
+	background: #fff;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+	position: relative;
 }
 
 .rank-card-first {
-    width: 250px;
-    background: #fff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    position: relative;
+	width: 250px;
+	background: #fff;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	position: relative;
 }
+
 .rank-card,
 .rank-card-first {
-    text-decoration: none;
+	text-decoration: none;
+	border: 2px solid #c8a15a;
 	border-radius: 0;
-    color: inherit;
-    cursor: pointer;
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+	color: inherit;
+	cursor: pointer;
+	transition:
+		transform 0.3s ease,
+		box-shadow 0.3s ease;
 }
+
 .rank-card:hover,
 .rank-card-first:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+	transform: scale(1.03);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
+
 .rank-image {
-    display: block;
+	display: block;
 	width: 150px;
 	height: 130px;
 	margin: 20px auto 10px;
-    overflow: hidden;
-    border-radius: 15px;
-    background: #f5f5f5;
+	overflow: hidden;
+	border-radius: 15px;
+	background: #f5f5f5;
 }
 
 .rank-image-first {
-    display: block;
+	display: block;
 	width: 220px;
 	height: 190px;
 	margin: 15px auto 10px;
-    overflow: hidden;
-    border-radius: 15px;
-    background: #f5f5f5;
+	overflow: hidden;
+	border-radius: 15px;
+	background: #f5f5f5;
 }
 
 .rank-image img,
 .rank-image-first img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
+
 .rank-label {
 	position: absolute;
 	left: 10px;
 	bottom: 205px;
-    display: flex;
-    align-items: center;
-    background: white;
-    padding: 5px 12px;
-    border-radius: 30px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	display: flex;
+	align-items: center;
+	background: white;
+	padding: 5px 12px;
+	border-radius: 30px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .rank-info {
 	background: #071d49;
 	padding: 20px 20px;
@@ -1893,138 +2067,184 @@ transform: translateY(-6px);
 
 .rank-name {
 	color: white;
-	  font-size: 32px;
-	  font-weight: normal;
+	font-size: 32px;
+	font-weight: normal;
 }
 
 .rank-price {
-  
+
 	color: #d7b56d;
-	  font-size: 28px;
-	  font-weight: bold;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 /*ranking*/
 .ranking-header {
-    text-align: center;
-    margin-top: 30px;
+	text-align: center;
+	margin-top: 30px;
 }
 
 .ranking-header h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
+	font-size: 40px;
+	margin-bottom: 10px;
 }
 
 .ranking-header h2 {
-    color: #888;
-    margin-bottom: 5px;
+	color: #888;
+	margin-bottom: 5px;
 }
 
 .ranking-header div {
-    color: #888;
-    font-size: 12px;
+	color: #888;
+	font-size: 12px;
 }
-.category-area {
-    width: 600px;
-    margin: 30px auto;
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+.category-area {
+	width: 600px;
+	margin: 30px auto;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 15px;
 }
 
 .category-link {
-    width: 120px;
-    text-align: center;
+	width: 120px;
+	text-align: center;
 }
 
 .category-link:hover {
-    background: #ffe9e2;
+	background: #ffe9e2;
 }
+
 .ranking-list {
-    width: 80%;
-    margin: 40px auto;
+	width: 80%;
+	margin: 40px auto;
 }
 
 .ranking-item {
 	display: flex;
-	   text-decoration: none;
-	   color: inherit;
-    display: flex;
-    align-items: center;
-    gap: 25px;
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	align-items: center;
+	gap: 25px;
 
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+	background: white;
+	border-radius: 20px;
+	padding: 20px;
+	margin-bottom: 20px;
 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	transition:
-	       transform 0.3s ease,
-	       box-shadow 0.3s ease;
+		transform 0.3s ease,
+		box-shadow 0.3s ease;
 }
+
 .ranking-item:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+	transform: scale(1.03);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 
 .ranking-number {
-    width: 50px;
-    height: 50px;
+	width: 50px;
+	height: 50px;
 
-    border-radius: 50%;
-    background: #f5f5f5;
+	border-radius: 50%;
+	background: #f5f5f5;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-    font-weight: bold;
-    font-size: 20px;
+	font-weight: bold;
+	font-size: 20px;
 
-    flex-shrink: 0;
+	flex-shrink: 0;
 }
 
 .ranking-image {
-    width: 100px;
-    height: 100px;
+	width: 100px;
+	height: 100px;
 
-    overflow: hidden;
-    border-radius: 15px;
+	overflow: hidden;
+	border-radius: 15px;
 
-    flex-shrink: 0;
+	flex-shrink: 0;
 }
 
 .ranking-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .ranking-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .ranking-name {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 .ranking-price {
-  
-    font-weight: bold;
-    font-size: 18px;
+
+	font-weight: bold;
+	font-size: 18px;
 }
 
 
 
 /*ランキングCSS 小松原作 ここまで*/
+
+/*小見出しCSS 小松原作 ここから*/
+.section-title {
+	text-align: center;
+	margin: 80px 0 60px;
+}
+
+.section-en {
+	font-size: 24px;
+	font-weight: bold;
+	color: #0b2740;
+	margin-bottom: 10px;
+}
+
+.section-ja {
+	font-size: 48px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.section-text {
+	font-size: 14px;
+	color: #888;
+	font-weight: bold;
+	margin-top: -10px;
+}
+
+.title {
+	font-size: 54px;
+    color: #333 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    float: none !important;
+    text-align: center !important;
+	
+}
+
+/*小見出しCSS 小松原作 ここまで*/
 
 /* #header {
     display: flex;
@@ -2033,5 +2253,3 @@ transform: translateY(-6px);
     width: 100%;
     height: 70px;
 } */
-
-

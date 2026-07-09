@@ -55,7 +55,7 @@ public class ClientItemRankingShowController {
 			findByRanking = itemrepo.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 10));
 
 			//				 画面の見出しを「〇〇年〇月度 」にする
-			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [総合ランキング]");
+			model.addAttribute("currentMonthText", today.getYear() + "年" + today.getMonthValue() + "月度 [すべて]");
 			//			
 		}
 

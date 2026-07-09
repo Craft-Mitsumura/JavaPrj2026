@@ -95,7 +95,8 @@ public class ClientFavoriteController {
 	@PostMapping("/client/favorite/add")
 	@ResponseBody
 	public String add(@RequestParam("itemId") Integer itemId) {
-		UserBean loginUser = (UserBean) session.getAttribute("user");
+
+	    UserBean loginUser = (UserBean) session.getAttribute("user");
 
 		if (loginUser == null) {
 			return "ng"; // 未ログイン 
@@ -114,13 +115,26 @@ public class ClientFavoriteController {
 
 		//「追加」と「解除」を切り替える 
 		if (isFavorite) {
-			// 既に登録済みの場合は「解除」して、画面には "detached" を返す
-			favoriteService.removeFavorite(loginUser.getId(), itemId);
-			return "detached";
+
+		    favoriteService.removeFavorite(loginUser.getId(), itemId);
+
+		    List<Favorite> favorites =
+		            favoriteService.getFavoriteList(loginUser.getId());
+
+		    session.setAttribute("favoriteBeans", favorites);
+
+		    return "detached";
+
 		} else {
-			// 未登録の場合は「追加」して、画面には "added" を返す 
-			favoriteService.addFavorite(loginUser.getId(), itemId);
-			return "added";
+
+		    favoriteService.addFavorite(loginUser.getId(), itemId);
+
+		    List<Favorite> favorites =
+		            favoriteService.getFavoriteList(loginUser.getId());
+
+		    session.setAttribute("favoriteBeans", favorites);
+
+		    return "added";
 		}
 	}
 }

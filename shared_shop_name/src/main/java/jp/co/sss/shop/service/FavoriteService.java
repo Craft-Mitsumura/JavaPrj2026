@@ -48,13 +48,13 @@ public class FavoriteService {
             favorite = new Favorite();
             favorite.setUser(user);
             favorite.setItem(item);
+            favorite.setDeleteFlag(0);
 
         } else {
 
             favorite.setDeleteFlag(0);
 
         }
-
         favoriteRepository.save(favorite);
     }
 
