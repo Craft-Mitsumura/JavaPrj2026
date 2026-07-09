@@ -1,39 +1,55 @@
 package jp.co.sss.shop.bean;
 
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * 会員情報クラス
  *
  * @author SystemShared
  */
 public class UserBean {
+	
 	/**
 	 * 会員ID
 	 */
 	private Integer id;
+	
 	/**
 	 * 会員メールアドレス
 	 */
+	@NotBlank(message = "必須")
 	private String email;
+	
 	/**
 	 * パスワード
 	 */
+	@NotBlank(message = "必須")
 	private String password;
+	
 	/**
 	 * 会員名
 	 */
+	@NotBlank(message = "必須")
 	private String name;
+	
 	/**
 	 * 郵便番号
 	 */
+	@NotBlank(message = "必須")
 	private String postalCode;
+	
 	/**
 	 * 住所
 	 */
+	@NotBlank(message = "必須")
 	private String address;
+	
 	/**
 	 * 電話番号
 	 */
+	@NotBlank(message = "必須")
 	private String phoneNumber;
+	
 	/**
 	 * 権限
 	 */
@@ -172,10 +188,16 @@ public class UserBean {
 	 */
 	private Integer point;
 
+	/**
+	 * ポイントの取得
+	 */
 	public Integer getPoint() {
 		return point;
 	}
 
+	/**
+	 * ポイントのセット
+	 */
 	public void setPoint(Integer point) {
 		this.point = point;
 	}
