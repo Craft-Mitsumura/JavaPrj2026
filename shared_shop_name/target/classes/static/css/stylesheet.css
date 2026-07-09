@@ -44,7 +44,7 @@ p {
 }
 
 .login_form .input {
-	width: 55%;
+	
 	padding: 8px 5px;
 	text-align: left;
 }
@@ -352,13 +352,13 @@ li.error_msg {
 	width: 100%;
 }
 
-.detail_button_area {
-	display: block;
+ .detail_button_area {
+   text-align:center;
 	width: 100%;
 	margin-top: 30px;
 	
 }
-
+ 
 
 .detail_button_area form {
 	/* display: inline-block; */
@@ -466,7 +466,6 @@ select {
 	border: 1px solid #808080;
 	border-radius: 6px;
 	padding: 2px 10px;
-	color: #12526d;
 	background: #fff;
 	
 }
@@ -784,11 +783,164 @@ p.link_center {
 }
 
 /* サガルから修正 */
-#userLogin h2 {
+/* ===========================
+        LOGIN PAGE
+=========================== */
 
-	text-align: center;
+#userLogin {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
 
 }
+
+/* Title */
+
+#userLogin .page_title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Description */
+
+#userLogin .description {
+    color: #666;
+    margin-bottom: 35px;
+    font-size: 15px;
+}
+
+/* Center */
+
+#userLogin .user_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#userLogin .login_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card */
+
+#userLogin .login_form_area {
+    width: 420px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.12);
+    border: 1px solid #e6e6e6;
+    
+}
+
+/* Table */
+
+#userLogin table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#userLogin tr {
+    display: block;
+    margin-bottom: 18px;
+   
+}
+
+#userLogin td {
+    display: block;
+}
+
+/* Input */
+
+#userLogin input[type="text"],
+#userLogin input[type="password"] {
+    width: 100%;
+    height: 50px;
+    padding: 0 18px;
+    font-size: 15px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    background: #fafafa;
+    transition: .3s;
+    box-sizing: border-box;
+}
+
+#userLogin input[type="text"]:focus,
+#userLogin input[type="password"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(74,144,226,.15);
+}
+
+/* Placeholder */
+
+#userLogin input::placeholder{
+    color:#999;
+}
+
+/* Login Button */
+
+#userLogin #loginBtn,
+#userLogin input[type="submit"]{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:10px;
+    background:#4a90e2;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#userLogin #loginBtn:hover,
+#userLogin input[type="submit"]:hover{
+    background:#2d74c4;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(74,144,226,.35);
+}
+
+/* Error */
+
+#userLogin .error_list{
+    background:#fff3f3;
+    border:1px solid #ffc7c7;
+    color:#d63031;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+#userLogin .error_list ul{
+    margin:0;
+    padding-left:20px;
+}
+
+/* Back Link */
+
+#userLogin .complete_link{
+    margin-top:30px;
+}
+
+#userLogin .complete_link a{
+    color:#4a90e2;
+    text-decoration:none;
+    font-weight:600;
+}
+
+#userLogin .complete_link a:hover{
+    text-decoration:underline;
+}
+
 
 
 
@@ -805,6 +957,7 @@ p.link_center {
 	width: 110px;
 	cursor: pointer;
 }
+
 
 #try {
 	display: grid;
@@ -832,14 +985,9 @@ p.link_center {
 /* ========================= */
 
 #itemList .title {
-
-	text-align: center;
-
-	font-size: 34px;
-
+    font-size: 34px;
 	margin-bottom: 35px;
-
-	color: #ffffff;
+	color:black;
 
 }
 
@@ -1368,6 +1516,7 @@ color:black;
 	justify-content: flex-end;
 	gap: 4px;
 	min-width: 280px;
+	
 }
 
 /*=========================================
@@ -1427,6 +1576,9 @@ color:black;
 
 	background: rgba(255, 255, 255, .15);
 
+}
+#containerd #userBtn span {
+	font-size:small;
 }
 
 /*=========================================
@@ -1713,6 +1865,7 @@ background: white;
 
 
 /* 商品一覧全体のコンテナ（横並びにする） */
+
 #itemList .item_list {
     display: flex;
     flex-wrap: wrap;
@@ -1804,9 +1957,13 @@ transform: translateY(-6px);
 
 	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
 }
-
 #moreBtn{
-	width:20%;
+	cursor:pointer;
+	
+}
+#moreBtn:hover{
+	background:black;
+	color:white;
 }
 
 
@@ -2018,13 +2175,5 @@ transform: translateY(-6px);
 
 
 /*ランキングCSS 小松原作 ここまで*/
-
-/* #header {
-    display: flex;
-    align-items: center; सबैलाई vertical center मा ल्याउँछ
-    justify-content: space-between; left, center, right spacing
-    width: 100%;
-    height: 70px;
-} */
 
 
