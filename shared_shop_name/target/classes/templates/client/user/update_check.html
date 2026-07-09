@@ -42,7 +42,10 @@
 		<form th:action="@{/client/user/update/complete}" method="post">
 			<input type="submit" value="登録" class="send_button" />
 		</form>
+		
 		<form th:action="@{/client/user/update/input}" method="post">
+			<input type="hidden" name="oldEmail" th:value="${oldEmail}" />
+			<input type="hidden" name="newEmail" th:value="${newEmail}" />
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
 	</div>

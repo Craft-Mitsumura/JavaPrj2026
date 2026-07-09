@@ -123,5 +123,12 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品ページ
 	 */
 	Page<Item> findByCategoryId(Integer id, Pageable pageable);
+	
+	/**
+	 * @author 金城 詳細表示用
+	 * @param name
+	 * @return
+	 */
+	List<Item> findByName(String name);
 
 }
