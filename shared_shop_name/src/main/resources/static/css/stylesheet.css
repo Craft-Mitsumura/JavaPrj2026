@@ -124,12 +124,15 @@ p {
 
 	border-width: 1px;
 	border-style: solid;
-	
+	background:black;
 	padding: 0px 10px;
-	
+	    border: 1px solid rgba(255, 255, 255, .35);
 	border-radius: 6px;
 	font-weight: bold;
+	color:white;
+	height:42px;
 }
+
 
 /* ---- 商品情報 ---- */
 .item {
@@ -465,8 +468,7 @@ select {
 	padding: 2px 10px;
 	color: #12526d;
 	background: #fff;
-	box-shadow: 1px 2px 2px #eee;
-	text-shadow: 1px 1px 1px #d8d8d8;
+	
 }
 
 /* スキルアップテクニック10
@@ -810,151 +812,6 @@ p.link_center {
 
 }
 
-/* ------------- */
-/* #containerd{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 40px;
-    background:#111827;
-}
-
- #containerd .header-left{
-    flex:1;
-}
-
-#mainLogo{
-    width:120px;
-    height:auto;
-    cursor:pointer;
-}
-
-#containerd .header-center{
-    flex:2;
-    display:flex;
-    justify-content:center;
-}
-
-#categoryBtn {
-font-size:10px;	
-}
-
-#categoryLists{
-    display:none;
-}
-
-#containerd .menu-list{
-    display:flex;
-    gap:30px;
-    list-style:none;
-    margin:0;
-    padding:0;
-}
- #containerd .menu-list a{
-    text-decoration:none;
-    color:white;
-    font-size:18px;
-}
-
- 
-==========================
-   RIGHT SIDE ONLY
-==========================
-
-#containerd .header-right{
-    flex:1;
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:18px;
-}
-
-#containerd .user_info{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:#ffffff;
-    
-}
-
-#containerd .user_info a{
-    color:black;
-    text-decoration:none;
-    font-size:10px;
-    font-weight:500;
-    transition:0.25s ease;
-}
-
-#containerd .user_info a:hover{
-    color:#fbbf24;
-}
-
-Login Button
-
-#containerd .login-btn{
-    padding:8px 16px;
-    border:1px solid rgba(255,255,255,.7);
-    border-radius:8px;
-    background:transparent;
-    color:#ffffff !important;
-    margin-left:8px;
-    transition:.3s;
-}
-
-#logoutBtn ,
-#userBtn{
-	color:black;
-	background:white;
-	border-radius:8px;
-}
-#logoutBtn a{
-	color:black;
-
-}
-#containerd .login-btn:hover{
-    background:#ffffff;
-    color:#111827 !important;
-}
-
-Signup Button
-
-#containerd .signup-btn{
-    padding:8px 16px;
-    margin-left:8px;
-    border-radius:8px;
-    background:#2563eb;
-    color:black !important;
-    transition:.3s;
-}
-
-#containerd .signup-btn:hover{
-    background:#1d4ed8;
-}
-
-Cart
-
-#containerd #cart{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#ffffff;
-    margin-left:12px;
-    transition:.3s;
-    crusor:pointer;
-}
-
-#containerd #cart svg{
-    width:28px;
-    height:28px;
-}
-
-#containerd #cart:hover{
-    color:#fbbf24;
-    transform:scale(1.12);
-} */
-
-
-
 
 /* サガルから編集 */
 /* ==========================
@@ -1183,11 +1040,6 @@ Cart
 
 }
 
-
- 
- /* tryout top page  */
-
-
 /*=====================================================
                 HEADER MAIN
 ======================================================*/
@@ -1237,7 +1089,13 @@ Cart
 #containerd .header-center {
 
 	position: relative;
+	background:transprant;
 
+}
+
+#containerd #categoryBtns:hover {
+	color:black;
+    background:white;
 }
 
 #containerd #categoryBtn {
@@ -1280,35 +1138,25 @@ Cart
 #containerd #categoryLists {
 
 	position: absolute;
-
 	top: 58px;
-
 	left: 0;
-
 	width: 250px;
-
-	background: #ffffff;
-
+	background:white;
 	border-radius: 12px;
-
 	box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
-
 	opacity: 0;
-
 	visibility: hidden;
-
 	transform: translateY(-10px);
-
 	transition: .28s;
 
 }
 
+
+
 #containerd #categoryLists.show {
 
 	opacity: 1;
-
 	visibility: visible;
-
 	transform: translateY(0);
 
 }
@@ -1316,7 +1164,6 @@ Cart
 #containerd #category {
 
 	list-style: none;
-
 	margin: 0;
 
 	padding: 8px 0;
@@ -1361,6 +1208,8 @@ Cart
 
 }
 
+
+
 /* ==========================================
             SEARCH
 ========================================== */
@@ -1404,7 +1253,7 @@ Cart
 }
 
 #containerd #searchBtn:hover {
-
+    
 	background: rgba(255, 255, 255, .12);
 
 }
@@ -1418,7 +1267,7 @@ Cart
     gap:8px;
 
     position:absolute;
-    right:28%;      /* search icon को छेउमा */
+    right:28%;     
     top:50%;
     transform:translateY(-50%) translateX(30px) scale(.8);
 
@@ -1432,11 +1281,10 @@ Cart
         visibility .35s;
 
 }
-/* JS le .show add garne */
 
 #containerd #searchInputBar.show {
 
-  margin-right:4%;
+  margin-right:5%;
     width:380px;
     opacity:1;
     opacity:1;
@@ -1470,7 +1318,7 @@ Cart
 	border: none;
 	outline: none;
 	font-size: 14px;
-	margin-bottom:5%;
+	text-align:center;
 
 }
 
@@ -1479,15 +1327,17 @@ Cart
 ========================================== */
 
 #containerd .search-btn {
-
-
+    border: 1px solid rgba(255, 255, 255, .35);
+height: 42px;
     opacity:0;
     margin-top:5%;
     transform:translateX(-15px);
-
+   background:transparent;
     transition:
         opacity .25s ease .15s,
-        transform .25s ease .15s;
+        transform .25s ease .15s; 
+        color:white;
+       
 
 }
 #containerd #searchInputBar.show .search-btn{
@@ -1504,9 +1354,8 @@ Cart
 
 }
 #containerd .search-btn:hover{
-
-	background: #d97706;
-
+background:white;
+color:black;
 }
 
 /*=========================================
@@ -1673,7 +1522,6 @@ Cart
 #containerd .login-btn:hover {
 
 	background: white;
-
 	color: #111827 !important;
 
 }
@@ -1682,18 +1530,15 @@ Cart
             SIGNUP
 =========================================*/
 
-#containerd .signup-btn {
+#containerd .signup-btn ,
+#containerd .login-btn {
 
 	padding: 10px 18px;
-
+border: 1px solid rgba(255, 255, 255, .35);
 	border-radius: 10px;
 
 	text-decoration: none;
-
-	background: #2563eb;
-
 	color: white;
-
 	font-weight: 600;
 
 	transition: .25s;
@@ -1701,8 +1546,8 @@ Cart
 }
 
 #containerd .signup-btn:hover {
-
-	background: #1d4ed8;
+background: white;
+	color: #111827 !important;
 
 }
 
@@ -1743,11 +1588,7 @@ Cart
 }
 
 #containerd #cart:hover {
-
-
-
 	transform: translateY(-2px);
-
 }
 
 #containerd #cart svg {
@@ -1803,7 +1644,7 @@ Cart
 }
 
 #containerd #userBtn:hover {
-	background: #2563eb;
+	
 }
 
 /* Hide */
