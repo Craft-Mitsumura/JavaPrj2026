@@ -73,6 +73,7 @@ public class ClientUserShowController {
 		UserBean userBean = new UserBean();
 
 		userBean.setEmail(userEntity.getEmail());
+		userBean.setPassword(userEntity.getPassword());   // ←追加
 		userBean.setName(userEntity.getName());
 		userBean.setPostalCode(userEntity.getPostalCode());
 		userBean.setAddress(userEntity.getAddress());
@@ -204,7 +205,7 @@ public class ClientUserShowController {
 
 		// 各項目をセット
 		userBean.setEmail(pastUser.getEmail());
-		userBean.setPassword(pastUser.getPassword()); // 💡【追加】パスワードの初期値を引き継ぐ
+		userBean.setPassword(pastUser.getPassword()); 
 		userBean.setName(pastUser.getName());
 		userBean.setPostalCode(pastUser.getPostalCode());
 		userBean.setAddress(pastUser.getAddress());
@@ -226,7 +227,6 @@ public class ClientUserShowController {
 	 * @param session セッションスコープ
 	 * @return client/user/update_check 会員情報編集確認画面を表示
 	 */
-
 	@RequestMapping(path = "/client/user/update/check", method = RequestMethod.POST)
 	public String updateCheck(
 			@Valid @ModelAttribute("userForm") UserBean userBean,
@@ -241,16 +241,16 @@ public class ClientUserShowController {
 		// ログイン中の情報（変更前の情報）取得
 		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
 
-		// 必須項目チェック
-		if (result.hasErrors()) {
-			return "client/user/update_input";
-		}
+		boolean hasError = false;
 
-		// 旧メールアドレスと旧パスワードの本人確認
-		if (!oldEmail.equals(pastUser.getEmail()) || !oldPassword.equals(pastUser.getPassword())) {
-			model.addAttribute("authErrorMessage", "旧メールアドレスまたは旧パスワードが正しくありません。");
-			model.addAttribute("userForm", userBean);
-			return "client/user/update_input";
+		// 旧メールアドレスと旧パスワードの未入力チェック
+		if (oldEmail == null || oldEmail.trim().isEmpty()) {
+			model.addAttribute("oldEmailErrorMessage", "メールアドレスを入力してください。");
+			hasError = true;
+		}
+		if (oldPassword == null || oldPassword.trim().isEmpty()) {
+			model.addAttribute("oldPasswordErrorMessage", "パスワードを入力してください。");
+			hasError = true;
 		}
 
 		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
@@ -260,8 +260,7 @@ public class ClientUserShowController {
 				User duplicateUser = userRepository.findByEmail(newEmail);
 				if (duplicateUser != null) {
 					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
-					model.addAttribute("userForm", userBean);
-					return "client/user/update_input";
+					hasError = true;
 				}
 			}
 			userBean.setEmail(newEmail);
@@ -276,10 +275,45 @@ public class ClientUserShowController {
 			userBean.setPassword(pastUser.getPassword()); // 変更なし（現在の値を設定）
 		}
 
+		// 旧メールアドレスと旧パスワードの本人確認
+		if (!hasError) {
+			if (!oldEmail.equals(pastUser.getEmail()) || !oldPassword.equals(pastUser.getPassword())) {
+				model.addAttribute("authErrorMessage", "旧メールアドレスまたは旧パスワードが正しくありません。");
+				hasError = true;
+			}
+		}
+
+		// 名前、郵便番号、住所、電話番号の個別必須チェック
+		if (userBean.getName() == null || userBean.getName().trim().isEmpty()) {
+			result.rejectValue("name", "msg.regist.input");
+			hasError = true;
+		}
+		if (userBean.getPostalCode() == null || userBean.getPostalCode().trim().isEmpty()) {
+			result.rejectValue("postalCode", "msg.regist.input");
+			hasError = true;
+		}
+		if (userBean.getAddress() == null || userBean.getAddress().trim().isEmpty()) {
+			result.rejectValue("address", "msg.regist.input");
+			hasError = true;
+		}
+		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().trim().isEmpty()) {
+			result.rejectValue("phoneNumber", "msg.regist.input");
+			hasError = true;
+		}
+
+		// 必須項目チェック
+		if (hasError) {
+		    System.out.println("hasError = true");
+		    model.addAttribute("oldEmail", oldEmail);
+		    model.addAttribute("newEmail", newEmail);
+		    model.addAttribute("userForm", userBean);
+		    return "client/user/update_input";
+		}
+
 		// 編集後の会員情報を一時保存して確認画面へ
 		session.setAttribute("updateUser", userBean);
 		model.addAttribute("userForm", userBean);
-
+		
 		return "client/user/update_check";
 	}
 
