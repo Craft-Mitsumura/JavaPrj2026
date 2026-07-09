@@ -17,7 +17,7 @@
 		</div>
 
 
-		<p class="section-text">今月の新着商品を紹介します</p>
+		<p class="section-text">今月の新着商品をご紹介します</p>
 	</div>
 
 	<!-- 商品がない場合のメッセージ -->
@@ -46,7 +46,8 @@
 
 					<!-- 3. 値段（名前の下に配置） -->
 					<div class="item_price">
-						¥<span th:text="${item.price}"></span>
+						¥<span th:text="|${#numbers.formatInteger(item.price,3,'COMMA')}|"></span>
+					
 					</div>
 
 				</div>
@@ -54,21 +55,32 @@
 
 			<!-- 新着一覧へ -->
 			<div class="detail_button_area">
-				<a th:href="@{/client/item/list/1}"> <input id="moreBtn" type="button" value="もっとみる" />
+				<a th:href="@{/client/item/list/1}"> <input id="moreBtn" type="button" value="more" />
 				</a>
 			</div>
 		</div>
 
 	</div>
+
+
+
+
+
+	<!-- ランキング表示 -->
 	<div>
-		<h2 class="title">
-			<span th:if="${sortType==1}" th:text="#{sort.ranking.title}"></span>
-			<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.ranking.title}"></span>
-		</h2>
+		<div class="section-title">
+					<p class="section-en">Ranking</p>
 
-		<!-- ランキング表示 -->
+					<div class="section-ja">
+						<h2 class="title" th:text="#{sort.ranking.title}"></h2>
+
+					</div>
+
+
+					<p class="section-text">今月のランキングをご紹介します</p>
+				</div>
 		<div class="ranking-area">
-
+		
 
 			<!--  Rank 2  -->
 			<!--データが2件以上ある場合のみ表示-->
@@ -131,7 +143,7 @@
 					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 					</p>
 				</div>
-
+			</a>
 
 
 
@@ -169,7 +181,7 @@
 						<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 						</p>
 					</div>
-
+				</a>
 		</div>
 	</div>
 
@@ -183,7 +195,7 @@
 	<div class="detail_button_area">
 
 		<a th:href="@{/client/item/ranking}">
-			<input type="button" value="ランキング一覧へ" />
+			<input id="moreBtn" type="button" value="more" />
 		</a>
 	</div>
 </body>
