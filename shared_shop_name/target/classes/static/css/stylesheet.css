@@ -1217,7 +1217,7 @@ p.link_center {
 	display: flex;
 	align-items: center;
 	gap: 22px;
-	
+	margin-top:1%;
 }
 
 #containerd .header-left {
@@ -1516,7 +1516,7 @@ color:black;
 	justify-content: flex-end;
 	gap: 4px;
 	min-width: 280px;
-	
+	margin-bottom:1%;
 }
 
 /*=========================================
@@ -2176,4 +2176,9 @@ transform: translateY(-6px);
 
 /*ランキングCSS 小松原作 ここまで*/
 
-
+/* ---------!!!!!!!!!!!!!!!!! */
+#details .top_area{
+	display:grid;
+	grid-template-columns:auto,auto;
+	
+}
