@@ -213,6 +213,9 @@ public class ClientItemShowController {
 			Model model,
 			//@PathVariable Integer sortType,
 			@RequestParam(defaultValue = "0") int page) {
+		
+//		ページの小見出しを作成する
+		model.addAttribute("allsubtittle", "すべての商品");
 
 		Page<Item> itemPage = itemRepository.findAll(
 				PageRequest.of(page, 20));
