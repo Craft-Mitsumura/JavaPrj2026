@@ -37,7 +37,9 @@ public class ClientBasketController {
 	 *  
 	 */
 	@RequestMapping(path = "client/basket/add", method = { RequestMethod.GET, RequestMethod.POST })
-	public String add(HttpSession session, @RequestParam Integer id) {
+	public String add(HttpSession session,
+			  @RequestParam Integer id,
+			  @RequestParam(required = false) String from) {
 	// itemにはidの値が同じである場合情報代入する
 		Item item = itemRepository.findById(id).orElse(null);
 	// list型にsessionからbasketBeanの値を取得している
@@ -65,6 +67,11 @@ public class ClientBasketController {
 		}
 		// sessionスコープにbasketBeansの値を代入する
 		session.setAttribute("basketBeans", basketBeans);
+
+		if ("favorite".equals(from)) {
+			return "redirect:/client/basket/list";
+		}
+
 		return "redirect:/client/item/list/1";
 
 	}

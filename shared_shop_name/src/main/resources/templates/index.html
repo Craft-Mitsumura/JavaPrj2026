@@ -8,16 +8,11 @@
 </head>
 
 <body class="user index">
-	<div class="section-title">
-		<p class="section-en">NEW ITEMS</p>
-
-		<div class="section-ja">
-			<h2 class="title" th:text="#{sort.latest.title}"></h2>
-
-		</div>
-
-
-		<p class="section-text">今月の新着商品をご紹介します</p>
+	<div>
+		<h2 class="title">
+			<span th:if="${sortType==1}" th:text="#{sort.latest.title}"></span>
+			<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.latest.title}"></span>
+		</h2>
 	</div>
 
 	<!-- 商品がない場合のメッセージ -->
@@ -28,26 +23,28 @@
 	<!-- 新着商品の一覧表示エリア -->
 	<div id="itemList">
 		<div class="item_list" th:if="${!#lists.isEmpty(items)}">
-			<th:block th:each="item, status: ${items}" th:if="${status.count le 10}">
+			<th:block th:each="item, status: ${items}"
+				th:if="${status.count le 10}">
 				<!-- 1件分の商品情報 -->
 				<div class="itemList">
 
 					<!-- 1. 商品画像（クリックで詳細へ） -->
 					<!-- 画像がはみ出さない -->
-					<a th:href="@{/client/item/detail/}+${item.id}"> <img th:if="${item.image != null}"
-							th:src="@{|/images/${item.image}|}" />
-						<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
+					<a th:href="@{/client/item/detail/}+${item.id}"> <img
+						th:if="${item.image != null}" th:src="@{|/images/${item.image}|}" />
+						<img th:src="@{/images/common/no_image.jpg}"
+						th:if="${item.image == null}" />
 					</a>
 
 					<!-- 2. 商品名前（画像の下に配置） -->
 					<div class="item_name">
-						<a th:href="@{/client/item/detail/}+${item.id}" th:text="${item.name}"></a>
+						<a th:href="@{/client/item/detail/}+${item.id}"
+							th:text="${item.name}"></a>
 					</div>
 
 					<!-- 3. 値段（名前の下に配置） -->
 					<div class="item_price">
-						¥<span th:text="|${#numbers.formatInteger(item.price,3,'COMMA')}|"></span>
-					
+						¥<span th:text="${item.price}"></span>
 					</div>
 
 				</div>
@@ -55,32 +52,22 @@
 
 			<!-- 新着一覧へ -->
 			<div class="detail_button_area">
-				<a th:href="@{/client/item/list/1}"> <input id="moreBtn" type="button" value="more" />
+				<a th:href="@{/client/item/list/1}"> <input id="moreBtn" type="button"
+					value="もっとみる" />
 				</a>
 			</div>
 		</div>
 
 	</div>
-
-
-
-
-
-	<!-- ランキング表示 -->
 	<div>
-		<div class="section-title">
-					<p class="section-en">Ranking</p>
+		<h2 class="title">
+			<span th:if="${sortType==1}" th:text="#{sort.ranking.title}"></span>
+			<span th:if="${sortType==2 || sortType==null}" th:text="#{sort.ranking.title}"></span>
+		</h2>
 
-					<div class="section-ja">
-						<h2 class="title" th:text="#{sort.ranking.title}"></h2>
-
-					</div>
-
-
-					<p class="section-text">今月のランキングをご紹介します</p>
-				</div>
+		<!-- ランキング表示 -->
 		<div class="ranking-area">
-		
+
 
 			<!--  Rank 2  -->
 			<!--データが2件以上ある場合のみ表示-->
@@ -143,7 +130,7 @@
 					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 					</p>
 				</div>
-			</a>
+
 
 
 
@@ -181,7 +168,7 @@
 						<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 						</p>
 					</div>
-				</a>
+
 		</div>
 	</div>
 
@@ -195,7 +182,7 @@
 	<div class="detail_button_area">
 
 		<a th:href="@{/client/item/ranking}">
-			<input id="moreBtn" type="button" value="more" />
+			<input type="button" value="ランキング一覧へ" />
 		</a>
 	</div>
 </body>

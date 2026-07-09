@@ -74,6 +74,19 @@ public class ItemForm implements Serializable {
 	 */
 	private String categoryName;
 
+	//-----------------------------------
+	/**
+	 * @author 金城
+	 * バリエーション番号、ペンの色、ペン先の太さ、芯の太さ、インクの量
+	 */
+	private Integer varNumber;
+	private String colorPattern;
+	private String nibDiameter;
+	private String leadDiameter;
+	private String inkVolume;
+
+	//-----------------------------------
+
 	/**
 	 * 商品ID取得
 	 * @return 商品ID
@@ -216,5 +229,77 @@ public class ItemForm implements Serializable {
 	 */
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	//-----------------------------------
+
+	/**
+	 * @return バリエーション番号
+	 */
+	public Integer getVarNumber() {
+		return varNumber;
+	}
+
+	/**
+	 * @param varNumber バリエーション番号
+	 */
+	public void setVarNumber(Integer varNumber) {
+		this.varNumber = varNumber;
+	}
+	
+	/**
+	 * @return ペンの色
+	 */
+	public String getColorPattern() {
+		return colorPattern;
+	}
+
+	/**
+	 * @param colorPattern ペンの色
+	 */
+	public void setColorPattern(String colorPattern) {
+		this.colorPattern = colorPattern;
+	}
+
+	/**
+	 * @return ペン先の太さ
+	 */
+	public String getNibDiameter() {
+		return nibDiameter;
+	}
+
+	/**
+	 * @param nibDiameter ペン先の太さ
+	 */
+	public void setNibDiameter(String nibDiameter) {
+		this.nibDiameter = nibDiameter;
+	}
+
+	/**
+	 * @return 芯の太さ
+	 */
+	public String getLeadDiameter() {
+		return leadDiameter;
+	}
+
+	/**
+	 * @param leadDiameter 芯の太さ
+	 */
+	public void setLeadDiameter(String leadDiameter) {
+		this.leadDiameter = leadDiameter;
+	}
+
+	/**
+	 * @return インクの量
+	 */
+	public String getInkVolume() {
+		return inkVolume;
+	}
+
+	/**
+	 * @param inkVolume インクの量
+	 */
+	public void setInkVolume(String inkVolume) {
+		this.inkVolume = inkVolume;
 	}
 }
