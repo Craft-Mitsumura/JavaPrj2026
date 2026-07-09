@@ -7,11 +7,14 @@
 </head>
 
 <body class="">
-	<div class="ranking-header">
-		<h1>ランキング</h1>
-		<h2 th:text="${currentMonthText}"></h2>
-		<div>人気の商品をランキング形式でご紹介します</div>
+	<div class="section-ja">
+		<h2 class="section-en" th:text="#{title.ranking}"></h2>
+
 	</div>
+	<h2 th:text="${currentMonthText}" class="section-text"></h2>
+
+	<p class="section-text">人気の商品をランキング形式でご紹介します</p>
+	
 
 	<!-- カテゴリ表示 -->
 	<div class="category-area">
