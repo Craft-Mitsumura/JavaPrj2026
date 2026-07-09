@@ -19,7 +19,7 @@ html {
  * paddingプロパティの値0は、body要素が持つ枠の領域を取り消します。
  */
 body {
-	margin: 0 0 30px;
+	
 	padding: 0;
 	background:#0000;
 }
@@ -133,11 +133,11 @@ header {
 .search_area .title,
 .main .title
  {
-	background-color: #3d98bf;
-	margin: 0;
-	padding: 5px 8px;
+	
+	margin: auto;
+	
 	color: #fff;
-	text-shadow: 1px 1px 1px #12526d;
+	
 }
 
 
@@ -256,8 +256,7 @@ aside.admin_menu {
 
 .user .main .title,
 .admin .main .title {
-	padding: 8px 15px;
-	position: relative;
+  margin-left:40%;
 	font-size: 1.5rem;
 	}
 .main .title::before,
@@ -382,3 +381,9 @@ small {
 	text-shadow: 1px 1px 1px #fff;
 	font-size: 8pt;
 }
+
+.title span {
+	color:red;
+	margin:auto;
+}
+

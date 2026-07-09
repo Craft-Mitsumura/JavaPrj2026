@@ -15,11 +15,12 @@
 
 	<!-- カテゴリ表示 -->
 	<div class="category-area">
+		<a th:href="@{/client/item/ranking}"
+		            th:text="すべて" class="category-link">
+		        </a>
 	    <th:block th:each="category : ${categories}">
-	        <a
-	            th:href="@{/client/item/ranking(categoryId=${category.id})}"
-	            th:text="${category.name}"
-	            class="category-link">
+	        <a th:href="@{/client/item/ranking(categoryId=${category.id})}"
+	            th:text="${category.name}" class="category-link">
 	        </a>
 	    </th:block>
 	</div>
