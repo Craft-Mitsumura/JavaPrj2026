@@ -44,7 +44,7 @@ p {
 }
 
 .login_form .input {
-	width: 55%;
+	
 	padding: 8px 5px;
 	text-align: left;
 }
@@ -121,16 +121,18 @@ p {
 
 /* ---- ボタン(商品個数指定) ---- */
 [type=button] {
-	width: 80px;
-	height: 35px;
+
 	border-width: 1px;
 	border-style: solid;
-	border-color: #808080;
+	background:black;
 	padding: 0px 10px;
-	
+	    border: 1px solid rgba(255, 255, 255, .35);
 	border-radius: 6px;
 	font-weight: bold;
+	color:white;
+	height:42px;
 }
+
 
 /* ---- 商品情報 ---- */
 .item {
@@ -350,11 +352,13 @@ li.error_msg {
 	width: 100%;
 }
 
-.detail_button_area {
-	display: block;
+ .detail_button_area {
+   text-align:center;
 	width: 100%;
 	margin-top: 30px;
+	
 }
+ 
 
 .detail_button_area form {
 	/* display: inline-block; */
@@ -462,10 +466,8 @@ select {
 	border: 1px solid #808080;
 	border-radius: 6px;
 	padding: 2px 10px;
-	color: #12526d;
 	background: #fff;
-	box-shadow: 1px 2px 2px #eee;
-	text-shadow: 1px 1px 1px #d8d8d8;
+	
 }
 
 /* スキルアップテクニック10
@@ -781,11 +783,164 @@ p.link_center {
 }
 
 /* サガルから修正 */
-#userLogin h2 {
+/* ===========================
+        LOGIN PAGE
+=========================== */
 
-	text-align: center;
+#userLogin {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
 
 }
+
+/* Title */
+
+#userLogin .page_title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Description */
+
+#userLogin .description {
+    color: #666;
+    margin-bottom: 35px;
+    font-size: 15px;
+}
+
+/* Center */
+
+#userLogin .user_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#userLogin .login_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card */
+
+#userLogin .login_form_area {
+    width: 420px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.12);
+    border: 1px solid #e6e6e6;
+    
+}
+
+/* Table */
+
+#userLogin table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#userLogin tr {
+    display: block;
+    margin-bottom: 18px;
+   
+}
+
+#userLogin td {
+    display: block;
+}
+
+/* Input */
+
+#userLogin input[type="text"],
+#userLogin input[type="password"] {
+    width: 100%;
+    height: 50px;
+    padding: 0 18px;
+    font-size: 15px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    background: #fafafa;
+    transition: .3s;
+    box-sizing: border-box;
+}
+
+#userLogin input[type="text"]:focus,
+#userLogin input[type="password"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(74,144,226,.15);
+}
+
+/* Placeholder */
+
+#userLogin input::placeholder{
+    color:#999;
+}
+
+/* Login Button */
+
+#userLogin #loginBtn,
+#userLogin input[type="submit"]{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:10px;
+    background:#4a90e2;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+#userLogin #loginBtn:hover,
+#userLogin input[type="submit"]:hover{
+    background:#2d74c4;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(74,144,226,.35);
+}
+
+/* Error */
+
+#userLogin .error_list{
+    background:#fff3f3;
+    border:1px solid #ffc7c7;
+    color:#d63031;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:20px;
+}
+
+#userLogin .error_list ul{
+    margin:0;
+    padding-left:20px;
+}
+
+/* Back Link */
+
+#userLogin .complete_link{
+    margin-top:30px;
+}
+
+#userLogin .complete_link a{
+    color:#4a90e2;
+    text-decoration:none;
+    font-weight:600;
+}
+
+#userLogin .complete_link a:hover{
+    text-decoration:underline;
+}
+
 
 
 
@@ -803,156 +958,12 @@ p.link_center {
 	cursor: pointer;
 }
 
+
 #try {
 	display: grid;
 	grid-template-columns: auto, auto, auto, auto;
 
 }
-
-/* ------------- */
-/* #containerd{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 40px;
-    background:#111827;
-}
-
- #containerd .header-left{
-    flex:1;
-}
-
-#mainLogo{
-    width:120px;
-    height:auto;
-    cursor:pointer;
-}
-
-#containerd .header-center{
-    flex:2;
-    display:flex;
-    justify-content:center;
-}
-
-#categoryBtn {
-font-size:10px;	
-}
-
-#categoryLists{
-    display:none;
-}
-
-#containerd .menu-list{
-    display:flex;
-    gap:30px;
-    list-style:none;
-    margin:0;
-    padding:0;
-}
- #containerd .menu-list a{
-    text-decoration:none;
-    color:white;
-    font-size:18px;
-}
-
- 
-==========================
-   RIGHT SIDE ONLY
-==========================
-
-#containerd .header-right{
-    flex:1;
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:18px;
-}
-
-#containerd .user_info{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:#ffffff;
-    
-}
-
-#containerd .user_info a{
-    color:black;
-    text-decoration:none;
-    font-size:10px;
-    font-weight:500;
-    transition:0.25s ease;
-}
-
-#containerd .user_info a:hover{
-    color:#fbbf24;
-}
-
-Login Button
-
-#containerd .login-btn{
-    padding:8px 16px;
-    border:1px solid rgba(255,255,255,.7);
-    border-radius:8px;
-    background:transparent;
-    color:#ffffff !important;
-    margin-left:8px;
-    transition:.3s;
-}
-
-#logoutBtn ,
-#userBtn{
-	color:black;
-	background:white;
-	border-radius:8px;
-}
-#logoutBtn a{
-	color:black;
-
-}
-#containerd .login-btn:hover{
-    background:#ffffff;
-    color:#111827 !important;
-}
-
-Signup Button
-
-#containerd .signup-btn{
-    padding:8px 16px;
-    margin-left:8px;
-    border-radius:8px;
-    background:#2563eb;
-    color:black !important;
-    transition:.3s;
-}
-
-#containerd .signup-btn:hover{
-    background:#1d4ed8;
-}
-
-Cart
-
-#containerd #cart{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#ffffff;
-    margin-left:12px;
-    transition:.3s;
-    crusor:pointer;
-}
-
-#containerd #cart svg{
-    width:28px;
-    height:28px;
-}
-
-#containerd #cart:hover{
-    color:#fbbf24;
-    transform:scale(1.12);
-} */
-
-
 
 
 /* サガルから編集 */
@@ -974,14 +985,9 @@ Cart
 /* ========================= */
 
 #itemList .title {
-
-	text-align: center;
-
-	font-size: 34px;
-
+    font-size: 34px;
 	margin-bottom: 35px;
-
-	color: #ffffff;
+	color:black;
 
 }
 
@@ -1182,11 +1188,6 @@ Cart
 
 }
 
-
- 
- /* tryout top page  */
-
-
 /*=====================================================
                 HEADER MAIN
 ======================================================*/
@@ -1216,7 +1217,7 @@ Cart
 	display: flex;
 	align-items: center;
 	gap: 22px;
-	margin-top:4%;
+	
 }
 
 #containerd .header-left {
@@ -1236,7 +1237,13 @@ Cart
 #containerd .header-center {
 
 	position: relative;
+	background:transprant;
 
+}
+
+#containerd #categoryBtns:hover {
+	color:black;
+    background:white;
 }
 
 #containerd #categoryBtn {
@@ -1279,35 +1286,25 @@ Cart
 #containerd #categoryLists {
 
 	position: absolute;
-
 	top: 58px;
-
 	left: 0;
-
 	width: 250px;
-
-	background: #ffffff;
-
+	background:white;
 	border-radius: 12px;
-
 	box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
-
 	opacity: 0;
-
 	visibility: hidden;
-
 	transform: translateY(-10px);
-
 	transition: .28s;
 
 }
 
+
+
 #containerd #categoryLists.show {
 
 	opacity: 1;
-
 	visibility: visible;
-
 	transform: translateY(0);
 
 }
@@ -1315,7 +1312,6 @@ Cart
 #containerd #category {
 
 	list-style: none;
-
 	margin: 0;
 
 	padding: 8px 0;
@@ -1360,16 +1356,18 @@ Cart
 
 }
 
+
+
 /* ==========================================
             SEARCH
 ========================================== */
 
 #containerd .header-search {
-    margin-top:2%;
+   
     display:flex;
     align-items:left;
     margin-left:40%;
-    gap:12px;
+
 
 
 }
@@ -1403,7 +1401,7 @@ Cart
 }
 
 #containerd #searchBtn:hover {
-
+    
 	background: rgba(255, 255, 255, .12);
 
 }
@@ -1417,7 +1415,7 @@ Cart
     gap:8px;
 
     position:absolute;
-    right:28%;      /* search icon को छेउमा */
+    right:28%;     
     top:50%;
     transform:translateY(-50%) translateX(30px) scale(.8);
 
@@ -1431,11 +1429,12 @@ Cart
         visibility .35s;
 
 }
-/* JS le .show add garne */
 
 #containerd #searchInputBar.show {
 
-
+  margin-right:5%;
+    width:380px;
+    opacity:1;
     opacity:1;
     visibility:visible;
     pointer-events:auto;
@@ -1455,7 +1454,7 @@ Cart
     overflow:hidden;
     margin-top:5%;
     background:#fff;
-    border-radius:30px;
+    border-radius:8px;
 
     transition:width .45s cubic-bezier(.22,1,.36,1);
 }
@@ -1463,16 +1462,11 @@ Cart
 #containerd .search-wrapper input {
 
 	width: 250px;
-
 	height: 42px;
-
 	border: none;
-
 	outline: none;
-
-	padding: 0 18px;
-
 	font-size: 14px;
+	text-align:center;
 
 }
 
@@ -1481,15 +1475,17 @@ Cart
 ========================================== */
 
 #containerd .search-btn {
-
-
+    border: 1px solid rgba(255, 255, 255, .35);
+height: 42px;
     opacity:0;
     margin-top:5%;
     transform:translateX(-15px);
-
+   background:transparent;
     transition:
         opacity .25s ease .15s,
-        transform .25s ease .15s;
+        transform .25s ease .15s; 
+        color:white;
+       
 
 }
 #containerd #searchInputBar.show .search-btn{
@@ -1506,9 +1502,8 @@ Cart
 
 }
 #containerd .search-btn:hover{
-
-	background: #d97706;
-
+background:white;
+color:black;
 }
 
 /*=========================================
@@ -1521,6 +1516,7 @@ Cart
 	justify-content: flex-end;
 	gap: 4px;
 	min-width: 280px;
+	
 }
 
 /*=========================================
@@ -1581,6 +1577,9 @@ Cart
 	background: rgba(255, 255, 255, .15);
 
 }
+#containerd #userBtn span {
+	font-size:small;
+}
 
 /*=========================================
             AVATAR
@@ -1594,39 +1593,24 @@ Cart
 #containerd #profileMenu {
 
 	position: absolute;
-
 	top: 55px;
-
 	right: 0;
-
 	width: 210px;
-
 	background: white;
-
 	border-radius: 12px;
-
 	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
-
 	overflow: hidden;
-
 	opacity: 0;
-
 	visibility: hidden;
-
 	transform: translateY(-10px);
-
 	transition: .28s;
-
 }
 
 /* JS will add .show */
 
 #containerd #profileMenu.show {
-
 	opacity: 1;
-
 	visibility: visible;
-
 	transform: translateY(0);
 
 }
@@ -1638,14 +1622,9 @@ Cart
 #containerd #profileMenu a {
 
 	DISPLAY: BLOCK;
-
 	text-decoration: none;
-
 	color: #374151;
-
-
     transition:.25s;
- 
     text-align:center;
 
 }
@@ -1656,8 +1635,6 @@ Cart
     background:#eff6ff;
  font-weight:200px;
     font-size:10px;
-    color:#2563eb;
-
 	padding-left: 24px;
 
 }
@@ -1669,9 +1646,7 @@ Cart
 #containerd .guest-buttons {
 
 	display: flex;
-
 	align-items: center;
-
 	gap: 10px;
 
 }
@@ -1699,7 +1674,6 @@ Cart
 #containerd .login-btn:hover {
 
 	background: white;
-
 	color: #111827 !important;
 
 }
@@ -1708,18 +1682,15 @@ Cart
             SIGNUP
 =========================================*/
 
-#containerd .signup-btn {
+#containerd .signup-btn ,
+#containerd .login-btn {
 
 	padding: 10px 18px;
-
+border: 1px solid rgba(255, 255, 255, .35);
 	border-radius: 10px;
 
 	text-decoration: none;
-
-	background: #2563eb;
-
 	color: white;
-
 	font-weight: 600;
 
 	transition: .25s;
@@ -1727,8 +1698,8 @@ Cart
 }
 
 #containerd .signup-btn:hover {
-
-	background: #1d4ed8;
+background: white;
+	color: #111827 !important;
 
 }
 
@@ -1769,11 +1740,7 @@ Cart
 }
 
 #containerd #cart:hover {
-
-	background: #2563eb;
-
 	transform: translateY(-2px);
-
 }
 
 #containerd #cart svg {
@@ -1802,13 +1769,7 @@ Cart
 
 }
 
-#containerd #searchInputBar.show {
 
-
-    width:380px;
-    opacity:1;
-
-}
 
 /* --------------- */
 
@@ -1835,7 +1796,7 @@ Cart
 }
 
 #containerd #userBtn:hover {
-	background: #2563eb;
+	
 }
 
 /* Hide */
@@ -1900,6 +1861,112 @@ Cart
 
 }
 
+/* 新着順 */
+
+
+/* 商品一覧全体のコンテナ（横並びにする） */
+
+#itemList .item_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* カード間の隙間 */
+    padding: 20px;
+    align-items: stretch;
+}
+
+/* 1件分の商品カード（枠線とサイズ） */
+#itemList .itemList {
+    display: flex;
+    flex-direction: column;
+    width: 250px; /* カードの横幅（お好みで調整してください） */
+    border: 2px solid #a38c5c; /* 金色・茶色系の枠線 */
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* 1. 商品画像エリア */
+#itemList .itemList a:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    overflow: hidden;
+}
+
+/* 画像自体のサイズ調整 */
+#itemList .itemList img {
+   width: 100%;
+height: 100%;
+    object-fit: cover;
+    transition:0.4s;
+    
+}
+#itemList .itemList img:hover {
+	  transition: transform .25s ease, box-shadow .25s ease;
+transform: translatex(-4px); 
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);	
+	}
+/* 2. 商品名と3. 値段の共通テキストエリア（濃い紺色の背景） */
+#itemList .item_name, 
+#itemList .item_price {
+    background-color: #0b2240; /* 濃い紺色 */
+    text-align: center;
+    padding: 10px 5px;
+    height:50px;
+}
+
+/* 商品名のリンク文字（白。上下の余白調整） */
+#itemList .item_name {
+    padding-top: 20px;
+}
+
+#itemList .item_name a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+}
+
+/* 値段の文字（金色・黄色。太字） */
+#itemList .item_price {
+    color: #e5c158; /* 金色・黄色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    margin-top: auto; /* 下部に固定 */
+}
+
+/* 下部にある「すべての商品をみる」ボタンエリアの調整 */
+#itemList .detail_button_area {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    
+}
+
+#itemList .itemList {
+   height:330px;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#itemList .itemList:hover {
+transform: translateY(-6px);
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
+}
+#moreBtn{
+	cursor:pointer;
+	
+}
+#moreBtn:hover{
+	background:black;
+	color:white;
+}
+
+
 /*ランキングCSS 小松原作 ここから*/
 .ranking-area {
     display: flex;
@@ -1923,6 +1990,20 @@ Cart
     border-radius: 30px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     position: relative;
+}
+.rank-card,
+.rank-card-first {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+.rank-card:hover,
+.rank-card-first:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 .rank-image {
     display: block;
@@ -1974,5 +2055,125 @@ Cart
   
     font-weight: bold;
 }
+.ranking-header {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.ranking-header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.ranking-header h2 {
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.ranking-header div {
+    color: #888;
+    font-size: 12px;
+}
+.category-area {
+    width: 600px;
+    margin: 30px auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.category-link {
+    width: 120px;
+    text-align: center;
+}
+
+.category-link:hover {
+    background: #ffe9e2;
+}
+.ranking-list {
+    width: 80%;
+    margin: 40px auto;
+}
+
+.ranking-item {
+	display: flex;
+	   text-decoration: none;
+	   color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+	transition:
+	       transform 0.3s ease,
+	       box-shadow 0.3s ease;
+}
+.ranking-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+
+.ranking-number {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 50%;
+    background: #f5f5f5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 20px;
+
+    flex-shrink: 0;
+}
+
+.ranking-image {
+    width: 100px;
+    height: 100px;
+
+    overflow: hidden;
+    border-radius: 15px;
+
+    flex-shrink: 0;
+}
+
+.ranking-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ranking-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ranking-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ranking-price {
+  
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
 
 /*ランキングCSS 小松原作 ここまで*/
+
+

@@ -3,10 +3,12 @@ package jp.co.sss.shop.controller.client.user;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -99,7 +101,6 @@ public class ClientUserShowController {
 		return "client/user/detail";
 	}
 
-
 	/**
 	 * 会員情報登録入力画面
 	 * @author 手塚
@@ -108,11 +109,11 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping("/client/user/regist/input/init")
 	public String registInput(Model model) {
-		
+
 		// 入力フォーム用の会員情報を作成
 		UserBean userBean = new UserBean();
 
-		// リクエストスコープに保存
+		// リクエストスコープに保存　
 		model.addAttribute("userForm", userBean);
 
 		// 会員登録入力画面へ遷移
@@ -129,9 +130,15 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping(path = "/client/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(
-			@ModelAttribute("userForm") UserBean userBean,
+			@Valid @ModelAttribute("userForm") UserBean userBean,
+			BindingResult result,
 			Model model,
 			HttpSession session) {
+
+		// 必須項目が未入力のとき
+		if (result.hasErrors()) {
+			return "client/user/regist_input";
+		}
 
 		// 登録する会員情報をセッションに保存
 		session.setAttribute("registUser", userBean);
@@ -181,13 +188,57 @@ public class ClientUserShowController {
 		return "client/user/regist_complete";
 	}
 
-
 	/**
-	 * 会員情報編集画面	 *
+	 * 会員情報編集確認画面
+	 * @author 手塚
+	 * @param userBean 入力された会員情報
+	 * @param result 入力チェックの結果を格納するオブジェクト
+	 * @param model リクエストスコープ
+	 * @param session セッションスコープ
+	 * @return client/user/update_check 会員情報編集確認画面を表示
+	 */
+	@RequestMapping(path = "/client/user/update/check", method = RequestMethod.POST)
+	public String updateCheck(
+			@Valid @ModelAttribute("userForm") UserBean userBean,
+			BindingResult result,
+			Model model,
+			HttpSession session) {
+
+		// 必須項目が未入力のとき
+		if (result.hasErrors()) {
+			// 変更前の情報はそのまま利用可能
+			return "client/user/update_input";
+		}
+
+		// ログイン中の情報（変更前の情報）取得
+		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
+
+		// メールアドレスの重複チェック
+		if (!userBean.getEmail().equals(pastUser.getEmail())) {
+			User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+			if (duplicateUser != null) {
+				model.addAttribute("errorMessage", "このメールアドレスは既に登録されています。");
+				model.addAttribute("userForm", userBean);
+				return "client/user/update_input";
+			}
+		}
+
+		// 編集後の会員情報を一時保存
+		session.setAttribute("updateUser", userBean);
+
+		// 確認画面へ渡す
+		model.addAttribute("userForm", userBean);
+
+		// 会員情報編集確認画面へ遷移
+		return "client/user/update_check";
+	}
+	
+	/**
+	 * 会員情報編集画面
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
-	 * @return client/user/update/input 会員情報編集画面を表示
+	 * @return client/user/update_input 会員情報編集画面を表示
 	 */
 	@RequestMapping("/client/user/update/input")
 	public String updateInput(Model model, HttpSession session) {
@@ -200,43 +251,6 @@ public class ClientUserShowController {
 
 		// 編集画面へ遷移
 		return "client/user/update_input";
-	}
-	
-	/**
-	 * 会員情報編集確認画面
-	 * @author 手塚
-	 * @param userBean 入力された会員情報
-	 * @param model リクエストスコープ
-	 * @param session セッションスコープ
-	 * @return client/user/update_check 会員情報編集確認画面を表示
-	 */
-	@RequestMapping(path = "/client/user/update/check", method = RequestMethod.POST)
-	public String updateCheck(
-			@ModelAttribute("userForm") UserBean userBean,
-			Model model,
-			HttpSession session) {
-
-		// ログイン中の情報（変更前の情報）をセッションから取得
-		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
-
-		// 【重要】メールアドレスが変更されている場合のみ重複チェックを行う
-		if (!userBean.getEmail().equals(pastUser.getEmail())) {
-			User duplicateUser = userRepository.findByEmail(userBean.getEmail());
-			if (duplicateUser != null) {
-				model.addAttribute("errorMessage", "このメールアドレスは既に登録されています。");
-				model.addAttribute("userForm", userBean);
-				return "client/user/update_input"; // 変更入力画面へ戻す
-			}
-		}
-
-		// 編集後の会員情報をセッションに一時保存
-		session.setAttribute("updateUser", userBean);
-
-		// 確認画面へ渡す
-		model.addAttribute("userForm", userBean);
-
-		// 会員情報編集確認画面へ遷移（※HTMLファイル名に合わせて調整してください）
-		return "client/user/update_check";
 	}
 
 	/**
@@ -314,8 +328,8 @@ public class ClientUserShowController {
 		User user = userRepository.findById(loginUser.getId()).orElse(null);
 
 		if (user != null) {
-		    // データベースからデータを完全に削除
-		    userRepository.delete(user);
+			// データベースからデータを完全に削除
+			userRepository.delete(user);
 		}
 
 		session.invalidate();
@@ -323,4 +337,3 @@ public class ClientUserShowController {
 		return "redirect:/";
 	}
 }
-

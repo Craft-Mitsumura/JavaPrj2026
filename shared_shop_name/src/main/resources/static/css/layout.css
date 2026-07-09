@@ -19,7 +19,7 @@ html {
  * paddingプロパティの値0は、body要素が持つ枠の領域を取り消します。
  */
 body {
-	margin: 0 0 30px;
+	
 	padding: 0;
 	background:#0000;
 }
@@ -80,7 +80,7 @@ header .container {
 }
 
 .admin header {
-	background: #12526d;
+	
 }
 
 header {
@@ -133,11 +133,11 @@ header {
 .search_area .title,
 .main .title
  {
-	background-color: #3d98bf;
-	margin: 0;
-	padding: 5px 8px;
-	color: #fff;
-	text-shadow: 1px 1px 1px #12526d;
+	
+	margin: auto;
+	
+	color: #333;
+	
 }
 
 
@@ -256,9 +256,9 @@ aside.admin_menu {
 
 .user .main .title,
 .admin .main .title {
-	padding: 8px 15px;
-	position: relative;
+  margin:auto;
 	font-size: 1.5rem;
+	text-align:center;
 	}
 .main .title::before,
 .admin .main .title::before {
@@ -273,9 +273,7 @@ aside.admin_menu {
 .admin .main .title.no_shadow::before {
 	display: none;
 }
-.admin .main .title {
-	background: #12526d;
-}
+
 
 .container.content > .admin_menu{
 	display: flex;
@@ -373,7 +371,7 @@ footer {
 }
 
 .admin footer {
-	background: #12526d;
+	
 }
 
 small {
