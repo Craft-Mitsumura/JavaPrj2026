@@ -121,11 +121,10 @@ p {
 
 /* ---- ボタン(商品個数指定) ---- */
 [type=button] {
-	width: 80px;
-	height: 35px;
+
 	border-width: 1px;
 	border-style: solid;
-	border-color: #808080;
+	
 	padding: 0px 10px;
 	
 	border-radius: 6px;
@@ -354,7 +353,9 @@ li.error_msg {
 	display: block;
 	width: 100%;
 	margin-top: 30px;
+	
 }
+
 
 .detail_button_area form {
 	/* display: inline-block; */
@@ -1216,7 +1217,7 @@ Cart
 	display: flex;
 	align-items: center;
 	gap: 22px;
-	margin-top:4%;
+	
 }
 
 #containerd .header-left {
@@ -1365,11 +1366,11 @@ Cart
 ========================================== */
 
 #containerd .header-search {
-    margin-top:2%;
+   
     display:flex;
     align-items:left;
     margin-left:40%;
-    gap:12px;
+
 
 
 }
@@ -1435,7 +1436,9 @@ Cart
 
 #containerd #searchInputBar.show {
 
-
+  margin-right:4%;
+    width:380px;
+    opacity:1;
     opacity:1;
     visibility:visible;
     pointer-events:auto;
@@ -1455,7 +1458,7 @@ Cart
     overflow:hidden;
     margin-top:5%;
     background:#fff;
-    border-radius:30px;
+    border-radius:8px;
 
     transition:width .45s cubic-bezier(.22,1,.36,1);
 }
@@ -1463,16 +1466,11 @@ Cart
 #containerd .search-wrapper input {
 
 	width: 250px;
-
 	height: 42px;
-
 	border: none;
-
 	outline: none;
-
-	padding: 0 18px;
-
 	font-size: 14px;
+	margin-bottom:5%;
 
 }
 
@@ -1594,39 +1592,24 @@ Cart
 #containerd #profileMenu {
 
 	position: absolute;
-
 	top: 55px;
-
 	right: 0;
-
 	width: 210px;
-
 	background: white;
-
 	border-radius: 12px;
-
 	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
-
 	overflow: hidden;
-
 	opacity: 0;
-
 	visibility: hidden;
-
 	transform: translateY(-10px);
-
 	transition: .28s;
-
 }
 
 /* JS will add .show */
 
 #containerd #profileMenu.show {
-
 	opacity: 1;
-
 	visibility: visible;
-
 	transform: translateY(0);
 
 }
@@ -1638,14 +1621,9 @@ Cart
 #containerd #profileMenu a {
 
 	DISPLAY: BLOCK;
-
 	text-decoration: none;
-
 	color: #374151;
-
-
     transition:.25s;
- 
     text-align:center;
 
 }
@@ -1656,8 +1634,6 @@ Cart
     background:#eff6ff;
  font-weight:200px;
     font-size:10px;
-    color:#2563eb;
-
 	padding-left: 24px;
 
 }
@@ -1669,9 +1645,7 @@ Cart
 #containerd .guest-buttons {
 
 	display: flex;
-
 	align-items: center;
-
 	gap: 10px;
 
 }
@@ -1770,7 +1744,7 @@ Cart
 
 #containerd #cart:hover {
 
-	background: #2563eb;
+
 
 	transform: translateY(-2px);
 
@@ -1802,13 +1776,7 @@ Cart
 
 }
 
-#containerd #searchInputBar.show {
 
-
-    width:380px;
-    opacity:1;
-
-}
 
 /* --------------- */
 
@@ -1899,6 +1867,107 @@ Cart
 	color: #2563eb;
 
 }
+
+/* 新着順 */
+
+
+/* 商品一覧全体のコンテナ（横並びにする） */
+#itemList .item_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* カード間の隙間 */
+    padding: 20px;
+    align-items: stretch;
+}
+
+/* 1件分の商品カード（枠線とサイズ） */
+#itemList .itemList {
+    display: flex;
+    flex-direction: column;
+    width: 250px; /* カードの横幅（お好みで調整してください） */
+    border: 2px solid #a38c5c; /* 金色・茶色系の枠線 */
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* 1. 商品画像エリア */
+#itemList .itemList a:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    overflow: hidden;
+}
+
+/* 画像自体のサイズ調整 */
+#itemList .itemList img {
+   width: 100%;
+height: 100%;
+    object-fit: cover;
+    transition:0.4s;
+    
+}
+#itemList .itemList img:hover {
+	  transition: transform .25s ease, box-shadow .25s ease;
+transform: translatex(-4px); 
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);	
+	}
+/* 2. 商品名と3. 値段の共通テキストエリア（濃い紺色の背景） */
+#itemList .item_name, 
+#itemList .item_price {
+    background-color: #0b2240; /* 濃い紺色 */
+    text-align: center;
+    padding: 10px 5px;
+    height:50px;
+}
+
+/* 商品名のリンク文字（白。上下の余白調整） */
+#itemList .item_name {
+    padding-top: 20px;
+}
+
+#itemList .item_name a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+}
+
+/* 値段の文字（金色・黄色。太字） */
+#itemList .item_price {
+    color: #e5c158; /* 金色・黄色 */
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    margin-top: auto; /* 下部に固定 */
+}
+
+/* 下部にある「すべての商品をみる」ボタンエリアの調整 */
+#itemList .detail_button_area {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    
+}
+
+#itemList .itemList {
+   height:330px;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+#itemList .itemList:hover {
+transform: translateY(-6px);
+
+	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
+}
+
+#moreBtn{
+	width:20%;
+}
+
 
 /*ランキングCSS 小松原作 ここから*/
 /*top ranking*/
@@ -2115,3 +2184,13 @@ Cart
 
 
 /*ランキングCSS 小松原作 ここまで*/
+
+/* #header {
+    display: flex;
+    align-items: center; सबैलाई vertical center मा ल्याउँछ
+    justify-content: space-between; left, center, right spacing
+    width: 100%;
+    height: 70px;
+} */
+
+
