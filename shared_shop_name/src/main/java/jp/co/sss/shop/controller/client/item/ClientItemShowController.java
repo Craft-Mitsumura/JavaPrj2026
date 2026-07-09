@@ -20,12 +20,14 @@ import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Favorite;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Promotions;
+import jp.co.sss.shop.form.ItemForm;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.FavoriteRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.PromotionsRepository;
 import jp.co.sss.shop.service.BeanTools;
 import jp.co.sss.shop.service.FavoriteService;
+import jp.co.sss.shop.service.ItemViewConverter;
 //import jp.co.sss.shop.service.StockCalc;
 import jp.co.sss.shop.util.Constant;
 
@@ -59,13 +61,20 @@ public class ClientItemShowController {
 
 	@Autowired
 	HttpSession session;
-	
+
 	@Autowired
 	FavoriteService favoriteService;
-	
+
 	@Autowired
 	PromotionsRepository promotionsRepository;
-	
+
+	/**
+	 * @author 金城
+	 * json用のコンバーター
+	 */
+	@Autowired
+	ItemViewConverter ItemViewConverter;
+
 	/**
 	 * 商品在庫数計算サービス
 	 */
@@ -104,10 +113,9 @@ public class ClientItemShowController {
 		findByRanking = itemRepository.findItemsOrderByallRanking(firstDateOfMonth, PageRequest.of(0, 3));
 		//  正しいデータが入ったリストを画面に渡す
 		model.addAttribute("rankings", findByRanking);
-		
+
 		// カルーセル広告一覧
-		List<Promotions> adList =
-		        promotionsRepository.findByDeleteFlagOrderByIsActiveDescIdAsc(Constant.NOT_DELETED);
+		List<Promotions> adList = promotionsRepository.findByDeleteFlagOrderByIsActiveDescIdAsc(Constant.NOT_DELETED);
 
 		// デバッグ用
 		System.out.println("広告件数：" + adList.size());
@@ -120,7 +128,7 @@ public class ClientItemShowController {
 
 	/**
 	 * 商品詳細表示
-	 *
+	 * @author 金城（微修正）
 	 * @param model 商品情報を渡すため
 	 * @param id 商品ID
 	 * @return 商品詳細画面
@@ -128,7 +136,7 @@ public class ClientItemShowController {
 	@RequestMapping(path = "/client/item/detail/{id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String details(Model model, @PathVariable Integer id) {
 
-	    Item detailItem = itemRepository.findById(id).orElse(null);
+		Item detailItem = itemRepository.findById(id).orElse(null);
 
 		if (detailItem != null) {
 			try {
@@ -138,13 +146,13 @@ public class ClientItemShowController {
 
 				// 同じ名前の全バリエーションを取得
 				List<Item> sameGroupItems = itemRepository.findByName(detailItem.getName());
-				
+
 				// Formに変換してリスト化
 				List<ItemForm> variationList = new ArrayList<>();
 				for (Item item : sameGroupItems) {
 					variationList.add(ItemViewConverter.convertToForm(item));
 				}
-				
+
 				// モデルに追加（これでJSから全バリエーション情報が参照可能になる）
 				model.addAttribute("variationList", variationList);
 
@@ -153,29 +161,29 @@ public class ClientItemShowController {
 				model.addAttribute("item", detailItem);
 			}
 		}
+		UserBean loginUser = (UserBean) session.getAttribute("user");
+		boolean isFavorite = false;
 
-	    boolean isFavorite = false;
+		if (loginUser != null) {
 
-	    if (loginUser != null) {
+			Favorite favorite = favoriteRepository.findByUser_IdAndItem_IdAndDeleteFlag(
+					loginUser.getId(),
+					id,
+					Constant.NOT_DELETED);
 
-	        Favorite favorite = favoriteRepository.findByUser_IdAndItem_IdAndDeleteFlag(
-	                loginUser.getId(),
-	                id,
-	                Constant.NOT_DELETED);
+			isFavorite = (favorite != null);
 
-	        isFavorite = (favorite != null);
+			// 右上ハート表示用
+			session.setAttribute(
+					"favoriteBeans",
+					favoriteService.getFavoriteList(loginUser.getId())
 
-	        // 右上ハート表示用
-	        session.setAttribute(
-	                "favoriteBeans",
-	                favoriteService.getFavoriteList(loginUser.getId())
+			);
+		}
 
-	        );
-	    }
+		model.addAttribute("isFavorite", isFavorite);
 
-	    model.addAttribute("isFavorite", isFavorite);
-
-	    return "client/item/detail";
+		return "client/item/detail";
 	}
 
 	/**
