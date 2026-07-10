@@ -42,20 +42,20 @@ public class ItemViewConverter {
 		// カテゴリに応じてJSONから値を取り出し、Formへセット
 		int categoryId = (entity.getCategory() != null) ? entity.getCategory().getId() : 0;
 		switch (categoryId) {
-		case 1: // ボールペン
+		case 1: // 万年筆
 			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
-			form.setNibDiameter(root.path("nib_diameter").asText(""));
+			form.setNibDiameter(root.path("nib_diameter").asText());
 			break;
 		case 2: // シャーペン
 			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
-			form.setLeadDiameter(root.path("lead_diameter").asText(""));
+			form.setLeadDiameter(root.path("lead_diameter").asDouble());
 			break;
-		case 3: // 万年筆
+		case 3: // ボールペン
 			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
-			form.setNibDiameter(root.path("nib_diameter").asText(""));
+			form.setNibDiameter(root.path("nib_diameter").asText());
 			break;
 		case 4: // ガラスペン
 			form.setVarNumber(root.path("var_Number").asInt(0));
@@ -68,7 +68,7 @@ public class ItemViewConverter {
 		case 6: // その他
 			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
-			form.setLeadDiameter(root.path("lead_diameter").asText(""));
+			form.setLeadDiameter(root.path("lead_diameter").asDouble());
 			break;
 		}
 
