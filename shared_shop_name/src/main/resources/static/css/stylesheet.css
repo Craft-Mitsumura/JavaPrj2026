@@ -44,7 +44,7 @@ p {
 }
 
 .login_form .input {
-
+	
 	padding: 8px 5px;
 	text-align: left;
 }
@@ -110,10 +110,6 @@ p {
 }
 
 /* ---- ボタン(削除) ---- */
-[type=submit].delete {
-	background: #d22222;
-	color: white;
-}
 
 [type=submit].delete:disabled {
 	background: #ccc;
@@ -219,7 +215,7 @@ p {
 .detail_area {
 	display: block;
 	width: 70%;
-	margin-top: 30px;
+
 	margin-left: 50px;
 }
 
@@ -352,13 +348,13 @@ li.error_msg {
 	width: 100%;
 }
 
-.detail_button_area {
-	text-align: center;
+ .detail_button_area {
+   text-align:center;
 	width: 100%;
 	margin-top: 30px;
 
 }
-
+ 
 
 .detail_button_area form {
 	/* display: inline-block; */
@@ -376,8 +372,9 @@ li.error_msg {
 }
 
 .detail_button_area [type="submit"] {
-	/* padding: 0.6em 1.8em; */
+ padding: 0.6em 1.8em;
 	font-size: 1.2em;
+	margin: 2% 2%;
 }
 
 .card_info {
@@ -477,7 +474,7 @@ select {
  * またlinear-gradientが解釈できないブラウザのために背景色を設定しています。
  * このような、誰にでも同様のデザインを届ける考え方を『プログレッシブエンハンスメント』と言います。
  */
-[type=submit].delete {
+/* [type=submit].delete {
 	background: #d44444;
 	background-image: -webkit-linear-gradient(top, #d44444, #9e1818);
 	background-image: -moz-linear-gradient(top, #d44444, #9e1818);
@@ -486,7 +483,7 @@ select {
 	background-image: linear-gradient(to bottom, #d44444, #9e1818);
 	color: #fff;
 	text-shadow: 1px 1px 1px #616161;
-}
+} */
 
 /* ---- テーブル ---- */
 /* ---- 共通 ---- */
@@ -788,157 +785,157 @@ p.link_center {
 =========================== */
 
 #userLogin {
-	min-height: 80vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	padding: 50px 20px;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
 
 }
 
 /* Title */
 
 #userLogin .page_title {
-	font-size: 32px;
-	font-weight: bold;
-	color: #2c3e50;
-	margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
 }
 
 /* Description */
 
 #userLogin .description {
-	color: #666;
-	margin-bottom: 35px;
-	font-size: 15px;
+    color: #666;
+    margin-bottom: 35px;
+    font-size: 15px;
 }
 
 /* Center */
 
 #userLogin .user_container {
-	width: 100%;
-	display: flex;
-	justify-content: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 #userLogin .login_content {
-	width: 100%;
-	display: flex;
-	justify-content: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 /* Card */
 
 #userLogin .login_form_area {
-	width: 420px;
-	background: #fff;
-	padding: 40px;
-	border-radius: 18px;
-	box-shadow: 0 12px 35px rgba(0, 0, 0, .12);
-	border: 1px solid #e6e6e6;
-
+    width: 420px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,.12);
+    border: 1px solid #e6e6e6;
+    
 }
 
 /* Table */
 
 #userLogin table {
-	width: 100%;
-	border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 #userLogin tr {
-	display: block;
-	margin-bottom: 18px;
-
+    display: block;
+    margin-bottom: 18px;
+   
 }
 
 #userLogin td {
-	display: block;
+    display: block;
 }
 
 /* Input */
 
 #userLogin input[type="text"],
 #userLogin input[type="password"] {
-	width: 100%;
-	height: 50px;
-	padding: 0 18px;
-	font-size: 15px;
-	border: 1px solid #d8d8d8;
-	border-radius: 10px;
-	background: #fafafa;
-	transition: .3s;
-	box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 0 18px;
+    font-size: 15px;
+    border: 1px solid #d8d8d8;
+    border-radius: 10px;
+    background: #fafafa;
+    transition: .3s;
+    box-sizing: border-box;
 }
 
 #userLogin input[type="text"]:focus,
 #userLogin input[type="password"]:focus {
-	outline: none;
-	border-color: #4a90e2;
-	background: white;
-	box-shadow: 0 0 0 4px rgba(74, 144, 226, .15);
+    outline: none;
+    border-color: #4a90e2;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(74,144,226,.15);
 }
 
 /* Placeholder */
 
-#userLogin input::placeholder {
-	color: #999;
+#userLogin input::placeholder{
+    color:#999;
 }
 
 /* Login Button */
 
 #userLogin #loginBtn,
-#userLogin input[type="submit"] {
-	width: 100%;
-	height: 52px;
-	border: none;
-	border-radius: 10px;
-	background: #4a90e2;
-	color: #fff;
-	font-size: 16px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: .3s;
+#userLogin input[type="submit"]{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:10px;
+    background:#4a90e2;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
 }
 
 #userLogin #loginBtn:hover,
-#userLogin input[type="submit"]:hover {
-	background: #2d74c4;
-	transform: translateY(-2px);
-	box-shadow: 0 10px 20px rgba(74, 144, 226, .35);
+#userLogin input[type="submit"]:hover{
+    background:#2d74c4;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(74,144,226,.35);
 }
 
 /* Error */
 
-#userLogin .error_list {
-	background: #fff3f3;
-	border: 1px solid #ffc7c7;
-	color: #d63031;
-	border-radius: 10px;
-	padding: 15px;
-	margin-bottom: 20px;
+#userLogin .error_list{
+    background:#fff3f3;
+    border:1px solid #ffc7c7;
+    color:#d63031;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:20px;
 }
 
-#userLogin .error_list ul {
-	margin: 0;
-	padding-left: 20px;
+#userLogin .error_list ul{
+    margin:0;
+    padding-left:20px;
 }
 
 /* Back Link */
 
-#userLogin .complete_link {
-	margin-top: 30px;
+#userLogin .complete_link{
+    margin-top:30px;
 }
 
-#userLogin .complete_link a {
-	color: #4a90e2;
-	text-decoration: none;
-	font-weight: 600;
+#userLogin .complete_link a{
+    color:#4a90e2;
+    text-decoration:none;
+    font-weight:600;
 }
 
-#userLogin .complete_link a:hover {
-	text-decoration: underline;
+#userLogin .complete_link a:hover{
+    text-decoration:underline;
 }
 
 
@@ -985,9 +982,9 @@ p.link_center {
 /* ========================= */
 
 #itemList .title {
-	font-size: 34px;
+    font-size: 34px;
 	margin-bottom: 35px;
-	color: black;
+	color:black;
 
 }
 
@@ -1217,6 +1214,7 @@ p.link_center {
 	display: flex;
 	align-items: center;
 	gap: 22px;
+	margin-top:1%;
 
 }
 
@@ -1519,7 +1517,7 @@ p.link_center {
 	justify-content: flex-end;
 	gap: 4px;
 	min-width: 280px;
-
+	margin-bottom:1%;
 }
 
 /*=========================================
@@ -1580,9 +1578,8 @@ p.link_center {
 	background: rgba(255, 255, 255, .15);
 
 }
-
 #containerd #userBtn span {
-	font-size: small;
+	font-size:small;
 }
 
 /*=========================================
@@ -1967,19 +1964,15 @@ p.link_center {
 
 	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
 }
-
 #moreBtn {
 	width: 20%;
 	display: block;
 	margin: 40px auto 0;
 	font-size: 16px;
 }
-
-#moreBtn:hover {
-	background: black;
-	color: white;
-	transform: scale(1.03);
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+#moreBtn:hover{
+	background:black;
+	color:white;
 }
 
 
@@ -2117,11 +2110,10 @@ p.link_center {
 .category-link {
 	width: 120px;
 	text-align: center;
-	font-weight: 600;
 }
 
 .category-link:hover {
-	background: #ffe9e2;
+	background: rgb(235, 235, 235);
 }
 
 .ranking-list {
@@ -2131,55 +2123,54 @@ p.link_center {
 
 .ranking-item {
 	display: flex;
-	align-items: center;
-	gap: 8px;
-
-	background: #fff;
-	border: 2px solid #071d49;
-	border-radius: 10px;
-
-	padding: 10px 35px;
-	margin-bottom: 18px;
-
 	text-decoration: none;
 	color: inherit;
+	display: flex;
+	align-items: center;
+	gap: 25px;
 
-	min-height: 70px;
-	overflow: hidden;
+	background: white;
+	border-radius: 20px;
+	padding: 20px;
+	margin-bottom: 20px;
 
-	box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-	transition: all .3s;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	transition:
+		transform 0.3s ease,
+		box-shadow 0.3s ease;
 }
 
 .ranking-item:hover {
-	transform: translateY(-3px);
+	transform: scale(1.03);
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.ranking-number {
-	width: 48px;
-	height: 48px;
-	font-size: 16px;
-	font-weight: 600;
-	border-radius: 50%;
 
-	background: #f7f7f7;
-	color: rgb(0, 0, 0);
+.ranking-number {
+	width: 50px;
+	height: 50px;
+
+	border-radius: 50%;
+	background: #f5f5f5;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
+	font-weight: bold;
+	font-size: 20px;
+
 	flex-shrink: 0;
 }
 
 .ranking-image {
-	width: 115px;
-	height: 115px;
-	border-radius: 0px;
+	width: 100px;
+	height: 100px;
+
 	overflow: hidden;
+	border-radius: 15px;
+
 	flex-shrink: 0;
-	margin-left: 20px;
 }
 
 .ranking-image img {
@@ -2189,42 +2180,141 @@ p.link_center {
 }
 
 .ranking-info {
-	background: #f7f7f7;
-	color: white;
-
-	flex: 1;
-	margin-left: 10px;
-	height: 100%;
-
-	padding: 20px 30px;
-	border-radius: 0 10px 10px 0;
-
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	flex: 1;
-	border-radius: 0;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
 }
 
 .ranking-name {
-	color: rgb(0, 0, 0);
-	font-size: 17px;
-	font-weight: 500;
-	letter-spacing: 1px;
-	margin-bottom: 8px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 .ranking-price {
-	color: rgb(0, 0, 0);
-	font-size: 17px;
-	font-weight: 600;
+
+	font-weight: bold;
+	font-size: 18px;
 }
 
 
 
 /*ランキングCSS 小松原作 ここまで*/
+
+
+/* ---------!!!!!!!!!!!!!!!!! */
+
+#details .top_area{
+	display:flex;
+	flex-direction:row;
+	gap:10%;
+	margin-top:2%
+}
+
+#details .point_area{
+text-align:center;
+  border:1px solid #cccc;
+  width:50%; 
+  
+  }
+ 
+#next_price{
+	display:grid;
+	grid-template-columns:auto auto;
+	grid-template-rows:auto auto;
+}
+#next_price #nextPrizeImg {
+	grid-row:1/3;
+   margin:auto;
+   width:60%;
+   overlay:hidden;
+   height:150px;
+   margin-top:5%;
+
+} 
+
+#details .current_point{
+	border:1px solid #cccc;
+}
+.point_area .next_prize{
+	border:1px solid #cccc;
+	  grid-column : 1 / span 2;
+	  height:77%;
+}
+#details  a {
+	text-decoration:none;
+	font-weight:600;
+}
+#details h2{
+	color:red;
+}
+  #pointDiv {
+  display:grid;
+  grid-template-columns:auto auto;
+  }
+
+
+#details .next_point {
+
+	border:1px solid #cccc;
+
+	
+}
+
+/*=========================================
+          会員詳細
+=========================================*/
+#details .detail_area{
+	border:1px solid #cccc;
+	width:40%;
+	padding:10px;
+}
+
+#details .detail_area {
+  
+    display: flex;
+    justify-content: center;
+}
+
+#details .detail_area .input_list {
+    width: 600px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#details .detail_area .input_list li {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+#details .detail_area .input_title {
+    width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#details .detail_area .input_value {
+    flex: 1;
+    color: #222;
+}
+
+
+/*=========================================
+          注文一覧
+=========================================*/
+#details .order_history h3 {
+	font-weight:bold;
+	
+	margin:auto;
+	text-align:center;
+	font-size:42px;
+	margin: 2% 2%;
+}
+
+
 
 /*小見出しCSS 小松原作 ここから*/
 .section-title {
@@ -2235,7 +2325,6 @@ p.link_center {
 .section-en {
 	font-size: 24px;
 	font-weight: bold;
-	font-weight: 800;
 	color: #0b2740;
 	margin-bottom: 10px;
 }
@@ -2253,30 +2342,19 @@ p.link_center {
 	color: #888;
 	font-weight: bold;
 	margin-top: -10px;
-	text-align: center;
-	margin: 0 auto;
 }
 
 .title {
 	font-size: 54px;
-	font-weight: 500;
-	color: #333 !important;
-	margin: 0 !important;
-	padding: 0 !important;
-	position: static !important;
-	left: auto !important;
-	transform: none !important;
-	float: none !important;
-	text-align: center !important;
-
+    color: #333 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    float: none !important;
+    text-align: center !important;
+	
 }
 
 /*小見出しCSS 小松原作 ここまで*/
-
-/* #header {
-    display: flex;
-    align-items: center; सबैलाई vertical center मा ल्याउँछ
-    justify-content: space-between; left, center, right spacing
-    width: 100%;
-    height: 70px;
-} */

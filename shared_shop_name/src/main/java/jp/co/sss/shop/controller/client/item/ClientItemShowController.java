@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.UserBean;
+import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Favorite;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Promotions;
@@ -208,7 +209,12 @@ public class ClientItemShowController {
 		model.addAttribute("page", itemPage);
 
 		model.addAttribute("categories", categoryRepository.findAll());
+		
+		Category category =
+		        categoryRepository.findByIdAndDeleteFlag(id, 0);
 
+		model.addAttribute("category", category);
+	
 		// ページ移動時にカテゴリを保持する
 		model.addAttribute("categoryId", id);
 
@@ -256,6 +262,10 @@ public class ClientItemShowController {
 			Model model,
 			//@PathVariable Integer sortType,
 			@RequestParam(defaultValue = "0") int page) {
+		
+//		ページの小見出しを作成する
+		model.addAttribute("allsubtittle", "すべての商品");
+		model.addAttribute("allsubtittleex", "avoirの商品をご紹介します。");
 
 		Page<Item> itemPage = itemRepository.findAll(
 				PageRequest.of(page, 20));

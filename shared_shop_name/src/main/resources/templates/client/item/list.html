@@ -11,7 +11,14 @@
 	<div id="itemList">
 
 		<!-- 商品一覧タイトル -->
-		<h2 class="title" th:text="#{item}+#{title.list}"></h2>
+		
+		<div class="section-ja">
+			<h2 class="section-en" th:text="#{item}+#{title.list}"></h2>
+
+		</div>
+		<h2 th:text="${allsubtittle}" class="section-text"></h2>
+
+		<p th:text="${allsubtittleex}" class="section-text"></p>
 
 		<!-- 並び替えメニュー -->
 		<div class="sorted_by">

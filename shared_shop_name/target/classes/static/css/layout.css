@@ -78,11 +78,6 @@ header .container {
 	display: flex;
 	justify-content: space-between;
 }
-
-.admin header {
-	
-}
-
 header {
 	background: #111827;
 	color: white;
@@ -241,7 +236,7 @@ aside.admin_menu {
 
 }
 
-.container.content{
+.container content{
 	display: flex;
 }
 
@@ -370,10 +365,6 @@ footer {
 	width: 100%;
 }
 
-.admin footer {
-	
-}
-
 small {
 	height: 30px;
 	line-height:30px;
@@ -381,14 +372,14 @@ small {
 	font-size: 8pt;
 }
 
-/* ---- 景品ページ ---- */
-
-body.prize .container {
-	width: 90%;
-	max-width: 1200px;
-	margin: 0 auto;
+.title span {
+	color:red;
+	margin:auto;
 }
 
+<<<<<<< HEAD
+
+=======
 body.prize .main {
 	width: 100%;
 }
@@ -397,3 +388,4 @@ body.prize #prize {
 	width: 100%;
 	text-align: center;
 }
+>>>>>>> aecc501a671204b1fe6404a22ae31102c23c1166
