@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.PrizeRepository;
 import jp.co.sss.shop.repository.UserRepository;
+import jp.co.sss.shop.service.MailService;
 
 /**
  * 会員情報詳細のコントローラクラス
@@ -400,4 +402,16 @@ public class ClientUserShowController {
 
 		return "redirect:/";
 	}
+	@PostMapping("/review")
+	public String review(ReviewForm form){
+
+	    MailService.sendMail(
+	            form.getName(),
+	            form.getEmail(),
+	            form.getMessage()
+	    );
+
+	    return "redirect:/thanks";
+	}
+	
 }
