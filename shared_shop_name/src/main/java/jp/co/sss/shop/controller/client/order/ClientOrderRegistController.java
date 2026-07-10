@@ -414,8 +414,8 @@ public class ClientOrderRegistController {
 		    itemRepository.save(item);
 		}
 		
-		// 購入ポイント加算（200円で1ポイント）
-		int addPoint = totalPrice / 200;
+		// 購入ポイント加算（500円で1ポイント）
+		int addPoint = totalPrice / 500;
 
 		user.setPoint(user.getPoint() + addPoint);
 
