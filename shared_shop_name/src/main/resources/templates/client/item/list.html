@@ -16,31 +16,11 @@
 			<h2 class="section-en" th:text="#{item}+#{title.list}"></h2>
 
 		</div>
-		<h2 th:text="${allsubtittle}" class="section-text"></h2>
+		<h2 th:text="${itemTitle}" class="section-text"></h2>
 
-		<p th:text="${allsubtittleex}" class="section-text"></p>
-
-		<!-- 並び替えメニュー -->
-		<div class="sorted_by">
-
-			<!-- カテゴリ絞り込み -->
-			<div class="category-list">
-
-				<a th:href="@{/client/item/list/1}">
-					すべて
-				</a>
-
-				<th:block th:each="category : ${categories}">
-					<a th:href="@{/client/category/lists/{id}(id=${category.id})}" th:text="${category.name}">
-					</a>
-				</th:block>
-
-			</div>
-
-			<!-- ランキング -->
-			<a th:href="@{/client/item/ranking}">ランキング</a>
-
-		</div>
+		<p class="section-text" th:if="${cateex != null and !#strings.isEmpty(cateex)}"
+		   th:text="${cateex}">
+		</p>
 
 		<!-- 商品が存在しない場合のメッセージ -->
 		<p class="noItem" th:if="${#lists.isEmpty(items)}" th:text="#{msg.client.item.list.none}">

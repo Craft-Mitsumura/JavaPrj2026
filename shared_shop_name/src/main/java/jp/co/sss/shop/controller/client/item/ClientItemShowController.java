@@ -212,8 +212,15 @@ public class ClientItemShowController {
 		
 		Category category =
 		        categoryRepository.findByIdAndDeleteFlag(id, 0);
+		
+	
 
 		model.addAttribute("category", category);
+		
+//		ページの小見出しを作成する
+		model.addAttribute("itemTitle", category.getName());
+		model.addAttribute("cateex", category.getDescription());
+
 	
 		// ページ移動時にカテゴリを保持する
 		model.addAttribute("categoryId", id);
@@ -264,8 +271,8 @@ public class ClientItemShowController {
 			@RequestParam(defaultValue = "0") int page) {
 		
 //		ページの小見出しを作成する
-		model.addAttribute("pageTitle", "すべての商品");
-		model.addAttribute("pageDescription", "");
+		model.addAttribute("itemTitle", "すべての商品");
+		model.addAttribute("cateex", "");
 
 		Page<Item> itemPage = itemRepository.findAll(
 				PageRequest.of(page, 20));
