@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head  >
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div > 
+<form  th:action="@{/client/review/input}" method="post">
+
+    <input type="text" name="name" required>
+
+    <input type="email" name="email" required>
+
+    <textarea name="message" required></textarea>
+
+    <button type="submit">Send</button>
+
+</form>
+</div>
+</body>
+</html>

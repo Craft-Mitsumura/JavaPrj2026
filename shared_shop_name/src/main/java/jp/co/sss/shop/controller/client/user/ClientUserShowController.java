@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,8 @@ import jp.co.sss.shop.service.MailService;
 @Controller
 public class ClientUserShowController {
 
+	private final MailService mailService;
+
 	/**
 	 * ユーザリポジトリ
 	 */
@@ -49,6 +52,10 @@ public class ClientUserShowController {
 	 */
 	@Autowired
 	OrderRepository orderRepository;
+
+	ClientUserShowController(MailService mailService) {
+		this.mailService = mailService;
+	}
 
 	/**
 	 * 会員情報詳細画面
@@ -402,16 +409,16 @@ public class ClientUserShowController {
 
 		return "redirect:/";
 	}
-	@PostMapping("/review")
-	public String review(ReviewForm form){
+	
+	@GetMapping( "/client/review/input")
+	public String review(
+	        @RequestParam String name,
+	        @RequestParam String email,
+	        @RequestParam String message) {
 
-	    MailService.sendMail(
-	            form.getName(),
-	            form.getEmail(),
-	            form.getMessage()
-	    );
-
-	    return "redirect:/thanks";
+	    mailService.sendMail(name, email, message);
+   System.out.print(name);
+	    return "redirect:/";
 	}
 	
 }

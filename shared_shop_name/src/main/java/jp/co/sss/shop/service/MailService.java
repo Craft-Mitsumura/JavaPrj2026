@@ -14,7 +14,7 @@ public class MailService {
 
         SimpleMailMessage mail = new SimpleMailMessage();
 
-        mail.setTo("yourgmail@gmail.com");
+        mail.setTo("sagarmatha603@gmail.com");
         mail.setSubject("New Review");
 
         mail.setText(
