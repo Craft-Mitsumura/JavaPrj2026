@@ -7,13 +7,15 @@
 </head>
 
 <body class="">
-	<div class="section-ja">
-		<h2 class="section-en" th:text="#{sort.ranking.title}"></h2>
+	<div class="section-title">
 
-	</div>
-	<h2 th:text="${currentMonthText}" class="section-text"></h2>
+		<div class="section-ja">
+			<h2 class="section-en" th:text="#{sort.ranking.title}"></h2>
 
-	<p class="section-text">人気の商品をランキング形式でご紹介します</p>
+		</div>
+		<h2 th:text="${currentMonthText}" class="section-text"></h2>
+
+		<p class="section-text">人気の商品をランキング形式でご紹介します</p>
 	</div>
 
 
@@ -65,9 +67,9 @@
 
 	<!-- 今月のランキング商品がない場合の表示 -->
 	<div th:if="${#lists.isEmpty(rankings)}" class="no-rank">
-	    <p>今月のランキングデータはありません。</p>
+		<p>今月のランキングデータはありません。</p>
 	</div>
-	
+
 	<!-- ボタン -->
 	<div class="detail_button_area">
 
@@ -76,7 +78,7 @@
 		</form>
 
 	</div>
-	
+
 </body>
 
 </html>

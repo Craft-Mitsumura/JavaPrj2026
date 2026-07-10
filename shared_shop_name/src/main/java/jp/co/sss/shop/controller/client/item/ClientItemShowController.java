@@ -208,12 +208,15 @@ public class ClientItemShowController {
 		model.addAttribute("page", itemPage);
 
 		model.addAttribute("categories", categoryRepository.findAll());
-		
-		Category category =
-		        categoryRepository.findByIdAndDeleteFlag(id, 0);
+
+		Category category = categoryRepository.findByIdAndDeleteFlag(id, 0);
 
 		model.addAttribute("category", category);
-	
+
+		//見出しを表示する
+		model.addAttribute("itemTitle", category.getName());
+		model.addAttribute("cateex", category.getDescription());
+
 		// ページ移動時にカテゴリを保持する
 		model.addAttribute("categoryId", id);
 
@@ -261,8 +264,8 @@ public class ClientItemShowController {
 			Model model,
 			//@PathVariable Integer sortType,
 			@RequestParam(defaultValue = "0") int page) {
-		
-//		ページの小見出しを作成する
+
+		//		ページの小見出しを作成する
 		model.addAttribute("pageTitle", "すべての商品");
 		model.addAttribute("pageDescription", "");
 
@@ -272,6 +275,10 @@ public class ClientItemShowController {
 
 		model.addAttribute("items", itemPage.getContent());
 		model.addAttribute("page", itemPage);
+
+		//		見出しを表示する
+		model.addAttribute("itemTitle", "すべての商品");
+		model.addAttribute("cateex", "");
 
 		model.addAttribute("categories", categoryRepository.findAll());
 
