@@ -4,11 +4,15 @@
 <meta charset="UTF-8" />
 </head>
 <body>
-	<div class="container">
-<small th:fragment="layout-footer" class="copyright">
+	<div  th:fragment="layout-footer" class="copyright">
+	<div  class="container" > 
+<small>
 	<!--/* small要素は免責・著作権・ライセンス要件などを表す際に使用します。 */-->
-	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved 
+	
 </small>
+<a th:href="@{/client/review/reviewForm}">Contact</a>
+	</div>
 	</div>
 </body>
 </html>

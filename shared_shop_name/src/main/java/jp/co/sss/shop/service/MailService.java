@@ -10,7 +10,7 @@ public class MailService {
     @Autowired
     private JavaMailSender sender;
 
-    public void sendMail(String name,String email,String message){
+    public void sendMail(String name,String email,String message , String subject){
 
         SimpleMailMessage mail = new SimpleMailMessage();
 
@@ -20,7 +20,9 @@ public class MailService {
         mail.setText(
                 "Name : "+name+
                 "\nEmail : "+email+
-                "\n\nMessage :\n"+message
+                "\n\nMessage :\n"+message+
+                "\n\nsubject : \n"+subject
+                
         );
 
         sender.send(mail);

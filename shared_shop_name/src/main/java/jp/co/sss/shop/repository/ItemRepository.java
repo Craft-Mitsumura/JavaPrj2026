@@ -125,6 +125,22 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	Page<Item> findByCategoryId(Integer id, Pageable pageable);
 	
 	/**
+	 * 【トップページ用】未削除の新着商品を最大4件取得（IDの降順）
+	 * @param deleteFlag 削除フラグ
+	 * @return 新着商品4件のリスト
+	 */
+	@Query(value = "SELECT i FROM Item i WHERE i.deleteFlag = :deleteFlag ORDER BY i.insertDate DESC, i.id DESC")
+	List<Item> findTop4ByDeleteFlagOrderByIdDesc(@Param("deleteFlag") int deleteFlag, Pageable pageable);
+
+	/**
+	 * 【商品一覧画面用】未削除の商品を新着順（IDの降順）にページングして取得
+	 * @param deleteFlag 削除フラグ
+	 * @param pageable ページング情報
+	 * @return 商品エンティティのページオブジェクト
+	 */
+	Page<Item> findByDeleteFlagOrderByIdDesc(int deleteFlag, Pageable pageable);
+	
+	/**
 	 * @author 金城 詳細表示用
 	 * @param name
 	 * @return

@@ -150,6 +150,14 @@ public class ClientUserShowController {
 		if (result.hasErrors()) {
 			return "client/user/regist_input";
 		}
+		
+		// メールアドレス重複チェック
+		User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+
+		if (duplicateUser != null) {
+		    result.rejectValue("email", "msg.regist.email.duplicate");
+		    return "client/user/regist_input";
+		}
 
 		// 登録する会員情報をセッションに保存
 		session.setAttribute("registUser", userBean);
@@ -410,15 +418,26 @@ public class ClientUserShowController {
 		return "redirect:/";
 	}
 	
-	@GetMapping( "/client/review/input")
-	public String review(
-	        @RequestParam String name,
-	        @RequestParam String email,
-	        @RequestParam String message) {
 
-	    mailService.sendMail(name, email, message);
-   System.out.print(name);
-	    return "redirect:/";
+
+	    @GetMapping("/client/review/reviewForm")
+	    public String showReviewForm() {
+	    	System.out.println("triggred");
+	        return "client/review/reviewForm";
+	    }
+
+	    @PostMapping("/client/review/input")
+	    public String review(
+	            @RequestParam String name,
+	            @RequestParam String email,
+	            @RequestParam String subject,
+	            @RequestParam String message
+	           ) {
+
+	        mailService.sendMail(name, email, subject , message);
+
+	        return "redirect:/";
+	    }
 	}
 	
-}
+
