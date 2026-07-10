@@ -187,10 +187,10 @@
 
 
 	<!-- 今月のランキング商品がない場合の表示 -->
-	<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100">
-		<p>今月のランキングデータはありません。</p>
+	<div th:if="${#lists.isEmpty(rankings)}" class="no-rank">
+	    <p>今月のランキングデータはありません。</p>
 	</div>
-	</div>
+	
 	<!-- ランキング一覧へ -->
 	<div class="detail_button_area">
 
@@ -198,6 +198,8 @@
 			<input id="moreBtn" type="button" value="more" />
 		</a>
 	</div>
+
+
 </body>
 
 </html>
