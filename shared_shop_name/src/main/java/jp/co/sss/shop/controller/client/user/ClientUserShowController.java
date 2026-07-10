@@ -143,7 +143,7 @@ public class ClientUserShowController {
 		}
 		
 		// メールアドレス重複チェック
-		User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+		User duplicateUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 0);
 
 		if (duplicateUser != null) {
 		    result.rejectValue("email", "msg.regist.email.duplicate");
@@ -175,6 +175,10 @@ public class ClientUserShowController {
 		// Entityへデータを詰め替え
 		User user = new User();
 
+		// 【★ここが最重要の解決ポイント】
+		// 新規登録なので、引き継がれてしまったかもしれない古いIDを完全にクリア(null)にします！
+		user.setId(null);
+
 		user.setEmail(userBean.getEmail());
 		user.setPassword(userBean.getPassword());
 		user.setName(userBean.getName());
@@ -187,6 +191,9 @@ public class ClientUserShowController {
 
 		// 初期ポイントを設定
 		user.setPoint(0);
+
+		// 現役会員として登録するため、削除フラグに 0 (未削除) を明示的に設定する
+		user.setDeleteFlag(0);
 
 		// DBへ保存
 		userRepository.save(user);
@@ -326,54 +333,12 @@ public class ClientUserShowController {
 	}
 
 	/**
-	 * 会員情報編集完了処理
-	 * @author 手塚
-	 * @param session セッションスコープ
-	 * @return client/user/update_complete 会員情報編集完了画面を表示
-	 */
-	@RequestMapping(path = "/client/user/update/complete", method = RequestMethod.POST)
-	public String updateComplete(HttpSession session, Model model) {
-
-		// セッションから編集後の会員情報および現在のログインユーザー情報を取得
-		UserBean updateUserBean = (UserBean) session.getAttribute("updateUser");
-		UserBean loginUser = (UserBean) session.getAttribute("user");
-
-		// データベースから現在のユーザーエンティティを取得
-		User user = userRepository.findById(loginUser.getId()).orElse(null);
-
-		if (user != null) {
-			// データベースのエンティティに入力された値を上書きする
-			user.setEmail(updateUserBean.getEmail());
-			user.setName(updateUserBean.getName());
-			user.setPostalCode(updateUserBean.getPostalCode());
-			user.setAddress(updateUserBean.getAddress());
-			user.setPhoneNumber(updateUserBean.getPhoneNumber());
-
-			// データベースへ保存
-			userRepository.save(user);
-
-			// セッションスコープ内のログインユーザー情報(Bean)も新しい内容に同期する
-			loginUser.setEmail(user.getEmail());
-			loginUser.setName(user.getName());
-			loginUser.setPostalCode(user.getPostalCode());
-			loginUser.setAddress(user.getAddress());
-			loginUser.setPhoneNumber(user.getPhoneNumber());
-			session.setAttribute("user", loginUser);
-		}
-
-		// 使用済みのセッション情報を削除
-		session.removeAttribute("updateUser");
-
-		// 編集完了画面
-		return "client/user/update_complete";
-	}
-
-	/**
-	 * 会員情報削除確認画面	 *
+	 * 会員情報削除確認画面
+	 *
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
-	 * @return client/user/delete/check 会員情報削除確認画面を表示
+	 * @return client/user/delete_check 会員情報削除確認画面を表示
 	 */
 	@RequestMapping("/client/user/delete/check")
 	public String deleteCheck(Model model, HttpSession session) {
@@ -386,11 +351,11 @@ public class ClientUserShowController {
 	}
 
 	/**
-	 * 会員情報削除処理
+	 * 会員情報削除処理（退会処理）
 	 *
 	 * @author 手塚
 	 * @param session セッションスコープ
-	 * @return トップ画面へリダイレクト
+	 * @return アカウント削除完了画面へリダイレクト
 	 */
 	@RequestMapping("/client/user/delete/complete")
 	public String deleteComplete(HttpSession session) {
@@ -400,12 +365,25 @@ public class ClientUserShowController {
 		User user = userRepository.findById(loginUser.getId()).orElse(null);
 
 		if (user != null) {
-			// データベースからデータを完全に削除
-			userRepository.delete(user);
+			// 削除フラグを1（退会済み）にして上書き保存する
+			user.setDeleteFlag(1);
+			userRepository.save(user);
 		}
 
-		session.invalidate();
+		return "redirect:/client/user/delete/complete/init";
+	}
 
-		return "redirect:/";
+	/**
+	 * 会員情報削除完了画面表示
+	 * @param session セッションスコープ
+	 * @return client/user/delete_complete 削除完了画面
+	 */
+	@RequestMapping(path = "/client/user/delete/complete/init", method = RequestMethod.GET)
+	public String deleteCompleteInit(HttpSession session) {
+		
+		// 画面表示時に安全にセッションを無効化（ログアウト）
+		session.invalidate();
+		
+		return "client/user/delete_complete";
 	}
 }
