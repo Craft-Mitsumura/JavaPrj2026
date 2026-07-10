@@ -1,5 +1,4 @@
 ﻿@charset "UTF-8";
-
 body {
 	color: #12526d;
 	font-size: 14px;
@@ -2113,7 +2112,7 @@ p.link_center {
 }
 
 .category-link:hover {
-	background: #ffe9e2;
+	background: rgb(235, 235, 235);
 }
 
 .ranking-list {
