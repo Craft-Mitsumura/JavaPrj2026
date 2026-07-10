@@ -415,6 +415,7 @@ public class ClientOrderRegistController {
 			item.setStock(item.getStock() - basket.getOrderNum());
 
 			itemRepository.save(item);
+			System.out.println(item.getId());
 
 			// ===== ランキング更新 =====
 			Date salesMonth = Date.valueOf(LocalDate.now().withDayOfMonth(1));
@@ -433,9 +434,14 @@ public class ClientOrderRegistController {
 				ranking.setTotal(
 						ranking.getTotal() + basket.getOrderNum());
 
+				
+				System.out.println("basketId=" + basket.getId());
+				System.out.println("itemId=" + item.getId());
+				System.out.println("itemName=" + item.getName());
+				
 				rankingRepository.save(ranking);
 			}
-		}
+		
 
 		// 購入ポイント加算（500円で1ポイント）
 		int addPoint = totalPrice / 500;
@@ -446,7 +452,7 @@ public class ClientOrderRegistController {
 
 		session.removeAttribute("orderForm");
 		session.removeAttribute("basketBeans");
-
+		}
 		// 注文完了画面表示処理にリダイレクト
 		return "redirect:/client/order/complete";
 	}
