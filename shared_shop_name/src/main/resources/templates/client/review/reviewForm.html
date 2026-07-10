@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head  >
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" th:href="@{/css/Review.css}">
+
+<body>
+<div > 
+<div class="contact-container">
+
+    <h2>Contact Us</h2>
+    <p class="contact-text">
+        If you have any questions, suggestions, or feedback, please send us a message.
+    </p>
+
+    <form th:action="@{/client/review/input}" method="post">
+
+        <div class="form-group">
+            <label>Your Name</label>
+            <input type="text"
+                   name="name"
+                   placeholder="Enter your name"
+                   maxlength="50"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email"
+                   name="email"
+                   placeholder="example@gmail.com"
+                   maxlength="100"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label>Subject</label>
+            <input type="text"
+                   name="subject"
+                   placeholder="Enter subject"
+                   maxlength="100">
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea
+                name="message"
+                rows="7"
+                placeholder="Please write your message here..."
+                maxlength="1000"
+                required></textarea>
+        </div>
+
+        <button type="submit" class="send-btn">
+            Send Message
+        </button>
+         <button type="submit" class="send-btn">
+            Send Message
+        </button>
+
+    </form>
+
+</div>
+</div>
+</body>
+</html>
