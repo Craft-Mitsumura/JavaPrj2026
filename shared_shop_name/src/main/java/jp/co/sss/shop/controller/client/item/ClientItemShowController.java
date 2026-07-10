@@ -93,16 +93,15 @@ public class ClientItemShowController {
 	public String index(Model model) {
 
 		// 新着商品順の表示用
-		// 【変更点】新着順（例：登録日の新しい順）で全商品を取得するメソッドに差し替え
 		List<Item> items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED);
 
-		// トップ画面用に最大4件に絞り込む（ここはそのまま使えます！）
+		// トップ画面用に最大4件に絞り込む
 		if (items.size() > 4) {
 			items = items.subList(0, 4);
 		}
 
 		model.addAttribute("items", items);
-		model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
+		model.addAttribute("sortType", 1); 
 		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(0));
 
 		//	    ランキング表示用
@@ -212,15 +211,8 @@ public class ClientItemShowController {
 		
 		Category category =
 		        categoryRepository.findByIdAndDeleteFlag(id, 0);
-		
-	
 
 		model.addAttribute("category", category);
-		
-//		ページの小見出しを作成する
-		model.addAttribute("itemTitle", category.getName());
-		model.addAttribute("cateex", category.getDescription());
-
 	
 		// ページ移動時にカテゴリを保持する
 		model.addAttribute("categoryId", id);
@@ -271,10 +263,11 @@ public class ClientItemShowController {
 			@RequestParam(defaultValue = "0") int page) {
 		
 //		ページの小見出しを作成する
-		model.addAttribute("itemTitle", "すべての商品");
-		model.addAttribute("cateex", "");
+		model.addAttribute("pageTitle", "すべての商品");
+		model.addAttribute("pageDescription", "");
 
-		Page<Item> itemPage = itemRepository.findAll(
+		Page<Item> itemPage = itemRepository.findByDeleteFlagOrderByIdDesc(
+				Constant.NOT_DELETED,
 				PageRequest.of(page, 20));
 
 		model.addAttribute("items", itemPage.getContent());
