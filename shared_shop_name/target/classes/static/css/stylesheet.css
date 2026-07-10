@@ -1,5 +1,4 @@
 ﻿@charset "UTF-8";
-
 body {
 	color: #12526d;
 	font-size: 14px;
@@ -2076,6 +2075,13 @@ p.link_center {
 	font-weight: bold;
 }
 
+.no-rank {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: 80px 0;
+}
+
 /*ranking*/
 .ranking-header {
 	text-align: center;
@@ -2113,7 +2119,7 @@ p.link_center {
 }
 
 .category-link:hover {
-	background: #ffe9e2;
+	background: rgb(235, 235, 235);
 }
 
 .ranking-list {
@@ -2196,7 +2202,6 @@ p.link_center {
 	font-weight: bold;
 	font-size: 18px;
 }
-
 
 
 /*ランキングCSS 小松原作 ここまで*/
@@ -2318,30 +2323,29 @@ text-align:center;
 
 /*小見出しCSS 小松原作 ここから*/
 .section-title {
-	text-align: center;
-	margin: 80px 0 60px;
+    text-align: center;
+    margin: 80px 0 70px;
 }
 
 .section-en {
-	font-size: 24px;
-	font-weight: bold;
-	color: #0b2740;
-	margin-bottom: 10px;
+    font-size: 40px;
+    font-weight: 700;
+    color: #0b2740;
+    margin: 0 0 15px;
 }
 
 .section-ja {
-	font-size: 48px;
-	font-weight: bold;
-	color: #333;
-	margin-bottom: 20px;
-	text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    color: #333;
+    margin: 0 0 10px;
 }
 
 .section-text {
-	font-size: 14px;
-	color: #888;
-	font-weight: bold;
-	margin-top: -10px;
+    font-size: 15px;
+    color: #888;
+    font-weight: bold;
+    margin: 0 0 70px;
 }
 
 .title {
