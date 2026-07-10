@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.BasketBean;
 import jp.co.sss.shop.bean.OrderItemBean;
@@ -215,21 +216,20 @@ public class ClientOrderRegistController {
      * @return 遷移先のリダイレクトパス
      */	
 	//　処理５(支払方法選択画面 次へボタン 押下時処理)
-	@RequestMapping(path = "client/order/check", method = RequestMethod.POST)
-    public String checkPayment(@ModelAttribute("paymentForm") OrderForm form, HttpSession session) {
-		
-		// セッションスコープから注文入力フォーム情報を取得
-		OrderForm orderForm = (OrderForm) session.getAttribute("orderForm");
-		
-		// 画面から入力された支払方法を取得した注文入力フォーム情報に設定
-		orderForm.setPayMethod(form.getPayMethod());
-		
-		// 注文入力フォーム情報をセッションスコープに保存
-		session.setAttribute("orderForm", orderForm);
-		
-		// 注文確認画面表示処理へリダイレクト
-		// リダイレクト : “/client/order/check”
-		return "redirect:/client/order/check";
+	@RequestMapping(path = "/client/order/check", method = RequestMethod.POST)
+	public String checkPayment(
+	        @RequestParam("payMethod") Integer payMethod,
+	        HttpSession session) {
+
+	    OrderForm orderForm = (OrderForm) session.getAttribute("orderForm");
+
+	    System.out.println("payMethod = " + payMethod);
+
+	    orderForm.setPayMethod(payMethod);
+
+	    session.setAttribute("orderForm", orderForm);
+
+	    return "redirect:/client/order/check";
 	}
 	
 	 /**
