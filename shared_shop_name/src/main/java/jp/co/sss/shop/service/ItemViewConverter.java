@@ -43,30 +43,30 @@ public class ItemViewConverter {
 		int categoryId = (entity.getCategory() != null) ? entity.getCategory().getId() : 0;
 		switch (categoryId) {
 		case 1: // ボールペン
-			form.setVarNumber(root.path("no").asInt(0));
+			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setNibDiameter(root.path("nib_diameter").asText(""));
 			break;
 		case 2: // シャーペン
-			form.setVarNumber(root.path("no").asInt(0));
+			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setLeadDiameter(root.path("lead_diameter").asText(""));
 			break;
 		case 3: // 万年筆
-			form.setVarNumber(root.path("no").asInt(0));
+			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setNibDiameter(root.path("nib_diameter").asText(""));
 			break;
 		case 4: // ガラスペン
-			form.setVarNumber(root.path("no").asInt(0));
+			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			break;
 		case 5: // インク
-			form.setVarNumber(root.path("no").asInt(0));
+			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setInkVolume(root.path("ink_volume").asText(""));
 			break;
 		case 6: // その他
-			form.setVarNumber(root.path("no").asInt(0));
+			form.setVarNumber(root.path("var_Number").asInt(0));
 			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setLeadDiameter(root.path("lead_diameter").asText(""));
 			break;
