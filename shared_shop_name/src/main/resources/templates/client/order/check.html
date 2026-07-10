@@ -76,7 +76,12 @@
 			<caption class="table_caption">[[#{paymethod.str}]]</caption>
 			<tr>
 				<th>[[#{paymethod.str}]]</th>
-	<td th:text="${orderForm.payMethod}"></td>
+				<td>
+				    <span th:if="${orderForm.payMethod == 1}">[[#{paymethod.credit.str}]]</span>
+				    <span th:if="${orderForm.payMethod == 2}">[[#{paymethod.bank.str}]]</span>
+				    <span th:if="${orderForm.payMethod == 3}">[[#{paymethod.onarrival.str}]]</span>
+				    <span th:if="${orderForm.payMethod == 4}">[[#{paymethod.emoney.str}]]</span>
+				    <span th:if="${orderForm.payMethod == 5}">[[#{paymethod.convenience.str}]]</span>
 				</td>
 			</tr>
 		</table>
