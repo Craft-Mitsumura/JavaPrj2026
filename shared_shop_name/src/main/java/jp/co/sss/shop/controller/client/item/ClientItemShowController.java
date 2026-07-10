@@ -264,8 +264,8 @@ public class ClientItemShowController {
 			@RequestParam(defaultValue = "0") int page) {
 		
 //		ページの小見出しを作成する
-		model.addAttribute("allsubtittle", "すべての商品");
-		model.addAttribute("allsubtittleex", "avoirの商品をご紹介します。");
+		model.addAttribute("pageTitle", "すべての商品");
+		model.addAttribute("pageDescription", "");
 
 		Page<Item> itemPage = itemRepository.findAll(
 				PageRequest.of(page, 20));
