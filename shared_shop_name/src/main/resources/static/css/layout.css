@@ -1,5 +1,4 @@
 ﻿@charset "UTF-8";
-
 /* ---- 共通 ---- */
 /* スキルアップテクニック1-1
  * html要素に対しmin-heightプロパティを付けることで、
@@ -361,7 +360,6 @@ footer {
 	background-color:black;
 	text-align: center;
 	position: absolute;
-	bottom: 0;
 	width: 100%;
 }
 
@@ -386,4 +384,3 @@ body.prize #prize {
 	width: 100%;
 	text-align: center;
 }
-
