@@ -129,7 +129,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @param deleteFlag 削除フラグ
 	 * @return 新着商品4件のリスト
 	 */
-	List<Item> findTop4ByDeleteFlagOrderByIdDesc(int deleteFlag);
+	@Query(value = "SELECT i FROM Item i WHERE i.deleteFlag = :deleteFlag ORDER BY i.insertDate DESC, i.id DESC")
+	List<Item> findTop4ByDeleteFlagOrderByIdDesc(@Param("deleteFlag") int deleteFlag, Pageable pageable);
 
 	/**
 	 * 【商品一覧画面用】未削除の商品を新着順（IDの降順）にページングして取得

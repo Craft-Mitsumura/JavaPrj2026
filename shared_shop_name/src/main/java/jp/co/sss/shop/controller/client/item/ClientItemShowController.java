@@ -88,20 +88,20 @@ public class ClientItemShowController {
 	 * @param model    Viewとの値受渡し
 	 * @return "index" トップ画面
 	 */
-
 	@RequestMapping(path = "/", method = { RequestMethod.GET, RequestMethod.POST })
 	public String index(Model model) {
 
 		// 新着商品順の表示用
-		List<Item> items = itemRepository.findAllByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED);
+		// 【変更点】PageRequest.of(0, 4) を渡して、登録日・IDの降順で確実に最新4件を取得します
+		List<Item> items = itemRepository.findTop4ByDeleteFlagOrderByIdDesc(Constant.NOT_DELETED, PageRequest.of(0, 4));
 
-		// トップ画面用に最大4件に絞り込む
+		// トップ画面用に最大4件に絞り込む（元コードのロジックを維持）
 		if (items.size() > 4) {
 			items = items.subList(0, 4);
 		}
 
 		model.addAttribute("items", items);
-		model.addAttribute("sortType", 1); 
+		model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
 		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(0));
 
 		//	    ランキング表示用
