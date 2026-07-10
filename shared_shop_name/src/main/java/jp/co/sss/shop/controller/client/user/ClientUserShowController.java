@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +23,7 @@ import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.PrizeRepository;
 import jp.co.sss.shop.repository.UserRepository;
+import jp.co.sss.shop.service.MailService;
 
 /**
  * 会員情報詳細のコントローラクラス
@@ -29,6 +32,8 @@ import jp.co.sss.shop.repository.UserRepository;
  */
 @Controller
 public class ClientUserShowController {
+
+	private final MailService mailService;
 
 	/**
 	 * ユーザリポジトリ
@@ -47,6 +52,10 @@ public class ClientUserShowController {
 	 */
 	@Autowired
 	OrderRepository orderRepository;
+
+	ClientUserShowController(MailService mailService) {
+		this.mailService = mailService;
+	}
 
 	/**
 	 * 会員情報詳細画面
@@ -408,4 +417,27 @@ public class ClientUserShowController {
 
 		return "redirect:/";
 	}
-}
+	
+
+
+	    @GetMapping("/client/review/reviewForm")
+	    public String showReviewForm() {
+	    	System.out.println("triggred");
+	        return "client/review/reviewForm";
+	    }
+
+	    @PostMapping("/client/review/input")
+	    public String review(
+	            @RequestParam String name,
+	            @RequestParam String email,
+	            @RequestParam String subject,
+	            @RequestParam String message
+	           ) {
+
+	        mailService.sendMail(name, email, subject , message);
+
+	        return "redirect:/";
+	    }
+	}
+	
+
