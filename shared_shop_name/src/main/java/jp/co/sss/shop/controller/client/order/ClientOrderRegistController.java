@@ -392,7 +392,7 @@ public class ClientOrderRegistController {
 		for (BasketBean basket : basketBeans) {
 
 		    // 商品情報取得
-		    Item item = itemRepository.getReferenceById(basket.getId());
+		    Item item = itemRepository.findById(basket.getId()).get();
 
 		    // 注文商品エンティティ作成
 		    OrderItem orderItem = new OrderItem();
@@ -404,12 +404,13 @@ public class ClientOrderRegistController {
 
 		    // 保存
 		    orderItemRepository.save(orderItem);
-		    
-		 // 合計金額計算
+
+		    // 合計金額計算
 		    totalPrice += item.getPrice() * basket.getOrderNum();
 
 		    // 在庫更新
 		    item.setStock(item.getStock() - basket.getOrderNum());
+
 		    itemRepository.save(item);
 		}
 		
