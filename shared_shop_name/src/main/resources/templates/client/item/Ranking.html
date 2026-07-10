@@ -64,10 +64,10 @@
 
 
 	<!-- 今月のランキング商品がない場合の表示 -->
-	<div th:if="${#lists.isEmpty(rankings)}" class="flex justify-center items-center min-h-100 mt-10">
-		<p class="text-gray-400 text-lg">今月のランキングデータはありません。</p>
+	<div th:if="${#lists.isEmpty(rankings)}" class="no-rank">
+	    <p>今月のランキングデータはありません。</p>
 	</div>
-	</div>
+	
 </body>
 
 </html>

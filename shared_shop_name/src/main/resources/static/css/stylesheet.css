@@ -2083,6 +2083,13 @@ p.link_center {
 	font-weight: bold;
 }
 
+.no-rank {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: 80px 0;
+}
+
 /*ranking*/
 .ranking-header {
 	text-align: center;
@@ -2223,38 +2230,33 @@ p.link_center {
 }
 
 
-
 /*ランキングCSS 小松原作 ここまで*/
 
 /*小見出しCSS 小松原作 ここから*/
 .section-title {
-	text-align: center;
-	margin: 80px 0 60px;
+    text-align: center;
+    margin: 80px 0 70px;
 }
 
 .section-en {
-	font-size: 24px;
-	font-weight: bold;
-	font-weight: 800;
-	color: #0b2740;
-	margin-bottom: 10px;
+    font-size: 40px;
+    font-weight: 700;
+    color: #0b2740;
+    margin: 0 0 15px;
 }
 
 .section-ja {
-	font-size: 48px;
-	font-weight: bold;
-	color: #333;
-	margin-bottom: 20px;
-	text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    color: #333;
+    margin: 0 0 10px;
 }
 
 .section-text {
-	font-size: 14px;
-	color: #888;
-	font-weight: bold;
-	margin-top: -10px;
-	text-align: center;
-	margin: 0 auto;
+    font-size: 15px;
+    color: #888;
+    font-weight: bold;
+    margin: 0 0 70px;
 }
 
 .title {
