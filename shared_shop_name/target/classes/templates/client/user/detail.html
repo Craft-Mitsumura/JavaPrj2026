@@ -106,7 +106,13 @@
 						</td>
 
 						<!-- 支払方法 -->
-						<td th:text="${order.payMethod == 1 ? 'クレジットカード' : '銀行振込'}"></td>
+						<td th:switch="${order.payMethod}">
+						    <span th:case="1">クレジットカード</span>
+						    <span th:case="2">銀行振込</span>
+						    <span th:case="3">着払い</span>
+						    <span th:case="4">電子マネー</span>
+						    <span th:case="5">コンビニ決済</span>
+						</td>
 
 						<!-- 購入数 -->
 						<td>

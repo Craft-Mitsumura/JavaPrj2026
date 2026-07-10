@@ -141,6 +141,14 @@ public class ClientUserShowController {
 		if (result.hasErrors()) {
 			return "client/user/regist_input";
 		}
+		
+		// メールアドレス重複チェック
+		User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+
+		if (duplicateUser != null) {
+		    result.rejectValue("email", "msg.regist.email.duplicate");
+		    return "client/user/regist_input";
+		}
 
 		// 登録する会員情報をセッションに保存
 		session.setAttribute("registUser", userBean);
