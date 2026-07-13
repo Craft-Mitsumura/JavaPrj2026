@@ -500,7 +500,8 @@ select {
 .detail_table th {
 	white-space: nowrap;
 	padding: 5px;
-	background: #add8e6;
+	background: rgb(255, 255, 255);
+	color: #fff;
 	font-weight: normal;
 	position: relative;
 }
@@ -508,6 +509,7 @@ select {
 .list_table td,
 .detail_table td {
 	padding: 10px;
+	color: rgb(0, 0, 0);
 }
 
 /* ---- 個別 ---- */
@@ -2290,8 +2292,6 @@ p.link_center {
 	font-size: 42px;
 	margin: 2% 2%;
 }
-
-
 
 /*小見出しCSS 小松原作 ここから*/
 .section-title {
