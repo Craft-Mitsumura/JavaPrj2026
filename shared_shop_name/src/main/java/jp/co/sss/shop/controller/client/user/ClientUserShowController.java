@@ -448,7 +448,30 @@ public class ClientUserShowController {
 		
 		// 画面表示時に安全にセッションを無効化（ログアウト）
 		session.invalidate();
-		
+ 
 		return "client/user/delete_complete";
 	}
-}
+	
+
+
+	    @GetMapping("/client/review/form")
+	    public String showReviewForm() {
+	    	System.out.println("triggred");
+	        return "client/review/reviewForm";
+	    }
+
+	    @PostMapping("/client/review/input")
+	    public String review(
+	            @RequestParam String name,
+	            @RequestParam String email,
+	            @RequestParam String subject,
+	            @RequestParam String message
+	           ) {
+
+	        mailService.sendMail(name, email, subject , message);
+
+	        return "redirect:/";
+	    }
+	}
+	
+
