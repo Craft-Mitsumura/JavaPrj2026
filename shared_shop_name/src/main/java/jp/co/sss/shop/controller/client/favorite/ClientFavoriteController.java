@@ -17,6 +17,7 @@ import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Favorite;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.service.FavoriteService;
+import jp.co.sss.shop.util.Constant;
 
 /**
  * お気に入り管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -77,7 +78,10 @@ public class ClientFavoriteController {
 
 		// HTMLにデータを渡す
 		model.addAttribute("favoriteList", pagedFavoriteList); // 10件に制限されたリスト
-		model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(Constant.NOT_DELETED)
+			);
 		model.addAttribute("categoryId", categoryId);
 
 		// ページめくりボタンを作るための情報を新しく送る
