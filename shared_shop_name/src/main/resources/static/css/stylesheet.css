@@ -2114,9 +2114,8 @@ p.link_center {
 }
 
 .category-link {
-	width: 130px;
+	width: 120px;
 	text-align: center;
-	font-size: 17px;
 }
 
 .category-link:hover {

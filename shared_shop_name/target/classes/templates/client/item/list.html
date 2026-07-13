@@ -12,16 +12,15 @@
 
 		<!-- 商品一覧タイトル -->
 		
-		<div class="section-title">
-		    <h2 class="section-en" th:text="#{item}+#{title.list}"></h2>
+		<div class="section-ja">
+			<h2 class="section-en" th:text="#{item}+#{title.list}"></h2>
 
-		    <h3 class="section-ja" th:text="${itemTitle}"></h3>
-
-		    <p class="section-text"
-		       th:if="${cateex != null and !#strings.isEmpty(cateex)}"
-		       th:text="${cateex}">
-		    </p>
 		</div>
+		<h2 th:text="${itemTitle}" class="section-text"></h2>
+
+		<p class="section-text" th:if="${cateex != null and !#strings.isEmpty(cateex)}"
+		   th:text="${cateex}">
+		</p>
 
 		<!-- 商品が存在しない場合のメッセージ -->
 		<p class="noItem" th:if="${#lists.isEmpty(items)}" th:text="#{msg.client.item.list.none}">

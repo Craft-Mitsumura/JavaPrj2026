@@ -69,8 +69,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 			"WHERE r.salesMonth = :salesMonth AND c.id = :categoryId ORDER BY r.total DESC")
 	List<Item> findItemsOrderBycateRanking(@Param("salesMonth") LocalDate salesMonth,
 			@Param("categoryId") Integer categoryId, Pageable pageable);
-	
-
 
 	/**
 	 * 商品情報を登録日付順に取得（一般会員用）
