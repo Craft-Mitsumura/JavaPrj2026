@@ -67,7 +67,7 @@ body{
 }
 
 .send-btn{
-    width:100%;
+   
     padding:16px;
     border:none;
     border-radius:10px;
@@ -77,6 +77,8 @@ body{
     font-weight:bold;
     cursor:pointer;
     transition:.3s;
+    margin-left:37%;
+    margin-bottom:3%;
 }
 
 .send-btn:hover{
@@ -99,3 +101,13 @@ body{
     }
 
 }
+
+#backBtn{
+	text-decoration:none;
+	
+	padding:16px;
+	margin-left:37%;
+	text-align:center;
+	margin-top:4%	
+}
+
