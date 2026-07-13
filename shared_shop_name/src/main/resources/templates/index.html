@@ -96,19 +96,10 @@
 
 				</div>
 
-				<!-- 順位 -->
-				<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
-
-					<img th:src="@{/images/common/crone.png}" class="w-5 h-5">
-
-					<span class="ml-1 font-bold">
-						2位
-					</span>
-
-				</div>
 
 				<!-- 商品情報 -->
 				<div class="rank-info">
+					<p class="ranking-rank">2位</p>
 					<p class="rank-name" th:text="*{name}"></p>
 					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 					</p>
@@ -131,14 +122,10 @@
 
 				</div>
 
-				<!-- 順位 -->
-				<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
-					<img th:src="@{/images/common/crone.png}" class="w-5 h-5">
-					<span class="ml-1 font-bold">1位</span>
-				</div>
 
 				<!-- 商品情報 -->
 				<div class="rank-info">
+					<p class="ranking-rank">1位</p>
 					<p class="rank-name" th:text="*{name}"></p>
 					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 					</p>
@@ -164,19 +151,10 @@
 
 					</div>
 
-					<!-- 順位 -->
-					<div class="absolute top-3 left-3 flex items-center bg-white rounded-full shadow px-3 py-1">
-
-						<img th:src="@{/images/common/crone.png}" class="w-5 h-5">
-
-						<span class="ml-1 font-bold">
-							3位
-						</span>
-
-					</div>
 
 					<!-- 商品情報 -->
 					<div class="rank-info">
+						<p class="ranking-rank">3位</p>
 						<p class="rank-name" th:text="*{name}"></p>
 						<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
 						</p>
