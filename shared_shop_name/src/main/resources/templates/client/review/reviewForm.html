@@ -12,7 +12,10 @@
 
     <h2>Contact Us</h2>
     <p class="contact-text">
-        If you have any questions, suggestions, or feedback, please send us a message.
+        If you have any questions, suggestions, or feedback, please send us a message. 
+        <br>
+        
+        
     </p>
 
     <form th:action="@{/client/review/input}" method="post">
@@ -56,11 +59,15 @@
         <button type="submit" class="send-btn">
             Send Message
         </button>
-         <button type="submit" class="send-btn">
-            Send Message
-        </button>
+                 
+       
+            <a class="send-btn" id="backBtn" th:href="@{/}"> トープ へ　戻る </a>
+        
+        
 
     </form>
+ 
+
 
 </div>
 </div>

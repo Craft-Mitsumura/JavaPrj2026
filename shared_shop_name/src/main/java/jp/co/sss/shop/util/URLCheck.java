@@ -84,12 +84,12 @@ public class URLCheck {
 
 		boolean isCheckURLOK = false;
 		if (URLCheck.isURLForStaticFile(requestURL)
+				 && !requestURL.endsWith("/client/review/form")
 				|| requestURL.endsWith(contextPath + "/")
 				|| requestURL.endsWith("/login")
-				&& !requestURL.endsWith("/client/review/reviewForm")
 				|| requestURL.indexOf("client") != -1
 				|| requestURL.indexOf("admin") == -1
-				|| requestURL.endsWith("/logout")) {
+				|| requestURL.endsWith("/logout")){
 			// URLのリクエスト先がフィルタ実行対象である場合
 			isCheckURLOK = true;
 		} else {
@@ -114,7 +114,9 @@ public class URLCheck {
 				&& !requestURL.endsWith("/login")
 				&& !requestURL.endsWith(contextPath + "/")
 				&& requestURL.indexOf("/client/item/list/") == -1
-				&& !requestURL.endsWith("/client/review/reviewForm")
+			    && !requestURL.endsWith("/client/review/form")
+				
+						
 				&& requestURL.indexOf("/client/category/lists/") == -1
 				&& requestURL.indexOf("/client/item/detail/") == -1
 				&& requestURL.indexOf("/client/user/delete/") == -1

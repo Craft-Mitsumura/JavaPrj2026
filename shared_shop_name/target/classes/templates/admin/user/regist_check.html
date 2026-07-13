@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{user}+#{title.input.check}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin user_regist_check_admin">
+	<h2 th:class="title" th:text="#{user}+#{title.input.check}"></h2>
+	<p th:class="check_message" th:text="#{msg.regist.check}"></p>
+	<div class="user_info_form_area" th:object="${userForm}">
+
+		<ul class="input_list">
+			<li>
+				<span class="input_title">[[#{userForm.email}]]</span>
+				<span class="input_value" th:text="*{email}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.password}]]</span>
+				<span class="input_value">********</span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.name}]]</span>
+				<span class="input_value" th:text="*{name}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.postalCode}]]</span>
+				<span class="input_value" th:text="*{postalCode}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.address}]]</span>
+				<span class="input_value" th:text="*{address}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{userForm.phoneNumber}]]</span>
+				<span class="input_value" th:text="*{phoneNumber}"></span>
+			</li>
+			<li>
+				<span class="input_title">[[#{data.authority}]]</span>
+				<th:block  th:switch="*{authority}">
+					<span class="input_value" th:case="0">[[#{auth.system.str}]]</span>
+					<span class="input_value" th:case="1">[[#{auth.admin.str}]]</span>
+					<span class="input_value" th:case="2">[[#{auth.client.str}]]</span>
+				</th:block>
+			</li>
+		</ul>
+
+		<form th:action="@{/admin/user/regist/complete}"  method="post" class="user_info_form">
+			<input type="submit" value="登録" class="send_button" />
+		</form>
+		<form th:action="@{/admin/user/regist/input}" method="post">
+			<input type="submit" value="戻る" class="back_button" />
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1905,7 +1905,7 @@ p.link_center {
 
 #itemList .itemList img:hover {
 	transition: transform .25s ease, box-shadow .25s ease;
-	transform: translatex(-4px);
+	transform: translatey(1px);
 
 	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
 }
@@ -2114,9 +2114,8 @@ p.link_center {
 }
 
 .category-link {
-	width: 130px;
+	width: 120px;
 	text-align: center;
-	font-size: 17px;
 }
 
 .category-link:hover {
