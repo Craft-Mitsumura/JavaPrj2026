@@ -9,6 +9,7 @@
 
 	<link rel="stylesheet" th:href="@{/css/prize.css}" />
 	<title th:replace="${title}">avoir</title>
+
 </head>
 
 <body class="admin">
@@ -25,11 +26,11 @@
 				<ul class="flex flex-col min-h-12 justify-between" style="list-style: none; padding: 0; margin: 0;">
 					<li class="flex items-center" style="margin-bottom: 12px;">
 						<img th:src="@{/images/common/account.png}" alt="" class="w-5 h-5">
-						<a th:href="@{/admin/user/list} " class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.user.list}">ユーザー管理</a>
+						<a th:href="@{/admin/user/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.user.list}">ユーザー管理</a>
 					</li>
 					<li class="flex items-center" style="margin-bottom: 12px;">
 						<img th:src="@{/images/common/document.png}" alt="" class="w-5 h-5">
-						<a th:href="@{/admin/order/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.order.list}">受注管理</a>
+						<a th:href="@{/admin/order/list}" class="disabled px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.order.list}">受注管理</a>
 					</li>
 					<li class="flex items-center" style="margin-bottom: 12px;">
 						<img th:src="@{/images/common/box.png}" alt="" class="w-5 h-5">
