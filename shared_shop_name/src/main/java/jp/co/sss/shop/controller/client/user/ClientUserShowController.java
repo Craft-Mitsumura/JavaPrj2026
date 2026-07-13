@@ -469,7 +469,7 @@ public class ClientUserShowController {
 	
 
 
-	    @GetMapping("/client/review/reviewForm")
+	    @GetMapping("/client/review/form")
 	    public String showReviewForm() {
 	    	System.out.println("triggred");
 	        return "client/review/reviewForm";
