@@ -463,13 +463,13 @@ public class ClientUserShowController {
 
 		// 画面表示時に安全にセッションを無効化（ログアウト）
 		session.invalidate();
-
+ 
 		return "client/user/delete_complete";
 	}
 	
 
 
-	    @GetMapping("/client/review/reviewForm")
+	    @GetMapping("/client/review/form")
 	    public String showReviewForm() {
 	    	System.out.println("triggred");
 	        return "client/review/reviewForm";
