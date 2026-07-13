@@ -102,7 +102,10 @@ public class ClientItemShowController {
 
 		model.addAttribute("items", items);
 		model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
-		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(0));
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
 
 		//	    ランキング表示用
 		//	    購入日をすべて1日に変更する
@@ -207,7 +210,10 @@ public class ClientItemShowController {
 		model.addAttribute("items", itemPage.getContent());
 		model.addAttribute("page", itemPage);
 
-		model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
 
 		Category category = categoryRepository.findByIdAndDeleteFlag(id, 0);
 
@@ -245,9 +251,10 @@ public class ClientItemShowController {
 
 		model.addAttribute("items", itemList);
 
-		model.addAttribute("categories",
-				categoryRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(
-						Constant.NOT_DELETED));
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
 
 		return "client/item/list";
 	}
@@ -280,7 +287,10 @@ public class ClientItemShowController {
 		model.addAttribute("itemTitle", "すべての商品");
 		model.addAttribute("cateex", "");
 
-		model.addAttribute("categories", categoryRepository.findAll());
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
 
 		return "client/item/list";
 

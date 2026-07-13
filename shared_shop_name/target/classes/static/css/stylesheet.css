@@ -1907,7 +1907,7 @@ p.link_center {
 
 #itemList .itemList img:hover {
 	transition: transform .25s ease, box-shadow .25s ease;
-	transform: translatey(1px);
+	transform: translatex(-4px);
 
 	box-shadow: 0 12px 25px rgba(0, 0, 0, .45);
 }
@@ -1971,20 +1971,19 @@ p.link_center {
 	display: block;
 	margin: 40px auto 0;
 	font-size: 16px;
-
 	transition:
 		transform 0.3s ease,
 		box-shadow 0.3s ease,
 		background-color 0.3s ease,
 		color 0.3s ease;
 }
-
 #moreBtn:hover {
 	background: black;
 	color: white;
 	transform: translateY(-4px);
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
+
 
 
 /*ランキングCSS 小松原作 ここから*/
@@ -1996,7 +1995,6 @@ p.link_center {
 	gap: 30px;
 	margin: 60px auto;
 }
-
 .rank-card,
 .rank-card-first {
 	background: #071d49;
@@ -2005,142 +2003,115 @@ p.link_center {
 	text-decoration: none;
 	transition: all 0.3s;
 }
-
 .rank-card {
 	width: 300px;
 	height: 490px;
 }
-
 .rank-card-first {
 	width: 335px;
 	height: 550px;
 	z-index: 2;
 }
-
 .rank-card:hover,
 .rank-card-first:hover {
 	transform: translateY(-8px);
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
-
 .rank-image,
 .rank-image-first {
 	width: 100%;
 	height: 240px;
 	overflow: hidden;
 }
-
 .rank-card-first .rank-image-first {
 	height: 300px;
 }
-
 .rank-image img,
 .rank-image-first img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
-
 .rank-info {
 	background: #071d49;
 	padding: 10px 20px 35px;
 	text-align: center;
-
 	display: grid;
 	grid-template-rows: 60px auto 60px;
 }
-
 .ranking-rank {
 	color: #d7b56d;
 	font-size: 23px;
 	font-weight: bold;
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-
 .rank-name {
 	color: white;
 	font-size: 23px;
 	font-weight: bold;
 	line-height: 1.5;
 	
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	
 	min-height: 35px; /* ここを調整 */
 	text-align: center;
-
-
 	word-break: keep-all;
 	overflow-wrap: break-word;
 }
-
 .rank-price {
 	color: #d7b56d;
 	font-size: 22px;
 	font-weight: bold;
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-
 .no-rank {
 	display: flex;
 	justify-content: center;
 	width: 100%;
 	margin: 80px 0;
 }
-
 /*ranking*/
 .ranking-header {
 	text-align: center;
 	margin-top: 30px;
 }
-
 .ranking-header h1 {
 	font-size: 40px;
 	margin-bottom: 10px;
 }
-
 .ranking-header h2 {
 	color: #888;
 	margin-bottom: 5px;
 }
-
 .ranking-header div {
 	color: #888;
 	font-size: 12px;
 }
-
 .category-area {
 	width: 600px;
 	margin: 30px auto;
-
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 15px;
 }
-
 .category-link {
 	width: 120px;
 	text-align: center;
 }
-
 .category-link:hover {
 	background: rgb(235, 235, 235);
 }
-
 .ranking-list {
 	width: 80%;
 	margin: 40px auto;
 }
-
 .ranking-item {
 	display: flex;
 	text-decoration: none;
@@ -2148,76 +2119,57 @@ p.link_center {
 	display: flex;
 	align-items: center;
 	gap: 25px;
-
 	background: white;
 	border-radius: 20px;
-	padding: 20px;
+	padding: 8px;
 	margin-bottom: 20px;
-
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	transition:
 		transform 0.3s ease,
 		box-shadow 0.3s ease;
 }
-
 .ranking-item:hover {
 	transform: scale(1.03);
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
-
-
 .ranking-number {
 	width: 50px;
 	height: 50px;
-
 	border-radius: 50%;
 	background: #f5f5f5;
-
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	font-weight: bold;
 	font-size: 20px;
-
 	flex-shrink: 0;
 }
-
 .ranking-image {
-	width: 100px;
-	height: 100px;
-
+	width: 110px;
+	height: 110px;
 	overflow: hidden;
-	border-radius: 15px;
-
+	border-radius: 10px;
 	flex-shrink: 0;
 }
-
 .ranking-image img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
-
 .ranking-info {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
-
 .ranking-name {
 	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 10px;
 }
-
 .ranking-price {
-
 	font-weight: bold;
 	font-size: 18px;
 }
-
-
 /*ランキングCSS 小松原作 ここまで*/
 
 
