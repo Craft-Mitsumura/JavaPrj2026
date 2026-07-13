@@ -86,7 +86,6 @@ public class URLCheck {
 		if (URLCheck.isURLForStaticFile(requestURL)
 				|| requestURL.endsWith(contextPath + "/")
 				|| requestURL.endsWith("/login")
-				&& !requestURL.endsWith("/client/review/reviewForm")
 				|| requestURL.indexOf("client") != -1
 				|| requestURL.indexOf("admin") == -1
 				|| requestURL.endsWith("/logout")) {
@@ -114,7 +113,7 @@ public class URLCheck {
 				&& !requestURL.endsWith("/login")
 				&& !requestURL.endsWith(contextPath + "/")
 				&& requestURL.indexOf("/client/item/list/") == -1
-				&& !requestURL.endsWith("/client/review/reviewForm")
+			
 				&& requestURL.indexOf("/client/category/lists/") == -1
 				&& requestURL.indexOf("/client/item/detail/") == -1
 				&& requestURL.indexOf("/client/user/delete/") == -1
