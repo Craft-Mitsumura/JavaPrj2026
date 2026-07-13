@@ -12,15 +12,16 @@
 
 		<!-- 商品一覧タイトル -->
 		
-		<div class="section-ja">
-			<h2 class="section-en" th:text="#{item}+#{title.list}"></h2>
+		<div class="section-title">
+		    <h2 class="section-en" th:text="#{item}+#{title.list}"></h2>
 
+		    <h3 class="section-ja" th:text="${itemTitle}"></h3>
+
+		    <p class="section-text"
+		       th:if="${cateex != null and !#strings.isEmpty(cateex)}"
+		       th:text="${cateex}">
+		    </p>
 		</div>
-		<h2 th:text="${itemTitle}" class="section-text"></h2>
-
-		<p class="section-text" th:if="${cateex != null and !#strings.isEmpty(cateex)}"
-		   th:text="${cateex}">
-		</p>
 
 		<!-- 商品が存在しない場合のメッセージ -->
 		<p class="noItem" th:if="${#lists.isEmpty(items)}" th:text="#{msg.client.item.list.none}">
@@ -61,7 +62,7 @@
 					<!-- 商品価格 -->
 					<div class="price">
 
-						¥<span th:text="${item.price}"></span>
+						¥<span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
 
 					</div>
 
@@ -94,6 +95,16 @@
 		</div>
 
 	</div>
+	
+	<!-- ボタン -->
+	<div class="detail_button_area">
+
+				<form th:action="@{/}" method="post">
+					<input type="submit" value="戻る" class="back_button" />
+				</form>
+
+			</div>
+		
 </body>
 
 
