@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title,body)">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
+
+	<link rel="stylesheet" th:href="@{/css/prize.css}" />
+	<title th:replace="${title}">シェアードショップ</title>
+</head>
+
+<body class="admin">
+	<header>
+		<div th:replace="~{common/header :: layout-header}"></div>
+	</header>
+	
+	<div class="container" style="position: relative; min-height: 80vh;">
+
+		<aside class="admin_sidebar" style="position: absolute; left: 0; top: 20px; width: 180px; list-style: none; padding: 0; margin: 0; z-index: 10;">
+					<h3>運用メニュー</h3>
+					<ul style="list-style: none; padding: 0; margin: 0;">
+						<li><a th:href="@{/admin/item/list}">商品管理</a></li>
+						<li><a th:href="@{/admin/category/list}">カテゴリ管理</a></li>
+						<li><a th:href="@{/admin/ad/list}">広告管理</a></li>
+						<li><hr /></li>
+						<li><a th:href="@{/admin/menu}">メインメニューへ戻る</a></li>
+					</ul>
+				</aside>
+
+			<article class="main">
+				<div th:replace="${body}"></div>
+			</article>
+		</div>
+	
+	<footer>
+		<div th:replace="~{common/footer :: layout-footer}"></div>
+	</footer>
+</body>
+
+</html>
