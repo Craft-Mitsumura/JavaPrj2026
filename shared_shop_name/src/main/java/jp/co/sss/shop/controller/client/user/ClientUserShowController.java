@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,15 +23,17 @@ import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.PrizeRepository;
 import jp.co.sss.shop.repository.UserRepository;
+import jp.co.sss.shop.service.MailService;
 
 /**
- * 会員情報詳細・登録・編集・削除のコントローラクラス
+ * 会員情報詳細のコントローラクラス
  *
  * @author Hirai Toshiki / 手塚
  */
 @Controller
 public class ClientUserShowController {
 
+	private final MailService mailService;
 	/**
 	 * ユーザリポジトリ
 	 */
@@ -48,6 +52,9 @@ public class ClientUserShowController {
 	@Autowired
 	OrderRepository orderRepository;
 
+	ClientUserShowController(MailService mailService) {
+		this.mailService = mailService;
+	}
 	/**
 	 * 会員情報詳細画面
 	 * @param model リクエストスコープ
@@ -115,7 +122,6 @@ public class ClientUserShowController {
 		// 入力フォーム用の会員情報を作成
 		UserBean userBean = new UserBean();
 
-		// リクエストスコープに保存 
 		model.addAttribute("userForm", userBean);
 
 		// 会員登録入力画面へ遷移
@@ -137,28 +143,28 @@ public class ClientUserShowController {
 			Model model,
 			HttpSession session) {
 
-		// 必須項目が未入力のとき
+		// 必須項目が未入力
 		if (result.hasErrors()) {
 			return "client/user/regist_input";
 		}
 		
-		// 1. 現役会員(delete_flag=0)の中に同じメールアドレスがいるか重複チェック
+		//現役会員に同じメールアドレスがいるか重複チェック
 		User activeUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 0);
 
 		if (activeUser != null) {
-			// 現役会員が存在する場合は、完全に重複しているためエラー
+			// 重複していたらエラー
 			result.rejectValue("email", "msg.regist.email.duplicate");
 			return "client/user/regist_input";
 		}
 
-		// 2. 退会済み会員(delete_flag=1)の中に同じメールアドレスがいるかチェック
+		// 退会済み会員の中に同じメールアドレスがいるかチェック
 		User deletedUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 1);
 
 		if (deletedUser != null) {
-			// 退会済み会員が見つかった場合、そのIDをBeanに退避させておく（復活処理の目印になります）
+			// 該当する退会済み会員がある場合、そのIDをBeanに退避させる
 			userBean.setId(deletedUser.getId());
 		} else {
-			// 完全にご新規さんの場合は、IDを明確にnullにしておく
+			// 完全新規
 			userBean.setId(null);
 		}
 
@@ -186,9 +192,9 @@ public class ClientUserShowController {
 
 		User user;
 
-		// セッションのBeanにIDが入っているかで、新規INSERTか復活UPDATEかを自動分岐
+		// セッションのBeanにIDが入っているかで、新規か再登録かを自動分岐
 		if (userBean.getId() != null) {
-			// 既存の退会済みデータをデータベースから取得して上書き対象にする
+			// 既存の退会済みデータをデータベースから取得して上書き対象にする（再登録）
 			user = userRepository.findById(userBean.getId()).orElse(new User());
 		} else {
 			// 完全な新規エンティティを作成し、新規登録時のみ初期ポイントを付与
@@ -197,7 +203,7 @@ public class ClientUserShowController {
 			user.setPoint(0);
 		}
 
-		// 共通の項目設定
+		// 上書き保存
 		user.setEmail(userBean.getEmail());
 		user.setPassword(userBean.getPassword());
 		user.setName(userBean.getName());
@@ -208,10 +214,10 @@ public class ClientUserShowController {
 		// 一般会員として登録
 		user.setAuthority(2);
 
-		// 現役会員（未削除）として登録するため、削除フラグに 0 を明示的に設定する
+		// 重要：削除フラグを 0 (未削除・現役) に戻する
 		user.setDeleteFlag(0);
 
-		// DBへ保存（idがある場合は自動UPDATE文、nullの場合はINSERT文が走ります）
+		// DBへ保存
 		userRepository.save(user);
 
 		// 登録情報をセッションから削除
@@ -286,9 +292,9 @@ public class ClientUserShowController {
 
 		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
 		if (newEmail != null && !newEmail.trim().isEmpty()) {
-			// 他の人が使っていないか重複チェック
+			// メールアドレスの重複チェック
 			if (!newEmail.equals(pastUser.getEmail())) {
-				// 【修正】退会済みデータを除外するため、現役会員(delete_flag=0)のみを対象に重複確認を行う
+				// 重複確認
 				User duplicateUser = userRepository.findByEmailAndDeleteFlag(newEmail, 0);
 				if (duplicateUser != null) {
 					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
@@ -307,7 +313,7 @@ public class ClientUserShowController {
 			userBean.setPassword(pastUser.getPassword()); 
 		}
 
-		// 旧メールアドレスと旧パスワードの本人確認
+		// 旧メールアドレスと旧パスワードの確認
 		if (!hasError) {
 			if (!oldEmail.equals(pastUser.getEmail()) || !oldPassword.equals(pastUser.getPassword())) {
 				model.addAttribute("authErrorMessage", "旧メールアドレスまたは旧パスワードが正しくありません。");
@@ -358,15 +364,15 @@ public class ClientUserShowController {
 	@RequestMapping(path = "/client/user/update/complete", method = RequestMethod.POST)
 	public String updateComplete(HttpSession session) {
 
-		// 1. セッションから確認画面で一時保存した編集後の会員情報を取得
+		// セッションから確認画面で一時保存した編集後の会員情報を取得
 		UserBean userBean = (UserBean) session.getAttribute("updateUser");
 
 		if (userBean != null) {
-			// 2. データベースから現在の会員情報をIDをキーに取得
+			// データベースから現在の会員情報をIDをキーに取得
 			User user = userRepository.findById(userBean.getId()).orElse(null);
 
 			if (user != null) {
-				// 3. 各項目を画面からの新しい入力値で上書き
+				// 各項目を画面からの新しい入力値で上書き
 				user.setEmail(userBean.getEmail());
 				user.setPassword(userBean.getPassword());
 				user.setName(userBean.getName());
@@ -374,15 +380,15 @@ public class ClientUserShowController {
 				user.setAddress(userBean.getAddress());
 				user.setPhoneNumber(userBean.getPhoneNumber());
 
-				// 4. DBへ上書き保存（UPDATE）
+				// 上書き保存
 				userRepository.save(user);
 
-				// 5. 現在ログイン中であるセッション情報（user）も、新しい情報に更新する
+				// 新しい情報に更新する
 				session.setAttribute("user", userBean);
 			}
 		}
 
-		// 6. 編集用の一時セッションをきれいに削除
+		// 編集用の一時セッションをきれいに削除
 		session.removeAttribute("updateUser");
 
 		// 二重送信を防ぐため、完了画面の表示URLへリダイレクト
