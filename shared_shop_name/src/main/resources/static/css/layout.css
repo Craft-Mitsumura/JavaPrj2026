@@ -282,19 +282,19 @@ aside.admin_menu {
 }
 
 .admin_menu_list .title_area {
-	background: #ff6c49;
+	background: #12526d;
 	text-align: center;
-	border: 1px solid #ff6c49;
+	border: 1px solid #12526d;
 	border-radius: 6px 6px 0 0;
 	font-size: 1.2em;
 	color: #fff;
-	text-shadow: 1px 1px 1px #333;
+	text-shadow: 1px 1px 1px #fff;
 	padding: 5px 0;
 }
 .admin_menu_list .title_area_no_shadow {
-	background: #ff6c49;
+	background: #fff;
 	text-align: center;
-	border: 1px solid #ff6c49;
+	border: 1px solid #12526d;
 	border-radius: 6px 6px 0 0;
 	font-size: 1.2em;
 	padding: 5px 0;
@@ -315,7 +315,9 @@ aside.admin_menu {
 }
 
 .admin_menu_list .link_area a:hover{
-	background: #ffc6b9;
+	background: #eff6ff;
+
+	color: #2563eb;
 }
 .admin_menu_list .link_area:last-of-type a{
 	border-radius: 0 0 6px 6px;
