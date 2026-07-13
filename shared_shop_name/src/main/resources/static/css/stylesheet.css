@@ -490,6 +490,7 @@ select {
 .list_table,
 .detail_table {
 	border-bottom: 1px solid #f0f8fb;
+	color: #fff;
 	background-color: #fff;
 	border-collapse: collapse;
 	margin: 50px auto 20px;
@@ -517,15 +518,15 @@ select {
 }
 
 .list_table tr:nth-of-type(odd) {
-	background: #f0f8fb;
+	background: #eff6ff;
 }
 
 .admin .list_table tr:nth-of-type(odd) {
-	background: #fff0ec;
+	background: #eff6ff;
 }
 
 .admin .list_table th {
-	background: #ffc6b9;
+	background: #12526d;
 }
 
 .list_table th:after {
@@ -556,7 +557,7 @@ select {
 }
 
 .admin .detail_table th {
-	background: #ffc6b9;
+	background: #12526d;
 }
 
 .detail_table td {
@@ -1905,7 +1906,7 @@ p.link_center {
 
 }
 
-#itemList .itemList img:hover {
+#itemList .itemList:hover {
 	transition: transform .25s ease, box-shadow .25s ease;
 	transform: translatex(-4px);
 
