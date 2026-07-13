@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
 
 <head>
 	<title th:text="#{category}+#{title.list}+' | '+ #{shop.title}"> </title>
@@ -46,6 +46,7 @@
 			</td>
 		</tr>
 	</table>
+	
 	<!--/* ページング */-->
 	<ul class="paging" th:if="!${#lists.isEmpty(categories)}">
 		<!-- 先頭のページリンク表示処理 --> 
@@ -58,12 +59,13 @@
 		</li>
 		<!--ページ番号指定のリンク表示処理--> 
 		<!-- #numbersのsequence()メソッドを使用して配列を作成し、被繰り返し変数として利用 -->
-		<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}' th:class="(${i}==${pages.number})? 'active' : ''">
-			<span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
-			<a th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}">
-				<span th:text='${i+1}'>1</span>
-			</a>
-		</li>
+		<li th:each='i : ${#numbers.sequence(1, pages.totalPages)}' th:class="(${i}==${pages.number + 1})? 'active' : ''">
+				<span th:if='${i}==${pages.number + 1}' th:text='${i}'>1</span>
+				
+				<a th:if='${i}!=${pages.number + 1}' th:href="@{${url}(page=${i - 1})}">
+					<span th:text='${i}'>1</span>
+				</a>
+			</li>
 		<!-- 末尾ページのリンク --> 
 		<!--1ページ目の場合はクラスの名前をdisabledに設定--> 
 		<li th:class="${pages.last} ? 'disabled':''">

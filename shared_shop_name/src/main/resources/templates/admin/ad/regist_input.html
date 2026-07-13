@@ -16,14 +16,30 @@
 			<form th:action="@{/admin/ad/regist/check}" method="post" th:object="${promotionsForm}"
 				enctype="multipart/form-data">
 
-				<p th:if="${#fields.hasErrors('*')}">
-					<span th:each="error:${#fields.detailedErrors()}">
-						<span th:text="${error.message}" style="color:red;"></span><br />
-					</span>
-				</p>
-				<div th:if="${errorMessage}"
-					style="color:red; border:1px solid red; padding:10px; margin-bottom:20px; background-color:#fff0f0;">
-					<p th:text="${errorMessage}"></p>
+				<div th:if="${#fields.hasErrors('*')}" style="margin-bottom: 20px;">
+				    <th:block th:if="${#fields.hasErrors('pageName')}">
+				        <span th:each="err : ${#fields.errors('pageName')}" 
+				              th:if="${err.contains('必須')}" 
+				              th:text="${err}" style="color:red;"></span><br th:if="${#fields.hasErrors('pageName')}" />
+				    </th:block>
+				        
+				    <th:block th:if="${#fields.hasErrors('pageName')}">
+				        <span th:each="err : ${#fields.errors('pageName')}" 
+				              th:if="${err.contains('文字以内で入力')}" 
+				              th:text="${err}" style="color:red;"></span><br th:if="${#fields.hasErrors('pageName')}" />
+				    </th:block>
+
+				    <th:block th:if="${#fields.hasErrors('body')}">
+				        <span th:each="err : ${#fields.errors('body')}" 
+				              th:if="${err.contains('必須')}" 
+				              th:text="${err}" style="color:red;"></span><br th:if="${#fields.hasErrors('body')}" />
+				    </th:block>
+				        
+				    <th:block th:if="${#fields.hasErrors('body')}">
+				        <span th:each="err : ${#fields.errors('body')}" 
+				              th:if="${err.contains('文字以内で入力')}" 
+				              th:text="${err}" style="color:red;"></span><br th:if="${#fields.hasErrors('body')}" />
+				    </th:block>
 				</div>
 
 				<div class="form">
