@@ -26,14 +26,15 @@ public class CategoryForm implements Serializable {
 	/**
 	 * カテゴリ名
 	 */
-	@NotBlank
-	@Size(min = 1, max = 15, message = "{text.maxsize.message}")
+	@NotBlank(message = "カテゴリ名は必須項目です。")
+	@Size(min = 1, max = 15, message = "カテゴリ名は15文字以内で入力してください。")
 	private String name;
 
 	/**
 	 * カテゴリ説明
 	 */
-	@Size(max = 30, message = "{text.maxsize.message}")
+	@NotBlank(message = "説明文は必須項目です。")
+	@Size(min = 1, max = 30, message = "説明文は30文字以内で入力してください。")
 	private String description = "";
 
 	/**

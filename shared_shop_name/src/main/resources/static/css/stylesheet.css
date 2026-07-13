@@ -1073,9 +1073,9 @@ p.link_center {
 
 }
 
-#itemList .item-card:hover img {
+#itemList .item-card:hover{
 
-	transform: scale(1.08);
+	transform: scale(0.05);
 
 }
 
