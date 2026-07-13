@@ -82,7 +82,7 @@ public class ItemForm implements Serializable {
 	private Integer varNumber;
 	private String colorPattern;
 	private String nibDiameter;
-	private Double leadDiameter;
+	private String leadDiameter;
 	private String inkVolume;
 
 	//-----------------------------------
@@ -278,14 +278,14 @@ public class ItemForm implements Serializable {
 	/**
 	 * @return 芯の太さ
 	 */
-	public Double getLeadDiameter() {
+	public String getLeadDiameter() {
 		return leadDiameter;
 	}
 
 	/**
 	 * @param leadDiameter 芯の太さ
 	 */
-	public void setLeadDiameter(Double leadDiameter) {
+	public void setLeadDiameter(String leadDiameter) {
 		this.leadDiameter = leadDiameter;
 	}
 

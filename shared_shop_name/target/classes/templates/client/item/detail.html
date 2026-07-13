@@ -37,14 +37,8 @@
 					<dd>
 						<div class="variation_group" th:if="${not #lists.isEmpty(variationList)}">
 							<th:block th:each="v : ${variationList}">
-								<a th:href="@{/client/item/detail/{id}(id=${v.id})}"
-									th:classappend="${v.id == item.id} ? 'selected_btn' : ''" class="var_btn">
-									<span th:text="${v.colorPattern} + 
-									              (${v.nibDiameter} != null and ${v.nibDiameter} != '' ? ' ' + ${v.nibDiameter} : '') +
-									              (${v.leadDiameter} != null ? ' ' + ${v.leadDiameter} + 'mm' : '') +
-									              (${v.inkVolume} != null and ${v.inkVolume} != '' ? ' ' + ${v.inkVolume} : '')">
-									</span>
-								</a>
+								<a th:href="@{/client/item/detail/{id}(id=${v.id})}" th:text="${v.colorPattern}"
+									th:classappend="${v.id == item.id} ? 'selected_btn' : ''" class="var_btn"></a>
 							</th:block>
 						</div>
 						<div class="current_spec_area">
@@ -206,17 +200,19 @@
 					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
 					<input type="submit" value="10本まとめ買いする" class="send_button" style="background-color: #e67e22;" />
 				</form>
-
+				
 			</th:block>
-
+			
 			<form id="favoriteForm" style="display: inline-block; margin-left: auto; margin-right: 10px;">
 				<input type="hidden" id="favoriteItemId" th:value="*{id}">
 
-				<button type="button" id="favoriteButton" class="send_button" style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
+				<button type="button" id="favoriteButton" class="send_button"
+				    style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
 				    width:120px;height:50px;padding:0;">
 
-					<span id="favoriteText" th:text="${isFavorite} ? '♥ お気に入り済み' : '♡ お気に入り'">
-					</span>
+				    <span id="favoriteText"
+				          th:text="${isFavorite} ? '♥ お気に入り済み' : '♡ お気に入り'">
+				    </span>
 
 				</button>
 			</form>
@@ -351,7 +347,7 @@
 				});
 			});
 		});
-
+		
 		const favoriteButton = document.getElementById("favoriteButton");
 
 		if (favoriteButton) {
@@ -367,23 +363,23 @@
 					},
 					body: "itemId=" + itemId
 				})
-					.then(response => response.text())
-					.then(result => {
+				.then(response => response.text())
+				.then(result => {
 
-						const favoriteText = document.getElementById("favoriteText");
+					const favoriteText = document.getElementById("favoriteText");
 
-						if (result === "added") {
-							favoriteText.textContent = "♥ お気に入り済み";
-							location.reload();
+					if (result === "added") {
+						favoriteText.textContent = "♥ お気に入り済み";
+						location.reload();
 
-						} else if (result === "detached") {
-							favoriteText.textContent = "♡ お気に入り";
-							location.reload();
+					} else if (result === "detached") {
+						favoriteText.textContent = "♡ お気に入り";
+						location.reload();
 
-						} else if (result === "ng") {
-							alert("ログインしてください");
-						}
-					});
+					} else if (result === "ng") {
+						alert("ログインしてください");
+					}
+				});
 			});
 		}
 	</script>
