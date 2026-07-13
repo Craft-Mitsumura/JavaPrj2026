@@ -5,6 +5,58 @@
 <head>
 	<title th:text="#{item}+#{title.detail}+' | '+ #{shop.title}"> </title>
 	<meta charset="UTF-8" />
+	<style>
+		/* --- 文房具特有カラーの定義 --- */
+
+		/* 単色系 */
+		.color-bordeaux {
+			background-color: #800020 !important;
+		}
+
+		.color-cream {
+			background-color: #FFFDD0 !important;
+		}
+
+		.color-gold {
+			background-color: #FFD700 !important;
+		}
+
+		.color-silver {
+			background-color: #C0C0C0 !important;
+		}
+
+		.color-sumire {
+			background-color: #6a4c9f !important;
+		}
+
+		/* すみれ色: 落ち着いた紫 */
+		.color-purple {
+			background-color: #800080 !important;
+		}
+
+		/* パープル: 標準的な紫 */
+		.color-indigo {
+			background-color: #4b0082 !important;
+		}
+
+		/* インディゴ: 深い藍色 */
+
+		/* グラデーション・模様系 */
+		.color-marble {
+			background: linear-gradient(45deg, #e0e0e0 25%, #f8f8f8 25%, #f8f8f8 50%, #e0e0e0 50%, #e0e0e0 75%, #f8f8f8 75%, #f8f8f8 100%) !important;
+			border: 1px solid #ccc !important;
+		}
+
+		.color-tortoise {
+			/* べっ甲 */
+			background: linear-gradient(45deg, #4b3621, #d2691e, #4b3621) !important;
+		}
+
+		.color-clear {
+			background: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 50%, #ccc 50%, #ccc 75%, transparent 75%, transparent 100%) !important;
+			background-size: 10px 10px;
+		}
+	</style>
 </head>
 
 <body class="user">
@@ -35,10 +87,36 @@
 				                   not #strings.isEmpty(item.inkVolume)}">
 					<dt>スペック</dt>
 					<dd>
-						<div class="variation_group" th:if="${not #lists.isEmpty(variationList)}">
+						<div class="variation_group" th:if="${not #lists.isEmpty(variationList)}"
+							style="display: flex; gap: 10px; flex-wrap: wrap;">
 							<th:block th:each="v : ${variationList}">
-								<a th:href="@{/client/item/detail/{id}(id=${v.id})}" th:text="${v.colorPattern}"
-									th:classappend="${v.id == item.id} ? 'selected_btn' : ''" class="var_btn"></a>
+								<a th:href="@{/client/item/detail/{id}(id=${v.id})}"
+									style="text-decoration: none; color: inherit;">
+
+									<!-- カード本体 -->
+									<div th:style="'width: 80px; padding: 8px; border: 2px solid ' + (${v.id == item.id} ? '#1a5fb4' : '#ccc') + '; ' +
+						                           'border-radius: 8px; text-align: center; background-color: white; cursor: pointer;'"
+										class="var_card">
+
+										<!-- 色の丸アイコン -->
+										<div th:style="'width: 40px; height: 40px; border-radius: 50%; background-color: ' + ${v.colorPattern} + '; ' +
+						                               'margin: 0 auto 8px auto; border: 1px solid #ddd;'">
+										</div>
+
+										<!-- テキスト情報 -->
+										<div
+											style="font-size: 13px; font-weight: bold; display: flex; flex-direction: column; gap: 2px;">
+											<!-- 色名 -->
+											<span th:text="${v.colorPattern}"></span>
+
+											<!-- サイズ情報 -->
+											<span th:if="${v.nibDiameter != null}" th:text="${v.nibDiameter}"></span>
+											<span th:if="${v.leadDiameter != null}"
+												th:text="${v.leadDiameter} + 'mm'"></span>
+											<span th:if="${v.inkVolume != null}" th:text="${v.inkVolume}"></span>
+										</div>
+									</div>
+								</a>
 							</th:block>
 						</div>
 						<div class="current_spec_area">
@@ -200,19 +278,17 @@
 					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
 					<input type="submit" value="10本まとめ買いする" class="send_button" style="background-color: #e67e22;" />
 				</form>
-				
+
 			</th:block>
-			
+
 			<form id="favoriteForm" style="display: inline-block; margin-left: auto; margin-right: 10px;">
 				<input type="hidden" id="favoriteItemId" th:value="*{id}">
 
-				<button type="button" id="favoriteButton" class="send_button"
-				    style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
+				<button type="button" id="favoriteButton" class="send_button" style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
 				    width:120px;height:50px;padding:0;">
 
-				    <span id="favoriteText"
-				          th:text="${isFavorite} ? '♥ お気に入り済み' : '♡ お気に入り'">
-				    </span>
+					<span id="favoriteText" th:text="${isFavorite} ? '♥ お気に入り済み' : '♡ お気に入り'">
+					</span>
 
 				</button>
 			</form>
@@ -347,7 +423,7 @@
 				});
 			});
 		});
-		
+
 		const favoriteButton = document.getElementById("favoriteButton");
 
 		if (favoriteButton) {
@@ -363,23 +439,23 @@
 					},
 					body: "itemId=" + itemId
 				})
-				.then(response => response.text())
-				.then(result => {
+					.then(response => response.text())
+					.then(result => {
 
-					const favoriteText = document.getElementById("favoriteText");
+						const favoriteText = document.getElementById("favoriteText");
 
-					if (result === "added") {
-						favoriteText.textContent = "♥ お気に入り済み";
-						location.reload();
+						if (result === "added") {
+							favoriteText.textContent = "♥ お気に入り済み";
+							location.reload();
 
-					} else if (result === "detached") {
-						favoriteText.textContent = "♡ お気に入り";
-						location.reload();
+						} else if (result === "detached") {
+							favoriteText.textContent = "♡ お気に入り";
+							location.reload();
 
-					} else if (result === "ng") {
-						alert("ログインしてください");
-					}
-				});
+						} else if (result === "ng") {
+							alert("ログインしてください");
+						}
+					});
 			});
 		}
 	</script>
