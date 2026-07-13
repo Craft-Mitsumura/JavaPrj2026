@@ -463,7 +463,7 @@ public class ClientUserShowController {
 
 		// 画面表示時に安全にセッションを無効化（ログアウト）
 		session.invalidate();
-
+ 
 		return "client/user/delete_complete";
 	}
 	
