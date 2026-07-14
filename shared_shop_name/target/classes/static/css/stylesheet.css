@@ -2056,7 +2056,7 @@ p.link_center {
 }
 .rank-name {
 	color: white;
-	font-size: 23px;
+	font-size: 19px;
 	font-weight: bold;
 	line-height: 1.5;
 	
@@ -2489,4 +2489,17 @@ p.link_center {
 .btn_basket:hover{
 	background:#00ffff;
 	color:white;
+}
+
+#itemListBtn{
+    cursor: pointer;
+    padding: 10px;
+    background: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: auto;
+    text-align: center;
+    margin-left: 45%;
+	
 }
