@@ -464,8 +464,10 @@ select {
 	border-radius: 6px;
 	padding: 2px 10px;
 	background: #fff;
+	cursor:pointer;
 
 }
+
 
 /* スキルアップテクニック10
  * background-imageプロパティの値linear-gradientによってグラデーションを設定しています。
@@ -579,6 +581,10 @@ select {
 .sign_up_form .menu_button {
 	margin-right: 0px;
 	margin-bottom: 8px;
+	background:#00ffff;
+	cursor:pointer;
+	padding:5px;
+	
 }
 
 .category_list .sign_up_form .menu_button {
@@ -2296,7 +2302,7 @@ p.link_center {
 	font-size: 42px;
 	margin: 2% 2%;
 }
-#details .changeBtn:hover{
+ .changeBtn:hover{
 	color:white;
 	background:blue;
 	cursor:pointer;

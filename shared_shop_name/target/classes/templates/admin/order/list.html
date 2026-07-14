@@ -37,7 +37,7 @@
 					<span th:case="4">[[#{paymethod.emoney.str}]]</span>
 					<span th:case="5">[[#{paymethod.convenience.str}]]</span>
 				</td>
-				<td th:text="${order.total}"></td>
+				<td th:text="|￥${#numbers.formatInteger(order.total,3,'COMMA')}|"></td>
 			</tr>
 		</table>
 		<!--/* ページリンク */-->
