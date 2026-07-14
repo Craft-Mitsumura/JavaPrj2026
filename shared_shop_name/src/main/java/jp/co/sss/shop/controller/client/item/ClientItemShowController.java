@@ -3,6 +3,7 @@ package jp.co.sss.shop.controller.client.item;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -236,28 +237,7 @@ public class ClientItemShowController {
 	 * @param items 検索する商品名
 	 * @return "client/item/list" 商品一覧画面
 	 */
-	@RequestMapping(path = "/client/item/list/", method = { RequestMethod.GET, RequestMethod.POST })
-	public String itemSearch(
-			Model model,
-			@RequestParam(required = false) String items) {
-
-		List<Item> itemList = new ArrayList<>();
-
-		if (items != null && !items.isEmpty()) {
-			itemList = itemRepository.findByNameOrCategoryContaining(
-					items,
-					Constant.NOT_DELETED);
-		}
-
-		model.addAttribute("items", itemList);
-
-		model.addAttribute(
-			    "categories",
-			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
-			);
-
-		return "client/item/list";
-	}
+	
 
 	/**
 	 * 商品一覧表示（全商品）
