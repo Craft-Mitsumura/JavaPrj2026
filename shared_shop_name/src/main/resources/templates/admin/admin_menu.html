@@ -4,31 +4,43 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title th:text="#{admin.menu}+' | '+ #{shop.title}"> </title>
+	<title th:text="#{admin.menu} + ' | ' + #{shop.title}"></title>
 </head>
 
-<body class="admin admin_menu">
-    <p class="admin .main .title" th:text="#{admin.menu}"></p>
+<body>
 
-    <dl class="admin_menu_list">
-        <dd class="link_area">
-            <a th:href="@{/admin/user/list}" th:text="#{admin.menu.user.list}"></a>
-        </dd>
 
-        <th:block th:if="${session.user.authority == 1}">
-            <dd class="link_area">
-                <a th:href="@{/admin/order/list}" th:text="#{admin.menu.order.list}"></a>
-            </dd>
 
-            <dd class="link_area">
-                <a th:href="@{/admin/item/list}" th:text="#{admin.menu.item.list}"></a>
-            </dd>
 
-            <dd class="link_area">
-                <a th:href="@{/admin/category/list}" th:text="#{admin.menu.category.list}"></a>
-            </dd>
-        </th:block>
-    </dl>
+	<!-- 見出し -->
+	<div class="admin-page">
+		<p class="admin-title" th:text="#{admin.menu}"></p>
+		<!-- メニュー -->
+		<div class="admin_menu">
+			<dl class="admin_menu_list">
+
+				<dd class="link_area">
+					<a th:href="@{/admin/user/list}" th:text="#{admin.menu.user.list}"></a>
+				</dd>
+
+				<th:block th:if="${session.user.authority == 1}">
+					<dd class="link_area">
+						<a th:href="@{/admin/order/list}" th:text="#{admin.menu.order.list}"></a>
+					</dd>
+
+					<dd class="link_area">
+						<a th:href="@{/admin/item/list}" th:text="#{admin.menu.item.list}"></a>
+					</dd>
+
+					<dd class="link_area">
+						<a th:href="@{/admin/category/list}" th:text="#{admin.menu.category.list}"></a>
+					</dd>
+				</th:block>
+			</dl>
+		</div>
+
+	</div>
+
 </body>
 
 </html>
