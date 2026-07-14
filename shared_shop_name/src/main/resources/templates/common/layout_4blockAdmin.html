@@ -61,6 +61,29 @@
 	<footer>
 		<div th:replace="~{common/footer :: layout-footer}"></div>
 	</footer>
+	
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+
+	    // 現在のURL
+	    const currentPath = window.location.pathname;
+
+	    // メニュー内のリンクを取得
+	    document.querySelectorAll(".admin_sidebar a").forEach(link => {
+
+	        // hrefを取得
+	        const href = link.getAttribute("href");
+
+	        // 一致したら非活性
+	        if (href === currentPath) {
+	            link.classList.add("menu-disabled");
+	            link.removeAttribute("href");
+	        }
+	    });
+
+	});
+	</script>
+	
 </body>
 
 </html>

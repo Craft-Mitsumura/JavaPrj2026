@@ -66,9 +66,8 @@
     
     <th:block th:if="@{session.basketBeans != null}"  >  
 	<div>   
-	<h1> hello
-	おすすめの商品　明日まで出ます　ごめんなさい
-	</h1>
+	<h1 th:text="${session.basketBeans.id}" > </h1>
+	
 	
 	
 	</div>
