@@ -41,14 +41,14 @@
 					</td>
 					<td>
 						<form th:action="@{/admin/ad/update/input(id=${ad.id})}" method="post" style="display:inline;">
-							<input type="submit" value="変更" />
+							<input type="submit" class="changeBtn" value="変更" />
 						</form>
 						<form th:action="@{/admin/ad/delete/execute}" method="post" style="display:inline;"
 							onsubmit="return confirm('本当にこの広告を削除しますか？');">
 
 							<input type="hidden" name="id" th:value="${ad.id}" />
 
-							<input type="submit" value="削除" class="delete" />
+							<input type="submit" value="削除" id="deleteBtn" />
 						</form>
 					</td>
 				</tr>

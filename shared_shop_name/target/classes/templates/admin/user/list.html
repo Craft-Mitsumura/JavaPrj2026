@@ -35,11 +35,11 @@
 			<td th:text="${user.email}"></td>
 			<td>
 				<form th:action="@{/admin/user/update/input/{id}(id=${user.id})}" method="post">
-					<input type="submit" value="変更" />
+					<input type="submit" class="changeBtn" value="変更" />
 				</form>
 				<form th:action="@{/admin/user/delete/check/{id}(id=${user.id})}" method="post">
 					<input type="submit" value="削除" class="delete" disabled th:if="${user.id==session.user.id}" />
-					<input type="submit" value="削除" class="delete" th:unless="${user.id==session.user.id}" />
+					<input type="submit" value="削除" id="deleteBtn" th:unless="${user.id==session.user.id}" />
 				</form>
 			</td>
 		</tr>

@@ -33,8 +33,9 @@
 				</a>
 
 			</div>
-
-			<div class="header-center">
+ 
+  
+			<div th:if="${session.user == null or session.user.authority == 2}"  class="header-center">
 
 				<button id="categoryBtns"  type="button"
 					onclick="
@@ -73,7 +74,7 @@ document.getElementById('categoryLists').classList.toggle('show');
 		<!-- Search -->
 		<!-- ===================== -->
 
-		<div class="header-search">
+		<div th:if="${session.user == null or session.user.authority == 2}"  class="header-search">
 
 			<button type="button" id="searchBtn"
 				onclick="
@@ -194,7 +195,7 @@ document.getElementById('categoryLists').classList.toggle('show');
 
 			<!-- Cart -->
 
-			<div class="cart-box" th:unless="${session.user==null}">
+			<div class="cart-box" th:if="${session.user == null or session.user.authority == 2}" >
 
 				<a id="cart" th:href="@{/client/basket/list}"> <svg
 						xmlns="http://www.w3.org/2000/svg" width="26" height="26"
