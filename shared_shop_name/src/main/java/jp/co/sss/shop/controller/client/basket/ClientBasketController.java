@@ -30,7 +30,7 @@ public class ClientBasketController {
 	ItemRepository itemRepository;
 
 	/**
-	 * @author Sarma Sagar	
+	 * @author Sharma Sagar	
 	 * @return 商品一覧に飛びます
 	 * @param id を受け渡しするため.
 	 * @param session userのかご情報を知るため
@@ -53,9 +53,12 @@ public class ClientBasketController {
 		} else {
 			for (int i = 0; i < basketBeans.size(); i++) {
 				// 買い物かごに同じ商品がすでにある場合、数量だけ増やす
-				if (basketBeans.get(i).getId() == item.getId()) {
-					basketBeans.get(i).setOrderNum(basketBeans.get(i).getOrderNum() + 1);
-					break;
+				if (basketBeans.get(i).getId().equals(item.getId())) {
+				    basketBeans.get(i).setOrderNum(
+				        basketBeans.get(i).getOrderNum() + 1
+				    );
+				    break;
+				
 				} else if((i + 1) == basketBeans.size()) {
 					// なかった場合、商品はカゴに入れる
 					BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock());

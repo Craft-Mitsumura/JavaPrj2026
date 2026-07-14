@@ -9,6 +9,7 @@
 </head>
 
 <body class="user user_delete_check">
+  <div id="userDeleteCheck" >  
 	<h2 th:class="title" th:text="#{user}+#{title.quit.check}"></h2>
 	<p th:class="check_message" th:text="#{msg.client.delete.check}"></p>
 	<div class="user_info_form_area" th:object="${userForm}">
@@ -34,12 +35,16 @@
 				<span class="input_value" th:text="*{phoneNumber}"></span>
 			</li>
 		</ul>
-		<form th:action="@{/client/user/delete/complete}"  method="post" class="user_info_form">
-			<input type="submit" value="退会" class="send_button delete" />
-		</form>
-		<form th:action="@{/client/user/detail}" method="post">
-			<input type="submit" value="戻る" class="back_button" />
-		</form>
+		<div class="button_area">
+    <form th:action="@{/client/user/delete/complete}" method="post">
+        <input type="submit" value="退会" class="send_button delete">
+    </form>
+
+    <form th:action="@{/client/user/detail}" method="post">
+        <input type="submit" value="戻る" class="back_button">
+    </form>
+</div>
+	</div>
 	</div>
 </body>
 
