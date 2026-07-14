@@ -17,7 +17,16 @@
 
 		<div class="left-section">
 
-			<div class="header-left">
+			<div th:if="${session.user  != null and  (session.user.authority == 0
+			or session.user.authority == 1
+			 )   }" class="header-left">
+
+				<a th:href="@{/admin/menu}"> <img id="mainLogo"
+					th:src="@{/images/common/newLogo.png}" alt="AVOIR">
+				</a>
+
+			</div>
+			<div th:if="${session.user == null or  session.user.authority == 2  }" class="header-left">
 
 				<a th:href="@{/}"> <img id="mainLogo"
 					th:src="@{/images/common/newLogo.png}" alt="AVOIR">
