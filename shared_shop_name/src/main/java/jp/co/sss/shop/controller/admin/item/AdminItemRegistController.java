@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.form.ItemForm;
@@ -135,6 +138,7 @@ public class AdminItemRegistController {
 			Category category = categoryRepository.findById(form.getCategoryId()).orElse(null);
 			form.setCategoryName(category.getName());
 		}
+		System.out.println("受信したCategoryID: " + form.getCategoryId());
 
 		//直前のセッション情報を取得
 		ItemForm lastItemForm = (ItemForm) session.getAttribute("itemForm");
@@ -191,6 +195,7 @@ public class AdminItemRegistController {
 
 	/**
 	 * 情報登録処理
+	 * 修正：金城（json用のchordを追加）
 	 *
 	 * @return "redirect:/admin/item/regist/complete" 登録完了画面　表示処理
 	 */
@@ -205,6 +210,25 @@ public class AdminItemRegistController {
 		}
 		// Formクラス内の各フィールドの値をエンティティにコピー
 		Item item = beanTools.copyItemFormToEntity(itemForm);
+
+		// 追加要素：JSON項目を構築してEntityにセット
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			ObjectNode root = mapper.createObjectNode();
+
+			// フォームから値を詰め込む
+			root.put("var_Number", itemForm.getVarNumber());
+			root.put("color_pattern", itemForm.getColorPattern());
+			root.put("nib_diameter", itemForm.getNibDiameter());
+			root.put("lead_diameter", itemForm.getLeadDiameter());
+			root.put("ink_volume", itemForm.getInkVolume());
+
+			// EntityのJSONカラムにセット
+			item.setVariationJson(root.toString());
+		} catch (Exception e) {
+			// 必要に応じてログ出力やエラーハンドリング
+			e.printStackTrace();
+		}
 
 		// 商品情報の削除フラグを初期化
 		item.setDeleteFlag(Constant.NOT_DELETED);
