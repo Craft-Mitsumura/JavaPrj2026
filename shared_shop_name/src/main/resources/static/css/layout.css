@@ -261,7 +261,7 @@ aside.admin_menu {
 .admin-title {
 	font-size: 2.5rem;
 	font-weight: bold;
-	margin: 20px 0;
+	
 	text-align: center;
 }
 
@@ -281,7 +281,7 @@ aside.admin_menu {
 
 .admin_menu_list .link_area a {
 	display: block;
-	padding: 30px;
+	padding: 15px;
 	font-size: 1.6rem;
 	text-align: center;
 	text-decoration: none;

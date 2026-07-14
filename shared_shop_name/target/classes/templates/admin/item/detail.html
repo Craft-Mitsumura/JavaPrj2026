@@ -24,7 +24,7 @@
 				<dt>[[#{itemForm.name}]]</dt>
 				<dd th:text="*{name}"></dd>
 				<dt>[[#{itemForm.price}]]</dt>
-				<dd th:text="*{price}"></dd>
+				<dd th:text="|￥${#numbers.formatInteger(item.price,3,'COMMA')}|"></dd>
 				<dt>[[#{itemForm.stock}]]</dt>
 				<dd th:text="*{stock}"></dd>
 				<dt>[[#{data.category}]]</dt>

@@ -38,10 +38,10 @@
 			</td>
 			<td>
 				<form th:action="@{/admin/category/update/input/{id}(id=${category.id})}" method="post">
-					<input type="submit" value="変更" />
+					<input type="submit" class="changeBtn" value="変更" />
 				</form>
 				<form th:action="@{/admin/category/delete/check/{id}(id=${category.id})}" method="post">
-					<input type="submit" value="削除" class="delete" />
+					<input type="submit" value="削除"   id="deleteBtn" />
 				</form>
 			</td>
 		</tr>

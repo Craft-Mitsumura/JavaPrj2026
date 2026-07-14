@@ -40,14 +40,14 @@
 		<tr th:each="item: ${items}">
 			<td th:text="${item.id}"></td>
 			<td><a th:href="@{/admin/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
-			<td th:text="${item.price}"></td>
+			<td th:text="|￥${#numbers.formatInteger(item.price,3,'COMMA')}|"></td>
 			<td th:text="${item.category.name}"></td>
 			<td>
 				<form th:action="@{/admin/item/update/input/{id}(id=${item.id})}" method="post">
-					<input type="submit" value="変更" />
+					<input type="submit" value="変更" class="changeBtn" />
 				</form>
 				<form th:action="@{/admin/item/delete/check/{id}(id=${item.id})}" method="post">
-					<input type="submit" value="削除" class="delete" />
+					<input type="submit" value="削除" id="deleteBtn" />
 				</form>
 			</td>
 		</tr>

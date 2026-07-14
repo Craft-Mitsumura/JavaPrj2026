@@ -28,6 +28,8 @@
 	<div th:if="${session.basketBeans == null}">
 		<!--/* 買い物かごが空のとき */-->
 		<p th:text="#{msg.basket.list.none}"></p>
+		
+		<a th:href="@{/client/item/list/1}" id="itemListBtn"  class="back_button" >  商品一覧へ戻る </a>
 	</div>
 
 	<th:block th:if="${session.basketBeans != null}">
