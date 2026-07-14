@@ -29,7 +29,30 @@
 				<span class="input_title">[[#{itemForm.stock}]]</span>
 				<span class="input_value" th:text="*{stock}"></span>
 			</li>
-
+			
+			<!-- カテゴリごとのJSON項目表示 -->
+			<li th:if="*{categoryName == 'ガラスペン' or categoryName == '万年筆' or categoryName == '鉛筆' or categoryName == 'シャープペン' or categoryName == 'インク' or categoryName == 'その他'}">
+			    <span class="input_title">[[#{itemForm.varNumber}]]</span>
+			    <span class="input_value" th:text="*{varNumber}"></span>
+			</li>
+			<li th:if="*{categoryName == 'ガラスペン' or categoryName == '万年筆' or categoryName == '鉛筆' or categoryName == 'シャープペン' or categoryName == 'その他'}">
+			    <span class="input_title">[[#{itemForm.colorPattern}]]</span>
+			    <span class="input_value" th:text="*{colorPattern}"></span>
+			</li>
+			<li th:if="*{categoryName == 'ガラスペン' or categoryName == '万年筆'}">
+			    <span class="input_title">[[#{itemForm.nibDiameter}]]</span>
+			    <span class="input_value" th:text="*{nibDiameter}"></span>
+			</li>
+			<li th:if="*{categoryName == '鉛筆' or categoryName == 'シャープペン'}">
+			    <span class="input_title">[[#{itemForm.leadDiameter}]]</span>
+			    <span class="input_value" th:text="*{leadDiameter}"></span>
+			</li>
+			<li th:if="*{categoryName == 'インク'}">
+			    <span class="input_title">[[#{itemForm.inkVolume}]]</span>
+			    <span class="input_value" th:text="*{inkVolume}"></span>
+			</li>
+			<!-- カテゴリごとのJSON項目表示：ここまで -->
+			
 			<li>
 				<span class="input_title">[[#{itemForm.description}]]</span>
 				<span class="input_value" th:text="*{description}"></span>

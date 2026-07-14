@@ -40,6 +40,30 @@
 							th:selected="${category.id == itemForm.categoryId}" th:text="${category.name}"></option>
 					</select>
 				</li>
+				<!-- JSON関連項目 -->
+				<li
+					th:if="*{categoryId == 1 or categoryId == 2 or categoryId == 3 or categoryId == 4 or categoryId == 5 or categoryId == 6}">
+					<label><span class="input_title">[[#{itemForm.varNumber}]]</span></label>
+					<input type="text" th:field="*{varNumber}" />
+				</li>
+				<li
+					th:if="*{categoryId == 1 or categoryId == 2 or categoryId == 3 or categoryId == 4 or categoryId == 6}">
+					<label><span class="input_title">[[#{itemForm.colorPattern}]]</span></label>
+					<input type="text" th:field="*{colorPattern}" />
+				</li>
+				<li th:if="*{categoryId == 1 or categoryId == 3}">
+					<label><span class="input_title">[[#{itemForm.nibDiameter}]]</span></label>
+					<input type="text" th:field="*{nibDiameter}" />
+				</li>
+				<li th:if="*{categoryId == 2 or categoryId == 6}">
+					<label><span class="input_title">[[#{itemForm.leadDiameter}]]</span></label>
+					<input type="text" th:field="*{leadDiameter}" />
+				</li>
+				<li th:if="*{categoryId == 5}">
+					<label><span class="input_title">[[#{itemForm.inkVolume}]]</span></label>
+					<input type="text" th:field="*{inkVolume}" />
+				</li>
+				<!-- JSON関連項目 ここまで -->
 				<li>
 					<label>
 						<span class="input_title">[[#{itemForm.description}]]</span>

@@ -86,6 +86,25 @@ public class AdminItemUpdateController {
 
 			// 初期表示用フォーム情報の生成しIDで取得した値を入力フォーム情報としてセット
 			itemForm = beanTools.copyEntityToItemForm(item);
+			
+			// --- 追加分(JSON) ---
+			if (item.getVariationJson() != null) {
+			    try {
+			        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+			        com.fasterxml.jackson.databind.JsonNode root = mapper.readTree(item.getVariationJson());
+
+			        // 各項目が存在する場合のみセットする
+			        if (root.has("var_Number")) itemForm.setVarNumber(root.get("var_Number").asInt());
+			        if (root.has("color_pattern")) itemForm.setColorPattern(root.get("color_pattern").asText());
+			        if (root.has("nib_diameter")) itemForm.setNibDiameter(root.get("nib_diameter").asText());
+			        if (root.has("lead_diameter")) itemForm.setLeadDiameter(root.get("lead_diameter").asText());
+			        if (root.has("ink_volume")) itemForm.setInkVolume(root.get("ink_volume").asText());
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			    }
+			}
+			// --- 追加分(JSON)終わり ---
+			
 			//変更入力フォームをセッションに保持
 			session.setAttribute("itemForm", itemForm);
 		}
@@ -225,6 +244,26 @@ public class AdminItemUpdateController {
 
 		// 入力フォーム情報を変更用エンティティにコピー
 		item = beanTools.copyItemFormToEntity(itemForm);
+		
+		// --- 追加分(JSON) ---
+		try {
+		    com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+		    com.fasterxml.jackson.databind.node.ObjectNode root = mapper.createObjectNode();
+
+		    // フォームから値を詰め込む
+		    root.put("var_Number", itemForm.getVarNumber());
+		    root.put("color_pattern", itemForm.getColorPattern());
+		    root.put("nib_diameter", itemForm.getNibDiameter());
+		    root.put("lead_diameter", itemForm.getLeadDiameter());
+		    root.put("ink_volume", itemForm.getInkVolume());
+
+		    // EntityのJSONカラムにセット
+		    item.setVariationJson(root.toString());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		// --- 追加分(JSON)終わり ---
+		
 		// 入力値以外の情報をエンティティに設定
 		item.setDeleteFlag(deleteFlag);
 		item.setInsertDate(insertDate);

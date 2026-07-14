@@ -61,6 +61,29 @@ public class AdminItemDeleteController {
 		// 取得情報から表示フォーム情報を生成
 		ItemForm itemForm = beanTools.copyEntityToItemForm(item);
 
+		// --- 追加分(JSON) ---
+		if (item.getVariationJson() != null) {
+			try {
+				com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+				com.fasterxml.jackson.databind.JsonNode root = mapper.readTree(item.getVariationJson());
+
+				// 各項目が存在する場合のみセットする
+				if (root.has("var_Number"))
+					itemForm.setVarNumber(root.get("var_Number").asInt());
+				if (root.has("color_pattern"))
+					itemForm.setColorPattern(root.get("color_pattern").asText());
+				if (root.has("nib_diameter"))
+					itemForm.setNibDiameter(root.get("nib_diameter").asText());
+				if (root.has("lead_diameter"))
+					itemForm.setLeadDiameter(root.get("lead_diameter").asText());
+				if (root.has("ink_volume"))
+					itemForm.setInkVolume(root.get("ink_volume").asText());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// --- 追加分(JSON)終わり ---
+
 		// セッションに取得情報を保持
 		session.setAttribute("itemForm", itemForm);
 
@@ -106,7 +129,7 @@ public class AdminItemDeleteController {
 		if (itemForm == null) {
 			// セッション情報がない場合、エラー
 			return "redirect:/syserror";
-			
+
 		}
 
 		// 商品情報を取得
