@@ -48,7 +48,7 @@ public class ClientBasketController {
 		if (basketBeans == null) {
 			// 買い物かごが空の場合
 			basketBeans = new ArrayList<>();
-			BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock());
+			BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock(),item.getPrice());
 			basketBeans.add(basketBeanNew);
 		} else {
 			for (int i = 0; i < basketBeans.size(); i++) {
@@ -61,7 +61,7 @@ public class ClientBasketController {
 				
 				} else if((i + 1) == basketBeans.size()) {
 					// なかった場合、商品はカゴに入れる
-					BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock());
+					BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock(),item.getPrice());
 					basketBeans.add(basketBeanNew);
 					break;
 				}
@@ -93,8 +93,15 @@ public class ClientBasketController {
 	public String basketList(HttpSession session, Model model) throws InterruptedException {
 		// list型にsessionからbasketBeanの値を取得している。
 		List<BasketBean> basketBeans = (List<BasketBean>) session.getAttribute("basketBeans");
+		int totalPrice = 0;
+		if (basketBeans != null) {
+	        for (BasketBean basket : basketBeans) {
+	            totalPrice += basket.getPrice() * basket.getOrderNum();
+	        }
+	    }
 		// requestスコープにbasketBeansの値を代入
 		model.addAttribute("basketBeans", basketBeans);
+		model.addAttribute("totalPrice", totalPrice);
 
 		return "client/basket/list";
 	}

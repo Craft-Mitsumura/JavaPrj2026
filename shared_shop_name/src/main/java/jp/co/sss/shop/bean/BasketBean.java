@@ -22,6 +22,11 @@ public class BasketBean {
 	 * 商品在庫数
 	 */
 	private Integer stock;
+	
+	/**
+	 * 商品価格
+	 */
+	private Integer price;
 
 	/**
 	 * 商品注文個数 初期値 1
@@ -40,11 +45,13 @@ public class BasketBean {
 	 * @param id  商品ID
 	 * @param name  商品名
 	 * @param stock 商品在庫数
+	 * @param price 金額
 	 */
-	public BasketBean(Integer id, String name, Integer stock) {
-		this.id = id;
-		this.name = name;
-		this.stock = stock;
+	public BasketBean(Integer id, String name, Integer stock, Integer price) {
+	    this.id = id;
+	    this.name = name;
+	    this.stock = stock;
+	    this.price = price;
 	}
 
 	/**
@@ -54,12 +61,14 @@ public class BasketBean {
 	 * @param name  商品名
 	 * @param stock  商品在庫数
 	 * @param orderNum  注文個数
+	 * @param price 金額
 	 */
-	public BasketBean(Integer id, String name, Integer stock, Integer orderNum) {
-		this.id = id;
-		this.name = name;
-		this.stock = stock;
-		this.orderNum = orderNum;
+	public BasketBean(Integer id, String name, Integer stock, Integer price, Integer orderNum) {
+	    this.id = id;
+	    this.name = name;
+	    this.stock = stock;
+	    this.price = price;
+	    this.orderNum = orderNum;
 	}
 
 	/**
@@ -93,6 +102,18 @@ public class BasketBean {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/**
+	 * 商品金額
+	 * @return
+	 */
+	public Integer getPrice() {
+	    return price;
+	}
+
+	public void setPrice(Integer price) {
+	    this.price = price;
+	}
 
 	/**
 	 * 商品の在庫数の取得
@@ -101,7 +122,7 @@ public class BasketBean {
 	public Integer getStock() {
 		return stock;
 	}
-
+	
 	/**
 	 * 商品の在庫数のセット
 	 * @param stock 在庫数

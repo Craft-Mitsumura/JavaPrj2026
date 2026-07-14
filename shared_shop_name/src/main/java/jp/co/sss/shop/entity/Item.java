@@ -14,6 +14,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * 商品情報のエンティティクラス
  *
@@ -309,6 +312,26 @@ public class Item {
 	 */
 	public void setVariationJson(String variationJson) {
 		this.variationJson = variationJson;
+	}
+	
+	/**
+	 * 色・模様を取得（variation_jsonから取得）
+	 * @return 色・模様
+	 */
+	public String getColorPattern() {
+	    try {
+	        if (variationJson == null || variationJson.isEmpty()) {
+	            return "";
+	        }
+
+	        ObjectMapper mapper = new ObjectMapper();
+	        JsonNode root = mapper.readTree(variationJson);
+
+	        return root.path("color_pattern").asText("");
+
+	    } catch (Exception e) {
+	        return "";
+	    }
 	}
 	
 }
