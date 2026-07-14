@@ -80,6 +80,40 @@
 		</div>
 	</th:block>
 
+ <th:block th:if="${session.basketBeans == null or #lists.isEmpty(session.basketBeans)}">
+    <h1> おすすめ商品</h1>
+    
+    <div class="item-card" th:each="item : ${items}">
+        
+       
+        <p th:text="${item.name}"></p>
+        
+        <!-- 商品画像（クリックで商品詳細へ） -->
+        <a class="item-image" th:href="@{/client/item/detail/{id}(id=${item.id})}">
+            <!-- 商品画像が登録されている場合 -->
+            <img th:if="${item.image != null}" th:src="@{/images/{image}(image=${item.image})}">
+            <!-- 商品画像が未登録の場合 -->
+            <img th:unless="${item.image != null}" th:src="@{/images/common/no_image.jpg}">
+        </a>
+
+        <!-- 商品情報 -->
+        <div class="item-info">
+         
+            <div class="category" th:text="${item.category.name}"></div>
+
+            <!-- 商品名 -->
+            <div class="name">
+                <a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a>
+            </div>
+
+            <!-- 商品価格 -->
+            <div class="price">
+                ¥<span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+            </div>
+        </div>
+    </div>
+</th:block>
+
 
 
 

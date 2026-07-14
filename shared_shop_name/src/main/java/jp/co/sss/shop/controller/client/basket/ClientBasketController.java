@@ -2,7 +2,9 @@ package jp.co.sss.shop.controller.client.basket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import jakarta.mail.Session;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.BasketBean;
+import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
+import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.util.Constant;
 
 /**
  * @author Sharma Sagar
@@ -28,7 +33,8 @@ public class ClientBasketController {
 	 */	
 	@Autowired
 	ItemRepository itemRepository;
-
+	@Autowired
+	CategoryRepository categoryRepository;
 	/**
 	 * @author Sharma Sagar	
 	 * @return 商品一覧に飛びます
@@ -88,22 +94,81 @@ public class ClientBasketController {
 	 * @param session userのかご情報を知るため
 	 *  @throws InterruptedException エラーを行ったときcatchのため
 	 */
-
+	
+	/*
+	 * @RequestMapping(path = "/client/basket/list", method = { RequestMethod.GET,
+	 * RequestMethod.POST }) public String basketList(HttpSession session, Model
+	 * model) throws InterruptedException { // list型にsessionからbasketBeanの値を取得している。
+	 * List<BasketBean> basketBeans = (List<BasketBean>)
+	 * session.getAttribute("basketBeans"); int totalPrice = 0; if (basketBeans !=
+	 * null) { for (BasketBean basket : basketBeans) { totalPrice +=
+	 * basket.getPrice() * basket.getOrderNum(); } } // requestスコープにbasketBeansの値を代入
+	 * model.addAttribute("basketBeans", basketBeans);
+	 * model.addAttribute("totalPrice", totalPrice);
+	 * 
+	 * return "client/basket/list"; }
+	 */
+	 
 	@RequestMapping(path = "/client/basket/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public String basketList(HttpSession session, Model model) throws InterruptedException {
-		// list型にsessionからbasketBeanの値を取得している。
-		List<BasketBean> basketBeans = (List<BasketBean>) session.getAttribute("basketBeans");
-		int totalPrice = 0;
-		if (basketBeans != null) {
+	public String itemSearch(
+	        HttpSession session,
+	        Model model,
+	        @RequestParam(required = false) String items) {
+
+	    int totalPrice = 0;
+	    
+	    // Session bata basketBeans line
+	    @SuppressWarnings("unchecked")
+	    List<BasketBean> basketBeans = (List<BasketBean>) session.getAttribute("basketBeans");
+
+	    // Total price calculate garne (Null Pointer Exception bata bachna null check thapeko)
+	    if (basketBeans != null) {
 	        for (BasketBean basket : basketBeans) {
 	            totalPrice += basket.getPrice() * basket.getOrderNum();
 	        }
 	    }
-		// requestスコープにbasketBeansの値を代入
-		model.addAttribute("basketBeans", basketBeans);
-		model.addAttribute("totalPrice", totalPrice);
+	    
+	    // Request scope ma pathaune
+	    model.addAttribute("basketBeans", basketBeans);
+	    model.addAttribute("totalPrice", totalPrice);
 
-		return "client/basket/list";
+	    // If string null chaina ra khali (space matrai) pani chaina bhane search garne
+	    if (items != null && !items.trim().isEmpty()) {
+	        List<Item> itemList = itemRepository.findByNameOrCategoryContaining(
+	                items,
+	                Constant.NOT_DELETED);
+	        model.addAttribute("items", itemList);
+	        
+	        model.addAttribute(
+	                "categories",
+	                categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+	                );
+	    } else {
+	        System.out.println("null triggered");
+	        List<Category> categories = categoryRepository.findAll();
+	        
+	        // Category empty chaina bhanera sure garna check thapeko
+	        if (!categories.isEmpty()) {
+	            Random random = new Random();
+	            Category randomCategory = categories.get(random.nextInt(categories.size()));
+	            Integer randomCategoryId = randomCategory.getId();
+	            
+	            List<Item> randomItems = itemRepository.findByCategoryIdAndDeleteFlag(
+	                    randomCategoryId,
+	                    Constant.NOT_DELETED
+	            );    
+	            model.addAttribute("items", randomItems);
+	        } else {
+	            model.addAttribute("items", new ArrayList<Item>());
+	        }
+
+	        model.addAttribute(
+	                "categories",
+	                categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+	                );
+	    }
+
+	    return "client/basket/list";
 	}
 
 	/**

@@ -2515,3 +2515,7 @@ p.link_center {
 	margin:auto;
 	text-align:center;
 }
+.page-button span{
+	font-size:16px;
+	font-weight:500;
+}
