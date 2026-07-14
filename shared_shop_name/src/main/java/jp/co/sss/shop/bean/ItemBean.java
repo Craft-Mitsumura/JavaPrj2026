@@ -46,6 +46,11 @@ public class ItemBean {
 	 * カテゴリ名
 	 */
 	private String categoryName;
+	
+	/**
+	 * スペック（色・模様）
+	 */
+	private String variation;
 
 	/**
 	 * 商品ID取得
@@ -173,6 +178,14 @@ public class ItemBean {
 	 */
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	
+	public String getVariation() {
+	    return variation;
+	}
+
+	public void setVariation(String variation) {
+	    this.variation = variation;
 	}
 
 }

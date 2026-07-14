@@ -13,12 +13,12 @@
 
 	<th:block th:if="${itemNameListLessThan != null || itemNameListZero != null}">
 		<br />
-				<!--/* 在庫不足商品 */-->
+		<!--/* 在庫不足商品 */-->
 		<ul class="error_list_no_mark" th:if="${itemNameListLessThan != null}">
 			<li th:each="err : ${itemNameListLessThan}" th:text="#{msg.basket.stock.short(${err})}"></li>
 
 		</ul>
-				<!--/* 在庫なし商品 */-->
+		<!--/* 在庫なし商品 */-->
 		<ul class="error_list_no_mark" th:if="${itemNameListZero != null}">
 			<li th:each="err : ${itemNameListZero}" th:text="#{msg.basket.stock.none(${err})}"></li>
 		</ul>
@@ -35,12 +35,18 @@
 			<tr>
 				<th>[[#{data.basket.item.name}]]</th>
 				<th>[[#{data.basket.count}]]</th>
+				<th>商品金額</th>
 				<th>[[#{data.basket.operate}]]</th>
 				<th>[[#{data.basket.stock.status}]]</th>
 			</tr>
 			<tr th:each="item, status: ${session.basketBeans}">
 				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
 				<td th:text="${item.orderNum}"></td>
+
+				<td>
+					¥<span th:text="${#numbers.formatInteger(item.price * item.orderNum, 3, 'COMMA')}"></span>
+				</td>
+
 				<td>
 					<form th:action="@{/client/basket/delete}" method="post">
 						<input type="hidden" name="id" th:value="${item.id}" /> <input type="submit" value="削除"
@@ -52,6 +58,14 @@
 				<td th:if="${item.stock >= 1 and 5 >= item.stock }" th:text="${item.stock}"></td>
 			</tr>
 		</table>
+		
+
+		<th:block th:if="${session.basketBeans != null}">
+		    <div class="basket_total">
+		        合計金額：
+		        <span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>円
+		    </div>
+		</th:block>
 		<div class="user_info_form_area shopping_button">
 			<!--/* 注文手続きフォーム */-->
 			<form th:action="@{/client/order/address/input}" method="post">
@@ -59,20 +73,14 @@
 			</form>
 			<!--/* 買い物かごを空にするフォーム */-->
 			<form th:action="@{/client/basket/allDelete}" method="post">
-				<input type="submit"  value="買い物かごを空にする" onclick="return confirm('本当に削除しますか？')" id="deleteBtn" />
+				<input type="submit" value="買い物かごを空にする" onclick="return confirm('本当に削除しますか？')" id="deleteBtn" />
 			</form>
 		</div>
 	</th:block>
-    
-    <th:block th:if="@{session.basketBeans != null}"  >  
-	<div>   
-	
-	
-	
-	</div>
-    </th:block>	
-	
-	
+
+
+
+
 </body>
 
 </html>
