@@ -490,6 +490,7 @@ select {
 .list_table,
 .detail_table {
 	border-bottom: 1px solid #f0f8fb;
+	color: #fff;
 	background-color: #fff;
 	border-collapse: collapse;
 	margin: 50px auto 20px;
@@ -499,7 +500,8 @@ select {
 .detail_table th {
 	white-space: nowrap;
 	padding: 5px;
-	background: #add8e6;
+	background: rgb(255, 255, 255);
+	color: #fff;
 	font-weight: normal;
 	position: relative;
 }
@@ -507,6 +509,7 @@ select {
 .list_table td,
 .detail_table td {
 	padding: 10px;
+	color: rgb(0, 0, 0);
 }
 
 /* ---- 個別 ---- */
@@ -517,15 +520,15 @@ select {
 }
 
 .list_table tr:nth-of-type(odd) {
-	background: #f0f8fb;
+	background: #eff6ff;
 }
 
 .admin .list_table tr:nth-of-type(odd) {
-	background: #fff0ec;
+	background: #eff6ff;
 }
 
 .admin .list_table th {
-	background: #ffc6b9;
+	background: #12526d;
 }
 
 .list_table th:after {
@@ -556,7 +559,7 @@ select {
 }
 
 .admin .detail_table th {
-	background: #ffc6b9;
+	background: #12526d;
 }
 
 .detail_table td {
@@ -696,9 +699,13 @@ select {
 	padding: 0px 10px;
 	border-radius: 6px;
 	font-weight: bold;
+	cursor:pointer;
 }
 
-
+.list_table.basket .delete:hover{
+	color:white;
+	background:red;
+}
 /* ---- 商品一覧(運用管理者向け) ---- */
 
 
@@ -976,7 +983,7 @@ p.link_center {
 	max-width: 1400px;
 
 	margin: 40px auto;
-
+   margin-bottom:100px;
 }
 
 /* ========================= */
@@ -1073,9 +1080,9 @@ p.link_center {
 
 }
 
-#itemList .item-card:hover img {
+#itemList .item-card:hover{
 
-	transform: scale(1.08);
+	transform: scale(1.05);
 
 }
 
@@ -1905,7 +1912,7 @@ p.link_center {
 
 }
 
-#itemList .itemList img:hover {
+#itemList .itemList:hover {
 	transition: transform .25s ease, box-shadow .25s ease;
 	transform: translatex(-4px);
 
@@ -2289,31 +2296,43 @@ p.link_center {
 	font-size: 42px;
 	margin: 2% 2%;
 }
-
-
-
-/*小見出しCSS 小松原作 ここから*/
+#details .changeBtn:hover{
+	color:white;
+	background:blue;
+	cursor:pointer;
+}
+ .back_button:hover{
+	color:white;
+	background: #c0c0c0;;
+	cursor:pointer;
+}
+ .send_button:hover{
+	color:white;
+	background: #00ff40;;
+	cursor:pointer;
+}
+/*小見出しCSrgb(255, 128, 128)ここから*/
 .section-title {
 	text-align: center;
 	margin: 80px 0 70px;
 }
 
 .section-en {
-	font-size: 40px;
+	font-size: 45px;
 	font-weight: 700;
 	color: #0b2740;
-	margin: 0 0 15px;
+	margin: 0 0 10px;
 }
 
 .section-ja {
-	font-size: 25px;
+	font-size: 15px;
 	font-weight: 500;
 	color: #333;
 	margin: 0 0 10px;
 }
 
 .section-text {
-	font-size: 15px;
+	font-size: 18px;
 	color: #888;
 	font-weight: bold;
 	margin: 0 0 70px;
@@ -2332,4 +2351,142 @@ p.link_center {
 
 }
 
+.main .section-ja .title {
+    font-size: 36px !important;
+}
+
 /*小見出しCSS 小松原作 ここまで*/
+
+
+/*=========================================
+          運用管理サイドバー
+=========================================*/
+
+/*メニュー非活性用CSS 手塚作 */
+.menu-disabled {
+	color: #999 !important;
+	pointer-events: none;
+	cursor: default;
+}
+/*=========================================
+         退会画面修正サガル
+=========================================*/
+#userDeleteCheck {
+    width: 700px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+#userDeleteCheck .title {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+#userDeleteCheck .check_message {
+    text-align: center;
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+#userDeleteCheck .input_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#userDeleteCheck .input_list li {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#userDeleteCheck .input_title {
+    width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#userDeleteCheck .input_value {
+    flex: 1;
+    color: #222;
+}
+
+#userDeleteCheck .user_info_form {
+    margin-top: 35px;
+}
+
+#userDeleteCheck .send_button,
+#userDeleteCheck .back_button {
+    display: block;
+    width: 220px;
+    margin: 15px auto;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#userDeleteCheck .delete {
+    background: #d32f2f;
+    color: #fff;
+}
+
+#userDeleteCheck .delete:hover {
+    background: #b71c1c;
+}
+
+#userDeleteCheck .back_button {
+    background: #666;
+    color: #fff;
+}
+
+#userDeleteCheck .back_button:hover {
+    background: #444;
+}
+#userDeleteCheck .button_area {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 35px;
+}
+
+#userDeleteCheck .button_area form {
+    margin: 0;
+}
+
+#userDeleteCheck .button_area input {
+    width: 180px;
+}
+#deleteBtn {
+	cursor:pointer;
+}
+#deleteBtn:hover{
+	color:white;
+	background:red;
+	cursor:pointer;
+}
+
+.orderBtn {
+	cursor:pointer;
+	
+}
+.orderBtn:hover {
+	background-color:#00ffff;
+	color:white;
+}
+.btn_basket{
+	cursor:pointer;
+	
+}
+.btn_basket:hover{
+	background:#00ffff;
+	color:white;
+}
