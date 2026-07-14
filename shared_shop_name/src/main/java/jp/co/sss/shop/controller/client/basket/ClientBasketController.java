@@ -30,56 +30,55 @@ public class ClientBasketController {
 	ItemRepository itemRepository;
 
 	/**
-	 * @author Sarma Sagar	
+	 * @author Sharma Sagar	
 	 * @return 商品一覧に飛びます
 	 * @param id を受け渡しするため.
 	 * @param session userのかご情報を知るため
 	 *  
 	 */
-	/*
-	 * @RequestMapping(path = "client/basket/add", method = { RequestMethod.GET,
-	 * RequestMethod.POST }) public String add(HttpSession session,
-	 * 
-	 * @RequestParam Integer id,
-	 * 
-	 * @RequestParam(required = false) String from) { // itemにはidの値が同じである場合情報代入する
-	 * Item item = itemRepository.findById(id).orElse(null); //
-	 * list型にsessionからbasketBeanの値を取得している List<BasketBean> basketBeans =
-	 * (List<BasketBean>) session.getAttribute("basketBeans");
-	 * 
-	 * if (basketBeans == null) { // 買い物かごが空の場合 basketBeans = new ArrayList<>();
-	 * BasketBean basketBeanNew = new
-	 * BasketBean(item.getId(),item.getName(),item.getStock());
-	 * basketBeans.add(basketBeanNew); } else { for (int i = 0; i <
-	 * basketBeans.size(); i++) { // 買い物かごに同じ商品がすでにある場合、数量だけ増やす if
-	 * (basketBeans.get(i).getId() == item.getId()) {
-	 * basketBeans.get(i).setOrderNum(basketBeans.get(i).getOrderNum() + 1); break;
-	 * } else if((i + 1) == basketBeans.size()) { // なかった場合、商品はカゴに入れる BasketBean
-	 * basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock());
-	 * basketBeans.add(basketBeanNew); break; } }
-	 * 
-	 * } // sessionスコープにbasketBeansの値を代入する session.setAttribute("basketBeans",
-	 * basketBeans);
-	 * 
-	 * if ("favorite".equals(from)) { return "redirect:/client/basket/list"; }
-	 * 
-	 * return "redirect:/client/item/list/1";
-	 * 
-	 * }
-	 */
-@RequestMapping(path="/client/basket/add", method ={RequestMethod.GET, RequestMethod.POST})
-public String addToCart (HttpSession session ,
-		Model model ,
-		@RequestParam Integer id
+	@RequestMapping(path = "client/basket/add", method = { RequestMethod.GET, RequestMethod.POST })
+	public String add(HttpSession session,
+			  @RequestParam Integer id,
+			  @RequestParam(required = false) String from) {
+	// itemにはidの値が同じである場合情報代入する
+		Item item = itemRepository.findById(id).orElse(null);
+	// list型にsessionからbasketBeanの値を取得している
+		List<BasketBean> basketBeans = (List<BasketBean>) session.getAttribute("basketBeans");
 		
-		) {
+		if (basketBeans == null) {
+			// 買い物かごが空の場合
+			basketBeans = new ArrayList<>();
+			BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock());
+			basketBeans.add(basketBeanNew);
+		} else {
+			for (int i = 0; i < basketBeans.size(); i++) {
+				// 買い物かごに同じ商品がすでにある場合、数量だけ増やす
+				if (basketBeans.get(i).getId().equals(item.getId())) {
+				    basketBeans.get(i).setOrderNum(
+				        basketBeans.get(i).getOrderNum() + 1
+				    );
+				    break;
+				
+				} else if((i + 1) == basketBeans.size()) {
+					// なかった場合、商品はカゴに入れる
+					BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock());
+					basketBeans.add(basketBeanNew);
+					break;
+				}
+			}
+			
+		}
+		// sessionスコープにbasketBeansの値を代入する
+		session.setAttribute("basketBeans", basketBeans);
 
-	System.out.println(id);
-	Item item = itemRepository.findById(id).orElse(null);
-	model.addAttribute(item);
-	return"/client/favorite/list";
-	/* return "redirect:/client/item/list"; */
-}
+		if ("favorite".equals(from)) {
+			return "redirect:/client/basket/list";
+		}
+
+		return "redirect:/client/item/list/1";
+
+	}
+
 
 	/**
 	 * 

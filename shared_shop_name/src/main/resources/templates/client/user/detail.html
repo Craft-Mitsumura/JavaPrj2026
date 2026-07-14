@@ -56,9 +56,9 @@
                       <div id="next_price"> 
 						<img style="height:190px;" id="nextPrizeImg" th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
 
-						<p class="prize_name" th:text="${nextPrizeName}"></p>
+						<p class="prize_name"  th:text="  '商品名　:  '  + ${ nextPrizeName} "></p>
 
-						<p class="prize_point" th:text="${nextPrizePoint} + 'ptで交換'"></p>
+						<p class="prize_point" th:text=" '次回　:   ' +  ${nextPrizePoint} + 'ptで交換'"></p>
 					</div>
 					</a>
 					
@@ -141,7 +141,7 @@
 			</form>
 
 			<form th:action="@{/client/user/update/input}" method="post">
-				<input type="submit" value="変更" />
+				<input type="submit" value="変更" class= changeBtn />
 			</form>
 
 			<form th:action="@{/client/user/delete/check}" method="post">
