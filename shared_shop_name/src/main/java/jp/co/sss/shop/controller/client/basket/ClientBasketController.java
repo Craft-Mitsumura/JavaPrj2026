@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import jakarta.mail.Session;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.BasketBean;
+import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Category;
+import jp.co.sss.shop.entity.Favorite;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.service.FavoriteService;
 import jp.co.sss.shop.util.Constant;
 
 /**
@@ -42,6 +44,10 @@ public class ClientBasketController {
 	 * @param session userのかご情報を知るため
 	 *  
 	 */
+	
+	@Autowired
+	private FavoriteService favoriteService;
+	
 	@RequestMapping(path = "client/basket/add", method = { RequestMethod.GET, RequestMethod.POST })
 	public String add(HttpSession session,
 			  @RequestParam Integer id,
@@ -115,9 +121,18 @@ public class ClientBasketController {
 	 
 	@RequestMapping(path = "/client/basket/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String itemSearch(
+			
+			
 	        HttpSession session,
 	        Model model,
 	        @RequestParam(required = false) String items) {
+		
+		UserBean loginUser = (UserBean) session.getAttribute("user");
+
+		if (loginUser != null) {
+		    List<Favorite> favoriteList = favoriteService.getFavoriteList(loginUser.getId());
+		    session.setAttribute("favoriteBeans", favoriteList);
+		}
 
 	    int totalPrice = 0;
 	    
