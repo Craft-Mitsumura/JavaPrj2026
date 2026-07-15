@@ -85,7 +85,7 @@
 				前へ</a>
 
 			<!--現在ページ-->
-			<span th:text="${page.number + 1 + ' / ' + page.totalPages + 'ページ'}"></span>
+			<span th:text="${page.number + 1 + ' / ' + (page.totalPages > 0 ? page.totalPages : 1) + 'ページ'}"></span>
 
 			<!-- 次へ -->
 			<a th:if="${page.hasNext()}" th:href="${categoryId != null} ?
