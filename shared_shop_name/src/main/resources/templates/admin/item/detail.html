@@ -29,6 +29,34 @@
 				<dd th:text="*{stock}"></dd>
 				<dt>[[#{data.category}]]</dt>
 				<dd th:text="*{categoryName}"></dd>
+				<!-- JSONスペック情報の表示 -->
+				<th:block th:if="${not #strings.isEmpty(item.colorPattern) or 
+				                   not #strings.isEmpty(item.leadDiameter) or 
+				                   not #strings.isEmpty(item.nibDiameter) or 
+				                   not #strings.isEmpty(item.inkVolume)}">
+
+					<th:block th:if="not ${#strings.isEmpty(item.colorPattern)}">
+						<dt>色・模様</dt>
+						<dd th:text="*{colorPattern}"></dd>
+					</th:block>
+
+					<th:block th:if="not ${#strings.isEmpty(item.leadDiameter)}">
+						<dt>芯の太さ</dt>
+						<dd th:text="*{leadDiameter} + 'mm'"></dd>
+					</th:block>
+
+					<th:block th:if="not ${#strings.isEmpty(item.nibDiameter)}">
+						<dt>ペン先の太さ</dt>
+						<dd th:text="*{nibDiameter}"></dd>
+					</th:block>
+
+					<th:block th:if="not ${#strings.isEmpty(item.inkVolume)}">
+						<dt>容量</dt>
+						<dd th:text="*{inkVolume}"></dd>
+					</th:block>
+				</th:block>
+				<dt>刻印サービス</dt>
+				<dd th:text="*{isEngravable == 1 ? '利用可能' : '利用不可'}"></dd>
 				<dt>[[#{itemForm.description}]]</dt>
 				<dd th:text="*{description}"></dd>
 			</dl>

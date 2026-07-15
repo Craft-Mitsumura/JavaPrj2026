@@ -74,6 +74,7 @@ public class BeanTools {
 
 		category.setId(form.getCategoryId());
 		entity.setCategory(category);
+		entity.setIsEngravable(form.getIsEngravable());
 
 		return entity;
 	}
@@ -91,6 +92,7 @@ public class BeanTools {
 
 		bean.setCategoryId(entity.getCategory().getId());
 		bean.setCategoryName(entity.getCategory().getName());
+		bean.setIsEngravable(entity.getIsEngravable());
 
 		return bean;
 	}
@@ -127,6 +129,7 @@ public class BeanTools {
 
 		form.setCategoryId(entity.getCategory().getId());
 		form.setCategoryName(entity.getCategory().getName());
+		form.setIsEngravable(entity.getIsEngravable());
 		//	form.setPrice(entity.getPrice());
 		//	form.setStock(entity.getStock());
 

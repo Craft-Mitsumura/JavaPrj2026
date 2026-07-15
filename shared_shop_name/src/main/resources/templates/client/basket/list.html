@@ -65,7 +65,7 @@
 		<th:block th:if="${session.basketBeans != null}">
 		    <div class="basket_total">
 		        合計金額：
-		        <span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>円
+		        <span th:text=  " |　￥${ #numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>
 		    </div>
 		</th:block>
 		<div class="user_info_form_area shopping_button">

@@ -57,35 +57,6 @@
 				background-color: #f5f5f5;
 			}
 
-			/* 左右ボタン：共通設定 */
-			.sample-swiper-coverflow .swiper-button-next,
-			.sample-swiper-coverflow .swiper-button-prev {
-				width: 45px;
-				height: 80px;
-				border: 2px solid var(--swiper-theme-color);
-				border-radius: 12px;
-				background-color: rgba(0, 0, 0, 0.6);
-				color: var(--swiper-theme-color);
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-weight: bold;
-				transition: transform 0.3s;
-			}
-
-			/* 左右ボタン：矢印サイズとホバー演出 */
-			.sample-swiper-coverflow .swiper-button-next::after,
-			.sample-swiper-coverflow .swiper-button-prev::after {
-				font-size: 20px;
-				font-weight: bold;
-			}
-
-			.sample-swiper-coverflow .swiper-button-next:hover,
-			.sample-swiper-coverflow .swiper-button-prev:hover {
-				background-color: rgba(212, 175, 55, 0.2);
-				transform: scale(1.1);
-			}
-
 			/* ページネーション：コンテナ */
 			.sample-swiper-coverflow .swiper-pagination {
 				background-color: transparent;
@@ -139,8 +110,6 @@
 					<!-- If we need pagination -->
 					<div class="swiper-pagination"></div>
 					<!-- If we need navigation buttons -->
-					<div class="swiper-button-prev"></div>
-					<div class="swiper-button-next"></div>
 				</div>
 			</div>
 		</div>
@@ -153,11 +122,7 @@
 					el: ".swiper-pagination",
 					clickable: true,
 				},
-				// 前後スライドボタンを表示
-				navigation: {
-					nextEl: ".swiper-button-next",
-					prevEl: ".swiper-button-prev",
-				},
+
 				loop: true,// ループの有効化
 
 				autoplay: {

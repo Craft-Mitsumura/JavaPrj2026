@@ -51,7 +51,9 @@ public class ClientBasketController {
 	@RequestMapping(path = "client/basket/add", method = { RequestMethod.GET, RequestMethod.POST })
 	public String add(HttpSession session,
 			  @RequestParam Integer id,
-			  @RequestParam(required = false) String from) {
+			  @RequestParam(required = false) String from,
+			  @RequestParam("quality") Integer quantity ) {
+		  System.out.println("How many items to add: " + quantity);
 	// itemにはidの値が同じである場合情報代入する
 		Item item = itemRepository.findById(id).orElse(null);
 	// list型にsessionからbasketBeanの値を取得している
@@ -61,19 +63,21 @@ public class ClientBasketController {
 			// 買い物かごが空の場合
 			basketBeans = new ArrayList<>();
 			BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock(),item.getPrice());
+			basketBeanNew.setOrderNum(quantity);
 			basketBeans.add(basketBeanNew);
 		} else {
 			for (int i = 0; i < basketBeans.size(); i++) {
 				// 買い物かごに同じ商品がすでにある場合、数量だけ増やす
 				if (basketBeans.get(i).getId().equals(item.getId())) {
 				    basketBeans.get(i).setOrderNum(
-				        basketBeans.get(i).getOrderNum() + 1
+				        basketBeans.get(i).getOrderNum() + quantity
 				    );
 				    break;
 				
 				} else if((i + 1) == basketBeans.size()) {
 					// なかった場合、商品はカゴに入れる
 					BasketBean basketBeanNew = new BasketBean(item.getId(),item.getName(),item.getStock(),item.getPrice());
+					basketBeanNew.setOrderNum(quantity);
 					basketBeans.add(basketBeanNew);
 					break;
 				}

@@ -89,10 +89,18 @@ public class Item {
 	private List<OrderItem> orderItemList;
 	
 	/**
+	 * @author 金城
 	 * バリエーション情報
 	 */
 	@Column(name = "variation_json")
 	private String variationJson;
+	
+	/**
+	 * @author 金城
+	 * 刻印機能のon/off
+	 */
+	@Column(name = "is_engravable")
+	private Integer isEngravable;
 
 	/**
 	 * コンストラクタ
@@ -315,6 +323,7 @@ public class Item {
 	}
 	
 	/**
+	 * @author 金城
 	 * 色・模様を取得（variation_jsonから取得）
 	 * @return 色・模様
 	 */
@@ -332,6 +341,24 @@ public class Item {
 	    } catch (Exception e) {
 	        return "";
 	    }
+	}
+	
+	/**
+	 * @auther 金城
+	 * 刻印機能のON/OFF
+	 * @return 刻印
+	 */
+	public Integer getIsEngravable() {
+	    return isEngravable;
+	}
+	
+	/**
+	 * @auther 金城
+	 * 刻印機能のON/OFF
+	 * @return 刻印
+	 */
+	public void setIsEngravable(Integer isEngravable) {
+	    this.isEngravable = isEngravable;
 	}
 	
 }

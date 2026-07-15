@@ -21,6 +21,8 @@
 				<br />
 			</th:block>
 			<ul class="input_list">
+				<!-- ★ここが重要です：これが無いと更新時にIDがnullになります -->
+				    <input type="hidden" th:field="*{id}" />
 				<li>
 					<label><span class="input_title">[[#{itemForm.name}]]</span></label>
 					<input type="text" th:field="*{name}" />
@@ -64,6 +66,14 @@
 					<input type="text" th:field="*{inkVolume}" />
 				</li>
 				<!-- JSON関連項目 ここまで -->
+				<!-- 追加分(刻印機能） -->
+				<li class="input_field">
+					<label class="input_title">刻印サービス</label>
+					<div class="checkbox_container">
+						<input type="checkbox" th:field="*{isEngravable}" value="1" id="isEngravable" />
+					</div>
+				</li>
+				<!-- 追加分(刻印機能）終わり -->
 				<li>
 					<label>
 						<span class="input_title">[[#{itemForm.description}]]</span>

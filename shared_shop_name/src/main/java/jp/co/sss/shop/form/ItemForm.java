@@ -9,8 +9,6 @@ import jakarta.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import jp.co.sss.shop.annotation.ItemCheck;
-
 /**
  * 商品情報のフォーム
  *
@@ -19,7 +17,7 @@ import jp.co.sss.shop.annotation.ItemCheck;
  * TIPS 入力チェックアノテーションのmessage属性に"{messages.propertiesで指定した名前}"と記述することができます。
  * 
  */
-@ItemCheck
+//@ItemCheck
 public class ItemForm implements Serializable {
 
 	/**
@@ -84,6 +82,12 @@ public class ItemForm implements Serializable {
 	private String nibDiameter;
 	private String leadDiameter;
 	private String inkVolume;
+	
+	/**
+	 * @author 金城
+	 * 刻印機能のON/OFF
+	 */
+	private Integer isEngravable;
 
 	//-----------------------------------
 
@@ -301,5 +305,19 @@ public class ItemForm implements Serializable {
 	 */
 	public void setInkVolume(String inkVolume) {
 		this.inkVolume = inkVolume;
+	}
+	
+	/**
+	 * @return 刻印のON/OFF
+	 */
+	public Integer getIsEngravable() {
+	    return isEngravable;
+	}
+
+	/**
+	 * @param 刻印のON/OFF
+	 */
+	public void setIsEngravable(Integer isEngravable) {
+	    this.isEngravable = isEngravable;
 	}
 }

@@ -53,6 +53,12 @@
 				<span class="input_value" th:text="*{inkVolume}"></span>
 			</li>
 			<!-- カテゴリごとのJSON項目表示：ここまで -->
+			<!-- 追加分(刻印機能） -->
+			<li>
+				<span class="input_title">刻印サービス</span>
+				<span class="input_value" th:text="*{isEngravable == 1 ? '利用可能' : '利用不可'}"></span>
+			</li>
+			<!-- 追加分(刻印機能）終わり -->
 			<li>
 				<span class="input_title">[[#{itemForm.description}]]</span>
 				<span class="input_value" th:text="*{description}"></span>
@@ -74,4 +80,5 @@
 		</form>
 	</div>
 </body>
+
 </html>

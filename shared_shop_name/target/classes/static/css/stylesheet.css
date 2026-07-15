@@ -1934,7 +1934,7 @@ p.link_center {
 }
  .send_button:hover{
 	color:white;
-	background: #00ff40;;
+	background: #000080;;
 	cursor:pointer;
 }
 /*小見出しCSrgb(255, 128, 128)ここから*/
@@ -2314,7 +2314,7 @@ p.link_center {
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    font-weight: 500;
+    font-weigrgb(0, 0, 64)0, 64);
     transition: background 0.2s;
 }
 .ecommerce-section .btn-add-to-cart:hover {
