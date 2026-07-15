@@ -138,7 +138,7 @@ public class ClientFavoriteController {
 
 		    session.setAttribute("favoriteBeans", favorites);
 
-		    return "added";
+		    return "redirect:/client/item/list";
 		}
 	}
 }

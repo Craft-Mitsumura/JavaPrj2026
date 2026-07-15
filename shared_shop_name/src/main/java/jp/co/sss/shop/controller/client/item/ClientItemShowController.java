@@ -275,5 +275,12 @@ public class ClientItemShowController {
 		return "client/item/list";
 
 	}
+	@RequestMapping(path="/client/item/list" , method = {RequestMethod.GET,RequestMethod.POST})
+	public String keyboardSearch (@RequestParam ( name = "item" , required = false) String item , Model model  ) {
+	System.out.println("triggred");
+		List<Item> itemss = itemRepository.findByNameContainingIgnoreCaseAndDeleteFlag(item , Constant.NOT_DELETED );
+		 model.addAttribute("items" , itemss);
+		return"client/item/list";
+	}
 
 }
