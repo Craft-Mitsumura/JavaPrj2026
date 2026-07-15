@@ -2105,7 +2105,7 @@ p.link_center {
 	
 }
 .orderBtn:hover {
-	background-color:#00ffff;
+	background: #0b2240;
 	color:white;
 }
 .btn_basket{
@@ -2236,10 +2236,10 @@ p.link_center {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: background 0.2s, transform 0.2s;
 }
-.ecommerce-section .btn-favorite:hover {
+ .ecommerce-section .btn-favorite:hover {
     background: #fff;
     transform: scale(1.1);
-}
+} 
 .ecommerce-section .heart-icon {
     width: 18px;
     height: 18px;
@@ -2247,9 +2247,9 @@ p.link_center {
     fill: transparent;
     transition: fill 0.2s;
 }
-.ecommerce-section .btn-favorite:hover .heart-icon {
+ .ecommerce-section .btn-favorite:hover .heart-icon {
     fill: #ff4757;
-}
+} 
 
  
 .ecommerce-section .item-info {
@@ -2280,10 +2280,10 @@ p.link_center {
     text-decoration: none;
     transition: color 0.2s;
 }
-.ecommerce-section .name a:hover {
+/* .ecommerce-section .name a:hover {
     color: #ff4757;
 }
-
+ */
 
 .ecommerce-section .card-footer {
     margin-top: auto;
@@ -2314,7 +2314,7 @@ p.link_center {
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    font-weigrgb(0, 0, 64)0, 64);
+    font-weight:(0, 0, 640, 64);
     transition: background 0.2s;
 }
 .ecommerce-section .btn-add-to-cart:hover {
