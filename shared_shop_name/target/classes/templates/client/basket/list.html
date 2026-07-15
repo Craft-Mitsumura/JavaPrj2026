@@ -80,39 +80,79 @@
 		</div>
 	</th:block>
 
- <th:block th:if="${session.basketBeans == null or #lists.isEmpty(session.basketBeans)}">
-    <h1> おすすめ商品</h1>
+ <th:block id="randomItems" th:if="${session.basketBeans == null or #lists.isEmpty(session.basketBeans)}">
+    <div class="ecommerce-section">
+        <!--title -->
+        <h2 class="section-title">おすすめ商品 <span class="subtitle">Recommended For You</span></h2>
+        
+        <!-- products -->
+        <div class="products-grid">
+            <div class="item-card" th:each="item : ${items}">
+                
+                <!--  -->
+                <div class="card-image-wrapper">
+                    <!-- favorite btn -->
+                    <form th:action="@{/client/favorite/add}" method="POST" class="favorite-form">
+                        <input type="hidden" name="itemId" th:value="${item.id}" />
+                        <button type="submit" class="btn-favorite" aria-label="Add to favorite">
+                            <svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="heart-icon"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </button>
+                    </form>
+
+                    <!-- img links  -->
+                    <a class="item-image-link" th:href="@{/client/item/detail/{id}(id=${item.id})}">
+                        <img th:if="${item.image != null}" th:src="@{/images/{image}(image=${item.image})}" th:alt="${item.name}" class="product-img">
+                        <img th:unless="${item.image != null}" th:src="@{/images/common/no_image.jpg}" alt="No Image" class="product-img">
+                    </a>
+                </div>
+
+                <!-- carts info -->
+                <div class="item-info">
+                    <!-- category-->
+                    <span class="category" th:text="${item.category.name}"></span>
+
+                   <!-- items name --> 
+                    <h3 class="name">
+                        <a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a>
+                    </h3>
+
+                     <!-- price and buttonsection -->
+                    <div class="card-footer">
+                        <div class="price">
+                            <span class="currency">¥</span><span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+                        </div>
+                        
+                     
+                      <form th:action="@{/client/basket/add}" method="post" class="cart-form">
     
-    <div class="item-card" th:each="item : ${items}">
-        
-       
-        <p th:text="${item.name}"></p>
-        
-        <!-- 商品画像（クリックで商品詳細へ） -->
-        <a class="item-image" th:href="@{/client/item/detail/{id}(id=${item.id})}">
-            <!-- 商品画像が登録されている場合 -->
-            <img th:if="${item.image != null}" th:src="@{/images/{image}(image=${item.image})}">
-            <!-- 商品画像が未登録の場合 -->
-            <img th:unless="${item.image != null}" th:src="@{/images/common/no_image.jpg}">
-        </a>
 
-        <!-- 商品情報 -->
-        <div class="item-info">
-         
-            <div class="category" th:text="${item.category.name}"></div>
+    <input type="hidden" name="id" th:value="${item.id}" />
+    
+ 
+    <input type="hidden" name="purchaseType" value="single" />
+    <input type="hidden" name="formColor" value="ブラック" />
+    <input type="hidden" name="engravingText" value="" />
+    <input type="hidden" name="engravingFont" value="" />
+    
+   
+    <button type="submit" class="btn-add-to-cart">
+        <svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="cart-icon">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span>買い物かごに入れる</span>
+    </button>
+</form>
 
-            <!-- 商品名 -->
-            <div class="name">
-                <a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a>
-            </div>
+                    </div>
+                </div>
 
-            <!-- 商品価格 -->
-            <div class="price">
-                ¥<span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
             </div>
         </div>
     </div>
 </th:block>
+
 
 
 

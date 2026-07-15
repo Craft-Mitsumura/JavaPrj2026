@@ -146,6 +146,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return
 	 */
 	List<Item> findByName(String name);
-	
+	List<Item> findByNameContainingIgnoreCaseAndDeleteFlag(String item, Integer deleteFlag);
+
 	List<Item> findByCategoryIdAndDeleteFlag(Integer categoryId, Integer deleteFlag);
 }

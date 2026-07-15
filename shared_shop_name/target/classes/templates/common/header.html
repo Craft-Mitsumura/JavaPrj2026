@@ -97,11 +97,11 @@ document.getElementById('categoryLists').classList.toggle('show');
         </svg>
 			</button>
 
-			<form id="searchInputBar" th:action="@{/client/item/list/}">
+			<form id="searchInputBar" th:action="@{/client/item/list}">
 
 				<div class="search-wrapper">
 
-					<input type="text" name="items" placeholder="ItemSearch">
+					<input type="text" name="item" th:value=${param.item} placeholder="ItemSearch">
 
 				</div>
 

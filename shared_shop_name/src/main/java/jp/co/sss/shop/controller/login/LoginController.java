@@ -2,6 +2,7 @@ package jp.co.sss.shop.controller.login;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.ui.Model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.form.LoginForm;
+import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.UserRepository;
 import jp.co.sss.shop.util.Constant;
 
@@ -22,7 +24,8 @@ import jp.co.sss.shop.util.Constant;
  */
 @Controller
 public class LoginController {
-
+	@Autowired
+	CategoryRepository categoryRepository;
 	/**
 	 * 会員情報
 	 */
@@ -42,11 +45,16 @@ public class LoginController {
 	 * @return "login" ログイン画面表示
 	 */
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
-	public String login(@ModelAttribute LoginForm form) {
-
+	public String login(@ModelAttribute LoginForm form,
+			
+			Model model) {
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
 		// セッション情報を無効にする
-		session.invalidate();
 
+		session.invalidate();
 		return "login";
 	}
 
@@ -60,12 +68,17 @@ public class LoginController {
 			運用管理者、システム管理者の場合 "redirect:/adminmenu"管理者メニュー表示処理
 	 */
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
-	public String doLogin(@Valid @ModelAttribute LoginForm form, BindingResult result) {
+	public String doLogin(@Valid @ModelAttribute LoginForm form, BindingResult result,
+		Model model	) {
 
 		String returnStr = "login";
 		if (result.hasErrors()) {
 			// 入力値に誤りがあった場合
 			// セッション情報を無効にして、ログイン画面再表示
+			model.addAttribute(
+				    "categories",
+				    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+				);
 			session.invalidate();
 			returnStr = "login";
 
