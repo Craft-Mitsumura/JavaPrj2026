@@ -92,6 +92,7 @@
                 <!--  -->
                 <div class="card-image-wrapper">
                     <!-- favorite btn -->
+                    
 					<div class="favorite-form">
 					    <input type="hidden" class="favoriteItemId" th:value="${item.id}" />
 
@@ -162,9 +163,9 @@ document.querySelectorAll(".btn-favorite").forEach(button => {
 
         fetch(/*[[@{/client/favorite/add}]]*/"", {
             method: "POST",
-            headers: {
+             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
-            },
+            }, 
             body: "itemId=" + itemId
         })
         .then(response => response.text())
@@ -174,8 +175,10 @@ document.querySelectorAll(".btn-favorite").forEach(button => {
 
 		    if (result === "added") {
 		        heart.classList.add("favorite");
+		    	window.location.href ="/shared_shop";
 		    } else if (result === "detached") {
-		        heart.classList.remove("favorite");
+		    	heart.classList.remove("favorite");
+		    	location.reload();
 		    } else if (result === "ng") {
 		        alert("ログインしてください");
 		    }
