@@ -147,6 +147,15 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 */
 	List<Item> findByName(String name);
 	List<Item> findByNameContainingIgnoreCaseAndDeleteFlag(String item, Integer deleteFlag);
+	
+	/**
+	 * @author 金城 商品情報変更用（IDで識別）
+	 * @param name
+	 * @param deleteFlag
+	 * @param id
+	 * @return
+	 */
+	List<Item> findByNameAndDeleteFlagAndIdNot(String name, Integer deleteFlag, Integer id);
 
 	List<Item> findByCategoryIdAndDeleteFlag(Integer categoryId, Integer deleteFlag);
 }

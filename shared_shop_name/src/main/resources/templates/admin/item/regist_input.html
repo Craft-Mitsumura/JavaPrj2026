@@ -68,6 +68,14 @@
 					<input type="text" th:field="*{inkVolume}" />
 				</li>
 				<!-- 追加分(JSON)終わり -->
+				<!-- 追加分(刻印機能） -->
+				<li class="input_field">
+					<label class="input_title">刻印サービス</label>
+					<div class="checkbox_container">
+						<input type="checkbox" th:field="*{isEngravable}" value="1" id="isEngravable" />
+					</div>
+				</li>
+				<!-- 追加分(刻印機能）終わり -->
 				<li>
 					<label><span class="input_title">[[#{data.item.image}]]</span></label>
 					<input type="file" id="upload_file" name="imageFile" />
