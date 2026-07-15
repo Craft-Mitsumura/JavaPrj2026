@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.service.BeanTools;
+import jp.co.sss.shop.service.ItemViewConverter;
 import jp.co.sss.shop.util.Constant;
 
 /**
@@ -42,6 +42,13 @@ public class AdminItemShowController {
 	 */
 	@Autowired
 	BeanTools beanTools;
+
+	/**
+	 * @author 金城
+	 * json用のコンバーター
+	 */
+	@Autowired
+	ItemViewConverter ItemViewConverter;
 
 	/**
 	 * 一覧データ取得、一覧表示　処理
@@ -99,12 +106,16 @@ public class AdminItemShowController {
 			return "redirect:/syserror";
 		}
 
-		//Itemエンティティの各フィールドの値をItemBeanにコピー
-		ItemBean itemBean = beanTools.copyEntityToItemBean(item);
-
-		// 商品情報をViewへ渡す
-		model.addAttribute("item", itemBean);
-		//商品登録・変更・削除用のセッションスコープを初期化
+		try {
+            jp.co.sss.shop.form.ItemForm itemForm = ItemViewConverter.convertToForm(item);
+            
+            model.addAttribute("item", itemForm);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 変換失敗時は最低限の情報のみ渡す
+            model.addAttribute("item", item);
+        }
 		session.removeAttribute("itemForm");
 
 		return "admin/item/detail";
