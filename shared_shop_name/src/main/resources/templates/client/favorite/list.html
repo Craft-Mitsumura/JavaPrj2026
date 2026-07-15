@@ -154,17 +154,17 @@
 
 			    const itemId = this.parentElement.querySelector(".favoriteItemId").value;
 
-			    fetch("/shared_shop/client/favorite/add", {
-			        method: "POST",
-			        headers: {
-			            "Content-Type": "application/x-www-form-urlencoded"
-			        },
-			        body: "itemId=" + itemId
-			    })
+				fetch("/shared_shop/client/favorite/add", {
+				    method: "POST",
+				    headers: {
+				        "Content-Type": "application/x-www-form-urlencoded"
+				    },
+				    body: "itemId=" + itemId
+				})
 				.then(response => response.text())
 				.then(result => {
-
-					if (result === "detached") {
+				    console.log(result);
+				});					if (result === "detached") {
 
 						// 一覧からその商品だけ消す
 						this.closest("tr").remove();
@@ -184,7 +184,6 @@
 
 			});
 
-		});
 	</script>
 </body>
 
