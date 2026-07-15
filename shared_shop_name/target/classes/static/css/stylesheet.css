@@ -1235,7 +1235,7 @@ p.link_center {
 #containerd #mainLogo {
     display: block;
     cursor: pointer;
-    height: 40px; /* Logo ko height secure garna */
+    height: 110px; 
     width: auto;
 }
 
@@ -1246,7 +1246,7 @@ p.link_center {
 
 #containerd #categoryBtns {
     width: 130px;
-    height: 44px;
+    height: 24px;
     border: none;
     border-radius: 10px;
     background: #2563eb;
