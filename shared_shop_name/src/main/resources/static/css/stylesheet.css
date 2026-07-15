@@ -1202,677 +1202,297 @@ p.link_center {
                 HEADER MAIN
 ======================================================*/
 /* ==========================================
-            HEADER
+            HEADER MAIN LAYOUT
 ========================================== */
-
 #containerd {
-	width: 100%;
-	height: 82px;
-	background: #111827;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 0 40px;
-	box-sizing: border-box;
-	box-shadow: 0 3px 15px rgba(0, 0, 0, .18);
-	position: relative;
-	z-index: 999;
+    width: 100%;
+    height: 82px;
+    background: #111827;
+    display: flex; /* Sabai main blocks lai horizontal line ma lyauna */
+    align-items: center; /* Vertical alignment center garna */
+    justify-content: space-between; /* Left, Search, ra Right section push garna */
+    padding: 0 40px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, .18);
+    position: relative;
+    z-index: 999;
 }
 
 /* ==========================================
-            LEFT
+            LEFT SECTION (Logo + Category)
 ========================================== */
-
 #containerd .left-section {
-	display: flex;
-	align-items: center;
-	gap: 22px;
-	margin-top: 1%;
-
+    display: flex;
+    align-items: center;
+    gap: 22px;
 }
 
 #containerd .header-left {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 #containerd #mainLogo {
-	display: block;
-	cursor: pointer;
+    display: block;
+    cursor: pointer;
+    height: 40px; /* Logo ko height secure garna */
+    width: auto;
 }
 
-/* ==========================================
-        CATEGORY BUTTON
-========================================== */
-
+/* CATEGORY BUTTON */
 #containerd .header-center {
+    position: relative;
+}
 
-	position: relative;
-	background: transprant;
-
+#containerd #categoryBtns {
+    width: 130px;
+    height: 44px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: .25s;
 }
 
 #containerd #categoryBtns:hover {
-	color: black;
-	background: white;
+    background: #1d4ed8;
 }
 
-#containerd #categoryBtn {
-
-	width: 180px;
-	height: 44px;
-
-	border: none;
-
-	border-radius: 10px;
-
-	background: #2563eb;
-
-	color: #fff;
-
-	font-size: 14px;
-	font-weight: 600;
-
-	cursor: pointer;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-
-	transition: .25s;
-
-}
-
-#containerd #categoryBtn:hover {
-
-	background: #1d4ed8;
-
-}
-
-/* ==========================================
-        CATEGORY DROPDOWN
-========================================== */
-
+/* CATEGORY DROPDOWN LIST */
 #containerd #categoryLists {
-
-	position: absolute;
-	top: 58px;
-	left: 0;
-	width: 250px;
-	background: white;
-	border-radius: 12px;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(-10px);
-	transition: .28s;
-
+    position: absolute;
+    top: 54px;
+    left: 0;
+    width: 250px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: .28s;
+    z-index: 1000;
 }
-
-
 
 #containerd #categoryLists.show {
-
-	opacity: 1;
-	visibility: visible;
-	transform: translateY(0);
-
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 #containerd #category {
-
-	list-style: none;
-	margin: 0;
-
-	padding: 8px 0;
-
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
 }
 
 #containerd #category li {
-
-	border-bottom: 1px solid #ececec;
-
+    border-bottom: 1px solid #ececec;
 }
 
 #containerd #category li:last-child {
-
-	border-bottom: none;
-
+    border-bottom: none;
 }
 
 #containerd #category li a {
-
-	display: block;
-
-	text-decoration: none;
-
-	color: #374151;
-
-	padding: 14px 20px;
-
-	transition: .2s;
-
-	font-size: 14px;
-
+    display: block;
+    text-decoration: none;
+    color: #374151;
+    padding: 14px 20px;
+    transition: .2s;
+    font-size: 14px;
 }
 
 #containerd #category li a:hover {
-
-	background: #eff6ff;
-
-	color: #2563eb;
-
-	padding-left: 28px;
-
+    background: #f3f4f6;
+    color: #2563eb;
 }
-
-
 
 /* ==========================================
-            SEARCH
+        SEARCH SECTION (Center/Search Row)
 ========================================== */
-
 #containerd .header-search {
-
-	display: flex;
-	align-items: left;
-	margin-left: 40%;
-
-
-
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1; /* Search bar lai center ma automatic thau milauna */
+    justify-content: center;
 }
 
-/* Search Icon */
-
 #containerd #searchBtn {
-
-	width: 42px;
-
-	height: 42px;
-
-	border: none;
-
-	border-radius: 50%;
-
-	background: transparent;
-
-	color: white;
-
-	cursor: pointer;
-
-	display: flex;
-
-	justify-content: center;
-
-	align-items: center;
-
-	transition: .25s;
-
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
 }
 
 #containerd #searchBtn:hover {
-
-	background: rgba(255, 255, 255, .12);
-
+    color: #fff;
 }
 
-/* Search Form Hidden */
-
 #containerd #searchInputBar {
-
-	display: flex;
-	align-items: center;
-	gap: 8px;
-
-	position: absolute;
-	right: 28%;
-	top: 50%;
-	transform: translateY(-50%) translateX(30px) scale(.8);
-
-	opacity: 0;
-	visibility: hidden;
-	pointer-events: none;
-
-	transition:
-		transform .45s cubic-bezier(.22, 1, .36, 1),
-		opacity .55s ease,
-		visibility .35s;
-
+    display: none; /* Default ma hide hune layout */
+    align-items: center;
+    gap: 8px;
 }
 
 #containerd #searchInputBar.show {
-
-	margin-right: 5%;
-	width: 380px;
-	opacity: 1;
-	opacity: 1;
-	visibility: visible;
-	pointer-events: auto;
-
-	transform: translateY(-50%) translateX(-30) scale(1);
-
-}
-
-/* ==========================================
-        SEARCH INPUT
-========================================== */
-
-#containerd .search-wrapper {
-
-
-	width: 0;
-	overflow: hidden;
-	margin-top: 5%;
-	background: #fff;
-	border-radius: 8px;
-
-	transition: width .45s cubic-bezier(.22, 1, .36, 1);
+    display: flex; /* Toggle huda inline browser line ma khulne */
 }
 
 #containerd .search-wrapper input {
-
-	width: 250px;
-	height: 42px;
-	border: none;
-	outline: none;
-	font-size: 14px;
-	text-align: center;
-
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    width: 200px;
 }
-
-/* ==========================================
-        SEARCH BUTTON
-========================================== */
 
 #containerd .search-btn {
-	border: 1px solid rgba(255, 255, 255, .35);
-	height: 42px;
-	opacity: 0;
-	margin-top: 5%;
-	transform: translateX(-15px);
-	background: transparent;
-	transition:
-		opacity .25s ease .15s,
-		transform .25s ease .15s;
-	color: white;
-
-
-}
-
-#containerd #searchInputBar.show .search-btn {
-
-
-	opacity: 1;
-
-	transform: translateX(0);
-
-}
-
-#containerd #searchInputBar.show .search-wrapper {
-
-	width: 260px;
-
+    background: #374151;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
 }
 
 #containerd .search-btn:hover {
-	background: white;
-	color: black;
+    background: #4b5563;
 }
 
-/*=========================================
-            RIGHT SECTION
-=========================================*/
-
+/* ==========================================
+        RIGHT SECTION (User/Guest + Cart)
+========================================== */
 #containerd .header-right {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	gap: 4px;
-	min-width: 280px;
-	margin-bottom: 1%;
+    display: flex;
+    align-items: center;
+    gap: 25px; /* Profile button ra cart/heart icon bich ko space */
 }
 
-/*=========================================
-            USER INFO
-=========================================*/
-
-#containerd .user_info {
-	display: flex;
-	align-items: center;
+#containerd #dropDown {
+    display: flex;
+    align-items: center;
 }
 
-/*=========================================
-            PROFILE
-=========================================*/
-
+/* PROFILE MENU BUTTON */
 #containerd .profile {
-	position: relative;
-	height: fit-content;
-	width: 2%;
+    position: relative;
 }
-
-/*=========================================
-            PROFILE BUTTON
-=========================================*/
 
 #containerd #userBtn {
-
-	height: fit-content;
-
-	padding: 0 18px;
-
-	display: flex;
-
-	align-items: center;
-
-	gap: 10px;
-
-	border: none;
-
-	border-radius: 30px;
-
-	background: rgba(255, 255, 255, .08);
-
-	color: white;
-
-	cursor: pointer;
-
-	transition: .25s;
-
-	font-size: 7px;
-
-	font-weight: 600;
-
+    background: #1f2937;
+    color: #fff;
+    border: 1px solid #374151;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
 }
-
-#containerd #userBtn:hover {
-
-	background: rgba(255, 255, 255, .15);
-
-}
-
-#containerd #userBtn span {
-	font-size: small;
-}
-
-/*=========================================
-            AVATAR
-=========================================*/
-
-
-/*=========================================
-            PROFILE DROPDOWN
-=========================================*/
 
 #containerd #profileMenu {
-
-	position: absolute;
-	top: 55px;
-	right: 0;
-	width: 210px;
-	background: white;
-	border-radius: 12px;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
-	overflow: hidden;
-	opacity: 0;
-	visibility: hidden;
-	transform: translateY(-10px);
-	transition: .28s;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
+    border-radius: 8px;
+    width: 150px;
+    display: none; /* JavaScript toggle use garna ko lagi */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
 }
 
-/* JS will add .show */
-
-#containerd #profileMenu.show {
-	opacity: 1;
-	visibility: visible;
-	transform: translateY(0);
-
+#containerd .profile:hover #profileMenu {
+    display: flex; /* Profile block ma mouse laida drop-down dekhine */
 }
-
-/*=========================================
-            PROFILE LINKS
-=========================================*/
 
 #containerd #profileMenu a {
-
-	DISPLAY: BLOCK;
-	text-decoration: none;
-	color: #374151;
-	transition: .25s;
-	text-align: center;
-
+    color: #374151;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-size: 14px;
 }
 
 #containerd #profileMenu a:hover {
-
-
-	background: #eff6ff;
-	font-weight: 200px;
-	font-size: 10px;
-	padding-left: 24px;
-
+    background: #f3f4f6;
+    color: #2563eb;
 }
 
-/*=========================================
-            GUEST BUTTONS
-=========================================*/
-
+/* GUEST BUTTONS (Login & Signup) */
 #containerd .guest-buttons {
-
-	display: flex;
-	align-items: center;
-	gap: 10px;
-
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-
-/*=========================================
-            LOGIN
-=========================================*/
 
 #containerd .login-btn {
-
-	padding: 10px 18px;
-
-	border: 1px solid rgba(255, 255, 255, .35);
-
-	border-radius: 10px;
-
-	text-decoration: none;
-
-	color: white;
-
-	transition: .25s;
-
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-#containerd .login-btn:hover {
-
-	background: white;
-	color: #111827 !important;
-
-}
-
-/*=========================================
-            SIGNUP
-=========================================*/
-
-#containerd .signup-btn,
-#containerd .login-btn {
-
-	padding: 10px 18px;
-	border: 1px solid rgba(255, 255, 255, .35);
-	border-radius: 10px;
-
-	text-decoration: none;
-	color: white;
-	font-weight: 600;
-
-	transition: .25s;
-
+#containerd .signup-btn {
+    background: #fff;
+    color: #111827;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
 }
 
 #containerd .signup-btn:hover {
-	background: white;
-	color: #111827 !important;
-
+    background: #e5e7eb;
 }
 
-/*=========================================
-            CART
-=========================================*/
-
+/* CART & HEART ICONS */
 #containerd .cart-box {
-
-	display: flex;
-	margin-top: 10%;
-	align-items: center;
-
+    display: flex;
+    align-items: center;
+    gap: 18px; /* Cart icon ra Heart icon lai ekai row ma space diyeko */
 }
 
 #containerd #cart {
-
-	width: 44px;
-
-	height: 44px;
-
-	display: flex;
-
-	align-items: center;
-
-	justify-content: center;
-
-	border-radius: 50%;
-
-	color: white;
-
-	text-decoration: none;
-
-	background: rgba(255, 255, 255, .08);
-
-	transition: .25s;
-	cursor: pointer;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+    text-decoration: none;
 }
 
 #containerd #cart:hover {
-	transform: translateY(-2px);
+    color: #fff;
 }
 
-#containerd #cart svg {
-
-	width: 22px;
-
-	height: 22px;
-
+#containerd #cart.favorite {
+    color: #ef4444; /* Favorite empty heart outline color */
 }
 
-/* Smooth Search Width */
-
-#containerd #searchInputBar {
-
-	width: 0;
-
-	opacity: 0;
-
-	overflow: hidden;
-
-	transition:
-
-		width .4s ease,
-
-		opacity .25s ease;
-
+#containerd .bi-heart-fill {
+    color: #ef4444; /* Filled heart color */
 }
 
-
-
-/* --------------- */
-
-#containerd #dropDown {
-	position: relative;
-	display: flex;
-	align-items: center;
-}
-
-#containerd .profile {
-	position: relative;
-}
-
-#containerd #userBtn {
-	min-width: 120px;
-	height: 42px;
-	padding: 0 18px;
-	border: none;
-	border-radius: 25px;
-	background: rgba(255, 255, 255, .08);
-	color: white;
-	cursor: pointer;
-	transition: .25s;
-}
-
-#containerd #userBtn:hover {}
-
-/* Hide */
-
-#containerd #profileMenu {
-
-	position: absolute;
-
-
-	top: 60px;
-
-	left: 0;
-
-	width: 180px;
-
-	background: #fff;
-
-	border-radius: 10px;
-
-	box-shadow: 0 10px 25px rgba(0, 0, 0, .18);
-
-	opacity: 0;
-
-	visibility: hidden;
-
-	transform: translateY(-10px);
-
-	transition: .25s;
-
-	z-index: 999;
-
-}
-
-
-#containerd .profile:hover #profileMenu {
-
-	opacity: 1;
-
-	visibility: visible;
-
-	transform: translateY(0);
-
-}
-
-#containerd #profileMenu a {
-
-	display: block;
-
-	padding: 14px 18px;
-
-	text-decoration: none;
-
-	color: #374151;
-
-}
-
-#containerd #profileMenu a:hover {
-
-	background: #eff6ff;
-
-	color: #2563eb;
-
-}
 
 /* 新着順 */
 
