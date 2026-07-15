@@ -188,4 +188,9 @@ public class ItemBean {
 	    this.variation = variation;
 	}
 
+	public void setIsEngravable(Integer isEngravable) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
+
 }

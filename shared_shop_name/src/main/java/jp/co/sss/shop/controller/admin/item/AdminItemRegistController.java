@@ -138,7 +138,6 @@ public class AdminItemRegistController {
 			Category category = categoryRepository.findById(form.getCategoryId()).orElse(null);
 			form.setCategoryName(category.getName());
 		}
-		System.out.println("受信したCategoryID: " + form.getCategoryId());
 
 		//直前のセッション情報を取得
 		ItemForm lastItemForm = (ItemForm) session.getAttribute("itemForm");

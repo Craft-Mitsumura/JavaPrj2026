@@ -55,6 +55,8 @@
 						<dd th:text="*{inkVolume}"></dd>
 					</th:block>
 				</th:block>
+				<dt>刻印サービス</dt>
+				<dd th:text="*{isEngravable == 1 ? '利用可能' : '利用不可'}"></dd>
 				<dt>[[#{itemForm.description}]]</dt>
 				<dd th:text="*{description}"></dd>
 			</dl>

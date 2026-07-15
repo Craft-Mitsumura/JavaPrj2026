@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -96,7 +97,7 @@ public class ClientFavoriteController {
 	 * @param  itemId 対象商品ID
 	 * @return 処理結果のステータス文字列
 	 */
-	@PostMapping("/client/favorite/add")
+	@RequestMapping( path = "/client/favorite/add", method = { RequestMethod.GET,  RequestMethod.POST })
 	@ResponseBody
 	public String add(@RequestParam("itemId") Integer itemId) {
 
@@ -138,7 +139,7 @@ public class ClientFavoriteController {
 
 		    session.setAttribute("favoriteBeans", favorites);
 
-		    return "added";
+		    return "redirect:/client/item/list";
 		}
 	}
 }

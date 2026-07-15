@@ -156,6 +156,7 @@ public class AdminItemUpdateController {
 	 */
 	@RequestMapping(path = "/admin/item/update/check", method = RequestMethod.POST)
 	public String updateInputCheck(@Valid @ModelAttribute ItemForm form, BindingResult result) {
+		System.out.println("送信されてきた商品名: " + form.getName());
 
 		//直前のセッション情報を取得
 		ItemForm lastItemForm = (ItemForm) session.getAttribute("itemForm");

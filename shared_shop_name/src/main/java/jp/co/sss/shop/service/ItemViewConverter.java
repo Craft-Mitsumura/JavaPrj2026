@@ -33,6 +33,8 @@ public class ItemViewConverter {
 			form.setCategoryId(entity.getCategory().getId());
 			form.setCategoryName(entity.getCategory().getName());
 		}
+		// 刻印サービス用
+		form.setIsEngravable(entity.getIsEngravable());
 
 		// JSON文字列を解析してFormにセット
 		// variationJsonがnullの場合は空のJSONオブジェクトとして扱う

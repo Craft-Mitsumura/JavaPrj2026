@@ -65,12 +65,11 @@
 			<a th:if="${not pages.first}" th:href="@{${url}(page=0)}">&lt;&lt;</a>
 		</li>
 		<!--ページ番号指定のリンク表示処理--> 
-		<!-- #numbersのsequence()メソッドを使用して配列を作成し、被繰り返し変数として利用 -->
-		<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}' th:class="(${i}==${pages.number})? 'active' : ''">
-			<span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
-			<a th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}">
-				<span th:text='${i+1}'>1</span>
-			</a>
+		<li th:each='i : ${#numbers.sequence(0, pages.totalPages > 0 ? pages.totalPages - 1 : 0)}' th:class="(${i}==${pages.number})? 'active' : ''">
+		    <span th:if='${i}==${pages.number}' th:text='${i+1}'>1</span>
+		    <a th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}">
+		        <span th:text='${i+1}'>1</span>
+		    </a>
 		</li>
 		<!-- 末尾ページのリンク --> 
 		<!--1ページ目の場合はクラスの名前をdisabledに設定--> 

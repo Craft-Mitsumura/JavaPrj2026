@@ -113,10 +113,10 @@ public class URLCheck {
 		if (!URLCheck.isURLForStaticFile(requestURL)
 				&& !requestURL.endsWith("/login")
 				&& !requestURL.endsWith(contextPath + "/")
-				&& requestURL.indexOf("/client/item/list/") == -1
-			    && !requestURL.endsWith("/client/review/form")
 				
-						
+			    && !requestURL.endsWith("/client/review/form")
+			    && !requestURL.contains("/client/item/list")
+			    && requestURL.indexOf("/client/item/lists/") == -1	
 				&& requestURL.indexOf("/client/category/lists/") == -1
 				&& requestURL.indexOf("/client/item/detail/") == -1
 				&& requestURL.indexOf("/client/user/delete/") == -1
