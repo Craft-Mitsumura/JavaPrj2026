@@ -290,6 +290,12 @@ public class ClientOrderRegistController {
 				orderItem.setImage(item.getImage());
 				orderItem.setOrderNum(basket.getOrderNum());
 				orderItem.setSubtotal(item.getPrice() * basket.getOrderNum());
+				
+				// 【追加】刻印情報をセット
+				orderItem.setIsEngravingSelected(basket.isEngravingSelected());
+				orderItem.setEngravingText(basket.getEngravingText());
+				orderItem.setFontType(basket.getFontType());
+				
 				orderItemBeans.add(orderItem);
 			}
 		}

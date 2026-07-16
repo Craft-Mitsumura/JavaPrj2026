@@ -39,6 +39,6 @@ public class AdminAdDeleteController {
         });
         
         // リダイレクト先に削除完了フラグを付けて一覧へ戻す
-        return "redirect:/admin/ad/list?deleted=true";
+        return "/admin/ad/deleteComplete";
     }
 }

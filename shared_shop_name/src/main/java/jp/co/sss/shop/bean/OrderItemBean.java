@@ -31,6 +31,22 @@ public class OrderItemBean {
 	 */
 	private Integer subtotal;
 
+	// 追加分
+	/**
+	 * 刻印有効フラグ
+	 */
+	private boolean isEngravingSelected;
+
+	/**
+	 * 刻印文字列
+	 */
+	private String engravingText;
+
+	/**
+	 * 刻印フォント
+	 */
+	private String fontType;
+
 	/**
 	 * 注文商品IDの取得
 	 * @return 注文商品ID
@@ -125,5 +141,53 @@ public class OrderItemBean {
 	 */
 	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
+	}
+	
+	/**追加分
+	 * 刻印有効フラグ
+	 * @return OFF/ON 0/1
+	 */
+	public boolean isEngravingSelected() {
+		return isEngravingSelected;
+	}
+
+	/**
+	 * 刻印有効フラグ
+	 * @param isEngravingSelected 刻印有効フラグ
+	 */
+	public void setIsEngravingSelected(boolean isEngravingSelected) {
+		this.isEngravingSelected = isEngravingSelected;
+	}
+
+	/**
+	 * 刻印文字列
+	 * @return 刻印文字列
+	 */
+	public String getEngravingText() {
+		return engravingText;
+	}
+
+	/**
+	 * 刻印文字列
+	 * @param engravingText 刻印文字列
+	 */
+	public void setEngravingText(String engravingText) {
+		this.engravingText = engravingText;
+	}
+
+	/**
+	 * 刻印フォント
+	 * @return 刻印フォント
+	 */
+	public String getFontType() {
+		return fontType;
+	}
+
+	/**
+	 * 刻印フォント
+	 * @param fontType 刻印フォント
+	 */
+	public void setFontType(String fontType) {
+		this.fontType = fontType;
 	}
 }
