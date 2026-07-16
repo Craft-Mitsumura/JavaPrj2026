@@ -37,17 +37,17 @@
   
 			<div th:if="${session.user == null or session.user.authority == 2}"  class="header-center">
 
-				<button id="categoryBtns"  type="button"
-					onclick="ale
-event.stopPropagation();
-document.getElementById('categoryLists').classList.toggle('show');
-">
+					<button id="categoryBtns" type="button" >
+						<!-- onclick="
+                                     event.stopPropagation();
+                        document.getElementById('categoryLists').classList.toggle('show');
+                           "--> 
 
-					<span>Category</span> <span class="arrow">▼</span>
+						<span>Category</span> <span class="arrow">▼</span>
 
-				</button>
+					</button>
 
-				<div id="categoryLists">
+					<div id="categoryLists">
 
 					<ul id="category">
 
@@ -249,17 +249,20 @@ document.getElementById('categoryLists').classList.toggle('show');
 			</div>
 
 		</div>
-<script th:src="@{/static/js/addedScript.js}"></script>
+<script th:src="@{/static/js/addedScript.js}" defer></script>
 	</div>
 	</div>
 	<script>
 
+	document.addEventListener('DOMContentLoaded', function() {
 
-
-
-document.onclick = function () {
-    document.getElementById("searchInputBar").classList.remove("show");
-}
+		document.addEventListener('click', function () {
+		    const searchInputBar = document.getElementById("searchInputBar");
+		    if (searchInputBar) {
+		        searchInputBar.classList.remove("show");
+		    }
+		});
+		});
 
 
 
@@ -281,7 +284,10 @@ document.onclick = function () {
 
             profileMenu.classList.toggle("show");
 
-            categoryMenu.classList.remove("show");
+            const categoryLists = document.getElementById("categoryLists");
+            if (categoryLists) {
+                categoryLists.classList.remove("show");
+            }
 
         });
 
@@ -290,38 +296,7 @@ document.onclick = function () {
 
 
 
-    /* ===========================
-        OUTSIDE CLICK
-    ============================ */
-
-    document.addEventListener("click",function(e){
-
-        /* Category */
-
-        if(categoryMenu && !categoryMenu.contains(e.target)
-            && !categoryBtn.contains(e.target)){
-
-            categoryMenu.classList.remove("show");
-
-        }
-
-        /* Profile */
-
-        if(profileMenu && profileBtn){
-
-            if(!profileMenu.contains(e.target)
-                && !profileBtn.contains(e.target)){
-
-                profileMenu.classList.remove("show");
-
-            }
-
-        }
-
-    });
-
-
-
-</script>
+    
+	</script>
 </body>
 </html>
