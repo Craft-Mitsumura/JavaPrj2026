@@ -28,6 +28,9 @@ public class Prize {
 
     @Column
     private String description;
+    
+    @Column(name = "delete_flag")
+    private Integer deleteFlag;
 
     public Integer getId() {
         return id;
@@ -67,5 +70,13 @@ public class Prize {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    public Integer getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(Integer deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }

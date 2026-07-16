@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+
+<head>
+    <title>景品一覧</title>
+</head>
+
+<body>
+
+<h2>景品一覧</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>景品名</th>
+        <th>必要ポイント</th>
+        <th>操作</th>
+    </tr>
+
+    <tr th:each="prize : ${prizes}">
+        <td th:text="${prize.id}"></td>
+        <td th:text="${prize.name}"></td>
+        <td th:text="${prize.requiredPoint}"></td>
+        <td>
+            <a th:href="@{/admin/prize/update/input/{id}(id=${prize.id})}">
+                編集
+            </a>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>
