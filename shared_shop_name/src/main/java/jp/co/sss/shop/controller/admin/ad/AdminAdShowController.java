@@ -14,7 +14,7 @@ import jp.co.sss.shop.service.PromotionConverter;
  * @author	金城（チームF）
  * 広告機能-システム管理者向け
  * 広告表示系
- *  
+ * 
  */
 
 @Controller
@@ -33,10 +33,10 @@ public class AdminAdShowController{
 	PromotionConverter converter;
 	
 	/**
-	 * セッション情報 
+	 * セッション情報
 	 */
 	@Autowired
-	HttpSession session; 
+	HttpSession session;
 	
     /**
      * 広告一覧表示
