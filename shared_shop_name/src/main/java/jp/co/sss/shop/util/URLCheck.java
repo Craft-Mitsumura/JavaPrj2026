@@ -63,6 +63,7 @@ public class URLCheck {
 				|| isURLForSystemAdmin(requestURL)
 				|| requestURL.indexOf("admin/category") != -1
 				|| requestURL.indexOf("admin/item") != -1
+				|| requestURL.indexOf("admin/ad/delete/confirm") != -1
 				|| requestURL.indexOf("admin/order") != -1) {
 			// URLのリクエスト先がフィルタ実行対象である場合
 			isCheckURLOK = true;
