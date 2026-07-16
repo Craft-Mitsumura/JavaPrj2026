@@ -15,7 +15,8 @@ public class URLCheck {
 	public static boolean isURLForStaticFile(String requestURL) {
 		boolean isCheckURLOK = false;
 		if (requestURL.indexOf(Constant.CSS_FOLDER) != -1
-				|| requestURL.indexOf(Constant.IMAGE_FOLDER) != -1) {
+				|| requestURL.indexOf(Constant.IMAGE_FOLDER) != -1
+			|| requestURL.indexOf(Constant.Js_FOLDER) != -1){
 			// URLのリクエスト先がフィルタ実行対象である場合
 			isCheckURLOK = true;
 		} else {
@@ -56,7 +57,7 @@ public class URLCheck {
 	 * @param requestURL リクエストURL
 	 * @return true：チェック対象、false：チェック対象外
 	 */
-	public static boolean istURLForAdmin(String requestURL) {
+	public static boolean isURLForAdmin(String requestURL) {
 		boolean isCheckURLOK = false;
 		if (isURLForStaticFile(requestURL)
 				|| isURLForSystemAdmin(requestURL)
@@ -83,12 +84,11 @@ public class URLCheck {
 	public static boolean isURLForClient(String requestURL, String contextPath) {
 
 		boolean isCheckURLOK = false;
-		if (URLCheck.isURLForStaticFile(requestURL)
-				 && !requestURL.endsWith("/client/review/form")
+		if ((URLCheck.isURLForStaticFile(requestURL)
+				&& !requestURL.endsWith("/client/review/form"))
 				|| requestURL.endsWith(contextPath + "/")
 				|| requestURL.endsWith("/login")
-				|| requestURL.indexOf("client") != -1
-				|| requestURL.indexOf("admin") == -1
+				|| (requestURL.indexOf("client") != -1 && requestURL.indexOf("admin") == -1)
 				|| requestURL.endsWith("/logout")){
 			// URLのリクエスト先がフィルタ実行対象である場合
 			isCheckURLOK = true;
