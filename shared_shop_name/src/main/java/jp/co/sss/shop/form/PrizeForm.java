@@ -1,6 +1,8 @@
 package jp.co.sss.shop.form;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,8 +12,11 @@ public class PrizeForm {
 
     @NotBlank
     private String name;
-    @NotBlank
+
+    @NotNull(message = "必要ポイントを入力してください")
+    @Min(value = 1, message = "必要ポイントは1以上で入力してください")
     private Integer requiredPoint;
+
     @NotBlank
     private String description;
     
@@ -68,6 +73,5 @@ public class PrizeForm {
 	public void setImageFile(MultipartFile imageFile) {
 	    this.imageFile = imageFile;
 	}
-    
     
 }
