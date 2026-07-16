@@ -15,7 +15,9 @@ import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
+import jp.co.sss.shop.entity.Prize;
 import jp.co.sss.shop.form.ItemForm;
+import jp.co.sss.shop.form.PrizeForm;
 
 /**
  * オブジェクト間でのフィールドコピー処理を行うクラス
@@ -221,5 +223,27 @@ public class BeanTools {
 			orderItemBeanList.add(orderItemBean);
 		}
 		return orderItemBeanList;
+	}
+	
+	public PrizeForm copyEntityToPrizeForm(Prize entity) {
+
+	    PrizeForm form = new PrizeForm();
+
+	    BeanUtils.copyProperties(entity, form);
+
+	    return form;
+	}
+	
+	public Prize copyPrizeFormToEntity(PrizeForm form) {
+
+	    Prize entity = new Prize();
+
+	    BeanUtils.copyProperties(form, entity);
+
+	    if (form.getId() != null) {
+	        entity.setId(form.getId());
+	    }
+
+	    return entity;
 	}
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+
+<head>
+    <title>景品編集確認</title>
+</head>
+
+<body>
+
+<h2>景品編集確認</h2>
+
+<table>
+
+    <tr>
+        <th>景品名</th>
+        <td th:text="${prizeForm.name}"></td>
+    </tr>
+
+    <tr>
+        <th>必要ポイント</th>
+        <td th:text="${prizeForm.requiredPoint}"></td>
+    </tr>
+
+    <tr>
+        <th>画像</th>
+        <td>
+            <img th:src="@{/img/{image}(image=${prizeForm.image})}" width="150">
+        </td>
+    </tr>
+
+    <tr>
+        <th>説明</th>
+        <td th:text="${prizeForm.description}"></td>
+    </tr>
+
+</table>
+
+<br>
+
+<form th:action="@{/admin/prize/update/input}" method="get" style="display:inline;">
+    <input type="submit" value="戻る">
+</form>
+
+<form th:action="@{/admin/prize/update/complete}" method="post" style="display:inline;">
+    <input type="submit" value="更新">
+</form>
+
+</body>
+</html>

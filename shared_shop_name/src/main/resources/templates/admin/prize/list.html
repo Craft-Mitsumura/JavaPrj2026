@@ -1,35 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <title>景品一覧</title>
+	<title>景品一覧 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
 </head>
 
-<body>
+<body class="admin prize_list_admin">
 
-<h2>景品一覧</h2>
+<div class="prize_list_admin">
 
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>景品名</th>
-        <th>必要ポイント</th>
-        <th>操作</th>
-    </tr>
+	<h2 class="title">景品一覧</h2>
+	
+	<!--新規景品追加-->
+	<form th:action="@{/admin/prize/regist/input}" method="post">
+	    <input type="submit" value="景品新規登録" class="menu_button" />
+	</form>
 
-    <tr th:each="prize : ${prizes}">
-        <td th:text="${prize.id}"></td>
-        <td th:text="${prize.name}"></td>
-        <td th:text="${prize.requiredPoint}"></td>
-        <td>
-            <a th:href="@{/admin/prize/update/input/{id}(id=${prize.id})}">
-                編集
-            </a>
-        </td>
-    </tr>
+	<!-- 景品が0件 -->
+	<div th:if="${#lists.isEmpty(prizes)}">
+		<p>景品が登録されていません。</p>
+	</div>
 
-</table>
+	<!-- 一覧 -->
+	<div class="item_list_table">
+		<table class="list_table" th:if="!${#lists.isEmpty(prizes)}">
+
+			<tr>
+				<th>ID</th>
+				<th>景品名</th>
+				<th>必要ポイント</th>
+				<th>操作</th>
+			</tr>
+
+			<tr th:each="prize : ${prizes}">
+				<td th:text="${prize.id}"></td>
+
+				<td th:text="${prize.name}"></td>
+
+				<td th:text="${prize.requiredPoint} + ' pt'"></td>
+
+				<td>
+					<form th:action="@{/admin/prize/update/input/{id}(id=${prize.id})}" method="post">
+						<input type="submit" value="変更" class="changeBtn"/>
+					</form>
+				</td>
+			</tr>
+
+		</table>
+	</div>
+
+</div>
 
 </body>
 </html>
