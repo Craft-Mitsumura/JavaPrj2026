@@ -38,7 +38,7 @@
 			<div th:if="${session.user == null or session.user.authority == 2}"  class="header-center">
 
 				<button id="categoryBtns"  type="button"
-					onclick="
+					onclick="ale
 event.stopPropagation();
 document.getElementById('categoryLists').classList.toggle('show');
 ">
@@ -249,7 +249,7 @@ document.getElementById('categoryLists').classList.toggle('show');
 			</div>
 
 		</div>
-
+<script th:src="@{/static/js/addedScript.js}"></script>
 	</div>
 	</div>
 	<script>
