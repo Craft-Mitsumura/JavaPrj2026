@@ -149,7 +149,7 @@
 			<div class="option_checkbox_area" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
 				<h3 style="background-color: #a4d5ee; margin: -10px -10px 10px -10px; padding: 5px;">オプション</h3>
 				<label>
-					<input type="checkbox" id="engraving_trigger" name="engravingRequested" value="true" />
+					<input type="checkbox" id="engraving_trigger" />
 					刻印サービスを希望する
 				</label>
 			</div>
@@ -162,7 +162,7 @@
 
 				<div style="margin-bottom: 10px;">
 					<label><strong>フォント</strong></label>
-					<select name="engravingFont" id="engraving_font" style="width: 100%;">
+					<select name="fontType" id="engraving_font" style="width: 100%;">
 						<option value="">--</option>
 						<option value="Serif">Serif</option>
 						<option value="Script">Script</option>
@@ -265,11 +265,12 @@
 					<input type="hidden" th:field="*{id}" />
 					<input type="hidden" name="purchaseType" value="single" />
 					<input type="hidden" name="formColor" class="form_color_input" value="ブラック" />
+
+					<input type="hidden" name="isEngravingSelected" id="form_is_engraving_single" value="false" />
 					<input type="hidden" name="engravingText" class="form_engraving_text" value="" />
-					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
+					<input type="hidden" name="fontType" class="form_engraving_font" value="" />
 					<!-- <input type="submit" name ="quality" value="1" class="send_button" /> -->
-					<button type="submit" name ="quality" value="1" class="send_button"  > 買い物かごに入れる </button>
-					
+					<button type="submit" name="quality" value="1" class="send_button"> 買い物かごに入れる </button>
 				</form>
 
 				<form th:action="@{/client/basket/add}" method="post" class="user_info_form"
@@ -277,11 +278,15 @@
 					<input type="hidden" th:field="*{id}" />
 					<input type="hidden" name="purchaseType" value="bulk" />
 					<input type="hidden" name="formColor" class="form_color_input" value="ブラック" />
+
+					<input type="hidden" name="isEngravingSelected" id="form_is_engraving_bulk" value="false" />
 					<input type="hidden" name="engravingText" class="form_engraving_text" value="" />
-					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
-					
+					<input type="hidden" name="fontType" class="form_engraving_font" value="" />
 					<!-- <input type="submit"　 name ="quality" value="10"  class="send_button" style="background-color: #e67e22;" />
-				 -->	<button type="submit" name ="quality" value="10" class="send_button" style="background-color: #e67e22;"  > 10本まとめの買いする </button>
+									 -->
+					<button type="submit" name="quality" value="10" class="send_button"
+						style="background-color: #e67e22;"> 10本まとめの買いする </button>
+
 				</form>
 
 			</th:block>
@@ -317,6 +322,12 @@
 
 			const hiddenTexts = document.querySelectorAll('.form_engraving_text');
 			const hiddenFonts = document.querySelectorAll('.form_engraving_font');
+
+			// Hiddenフィールドの同期用
+			const hiddenEngravings = [
+				document.getElementById('form_is_engraving_single'),
+				document.getElementById('form_is_engraving_bulk')
+			];
 
 			let imgPos = {x: 0, y: 0};
 			let imgRotate = 0;
@@ -391,10 +402,13 @@
 			document.getElementById('btn_txt_reset').addEventListener('click', () => {txtPos = {x: 0, y: 0}; txtRotate = 0; applyPositions();});
 
 			function toggleEngravingForm() {
-				if (trigger.checked) {
-					formContainer.style.display = 'block';
-				} else {
-					formContainer.style.display = 'none';
+				const isChecked = trigger.checked;
+				formContainer.style.display = isChecked ? 'block' : 'none';
+
+				// Hiddenフィールドに値を同期
+				hiddenEngravings.forEach(h => h.value = isChecked ? "true" : "false");
+
+				if (!isChecked) {
 					engravingInput.value = '';
 					fontSelect.value = '';
 					imgPos = {x: 0, y: 0}; imgRotate = 0;
