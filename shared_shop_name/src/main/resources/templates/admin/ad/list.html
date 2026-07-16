@@ -50,7 +50,7 @@
 
 							<input type="submit" value="削除" id="deleteBtn" />
 						</form> -->
-						<form th:action="@{/admin/ad/delete/confirm}" method="post" style="display:inline;"
+						<form th:action="@{/admin/ad/delete/confirm(id=${ad.id})}" method="post" style="display:inline;"
 							>
 
 							<input type="hidden" name="id" th:value="${ad.id}" />

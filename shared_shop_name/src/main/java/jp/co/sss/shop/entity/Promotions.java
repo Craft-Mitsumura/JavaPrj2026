@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 広告情報のエンティティクラス
  *
  * @author SystemShared
- */
+ */ 
 @Entity
 @Table(name = "promotions")
 public class Promotions {
@@ -52,13 +52,13 @@ public class Promotions {
 	@Column(name = "content_json")
 	private String contentJson;
 	
-	/**
+	/** 
 	 * @author	金城
 	 * 遷移先URL
 	 */
 	@Column(name = "target_url")
 	private String targetUrl;
-	
+	 
 	/**
 	 * @author	金城
 	 * 有効フラグ
