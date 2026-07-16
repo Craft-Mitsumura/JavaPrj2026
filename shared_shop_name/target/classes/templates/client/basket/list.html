@@ -144,23 +144,12 @@
 									th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
 							</div>
 
-<script th:inline="javascript">
 
 							<form th:action="@{/client/basket/add}" method="post" class="cart-form">
 
-    button.addEventListener("click", function () {
 
 								<input type="hidden" name="id" th:value="${item.id}" />
 
-        fetch(/*[[@{/client/favorite/add}]]*/"", {
-            method: "POST",
-             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            }, 
-            body: "itemId=" + itemId
-        })
-        .then(response => response.text())
-		.then(result => {
 
 								<input type="hidden" name="purchaseType" value="single" />
 								<input type="hidden" name="formColor" value="ブラック" />
@@ -188,11 +177,43 @@
 			</div>
 		</div>
 	</th:block>
+	<script th:inline="javascript">
 
+		document.querySelectorAll(".btn-favorite").forEach(button => {
 
+			button.addEventListener("click", function () {
 
+				const itemId = this.parentElement.querySelector(".favoriteItemId").value;
 
+				fetch(/*[[@{/client/favorite/add}]]*/"", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					body: "itemId=" + itemId
+				})
+					.then(response => response.text())
+					.then(result => {
 
+						const heart = this.querySelector(".heart-icon");
+
+						if (result === "added") {
+							heart.classList.add("favorite");
+							window.location.href = "/shared_shop";
+						} else if (result === "detached") {
+							heart.classList.remove("favorite");
+							location.reload();
+						} else if (result === "ng") {
+							alert("ログインしてください");
+						}
+
+					});
+
+			});
+
+		});
+
+	</script>
 </body>
 
 </html>
