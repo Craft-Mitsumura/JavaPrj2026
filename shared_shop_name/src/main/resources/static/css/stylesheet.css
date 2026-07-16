@@ -2427,5 +2427,9 @@ p.link_center {
     color:#b5b5b5;
     font-size:14px;
 }
-
+#favoritep {
+	font-size:25px;
+	font-weight:600;
+	text-align:center;
+}
 
