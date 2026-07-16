@@ -28,7 +28,7 @@ h2,
 h3 {
 	font-size: 1em;
 	font-weight: normal;
-	margin: 0;
+	
 	padding: 0;
 }
 
@@ -352,7 +352,7 @@ aside.admin_menu {
 footer {
 	background-color: black;
 	text-align: center;
-	position: absolute;
+	
 	width: 100%;
 	bottom:0;
 }
