@@ -53,7 +53,7 @@
 	<h2 class="title">お気に入り一覧</h2>
 
 	<div th:if="${#lists.isEmpty(favoriteList)}" class="sorted_by">
-		<p>お気に入りに登録されている商品はありません。</p>
+		<p id="favoritep" >お気に入りに登録されている商品はありません。</p>
 	</div>
 
 	<table th:unless="${#lists.isEmpty(favoriteList)}" class="list_table item_detail">
@@ -95,11 +95,11 @@
 				<td th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '円'" style="text-align: right;">0円</td>
 
 				<td th:text="${item.category.name}">カテゴリ名</td>
-
-				<td class="favorite_td">
+ 
+				<td class="favorite_td" id="favoriteButton">
 					<input type="hidden" class="favoriteItemId" th:value="${item.id}" />
 
-					<button type="button" class="favoriteButton send_button" style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
+					<button type="button"  class="favoriteButton send_button" style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
 								   width:120px;height:40px;padding:0;">
 
 						<span>♥ お気に入り済み</span>
@@ -145,7 +145,7 @@
 		});
 	</script>
 	<script th:inline="javascript">
-		document.querySelectorAll(".favoriteButton").forEach(button => {
+		/* document.querySelectorAll(".favoriteButton").forEach(button => {
 
 			button.addEventListener("click", function (e) {
 
@@ -183,7 +183,7 @@
 				});
 
 			});
-
+ */
 	</script>
 </body>
 
