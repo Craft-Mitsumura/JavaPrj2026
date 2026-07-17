@@ -154,6 +154,8 @@ public class AdminPrizeRegistController {
 
 
         Prize prize = new Prize();
+        
+        System.out.println("作成直後 id = " + prize.getId());
 
         prize.setName(prizeForm.getName());
         prize.setRequiredPoint(prizeForm.getRequiredPoint());
@@ -164,6 +166,7 @@ public class AdminPrizeRegistController {
         prize.setDeleteFlag(Constant.NOT_DELETED);
 
 
+        System.out.println("保存前 id = " + prize.getId());
         prizeRepository.save(prize);
 
 

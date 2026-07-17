@@ -19,9 +19,10 @@
 	<div class="user_info_form_area">
 
 		<form th:action="@{/admin/prize/regist/check}"
-			method="post"
-			class="user_info_form"
-			th:object="${prizeForm}">
+		      method="post"
+		      enctype="multipart/form-data"
+		      class="user_info_form"
+		      th:object="${prizeForm}">
 
 
 			<th:block th:if="${#fields.hasErrors()}">
@@ -66,7 +67,7 @@
 						<span class="input_title">画像</span>
 					</label>
 
-					<input type="file" name="imageFile" />
+					<input type="file" th:field="*{imageFile}" />
 
 					<span th:unless="${#strings.isEmpty(prizeForm.image)}">
 						<img th:src="@{/images/{image}(image=${prizeForm.image})}">

@@ -1,50 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+    th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <title>景品編集確認</title>
+    <title>景品編集確認 | [[#{shop.title}]]</title>
+    <meta charset="UTF-8" />
 </head>
 
-<body>
+<body class="admin prize_update_check">
 
-<h2>景品編集確認</h2>
+    <h2 class="title">景品編集確認</h2>
+    <p class="check_message">以下の内容で更新します。</p>
 
-<table>
+    <div class="user_info_form_area">
 
-    <tr>
-        <th>景品名</th>
-        <td th:text="${prizeForm.name}"></td>
-    </tr>
+        <ul class="input_list">
 
-    <tr>
-        <th>必要ポイント</th>
-        <td th:text="${prizeForm.requiredPoint}"></td>
-    </tr>
+            <li>
+                <span class="input_title">景品名</span>
+                <span class="input_value" th:text="${prizeForm.name}"></span>
+            </li>
 
-    <tr>
-        <th>画像</th>
-        <td>
-            <img th:src="@{/img/{image}(image=${prizeForm.image})}" width="150">
-        </td>
-    </tr>
+            <li>
+                <span class="input_title">必要ポイント</span>
+                <span class="input_value" th:text="${prizeForm.requiredPoint} + ' pt'"></span>
+            </li>
 
-    <tr>
-        <th>説明</th>
-        <td th:text="${prizeForm.description}"></td>
-    </tr>
+            <li>
+                <span class="input_title">画像</span>
+                <span class="input_value">
+                    <img th:if="${prizeForm.image != null}"
+                         th:src="@{/images/{image}(image=${prizeForm.image})}" />
 
-</table>
+                    <img th:if="${prizeForm.image == null}"
+                         th:src="@{/images/common/no_image.jpg}" />
+                </span>
+            </li>
 
-<br>
+            <li>
+                <span class="input_title">説明</span>
+                <span class="input_value" th:text="${prizeForm.description}"></span>
+            </li>
 
-<form th:action="@{/admin/prize/update/input}" method="get" style="display:inline;">
-    <input type="submit" value="戻る">
-</form>
+        </ul>
 
-<form th:action="@{/admin/prize/update/complete}" method="post" style="display:inline;">
-    <input type="submit" value="更新">
-</form>
+        <form th:action="@{/admin/prize/update/complete}" method="post" class="user_info_form">
+            <input type="submit" value="更新" class="send_button" />
+        </form>
+
+        <form th:action="@{/admin/prize/update/input}" method="get">
+            <input type="submit" value="戻る" class="back_button" />
+        </form>
+
+    </div>
 
 </body>
 </html>
