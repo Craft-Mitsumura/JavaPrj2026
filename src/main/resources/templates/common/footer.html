@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body><footer th:fragment="layout-footer" class="footer">
+
+    <div class="footer-container">
+
+        <!-- Logo / About -->
+        <div class="footer-section">
+            <h4 >Avoir Shop</h4>
+            <p>
+      <!--           Quality products at the best prices.
+                Fast delivery and secure shopping.
+                <br/> -->
+                高品質な商品をお手頃な価格でご提供します。
+安心・安全なお買い物と迅速な配送をお届けします。
+            </p>
+        </div>
+
+        <!-- Customer Service -->
+        <div class="footer-section">
+            <h4 >Customer Service</h4>
+            <ul>
+                <li><a th:href="@{/client/review/form}">Contact Us</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Returns</a></li>
+            </ul>
+        </div>
+
+        <!-- Follow -->
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+
+            <div class="social-icons">
+
+                <!-- Facebook -->
+                <a href="#">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22 12A10 10 0 1 0 10.44 21.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/>
+                    </svg>
+                </a>
+
+                <!-- Instagram -->
+                <a href="#">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm5 4.5A5.5 5.5 0 1 1 6.5 12 5.5 5.5 0 0 1 12 6.5zm6-.75a1.25 1.25 0 1 1-1.25 1.25A1.25 1.25 0 0 1 18 5.75zM12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4z"/>
+                    </svg>
+                </a>
+
+                <!-- X -->
+                <a href="#">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.3L6.5 22H3.4l7.2-8.3L1 2h6.4l4.5 5.8L18.9 2z"/>
+                    </svg>
+                </a>
+
+                <!-- YouTube -->
+                <a href="#">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.5 6.2s-.2-1.7-.9-2.5c-.8-.9-1.7-.9-2.2-1C17.3 2.5 12 2.5 12 2.5h0s-5.3 0-8.4.2c-.5.1-1.4.1-2.2 1C.7 4.5.5 6.2.5 6.2S.2 8.2.2 10.2v1.6c0 2 .3 4 .3 4s.2 1.7.9 2.5c.8.9 1.9.9 2.4 1 1.8.2 8.2.2 8.2.2s5.3 0 8.4-.2c.5-.1 1.4-.1 2.2-1 .7-.8.9-2.5.9-2.5s.3-2 .3-4v-1.6c0-2-.3-4-.3-4zM9.8 15.3V8.7l6.3 3.3-6.3 3.3z"/>
+                    </svg>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <small>
+            © 2026 avoir Shop. All Rights Reserved.
+        </small>
+    </div>
+
+</footer>
+</body>
+</html>

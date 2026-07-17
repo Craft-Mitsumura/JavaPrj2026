@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.update.complete}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<div class="complete-container">
+
+    <div class="complete-card">
+
+        <div class="check-icon">
+            ✓
+        </div>
+
+        <h1>広告削除完了</h1>
+
+        <p>
+            広告の削除が正常に完了しました。
+        </p>
+
+        <a  th:href="@{/admin/category/list}" class="home-btn">
+            ホームへ戻る
+        </a>
+
+    </div>
+
+</div>
+</body>
+
+</html>

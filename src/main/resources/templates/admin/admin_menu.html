@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_3block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="#{admin.menu} + ' | ' + #{shop.title}"></title>
+</head>
+
+<body>
+
+
+
+
+	<!-- 見出し -->
+	<div class="admin-page">
+		<p class="admin-title" th:text="#{admin.menu}"></p>
+		<!-- メニュー -->
+		<div class="admin_menu">
+			<dl class="admin_menu_list">
+
+				<dd class="link_area">
+					<a th:href="@{/admin/user/list}" th:text="#{admin.menu.user.list}"></a>
+				</dd>
+
+				<th:block th:if="${session.user.authority == 1}">
+					<dd class="link_area">
+						<a th:href="@{/admin/order/list}" th:text="#{admin.menu.order.list}"></a>
+					</dd>
+
+					<dd class="link_area">
+						<a th:href="@{/admin/item/list}" th:text="#{admin.menu.item.list}"></a>
+					</dd>
+
+					<dd class="link_area">
+						<a th:href="@{/admin/category/list}" th:text="#{admin.menu.category.list}"></a>
+					</dd>
+					<dd class="link_area">
+						<a th:href="@{/admin/ad/list}" th:text="#{admin.ad.category.list}"></a>
+					</dd>
+					
+					<dd class="link_area">
+						<a th:href="@{/admin/prize/list}" th:text="#{admin.menu.prize.list}"></a>
+					</dd>
+
+				</th:block>
+			</dl>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

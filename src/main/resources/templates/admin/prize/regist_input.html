@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title>景品登録 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin prize_regist_input">
+
+	<h2 class="title">景品新規登録</h2>
+
+	<p class="input_message">
+		景品情報を入力してください。
+	</p>
+
+
+	<div class="user_info_form_area">
+
+		<form th:action="@{/admin/prize/regist/check}"
+		      method="post"
+		      enctype="multipart/form-data"
+		      class="user_info_form"
+		      th:object="${prizeForm}">
+
+
+			<th:block th:if="${#fields.hasErrors()}">
+				<ul class="error_list">
+					<li th:each="err:${#fields.detailedErrors()}"
+						th:text="${err.message}">
+					</li>
+				</ul>
+			</th:block>
+
+
+			<ul class="input_list">
+
+				<li>
+					<label>
+						<span class="input_title">景品名</span>
+					</label>
+					<input type="text" th:field="*{name}" />
+				</li>
+
+
+				<li>
+					<label>
+						<span class="input_title">必要ポイント</span>
+					</label>
+					<input type="text" th:field="*{requiredPoint}" />
+				</li>
+
+
+				<li>
+					<label>
+						<span class="input_title">説明</span>
+					</label>
+					<textarea rows="6"
+						th:field="*{description}">
+					</textarea>
+				</li>
+
+
+				<li>
+					<label>
+						<span class="input_title">画像</span>
+					</label>
+
+					<input type="file" th:field="*{imageFile}" />
+
+					<span th:unless="${#strings.isEmpty(prizeForm.image)}">
+						<img th:src="@{/images/{image}(image=${prizeForm.image})}">
+					</span>
+
+					<span th:if="${#strings.isEmpty(prizeForm.image)}">
+						<img th:src="@{/images/common/no_image.jpg}">
+					</span>
+
+				</li>
+
+
+			</ul>
+
+
+			<input type="submit" value="確認" class="send_button"/>
+
+		</form>
+
+
+		<form th:action="@{/admin/prize/list}" method="post">
+			<input type="submit" value="戻る" class="back_button"/>
+		</form>
+
+
+	</div>
+
+</body>
+
+</html>
