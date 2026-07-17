@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin category_delete_check">
+<div id="adminCategoryConfirm">
 	<h2 th:class="title" th:text="#{category}+#{title.delete.check}"></h2>
 	<p th:class="check_message" th:text="#{msg.delete.check}"></p>
 
@@ -28,6 +29,7 @@
 		<form th:action="@{/admin/category/detail/{id}(id=*{id})}" method="post">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 
