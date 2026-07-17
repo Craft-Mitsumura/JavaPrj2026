@@ -8,7 +8,9 @@
 </head>
 
 <body class="admin user_delete_check_admin">
+
 	<h2 th:class="title" th:text="#{user}+#{title.delete.check}"></h2>
+   <div id="adminUserDeleteCheck">
 	<p th:class="check_message" th:text="#{msg.delete.check}"></p>
 	<div class="user_info_form_area" th:object=${userForm}>
 		<ul class="input_list" >
@@ -47,6 +49,7 @@
 		<form th:action="@{/admin/user/detail/{id}(id=*{id})}" method="post" class="user_info_form">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 

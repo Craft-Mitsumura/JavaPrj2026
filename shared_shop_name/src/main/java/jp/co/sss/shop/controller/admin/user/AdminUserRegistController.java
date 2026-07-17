@@ -173,7 +173,7 @@ public class AdminUserRegistController {
 
 		// 入力フォーム情報をエンティティに設定
 		BeanUtils.copyProperties(userForm, user);
-
+         user.setPoint(0); // 初期ポイントを0に設定
 		// DB登録
 		userRepository.save(user);
 

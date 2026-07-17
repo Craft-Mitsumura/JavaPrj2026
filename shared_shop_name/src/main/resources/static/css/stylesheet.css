@@ -3477,3 +3477,386 @@ p.link_center {
     color: #aaa;
     border-color: #eee;
 }
+#adminUserDetails{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+#adminUserDetails:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminUserDetails .detail_area{
+    margin-bottom: 30px;
+}
+
+#adminUserDetails .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#adminUserDetails .input_list li{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminUserDetails .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: 600;
+    color: #555;
+}
+
+#adminUserDetails .input_value{
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminUserDetails .detail_button_area{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+#adminUserUpdateInput{
+    max-width: 850px;
+   
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+#adminUserUpdateInput:hover{
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+    transform: translateY(-2px);
+}
+
+#adminUserUpdateInput .input_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminUserUpdateInput .input_list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#adminUserUpdateInput .input_list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminUserUpdateInput .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: 600;
+    color: #555;
+    padding-top: 8px;
+}
+
+#adminUserUpdateInput input[type="text"],
+#adminUserUpdateInput input[type="password"],
+#adminUserUpdateInput textarea{
+    flex: 1;
+    width: 100%;
+}
+
+#adminUserUpdateInput textarea{
+    min-height: 120px;
+    resize: vertical;
+}
+
+#adminUserUpdateInput .radio_label{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+#adminUserUpdateInput .radio_label input[type="radio"]{
+    margin-right: 6px;
+}
+
+#adminUserUpdateInput .input_value{
+    padding-top: 8px;
+    color: #333;
+}
+
+#adminUserUpdateInput .error_list{
+    margin-bottom: 20px;
+}
+#adminUserUpdateCheck{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+#adminUserUpdateCheck:hover{
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+    transform: translateY(-2px);
+}
+
+#adminUserUpdateCheck .check_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminUserUpdateCheck .input_list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#adminUserUpdateCheck .input_list li{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminUserUpdateCheck .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: 600;
+    color: #555;
+}
+
+#adminUserUpdateCheck .input_value{
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminUserDeleteCheck{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+#adminUserDeleteCheck:hover{
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+    transform: translateY(-2px);
+}
+
+#adminUserDeleteCheck .check_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminUserDeleteCheck .input_list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#adminUserDeleteCheck .input_list li{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminUserDeleteCheck .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: 600;
+    color: #555;
+}
+
+#adminUserDeleteCheck .input_value{
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminUserDeleteCheck form{
+    display: inline-block;
+    margin-top: 25px;
+    margin-right: 12px;
+}
+
+#adminUserDeleteCheck .user_info_form_area{
+    text-align: center;
+}
+#adminUserDeleteCheck .send_button{
+	background: #e53935;
+	color: #fff;
+	border-radius: 8px;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color .25s ease, transform .15s ease, box-shadow .25s ease;
+}
+
+
+
+#adminUserRegistInput{
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+#adminUserRegistInput:hover{
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+    transform: translateY(-2px);
+}
+
+#adminUserRegistInput .input_list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#adminUserRegistInput .input_list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminUserRegistInput .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: 600;
+    color: #555;
+    padding-top: 8px;
+}
+
+#adminUserRegistInput input[type="text"],
+#adminUserRegistInput input[type="password"],
+#adminUserRegistInput textarea{
+    flex: 1;
+    width: 100%;
+}
+
+#adminUserRegistInput textarea{
+    min-height: 120px;
+    resize: vertical;
+}
+
+#adminUserRegistInput .radio_label{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+#adminUserRegistInput .radio_label input[type="radio"]{
+    margin-right: 6px;
+}
+
+#adminUserRegistInput .input_value{
+    padding-top: 8px;
+    color: #333;
+}
+
+#adminUserRegistInput .error_list{
+    margin-bottom: 20px;
+}
+
+#adminUserRegistCheck{
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+#adminUserRegistCheck:hover{
+    box-shadow: 0 8px 20px rgba(0,0,0,.10);
+    transform: translateY(-2px);
+}
+
+#adminUserRegistCheck .check_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminUserRegistCheck .input_list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#adminUserRegistCheck .input_list li{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminUserRegistCheck .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: 600;
+    color: #555;
+}
+
+#adminUserRegistCheck .input_value{
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminUserRegistCheck .user_info_form{
+    display: inline-block;
+    margin-top: 25px;
+    margin-right: 12px;
+}
+
+#adminUserRegistCheck .user_info_form_area{
+    text-align: center;
+}
+#preview-imageName,
+#preview-headingImage{
+	height: 90px;
+	
+	
+}
