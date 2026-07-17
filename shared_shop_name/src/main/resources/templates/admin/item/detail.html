@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin item_detail_admin">
+<div id="adminItemDetail">
 	<h2 th:class="title" th:text="#{item}+#{title.detail}"></h2>
 
 	<div class="info_form_area" th:object="${item}">
@@ -68,13 +69,14 @@
 			</form>
 
 			<form th:action="@{/admin/item/update/input/{id}(id=*{id})}" method="post">
-				<input type="submit" value="変更" />
+				<input type="submit" class="send_button" value="変更" />
 			</form>
 
 			<form th:action="@{/admin/item/delete/check/{id}(id=*{id})}" method="post">
 				<input type="submit" value="削除" class="delete" />
 			</form>
 		</div>
+	</div>
 	</div>
 </body>
 

@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin item_update_input">
+  <div  id="adminItemInput"> 
 	<h2 th:class="title" th:text="#{item}+#{title.update.input}"></h2>
 	<p th:class="input_message" th:text="#{msg.update.input}"></p>
 
@@ -77,7 +78,7 @@
 				<li>
 					<label>
 						<span class="input_title">[[#{itemForm.description}]]</span>
-						<textarea rows="6" th:field="*{description}"></textarea>
+						<textarea style="width:100%;"  th:field="*{description}"></textarea>
 					</label>
 				</li>
 				<li>
@@ -97,6 +98,7 @@
 		<form th:action="@{/admin/item/detail/{id}(id=${itemForm.id})}" method="post">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 

@@ -8,6 +8,8 @@
 </head>
 
 <body class="admin item_delete_check">
+
+<div id="adminItemDeleteCheck">
 	<h2 th:class="title" th:text="#{item}+#{title.delete.check}"></h2>
 	<p th:class="check_message" th:text="#{msg.delete.check}"></p>
 
@@ -78,6 +80,7 @@
 		<form th:action="@{/admin/item/detail/{id}(id=*{id})}" method="post">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 
