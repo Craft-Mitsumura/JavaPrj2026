@@ -8,6 +8,8 @@
 </head>
 
 <body class="admin">
+
+ 	<div id="adminOrderDetail">
 	<h2 th:class="title" th:text="#{order}+#{title.detail}"></h2>
 
 	<div class="info_form_area">
@@ -70,6 +72,7 @@
 		<form th:action="@{/admin/order/list}" method="post" class="detail_button_area">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 
