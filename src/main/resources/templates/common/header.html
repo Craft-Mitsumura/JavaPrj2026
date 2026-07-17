@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+
+
+
+   <div id="header" >  
+	<div th:fragment="layout-header" id="containerd">
+
+		<!-- ===================== -->
+		<!-- Logo + Category -->
+		<!-- ===================== -->
+
+		<div class="left-section">
+
+			<div th:if="${session.user  != null and  (session.user.authority == 0
+			or session.user.authority == 1
+			 )   }" class="header-left">
+
+				<a th:href="@{/admin/menu}"> <img id="mainLogo"
+					th:src="@{/images/common/newLogo.png}" alt="AVOIR">
+				</a>
+
+			</div>
+			<div th:if="${session.user == null or  session.user.authority == 2  }" class="header-left">
+
+				<a th:href="@{/}"> <img id="mainLogo"
+					th:src="@{/images/common/newLogo.png}" alt="AVOIR">
+				</a>
+
+			</div>
+ 
+  
+			<div th:if="${session.user == null or session.user.authority == 2}"  class="header-center">
+
+					<button id="categoryBtns" type="button" >
+						<!-- onclick="
+                                     event.stopPropagation();
+                        document.getElementById('categoryLists').classList.toggle('show');
+                           "--> 
+
+						<span>Category</span> <span class="arrow">▼</span>
+
+					</button>
+
+					<div id="categoryLists">
+
+					<ul id="category">
+
+						<li th:each="category:${categories}"><a
+							th:href="@{/client/category/lists/{id}(id=${category.id})}"
+							th:text="${category.name}"> </a></li>
+
+						<li><a th:href="@{/client/item/list/1}"
+							th:text="#{item}+#{title.list}"> </a></li>
+
+					</ul>
+
+				</div>
+
+			</div>
+
+		</div>
+
+
+
+
+
+		<!-- ===================== -->
+		<!-- Search -->
+		<!-- ===================== -->
+
+		<div th:if="${session.user == null or session.user.authority == 2}"  class="header-search">
+
+			<button type="button" id="searchBtn"
+				onclick="
+        event.stopPropagation();
+        document.getElementById('searchInputBar').classList.toggle('show');
+    ">
+				<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+					fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+
+            <path
+						d="M11.742 10.344a6.5 6.5 0 1 0-1.397
+            1.398h-.001q.044.06.098.115l3.85
+            3.85a1 1 0 0 0
+            1.415-1.414l-3.85-3.85a1
+            1 0 0 0-.115-.1zM12
+            6.5a5.5 5.5 0 1
+            1-11 0a5.5 5.5
+            0 0 1 11 0" />
+
+        </svg>
+			</button>
+
+			<form id="searchInputBar" th:action="@{/client/item/list}">
+
+				<div class="search-wrapper">
+
+					<input type="text" name="item" th:value=${param.item} placeholder="ItemSearch">
+
+				</div>
+
+				<button  class="search-btn" type="submit">Search</button>
+
+			</form>
+			
+
+		</div>
+
+
+
+
+
+
+		<!-- ===================== -->
+		<!-- Right -->
+		<!-- ===================== -->
+
+		<div class="header-right">
+
+
+
+			<!-- CLIENT -->
+            <div id="dropDown" >
+			<div class="user_info"
+				th:if="${session.user != null and session.user.authority == 2}">
+
+				<div class="profile">
+
+					<button  class="login-btn" id="userBtn" type="button">
+
+						 <span
+							th:text="${session.user.name}+#{name.polite}"></span> 
+
+					</button>
+
+					<div id="profileMenu">
+
+						<a th:href="@{/client/user/detail}"> My Page </a> <a
+							th:href="@{/logout}"> Logout</a>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+			<!-- ADMIN -->
+
+			<div class="user_info"
+				th:if="${session.user != null and
+     (session.user.authority==0 or session.user.authority==1)}">
+
+				<div class="profile">
+
+					<button id="userBtn" type="button">
+
+						 <span
+							th:text="${session.user.name}+#{name.polite}"></span> 
+
+					</button>
+
+					<div id="profileMenu">
+
+						<a th:href="@{/admin/user/detail/{id}(id=${session.user.id})}">
+							My page </a> <a th:href="@{/logout}">Logout</a>
+
+					</div>
+
+				</div>
+
+			</div>
+
+</div>
+
+			<!-- Guest -->
+
+			<div class="guest-buttons" th:if="${session.user==null}">
+
+				<a class="login-btn" th:href="@{/login}" th:text="#{login}"> </a> <a
+					class="signup-btn" th:href="@{/client/user/regist/input/init}"
+					th:text="#{client.regist}"> </a>
+
+			</div>
+
+
+
+
+			<!-- Cart -->
+
+			<div class="cart-box" th:if="${session.user == null or session.user.authority == 2}" >
+
+				<a id="cart" th:href="@{/client/basket/list}"> <svg
+						xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+						fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
+
+                    <path
+							d="M0 2.5A.5.5
+                    0 0 1 .5 2H2a.5.5
+                    0 0 1 .485.379L2.89
+                    4H14.5a.5.5
+                    0 0 1 .485.621l-1.5
+                    6A.5.5 0 0 1
+                    13 11H4a.5.5
+                    0 0 1-.485-.379L1.61
+                    3H.5a.5.5
+                    0 0 1-.5-.5" />
+
+                    <path
+					d="M5 13a2
+                    2 0 1 0 0
+                    4a2 2 0 0
+                    0 0-4m7
+                    0a2 2 0
+                    1 0 0
+                    4a2 2
+                    0 0 0
+                    0-4" />
+
+                </svg>
+
+				</a>
+				
+				<!-- お気に入りが0件 -->
+				<a th:if="${session.favoriteBeans == null or #lists.isEmpty(session.favoriteBeans)}"id="cart"class="favorite"
+				   th:href="@{/client/favorite/list}">
+				    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+				         fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+				        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+				    </svg>
+				</a>
+
+				<!-- お気に入りが1件以上 -->
+				<a th:if="${session.favoriteBeans != null and !#lists.isEmpty(session.favoriteBeans)}"id="cart"
+				   th:href="@{/client/favorite/list}">
+				    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+				         fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+				        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+				    </svg>
+				</a>
+
+			</div>
+
+		</div>
+<script th:src="@{/static/js/addedScript.js}" defer></script>
+	</div>
+	</div>
+	<script>
+
+	document.addEventListener('DOMContentLoaded', function() {
+
+		document.addEventListener('click', function () {
+		    const searchInputBar = document.getElementById("searchInputBar");
+		    if (searchInputBar) {
+		        searchInputBar.classList.remove("show");
+		    }
+		});
+		});
+
+
+
+
+
+    /* ===========================
+            PROFILE
+    ============================ */
+
+    const profileBtn=document.getElementById("userBtn");
+
+    const profileMenu=document.getElementById("profileMenu");
+
+    if(profileBtn){
+
+        profileBtn.addEventListener("click",function(e){
+
+            e.stopPropagation();
+
+            profileMenu.classList.toggle("show");
+
+            const categoryLists = document.getElementById("categoryLists");
+            if (categoryLists) {
+                categoryLists.classList.remove("show");
+            }
+
+        });
+
+    }
+
+
+
+
+    
+	</script>
+</body>
+</html>

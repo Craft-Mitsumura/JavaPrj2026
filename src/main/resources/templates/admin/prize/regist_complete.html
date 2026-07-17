@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title>景品登録完了 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin prize_regist_complete">
+
+	<h2 class="title">景品登録完了</h2>
+
+	<p class="complete_message">
+		景品を登録しました。
+	</p>
+
+	<p class="complete_link">
+		<a th:href="@{/admin/prize/list}">
+			景品一覧へ戻る
+		</a>
+	</p>
+
+</body>
+
+</html>

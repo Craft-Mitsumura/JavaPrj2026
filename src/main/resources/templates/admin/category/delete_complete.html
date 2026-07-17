@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="#{category}+#{title.delete.complete}+' | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin category_delete_complete">
+<div class="complete-container">
+
+    <div class="complete-card">
+
+        <div class="check-icon">
+            ✓
+        </div>
+
+        <h1>カテゴリ削除完了</h1>
+
+        <p>
+        カテゴリ情報の削除が完了しました。
+        </p>
+
+        <a  th:href="@{/admin/category/list}"  class="home-btn">
+            ホームへ戻る
+        </a>
+
+    </div>
+
+</div>
+
+	</body>
+
+</html>
+

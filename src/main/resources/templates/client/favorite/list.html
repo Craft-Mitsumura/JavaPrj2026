@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>お気に入り商品一覧 | [[#{shop.title}]]</title>
+</head>
+
+<body class="user favorite_list">
+
+	<style>
+		.list_table td a {
+			font-size: 22px !important;
+		}
+
+		/* ページのデザイン */
+		.pagination_area {
+			text-align: center;
+			margin-top: 30px;
+			margin-bottom: 50px;
+		}
+
+		.page_btn {
+			display: inline-block;
+			padding: 8px 16px;
+			margin: 0 4px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			color: #333;
+			text-decoration: none;
+			border-radius: 4px;
+			font-size: 16px;
+		}
+
+		.page_btn.current {
+			background-color: #333;
+			color: #fff;
+			font-weight: bold;
+			border-color: #333;
+		}
+
+		.page_btn:hover:not(.current) {
+			background-color: #eee;
+		}
+
+		h2 {
+			font-weight: bold;
+
+		}
+	</style>
+
+	<h2 class="title">お気に入り一覧</h2>
+
+	<div th:if="${#lists.isEmpty(favoriteList)}" class="sorted_by">
+		<p id="favoritep" >お気に入りに登録されている商品はありません。</p>
+	</div>
+
+	<table th:unless="${#lists.isEmpty(favoriteList)}" class="list_table item_detail">
+		<thead>
+			<tr>
+				<th th:text="#{data.item.image}">画像</th>
+				<th th:text="#{data.item.name}">商品名</th>
+				<th>スペック</th>
+				<th th:text="#{data.item.price}">価格</th>
+				<th th:text="#{category}">カテゴリ</th>
+				<th>お気に入り</th>
+				<th th:text="#{nowBuy}">購入</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="favorite : ${favoriteList}" th:with="item=${favorite.item}" th:attr="data-item-id=${item.id}">
+				<td class="image" th:with="item=${favorite.item}">
+					<a th:href="@{/client/item/detail/{id}(id=${item.id})}">
+						<img th:src="@{/images/{image}(image=${item.image})}" th:if="${item.image != null}"
+							th:onerror="'this.onerror=null;this.src=\'' + @{/images/common/no_image.jpg} + '\';'" />
+						<img th:src="@{/images/common/no_image.jpg}" th:if="${item.image == null}" />
+					</a>
+				</td>
+
+				<td>
+					<a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}">商品名</a>
+				</td>
+
+				<td class="spec_td">
+					<div th:style="'width: 24px;
+				                    height: 24px;
+				                    border-radius: 50%;
+				                    background-color: ' + ${item.colorPattern} + ';
+				                    margin: 0 auto;
+				                    border: 1px solid #ddd;'">
+					</div>
+				</td>
+
+				<td th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '円'" style="text-align: right;">0円</td>
+
+				<td th:text="${item.category.name}">カテゴリ名</td>
+ 
+				<td class="favorite_td" id="favoriteButton">
+					<input type="hidden" class="favoriteItemId" th:value="${item.id}" />
+
+					<button type="button"  class="favoriteButton send_button" style="background:#ffffff;color:#e74c3c;border:1px solid #e74c3c;
+								   width:120px;height:40px;padding:0;">
+
+						<span>♥ お気に入り済み</span>
+
+					</button>
+				</td>
+				<td>
+					<form th:action="@{/client/basket/add}" method="post">
+						<input type="hidden" name="id" th:value="${item.id}" />
+						<input type="hidden" name="from" value="favorite" />
+						<button type="submit" class="btn_basket">今すぐ購入</button>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div th:if="${totalPages > 1}" class="pagination_area">
+
+		<a th:if="${currentPage > 0}"
+			th:href="@{/client/favorite/list(categoryId=${categoryId}, page=${currentPage - 1})}" class="page_btn">«
+			前へ</a>
+
+		<th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+			<span th:if="${currentPage == i}" th:text="${i + 1}" class="page_btn current"></span>
+			<a th:unless="${currentPage == i}" th:href="@{/client/favorite/list(categoryId=${categoryId}, page=${i})}"
+				th:text="${i + 1}" class="page_btn"></a>
+		</th:block>
+
+		<a th:if="${currentPage < totalPages - 1}"
+			th:href="@{/client/favorite/list(categoryId=${categoryId}, page=${currentPage + 1})}" class="page_btn">次へ
+			»</a>
+
+	</div>
+	<script th:inline="javascript">
+		document.addEventListener("DOMContentLoaded", function () {
+			// 共通レイアウト内にある、商品一覧（item）に向かっている検索フォームを探す
+			const searchForm = document.querySelector("form[action*='item']");
+			if (searchForm) {
+				// 送信先をお気に入り一覧画面（自身）のURLに強制的に書き換える
+				searchForm.action = /*[[@{/client/favorite/list}]]*/ '/client/favorite/list';
+			}
+		});
+	</script>
+	<script th:inline="javascript">
+		/* document.querySelectorAll(".favoriteButton").forEach(button => {
+
+			button.addEventListener("click", function (e) {
+
+			    e.preventDefault();
+			    console.log("favorite clicked");
+
+			    const itemId = this.parentElement.querySelector(".favoriteItemId").value;
+
+				fetch("/shared_shop/client/favorite/add", {
+				    method: "POST",
+				    headers: {
+				        "Content-Type": "application/x-www-form-urlencoded"
+				    },
+				    body: "itemId=" + itemId
+				})
+				.then(response => response.text())
+				.then(result => {
+				    console.log(result);
+				});					if (result === "detached") {
+
+						// 一覧からその商品だけ消す
+						this.closest("tr").remove();
+
+						// 全件なくなったら再読み込みして
+						// 「お気に入りに登録されている商品はありません。」
+						// を表示させる
+						if (document.querySelectorAll(".list_table tbody tr").length === 0) {
+							location.reload();
+						}
+
+					} else if (result === "ng") {
+						alert("ログインしてください");
+					}
+
+				});
+
+			});
+ */
+	</script>
+</body>
+
+</html>
