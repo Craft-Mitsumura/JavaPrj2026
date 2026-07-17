@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin item_update_check">
+<div id ="adminItemUpdateCheck">
 	<h2 th:class="title" th:text="#{item}+#{title.update.check}"></h2>
 	<p th:class="check_message" th:text="#{msg.update.check}"></p>
 
@@ -77,6 +78,7 @@
 		<form th:action="@{/admin/item/update/input/{id}(id=*{id})}" method="post">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 

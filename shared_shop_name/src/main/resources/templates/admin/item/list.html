@@ -8,7 +8,7 @@
 </head>
 
 <body class="admin item_list_admin">
-<div class="item_list_admin">
+<div id="adminOrderList">
 	<h2 th:class="title" th:text="#{item}+#{title.list}"></h2>
 		<!-- /*追加登録不可メッセージ */-->
 	<ul class="error_message" th:unless="${registrable}">

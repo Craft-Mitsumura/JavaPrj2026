@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin order_list_admin">
+<div id="adminOrderList">
 	<h2 th:class="title" th:text="#{order}+#{title.list}"></h2>
 	<!--/* 登録なしメッセージ */-->
 	<div th:if="${#lists.isEmpty(orders)}">
@@ -68,6 +69,7 @@
 				<a th:if="${not pages.last}" th:href="@{${url}(page=(${pages.totalPages}-1))}">&gt;&gt;</a>
 			</li>
 		</ul>
+	</div>
 	</div>
 </body>
 
