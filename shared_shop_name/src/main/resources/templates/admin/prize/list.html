@@ -14,8 +14,8 @@
 	<h2 class="title">景品一覧</h2>
 	
 	<!--新規景品追加-->
-	<form th:action="@{/admin/prize/regist/input}" method="post">
-	    <input type="submit" value="景品新規登録" class="menu_button" />
+	<form th:action="@{/admin/prize/regist/input}" method="post" class="sign_up_form">
+	    <input type="submit" value="景品新規登録" class="menu_button">
 	</form>
 
 	<!-- 景品が0件 -->
@@ -45,6 +45,11 @@
 					<form th:action="@{/admin/prize/update/input/{id}(id=${prize.id})}" method="post">
 						<input type="submit" value="変更" class="changeBtn"/>
 					</form>
+				
+				    <form th:action="@{/admin/prize/delete}" method="post" onsubmit="return confirm('この景品を削除しますか？');">
+				        <input type="hidden" name="id" th:value="${prize.id}">
+				        <input type="submit" value="削除" class="deleteBtn">
+				    </form>
 				</td>
 			</tr>
 
