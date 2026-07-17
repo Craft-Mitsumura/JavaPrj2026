@@ -8,7 +8,9 @@
 </head>
 
 <body class="admin user_detail_admin">
+
 	<h2 th:class="title" th:text="#{user}+#{title.detail}"></h2>
+      <div id="adminUserDetails" > 
 	<div class="info_form_area" th:object="${userBean}">
 		<div class="detail_area">
 			<ul class="input_list">
@@ -55,6 +57,7 @@
 				<input type="submit" value="削除" class="delete" th:unless="${userBean.id==session.user.id}" />
 			</form>
 		</div>
+	</div>
 	</div>
 </body>
 
