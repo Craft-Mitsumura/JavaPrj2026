@@ -10,6 +10,7 @@
 
 <body class="admin ad_regist_input">
 	<div th:fragment="content" class="admin ad_list">
+	<div id="admin">
 		<h2 class="title">広告追加</h2>
 
 		<div class="update ad_form">
@@ -162,7 +163,7 @@
 			</form>
 		</div>
 	</div>
-
+</div>
 	<script th:inline="javascript">
 		// Thymeleafからパスを取得
 		const noImagePath = /*[[@{/images/common/no_image.jpg}]]*/ '/images/common/no_image.jpg';

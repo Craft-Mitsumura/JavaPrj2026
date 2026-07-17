@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin category_regist_check">
+<div id="adminCategoryConfirm">
 	<h2 th:class="title" th:text="#{category}+#{title.input.check}"></h2>
 	<p th:class="check_message" th:text="#{msg.regist.check}"></p>
 
@@ -30,6 +31,7 @@
 		<form th:action="@{/admin/category/regist/input}" method="post">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 

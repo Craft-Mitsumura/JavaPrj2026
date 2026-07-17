@@ -8,6 +8,7 @@
 </head>
 
 <body class="admin category_detail">
+<div id="adminDetails">
 	<h2 th:class="title" th:text="#{category}+#{title.detail}"></h2>
 	<div class="info_form_area" th:object="${category}">
 		<div class="detail_area">
@@ -29,12 +30,13 @@
 				<input type="submit" value="戻る" class="back_button"/>
 			</form>
 			<form th:action="@{/admin/category/update/input/{id}(id=*{id})}" method="post">
-				<input type="submit" value="変更" />
+				<input type="submit" class="changeBtn" value="変更" />
 			</form>
 			<form th:action="@{/admin/category/delete/check/{id}(id=*{id})}" method="post">
 				<input type="submit" value="削除" class="delete" />
 			</form>
 		</div>
+	</div>
 	</div>
 </body>
 

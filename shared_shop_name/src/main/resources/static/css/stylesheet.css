@@ -2660,7 +2660,7 @@ p.link_center {
 #admin select,
 #admin textarea{
 
-    width:100%;
+    width:auto;
 
     padding:12px;
 
@@ -2810,3 +2810,211 @@ p.link_center {
     margin-bottom:25px;
 
 }
+
+#admin .update{
+    background: #fff;
+    border: 1px solid #d0e4ff;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    max-width: fit-content;
+    margin: 20px auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+#admin .update:hover{
+    box-shadow: 0 8px 20px rgba(25, 118, 210, 0.25);
+    transform: translateY(-2px);
+}
+#admin .input{
+	max-width: 400px;
+}
+
+#adminDetails{
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+#adminDetails .title{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+#adminDetails .info_form_area{
+    width: 100%;
+}
+
+#adminDetails .detail_area{
+    margin-bottom: 30px;
+}
+
+#adminDetails .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#adminDetails .input_list li{
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminDetails .input_title{
+    width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#adminDetails .input_value{
+    flex: 1;
+    color: #333;
+}
+
+#adminDetails .detail_button_area{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+#adminDetails .delete:hover{
+		background: #d32f2f;
+	color: white;
+}
+#adminDetails .changeBtn:hover{
+		background: #0b2240;
+	color: white;
+}
+#adminCategoryInput{
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminCategoryInput:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+#adminCategoryInput .user_info_form_area{
+	margin:auto;
+	width:100%;
+}
+#adminCategoryConfirm{
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminCategoryConfirm:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminCategoryConfirm .title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#adminCategoryConfirm .check_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+    font-weight: bold;
+}
+
+#adminCategoryConfirm .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+}
+
+#adminCategoryConfirm .input_list li{
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminCategoryConfirm .input_title{
+    width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#adminCategoryConfirm .input_value{
+    flex: 1;
+    color: #333;
+}
+#adminCategoryConfirm .delete:hover{
+		background: #d32f2f;
+	color: white;
+}
+#adminCategoryRegistInput{
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminCategoryRegistInput:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminCategoryRegistInput .title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#adminCategoryRegistInput .input_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminCategoryRegistInput .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+}
+
+#adminCategoryRegistInput .input_list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminCategoryRegistInput .input_title{
+    width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#adminCategoryRegistInput input[type="text"],
+#adminCategoryRegistInput textarea{
+    flex: 1;
+    width: 100%;
+}
+
