@@ -10,6 +10,7 @@
 
 <body class="admin ad_update_check">
 	<div th:fragment="content" class="admin ad_list">
+	<div id="admin">
 		<h2 class="title">広告変更-確認</h2>
 
 		<div class="update ad_form" th:object="${promotionsForm}">
@@ -96,7 +97,7 @@
 				<input type="submit" value="更新" />
 			</form>
 
-			<form th:action="@{/admin/ad/update/input}" method="post" th:object="${promotionsForm}">
+			<form  th:action="@{/admin/ad/update/input}" method="post" th:object="${promotionsForm}">
 				<input type="hidden" th:field="*{id}" />
 				<input type="hidden" th:field="*{pageName}" />
 				<input type="hidden" th:field="*{layoutType}" />
@@ -117,9 +118,10 @@
 					<input type="hidden" name="linkUrls" th:value="*{linkUrls[__${iter.index}__]}" />
 				</div>
 
-				<input type="submit" value="戻る" />
+				<input style="margin-top:3%;" type="submit" value="戻る" />
 			</form>
 		</div>
+	</div>
 	</div>
 </body>
 </html>
