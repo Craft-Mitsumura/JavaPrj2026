@@ -54,11 +54,17 @@
 			            <input type="submit" value="変更" class="changeBtn"/>
 			        </form>
 
-			        <form th:action="@{/admin/prize/delete}" method="post"
-			              onsubmit="return confirm('この景品を削除しますか？');">
+			        <form th:action="@{/admin/prize/delete/confirm}" method="post"
+			              >
 			            <input type="hidden" name="id" th:value="${prize.id}">
 			            <input type="submit" value="削除" id="deleteBtn">
 			        </form>
+					
+					<!--<form th:action="@{/admin/prize/delete}" method="post"
+					      onsubmit="return confirm('この景品を削除しますか？');">
+					    <input type="hidden" name="id" th:value="${prize.id}">
+					    <input type="submit" value="削除" id="deleteBtn">
+					</form>-->
 			    </td>
 
 			</tr>

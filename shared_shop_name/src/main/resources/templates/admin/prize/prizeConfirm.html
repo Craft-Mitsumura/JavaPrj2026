@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_3block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+<meta charset="UTF-8">
+<title th:text=" '景品削除かくにん  | '+ #{shop.title}"></title>
+</head> 
+<body>
+<div id="adConfirm">
+
+    <h1 class="page-title">広告削除確認</h1>
+
+    <p class="confirm-message">
+        以下の景品を削除します。よろしいですか？
+    </p>
+
+    <div class="ad-card">
+
+        <table class="confirm-table">
+
+            <tr>
+                <th>景品名</th>
+                <td th:text="${prize.name}"></td>
+            </tr>
+
+            <tr>
+                <th>必要ポイント</th>
+                <td th:text="${prize.requiredPoint}"></td>
+            </tr>
+
+            <tr>
+                <th>説明</th>
+                <td class="content" th:text="${prize.description}"></td>
+            </tr>
+			
+			<tr>
+			    <th>画像</th>
+			    <td>
+			        <img th:if="${prize.image != null}"
+			             th:src="@{/images/{image}(image=${prize.image})}"
+			             width="150"
+			             height="150"
+			             style="object-fit: contain;">
+
+			        <img th:if="${prize.image == null}"
+			             th:src="@{/images/common/no_image.jpg}"
+			             width="150"
+			             height="150">
+			    </td>
+			</tr>
+
+        </table>
+
+        <div class="button-area">
+            <a th:href="@{/admin/prize/list}" class="btn cancel">
+                キャンセル
+            </a>
+
+            <form th:action="@{/admin/prize/delete/execute}" method="post">
+                <input type="hidden" name="id" th:value="${prize.id}">
+                <button class="btn delete" type="submit">
+                    削除する
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

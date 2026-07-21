@@ -1,4 +1,4 @@
-package jp.co.sss.shop.controller.admin.ad;
+package jp.co.sss.shop.controller.admin.prize;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jp.co.sss.shop.repository.PromotionsRepository;
+import jp.co.sss.shop.repository.PrizeRepository;
+
 @Controller
-public class AdminAdDeleteConfirm {
-	
+
+public class AdminPrizeDeleteConfirm {
 	@Autowired
-	PromotionsRepository  pRepo ;
-	@RequestMapping(path ="/admin/prize/confirm" , method= RequestMethod.POST)
+	PrizeRepository  pRepo ;
+	@RequestMapping(path ="/admin/prize/delete/confirm" , method= RequestMethod.POST)
 	public String confirmDelete(
 			Model model ,
 			@RequestParam("id") Integer id
@@ -21,8 +22,8 @@ public class AdminAdDeleteConfirm {
 			
 			) {
 		System.out.println(id);
-		model.addAttribute("items" , pRepo.findById(id).orElse(null));
+		model.addAttribute("prize" , pRepo.findById(id).orElse(null));
 		System.out.println("削除確認画面に遷移");
-		return"admin/ad/adDeleteConfirm"; 	
+		return"admin/prize/prizeConfirm"; 	
 	}
 }
