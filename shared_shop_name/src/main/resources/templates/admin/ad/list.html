@@ -19,7 +19,7 @@
 		<h2 class="title">広告一覧</h2>
 
 		<form th:action="@{/admin/ad/regist/input}" method="post" class="sign_up_form">
-			<input type="submit" value="新規広告追加" class="menu_button" />
+			<input style=" padding:1%;" type="submit" value="カルーセル追加" class="menu_button" />
 		</form>
 
 		<p th:if="${promotions == null or #lists.isEmpty(promotions)}" th:text="'登録されている広告はありません。'"></p>
@@ -36,7 +36,7 @@
 			<tbody>
 				<tr th:each="ad : ${promotions}">
 					<td th:text="${ad.id}"></td>
-					<td th:text="${ad.adTitle}"></td>
+					<td > <a th:text="${ad.adTitle}" th:href="@{/ad/details/{id}( id=${ad.id})}" > </a></td>
 					<td>
 						<span th:text="${ad.isActive == 1 ? '有効' : '無効'}">有効</span>
 					</td>
