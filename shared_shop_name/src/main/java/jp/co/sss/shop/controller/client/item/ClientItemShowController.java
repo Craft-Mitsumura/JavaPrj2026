@@ -3,7 +3,6 @@ package jp.co.sss.shop.controller.client.item;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -104,9 +104,8 @@ public class ClientItemShowController {
 		model.addAttribute("items", items);
 		model.addAttribute("sortType", 1); // デフォルトを新着順（例として1）として扱う
 		model.addAttribute(
-			    "categories",
-			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
-			);
+				"categories",
+				categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED));
 
 		//	    ランキング表示用
 		//	    購入日をすべて1日に変更する
@@ -138,7 +137,10 @@ public class ClientItemShowController {
 	 * @return 商品詳細画面
 	 */
 	@RequestMapping(path = "/client/item/detail/{id}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String details(Model model, @PathVariable Integer id) {
+	public String details(Model model, @PathVariable Integer id,
+			@RequestParam(required = false) Boolean isEngravingSelected,
+			@RequestParam(required = false) String engravingText,
+			@RequestParam(required = false) String fontType) {
 
 		Item detailItem = itemRepository.findById(id).orElse(null);
 
@@ -159,6 +161,10 @@ public class ClientItemShowController {
 
 				// モデルに追加（これでJSから全バリエーション情報が参照可能になる）
 				model.addAttribute("variationList", variationList);
+
+				model.addAttribute("paramIsEngravingSelected", isEngravingSelected);
+				model.addAttribute("paramEngravingText", engravingText);
+				model.addAttribute("paramFontType", fontType);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -212,9 +218,8 @@ public class ClientItemShowController {
 		model.addAttribute("page", itemPage);
 
 		model.addAttribute(
-			    "categories",
-			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
-			);
+				"categories",
+				categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED));
 
 		Category category = categoryRepository.findByIdAndDeleteFlag(id, 0);
 
@@ -237,7 +242,6 @@ public class ClientItemShowController {
 	 * @param items 検索する商品名
 	 * @return "client/item/list" 商品一覧画面
 	 */
-	
 
 	/**
 	 * 商品一覧表示（全商品）
@@ -268,19 +272,51 @@ public class ClientItemShowController {
 		model.addAttribute("cateex", "");
 
 		model.addAttribute(
-			    "categories",
-			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
-			);
+				"categories",
+				categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED));
 
 		return "client/item/list";
 
 	}
-	@RequestMapping(path="/client/item/list" , method = {RequestMethod.GET,RequestMethod.POST})
-	public String keyboardSearch (@RequestParam ( name = "item" , required = false) String item , Model model  ) {
-	System.out.println("triggred");
-		List<Item> itemss = itemRepository.findByNameContainingIgnoreCaseAndDeleteFlag(item , Constant.NOT_DELETED );
-		 model.addAttribute("items" , itemss);
-		return"client/item/list";
+
+	@RequestMapping(path = "/client/item/list", method = { RequestMethod.GET, RequestMethod.POST })
+	public String keyboardSearch(@RequestParam(name = "item", required = false) String item, Model model) {
+		System.out.println("triggred");
+		List<Item> itemss = itemRepository.findByNameContainingIgnoreCaseAndDeleteFlag(item, Constant.NOT_DELETED);
+		model.addAttribute("items", itemss);
+		return "client/item/list";
+	}
+	
+	@GetMapping (path="/client/ad/page/{id}")
+	public String adPage(Model model,
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "0") int page
+			) {
+	  System.out.println("triggred");
+	  Page<Item> itemPage = itemRepository.findByCategoryId(
+				id,
+				PageRequest.of(page, 20));
+
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
+
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
+
+		Category category = categoryRepository.findByIdAndDeleteFlag(id, 0);
+
+		model.addAttribute("category", category);
+
+		//見出しを表示する
+		model.addAttribute("itemTitle", category.getName());
+		model.addAttribute("cateex", category.getDescription());
+
+		// ページ移動時にカテゴリを保持する
+		model.addAttribute("categoryId", id);
+
+		return "client/item/list";
 	}
 
 }

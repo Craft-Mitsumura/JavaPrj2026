@@ -43,7 +43,8 @@
 				<th>[[#{data.basket.stock.status}]]</th>
 			</tr>
 			<tr th:each="item, status: ${session.basketBeans}">
-				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
+				<td><a th:href="@{/client/item/detail/{id}(id=${item.id}, isEngravingSelected=${item.isEngravingSelected}, engravingText=${item.engravingText}, fontType=${item.fontType})}"
+						th:text="${item.name}"></a></td>
 				<td>
 					<th:block th:if="${item.isEngravingSelected}">
 						<div style="font-size: 0.9em; color: #555;">
@@ -94,7 +95,7 @@
 		</div>
 	</th:block>
 
-	<th:block id="randomItems" th:if="${session.basketBeans == null or #lists.isEmpty(session.basketBeans)}">
+	<th:block id="randomItems">
 		<div class="ecommerce-section">
 			<!--title -->
 			<h2 class="section-title">おすすめ商品 <span class="subtitle">Recommended For You</span></h2>
