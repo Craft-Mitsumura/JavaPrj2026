@@ -149,7 +149,7 @@
 			<div class="option_checkbox_area" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
 				<h3 style="background-color: #a4d5ee; margin: -10px -10px 10px -10px; padding: 5px;">オプション</h3>
 				<label>
-					<input type="checkbox" id="engraving_trigger" />
+					<input type="checkbox" id="engraving_trigger" th:checked="${paramIsEngravingSelected}" />
 					刻印サービスを希望する
 				</label>
 			</div>
@@ -157,16 +157,17 @@
 			<div id="engraving_form_container" class="hidden_form_area">
 				<div style="margin-bottom: 10px;">
 					<label><strong>刻印文字列（最大15文字）</strong></label>
-					<input type="text" name="engravingText" id="engraving_text" maxlength="15" style="width: 100%;" />
+					<input type="text" name="engravingText" id="engraving_text" maxlength="15" style="width: 100%;"
+						th:value="${paramEngravingText}" />
 				</div>
 
 				<div style="margin-bottom: 10px;">
 					<label><strong>フォント</strong></label>
 					<select name="fontType" id="engraving_font" style="width: 100%;">
 						<option value="">--</option>
-						<option value="Serif">Serif</option>
-						<option value="Script">Script</option>
-						<option value="Sans">Sans</option>
+						<option value="Serif" th:selected="${paramFontType == 'Serif'}">Serif</option>
+						<option value="Script" th:selected="${paramFontType == 'Script'}">Script</option>
+						<option value="Sans" th:selected="${paramFontType == 'Sans'}">Sans</option>
 					</select>
 				</div>
 
@@ -338,7 +339,13 @@
 			const MOVE_STEP = 4;
 			const ROTATE_STEP = 2;
 
-			formContainer.style.display = 'none';
+			if (trigger && trigger.checked) {
+				formContainer.style.display = 'block';
+				hiddenEngravings.forEach(h => h.value = "true");
+				updatePreview();
+			} else {
+				formContainer.style.display = 'none';
+			}
 
 			function updatePreview() {
 				const textValue = engravingInput.value;

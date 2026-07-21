@@ -46,18 +46,30 @@
 		<table class="list_table detail">
 			<tr>
 				<th>[[#{data.item.name}]]</th>
+				<th>刻印内容</th> <!-- 追加 -->
 				<th>[[#{data.unit.price}]]</th>
 				<th>[[#{data.order.num}]]</th>
 				<th>[[#{data.subtotal}]]</th>
 			</tr>
 			<tr th:each="orderItem: ${orderItemBeans}">
 				<td th:text="${orderItem.name}"></td>
+				<td>
+					<th:block th:if="${orderItem.isEngravingSelected}">
+						<div style="font-size: 0.9em; color: #555;">
+							内容: <span th:text="${orderItem.engravingText}"></span><br>
+							フォント: <span th:text="${orderItem.fontType}"></span>
+						</div>
+					</th:block>
+					<th:block th:unless="${orderItem.isEngravingSelected}">
+						<span>-</span>
+					</th:block>
+				</td>
 				<td th:text="${orderItem.price}"></td>
 				<td th:text="${orderItem.orderNum}"></td>
 				<td th:text="${orderItem.subtotal}"></td>
 			</tr>
 			<tr>
-				<td colspan="2"></td>
+				<td colspan="3"></td>
 				<td class="total">[[#{data.total}]]</td>
 				<td class="total" th:text="${total}"></td>
 			</tr>
