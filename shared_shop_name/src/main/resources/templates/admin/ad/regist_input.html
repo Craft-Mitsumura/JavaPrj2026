@@ -11,7 +11,7 @@
 <body class="admin ad_regist_input">
 	<div th:fragment="content" class="admin ad_list">
 	<div id="admin">
-		<h2 class="title">広告追加</h2>
+		<h2 class="title">カルーセル式カテゴリ追加</h2>
 
 		<div class="update ad_form">
 			<form th:action="@{/admin/ad/regist/check}" method="post" th:object="${promotionsForm}"
@@ -40,7 +40,7 @@
 				        <span th:each="err : ${#fields.errors('body')}" 
 				              th:if="${err.contains('文字以内で入力')}" 
 				              th:text="${err}" style="color:red;"></span><br th:if="${#fields.hasErrors('body')}" />
-				    </th:block>
+				    </th:block> 
 				</div>
 
 				<div class="form">
@@ -49,7 +49,7 @@
 						<input type="text" th:field="*{pageName}" />
 					</div>
 				</div>
-				<div class="form">
+				 <div class="form">
 					<div class="label">レイアウトタイプ：</div>
 					<div class="input">
 						<select th:field="*{layoutType}" id="layoutType">
@@ -58,13 +58,13 @@
 							<option value="3">タイプ3</option>
 						</select>
 					</div>
-				</div>
-				<div class="form">
+				</div> 
+				<!--  <div class="form">
 					<div class="label">レイアウト例：</div>
 					<div class="input">
 						<img id="layout-example-img" style="width: 200px; height: auto; border: 1px solid #ccc;" />
 					</div>
-				</div>
+				</div>  -->
 				<div class="form">
 					<div class="label">サムネイル：</div>
 					<div class="input">
@@ -86,14 +86,14 @@
 						<input type="text" th:field="*{targetUrl}" />
 					</div>
 				</div>
-				<div class="form">
+			 <div class="form">
 					<div class="label">見出し：</div>
 					<div class="input">
 						<input type="text" th:field="*{adTitle}" />
 					</div>
 				</div>
-
-				<div class="form">
+ 
+				 <div class="form">
 					<div class="label">タイトル画像：</div>
 					<div class="input">
 						<input type="file" th:field="*{headingImage}"
@@ -116,19 +116,19 @@
 					<div class="input">
 						<textarea th:field="*{body}" rows="5" cols="40"></textarea>
 					</div>
-				</div>
+				</div> 
 
 				<div class="form">
 					<div class="label">リンクリスト：</div>
 					<div class="input" id="link-list-container">
 					</div>
-				</div>
+				</div> 
 				<div class="form">
 					<div class="label"></div>
 					<div class="input">
 						<button type="button" id="addLinkBtn">リンクを追加</button>
 					</div>
-				</div>
+				</div> 
 
 				<template id="link-template">
 					<div class="link-item" style="margin-bottom: 10px; border: 1px solid #ccc; padding: 5px;">

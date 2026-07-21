@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.repository.PromotionsRepository;
 import jp.co.sss.shop.service.PromotionConverter;
@@ -51,6 +53,15 @@ public class AdminAdShowController{
         
         return "admin/ad/list";
 	}
+    
+    @GetMapping("/ad/details/{id}")
+    public String adDetails(
+    		Model model ,
+    		@PathVariable(required= true) Integer id 
+    		) {
+    	model.addAttribute("items" , repository.findById(id).orElse(null));
+    	return"admin/ad/adDetails";
+    }
     
     
 }
