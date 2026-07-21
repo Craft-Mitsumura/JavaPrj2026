@@ -196,7 +196,7 @@ public class BeanTools {
 		return orderItemBean;
 
 	}
-	
+
 	/**
 	 * OrderItemエンティティのリストから、OrderItemBeanのリストを生成
 	 * 
@@ -219,31 +219,40 @@ public class BeanTools {
 			int subtotal = orderItem.getPrice() * orderItem.getQuantity();
 
 			orderItemBean.setSubtotal(subtotal);
+			
+			// 追加（金城）：刻印機能関係
+			boolean isSelected = (orderItem.getIsEngravingRequested() != null
+					&& orderItem.getIsEngravingRequested() == 1);
+			orderItemBean.setIsEngravingSelected(isSelected);
 
+			orderItemBean.setEngravingText(orderItem.getEngravingText());
+			orderItemBean.setFontType(orderItem.getEngravingFont()); // Bean側のフィールド名が fontType のため
+			// 追加終わり
+			
 			orderItemBeanList.add(orderItemBean);
 		}
 		return orderItemBeanList;
 	}
-	
+
 	public PrizeForm copyEntityToPrizeForm(Prize entity) {
 
-	    PrizeForm form = new PrizeForm();
+		PrizeForm form = new PrizeForm();
 
-	    BeanUtils.copyProperties(entity, form);
+		BeanUtils.copyProperties(entity, form);
 
-	    return form;
+		return form;
 	}
-	
+
 	public Prize copyPrizeFormToEntity(PrizeForm form) {
 
-	    Prize entity = new Prize();
+		Prize entity = new Prize();
 
-	    BeanUtils.copyProperties(form, entity);
+		BeanUtils.copyProperties(form, entity);
 
-	    if (form.getId() != null) {
-	        entity.setId(form.getId());
-	    }
+		if (form.getId() != null) {
+			entity.setId(form.getId());
+		}
 
-	    return entity;
+		return entity;
 	}
 }

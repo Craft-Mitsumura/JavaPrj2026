@@ -52,6 +52,30 @@ public class OrderItem {
 	 */
 	@Column
 	private int price;
+	
+	//---------------------------
+	/**
+	 * @author 金城
+	 * 刻印希望フラグ (0:希望しない, 1:希望する)
+	 */
+	@Column(name = "is_engraving_requested")
+	private Integer isEngravingRequested; // または boolean / int
+
+	/**
+	 * @author 金城
+	 * 刻印文字列
+	 */
+	@Column(name = "engraving_text")
+	private String engravingText;
+
+	/**
+	 * @author 金城
+	 * 刻印フォント
+	 */
+	@Column(name = "engraving_font")
+	private String engravingFont;
+	
+	//-----------------------------
 
 	/**
 	 * 注文商品IDの取得
@@ -131,6 +155,56 @@ public class OrderItem {
 	 */
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	//---- getter・setter追加
+	
+	/**
+	 * @author 金城
+	 * @return
+	 */
+	public Integer getIsEngravingRequested() {
+		return isEngravingRequested;
+	}
+
+	/**
+	 * @author 金城
+	 * @param isEngravingRequested
+	 */
+	public void setIsEngravingRequested(Integer isEngravingRequested) {
+		this.isEngravingRequested = isEngravingRequested;
+	}
+
+	/**
+	 * @author 金城
+	 * @return
+	 */
+	public String getEngravingText() {
+		return engravingText;
+	}
+
+	/**
+	 * @author 金城
+	 * @param engravingText
+	 */
+	public void setEngravingText(String engravingText) {
+		this.engravingText = engravingText;
+	}
+
+	/**
+	 * @author 金城
+	 * @return
+	 */
+	public String getEngravingFont() {
+		return engravingFont;
+	}
+
+	/**
+	 * 
+	 * @param engravingFont
+	 */
+	public void setEngravingFont(String engravingFont) {
+		this.engravingFont = engravingFont;
 	}
 
 }
