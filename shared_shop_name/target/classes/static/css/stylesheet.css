@@ -2147,7 +2147,7 @@ p.link_center {
 /*  random items -------------- */
 
 .ecommerce-section {
-    padding: 40px 20px;
+    
     max-width: 1200px;
     margin: 0 auto;
     font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -2331,6 +2331,7 @@ p.link_center {
     background:#000;
     color:#fff;
     margin-top:60px;
+    position:relative;
 }
 
 .footer-container{

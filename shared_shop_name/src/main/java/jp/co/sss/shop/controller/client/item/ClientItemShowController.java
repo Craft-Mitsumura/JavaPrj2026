@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -281,6 +282,38 @@ public class ClientItemShowController {
 		List<Item> itemss = itemRepository.findByNameContainingIgnoreCaseAndDeleteFlag(item , Constant.NOT_DELETED );
 		 model.addAttribute("items" , itemss);
 		return"client/item/list";
+	}
+	
+	@GetMapping (path="/client/ad/page/{id}")
+	public String adPage(Model model,
+			@PathVariable Integer id,
+			@RequestParam(defaultValue = "0") int page
+			) {
+	  System.out.println("triggred");
+	  Page<Item> itemPage = itemRepository.findByCategoryId(
+				id,
+				PageRequest.of(page, 20));
+
+		model.addAttribute("items", itemPage.getContent());
+		model.addAttribute("page", itemPage);
+
+		model.addAttribute(
+			    "categories",
+			    categoryRepository.findByDeleteFlagOrderByIdAsc(Constant.NOT_DELETED)
+			);
+
+		Category category = categoryRepository.findByIdAndDeleteFlag(id, 0);
+
+		model.addAttribute("category", category);
+
+		//見出しを表示する
+		model.addAttribute("itemTitle", category.getName());
+		model.addAttribute("cateex", category.getDescription());
+
+		// ページ移動時にカテゴリを保持する
+		model.addAttribute("categoryId", id);
+
+		return "client/item/list";
 	}
 
 }
