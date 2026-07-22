@@ -27,7 +27,7 @@
 				<dt>[[#{itemForm.price}]]</dt>
 				<dd th:text="|￥${#numbers.formatInteger(item.price,3,'COMMA')}|"></dd>
 				<dt>[[#{itemForm.stock}]]</dt>
-				<dd th:text="*{stock}"></dd>
+				<dd  th:text="*{#numbers.formatDecimal(stock, 0, 'COMMA', 0, 'POINT')}"></dd>
 				<dt>[[#{data.category}]]</dt>
 				<dd th:text="*{categoryName}"></dd>
 				<!-- JSONスペック情報の表示 -->
