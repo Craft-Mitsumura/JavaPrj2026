@@ -57,12 +57,10 @@
                 キャンセル
             </a>
 
-            <form th:action="@{/admin/prize/delete/execute}" method="post">
-                <input type="hidden" name="id" th:value="${prize.id}">
-                <button class="btn delete" type="submit">
-                    削除する
-                </button>
-            </form>
+			<form th:action="@{/admin/prize/delete/complete}" method="post">
+			    <input type="hidden" name="id" th:value="${prize.id}">
+			    <input type="submit" value="削除する">
+			</form>
         </div>
 
     </div>

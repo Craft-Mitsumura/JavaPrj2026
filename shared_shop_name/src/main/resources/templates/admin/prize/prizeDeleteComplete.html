@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+
+<head>
+<meta charset="UTF-8">
+<title>景品削除完了</title>
+</head>
+
+<body>
+
+<h2>景品削除完了</h2>
+
+<p>景品を削除しました。</p>
+
+<form th:action="@{/admin/prize/list}" method="get">
+    <input type="submit" value="景品一覧へ戻る">
+</form>
+
+</body>
+</html>
