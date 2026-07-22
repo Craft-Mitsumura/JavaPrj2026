@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title th:text=" 'カルーセル式カテゴリ削除かくにん  | '+ #{shop.title}"></title>
+
 </head> 
 <body>
 <div id="adConfirm">
@@ -73,12 +74,16 @@
                 キャンセル
             </a>
 
-            <form th:action="@{/admin/ad/delete/execute}" method="post">
-                <input type="hidden" name="id" th:value="${items.id}">
-                <button class="btn delete" type="submit">
-                    削除する
-                </button>
-            </form>
+			<form th:action="@{/admin/ad/delete/execute}" method="post">
+			    <input type="hidden" name="id" th:value="${items.id}">
+			    <button
+			        class="btn delete"
+			        type="submit"
+			        style="width:220px; height:55px; font-size:18px;">
+			        削除する
+			    </button>
+			</form>
+			
         </div>
 
     </div>
