@@ -4,15 +4,15 @@
 
 <head>
 <meta charset="UTF-8">
-<title th:text=" '広告削除かくにん  | '+ #{shop.title}"></title>
+<title th:text=" 'カルーセル式カテゴリ削除かくにん  | '+ #{shop.title}"></title>
 </head> 
 <body>
 <div id="adConfirm">
 
-    <h1 class="page-title">広告削除確認</h1>
+    <h1 class="page-title">カルーセル式カテゴリ削除確認</h1>
 
     <p class="confirm-message">
-        以下の広告を削除します。よろしいですか？
+        以下のカルーセル式カテゴリを削除します。よろしいですか？
     </p>
 
     <div class="ad-card" th:each="items : ${items}">

@@ -5,13 +5,13 @@
 <head>
     <meta charset="UTF-8" />
 <!--    <title>広告変更入力 | シェアードショップ</title>-->
-	<title th:text="'広告変更入力 | '+ #{shop.title}"> </title>
+	<title th:text="'カルーセル式カテゴリ変更入力 | '+ #{shop.title}"> </title>
 </head>
 
 <body class="admin ad_update_input">
    <div th:fragment="content" >
     <div  id="admin"> 
-    <h2 class="title">広告変更</h2>
+    <h2 class="title">カルーセル式カテゴリ変更</h2>
 
     <div class="update ad_form">
         <form th:action="@{/admin/ad/update/check}" method="post" th:object="${promotionsForm}"

@@ -19,7 +19,7 @@
 	
 	<div class="container" style="position: relative; min-height: 80vh;">
 
-		<aside class="admin_sidebar" style="position: absolute; left: 0; top: 20px; width: 200px; z-index: 10;">
+		<aside 　th:if="${session.user.authority == 1}" class="admin_sidebar" style="position: absolute; left: 0; top: 20px; width: 200px; z-index: 10;">
 			<div class="border border-gray-200 rounded-md p-5 mr-9">
 				<h2 class="font-bold text-lg" th:text="#{admin.menu}">運用メニュー</h2><br>
 				
@@ -42,7 +42,7 @@
 					</li>
 					<li class="flex items-center" style="margin-bottom: 12px;">
 						<img th:src="@{/images/common/document.png}" alt="" class="w-5 h-5">
-						<a th:href="@{/admin/ad/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl">カルーセル式カテゴリ追加</a>
+						<a th:href="@{/admin/ad/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl">カルーセル式カテゴリ追加一覧</a>
 					</li>
 					<li class="flex items-center" style="margin-bottom: 12px;">
 					    <img th:src="@{/images/common/gift.png}" alt="" class="w-5 h-5">
