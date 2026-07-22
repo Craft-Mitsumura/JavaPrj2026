@@ -1,220 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <meta charset="UTF-8" />
-<!--    <title>広告変更入力 | シェアードショップ</title>-->
-	<title th:text="'カルーセル式カテゴリ変更入力 | '+ #{shop.title}"> </title>
+	<meta charset="UTF-8" />
+	<title th:text="'カテゴリカルーセル変更 | '+ #{shop.title}"> </title>
 </head>
 
 <body class="admin ad_update_input">
-   <div th:fragment="content" >
-    <div  id="admin"> 
-    <h2 class="title">カルーセル式カテゴリ変更</h2>
+	<div th:fragment="content" class="admin ad_list">
+		<div id="adminItemInput">
+			<h2 class="title">カテゴリカルーセル変更</h2>
+			<p class="input_message">変更内容を入力してください。</p>
 
-    <div class="update ad_form">
-        <form th:action="@{/admin/ad/update/check}" method="post" th:object="${promotionsForm}"
-            enctype="multipart/form-data">
+			<div class="user_info_form_area">
+				<form th:action="@{/admin/ad/update/check}" enctype="multipart/form-data" method="post"
+					class="user_info_form" th:object="${updateForm}">
 
-            <input type="hidden" th:field="*{id}" />
+					<input type="hidden" th:field="*{id}" />
 
-            <p th:if="${#fields.hasErrors('*')}">
-                <span th:each="error:${#fields.detailedErrors()}">
-                    <span th:text="${error.message}"></span><br />
-                </span>
-            </p>
-            <div th:if="${errorMessage}">
-                <p th:text="${errorMessage}"></p>
-            </div>
+					<!-- エラーメッセージ表示 -->
+					<th:block th:if="${#fields.hasErrors()}">
+						<ul class="error_list">
+							<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+						</ul>
+						<br />
+					</th:block>
+					<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
 
-            <div class="form">
-                <div class="label">ページ名：</div>
-                <div class="input">
-                    <input type="text" th:field="*{pageName}" />
-                </div>
-            </div>
-            <div class="form">
-                <div class="label">レイアウトタイプ：</div>
-                <div class="input">
-                    <select th:field="*{layoutType}" id="layoutType">
-                        <option value="1">タイプ1</option>
-                        <option value="2">タイプ2</option>
-                        <option value="3">タイプ3</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form">
-                <div class="label">レイアウト例：</div>
-                <div class="input">
-                    <img id="layout-example-img" />
-                </div>
-            </div>
-            <div class="form">
-                <div class="label">サムネイル：</div>
-                <div class="input">
-                    <input type="file" th:field="*{imageName}" onchange="previewImage(this, 'preview-imageName')" />
+					<ul class="input_list">
+						<!-- 1. 管理名 -->
+						<li>
+							<label><span class="input_title">管理名</span></label>
+							<input type="text" th:field="*{pageName}" placeholder="例: TOPページ用カテゴリバナー1" />
+						</li>
 
-                    <img id="preview-imageName" th:if="*{tempImageName == null}"
-                        th:src="@{/images/common/no_image.jpg}" />
+						<!-- 2. 画像ファイルアップロード & プレビュー -->
+						<li>
+							<label><span class="input_title">画像</span></label>
+							<input type="file" id="upload_file" th:field="*{imageName}" onchange="previewImage(this, 'preview-imageName')" />
+							<input type="hidden" th:field="*{tempImageName}" />
 
-                    <img id="preview-imageName" th:unless="*{tempImageName == null}"
-                        th:src="@{'/images/image_tmp/' + *{tempImageName}}" />
-                </div>
-            </div>
+							<span th:if="*{tempImageName != null}">
+								<img id="preview-imageName" th:src="@{'/images/image_tmp/' + *{tempImageName}}" />
+							</span>
+							<span th:unless="*{tempImageName != null}">
+								<img id="preview-imageName" th:src="@{/images/common/no_image.jpg}" />
+							</span>
+						</li>
 
-            <div class="form">
-                <div class="label">遷移先URL：</div>
-                <div class="input">
-                    <input type="text" th:field="*{targetUrl}" />
-                </div>
-            </div>
-            <div class="form">
-                <div class="label">見出し：</div>
-                <div class="input">
-                    <input type="text" th:field="*{adTitle}" />
-                </div>
-            </div>
+						<!-- 3. 遷移先カテゴリ -->
+						<li>
+							<label><span class="input_title">遷移先カテゴリ</span></label>
+							<select th:field="*{categoryId}">
+								<option value="">選択してください</option>
+								<option th:each="category : ${categoryList}" th:value="${category.id}"
+									th:text="${category.name}">
+								</option>
+							</select>
+						</li>
 
-            <div class="form">
-                <div class="label">タイトル画像：</div>
-                <div class="input">
-                    <input type="file" th:field="*{headingImage}"
-                        onchange="previewImage(this, 'preview-headingImage')" />
+						<!-- 4. 有効/無効 -->
+						<li class="input_field">
+							<label class="input_title">有効/無効</label>
+							<div class="checkbox_container">
+								<input type="checkbox" th:field="*{isActive}" value="1" /> 有効にする
+							</div>
+						</li>
+					</ul>
 
-                    <img id="preview-headingImage" th:if="*{tempHeadingImage == null}"
-                        th:src="@{/images/common/no_image.jpg}" />
+					<input type="submit" value="確認" class="send_button" />
+				</form>
 
-                    <img id="preview-headingImage" th:unless="*{tempHeadingImage == null}"
-                        th:src="@{'/images/image_tmp/' + *{tempHeadingImage}}" />
-                </div>
-            </div>
+				<!-- 一覧へ戻るフォーム -->
+				<form th:action="@{/admin/ad/list}" method="get">
+					<input type="submit" value="戻る" class="back_button" />
+				</form>
 
-            <div id="image-list-container"></div>
+				<!-- 画像プレビュー用スクリプト -->
+				<script th:inline="javascript">
+					const noImagePath = /*[[@{/images/common/no_image.jpg}]]*/ '/images/common/no_image.jpg';
 
-            <div class="form">
-                <div class="label">本文：</div>
-                <div class="input">
-                    <textarea th:field="*{body}" rows="5" cols="40"></textarea>
-                </div>
-            </div>
+					function previewImage(input, previewId) {
+						const preview = document.getElementById(previewId);
+						if (input.files && input.files[0]) {
+							const reader = new FileReader();
+							reader.onload = function (e) {
+								preview.src = e.target.result;
+								preview.style.display = 'block';
+							}
+							reader.readAsDataURL(input.files[0]);
+						}
+					}
 
-            <div class="form">
-                <div class="label">リンクリスト：</div>
-                <div class="input" id="link-list-container">
-                </div>
-            </div>
-            <div class="form">
-                <div class="label"></div>
-                <div class="input">
-                    <button type="button" id="addLinkBtn">リンクを追加</button>
-                </div>
-            </div>
-
-            <template id="link-template">
-                <div class="link-item">
-                    <input type="text" class="js-link-text" placeholder="リンクテキスト" />
-                    <input type="text" class="js-link-url" placeholder="URL" />
-                    <button type="button" onclick="this.parentElement.remove()">削除</button>
-                </div>
-            </template>
-
-            <div class="form">
-                <div class="label">有効/無効：</div>
-                <div class="input">
-                    <input type="checkbox" th:field="*{isActive}" value="1" /> 有効にする
-                </div>
-            </div>
-
-            <div class="form">
-                <div class="label"></div>
-                <div class="input">
-                    <input type="submit" value="確認" />
-                </div>
-            </div>
-        </form>
-
-        <form th:action="@{/admin/ad/list}" method="get">
-            <div class="form">
-                <div class="label"></div>
-                <div class="input">
-                    <input type="submit" value="一覧へ戻る" />
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-</div>
-
-    <script th:inline="javascript">
-        const noImagePath = /*[[@{/images/common/no_image.jpg}]]*/ '/images/common/no_image.jpg';
-        const layoutBaseUrl = /*[[@{/images/layout_}]]*/ '/images/layout_';
-
-        let linkCount = /*[[${promotionsForm.linkTexts != null ? promotionsForm.linkTexts.size() : 0}]]*/ 0;
-        const layoutSelect = document.getElementById('layoutType');
-        const imageContainer = document.getElementById('image-list-container');
-        const exampleImg = document.getElementById('layout-example-img');
-
-        document.getElementById('addLinkBtn').addEventListener('click', function () {
-            const container = document.getElementById('link-list-container');
-            const template = document.getElementById('link-template');
-            const clone = template.content.cloneNode(true);
-            clone.querySelector('.js-link-text').name = "linkTexts[" + linkCount + "]";
-            clone.querySelector('.js-link-url').name = "linkUrls[" + linkCount + "]";
-            container.appendChild(clone);
-            linkCount++;
-        });
-
-        function previewImage(input, previewId) {
-            const preview = document.getElementById(previewId);
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function updateLayoutPreview() {
-            const layoutType = layoutSelect.value;
-            exampleImg.onerror = function () { this.onerror = null; this.src = noImagePath; };
-            exampleImg.src = layoutBaseUrl + layoutType + '.jpg';
-
-            const tempImageSrcs = /*[[${promotionsForm.tempImageSrcs}]]*/[];
-            const imageTexts = /*[[${promotionsForm.imageTexts}]]*/[];
-            const imageAlts = /*[[${promotionsForm.imageAlts}]]*/[];
-
-            const count = parseInt(layoutType);
-            imageContainer.innerHTML = '';
-
-            for (let i = 0; i < count; i++) {
-                const imgId = `preview-img-${i}`;
-                const imgSrc = (tempImageSrcs && tempImageSrcs[i]) ? '/images/image_tmp/' + tempImageSrcs[i] : noImagePath;
-                const textValue = (imageTexts && imageTexts[i]) ? imageTexts[i] : '';
-                const altValue = (imageAlts && imageAlts[i]) ? imageAlts[i] : '';
-
-                const div = document.createElement('div');
-                div.className = 'form';
-                div.innerHTML = `
-            <div class="label">画像${i + 1}：</div>
-            <div class="input">
-                <input type="file" name="imageSrcs[${i}]" onchange="previewImage(this, '${imgId}')" />
-                <img id="${imgId}" src="${imgSrc}" style="width: 150px; height: 100px; object-fit: cover; margin-top: 5px; display: block;" />
-                <input type="text" name="imageTexts[${i}]" value="${textValue}" placeholder="説明" />
-                <input type="text" name="imageAlts[${i}]" value="${altValue}" placeholder="ALT" />
-            </div>
-        `;
-                imageContainer.appendChild(div);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // 初期画像を強制的にno_imageにする処理を削除し、サーバーからの値を優先
-            layoutSelect.addEventListener('change', updateLayoutPreview);
-            updateLayoutPreview();
-        });
-    </script>
+					document.addEventListener('DOMContentLoaded', function () {
+						const previewImg = document.getElementById('preview-imageName');
+						if (previewImg && !previewImg.getAttribute('src')) {
+							previewImg.src = noImagePath;
+						}
+					});
+				</script>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>

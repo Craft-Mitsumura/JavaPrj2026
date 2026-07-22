@@ -4,33 +4,30 @@
 
 <head>
 	<meta charset="UTF-8" />
-<!--	<title>広告変更完了 | シェアードショップ</title>-->
-	<title th:text="'カルーセル式カテゴリ変更完了 | '+ #{shop.title}"> </title>
+	<title th:text="'カテゴリカルーセル変更完了 | '+ #{shop.title}"> </title>
 </head>
 
 <body class="admin ad_update_complete">
 	<div class="complete-container">
 
-    <div class="complete-card">
+		<div class="complete-card">
 
-        <div class="check-icon">
-            ✓
-        </div>
+			<div class="check-icon">
+				✓
+			</div>
 
-        <h1>カルーセル式カテゴリ変更-完了</h1>
+			<h1>登録完了</h1>
 
-        <p>
-            カルーセル式カテゴリの変更が正常に完了しました。
-        </p>
+			<p>
+				登録が正常に完了しました。
+			</p>
 
-        <a  th:href="@{/admin/ad/list}" class="home-btn">
-            ホームへ戻る
-        </a>
+			<a th:href="@{/admin/ad/list}" class="home-btn">
+				ホームへ戻る
+			</a>
 
-    </div>
+		</div>
 
-</div>
+	</div>
 </body>
 </html>
-
-
