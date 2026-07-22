@@ -17,7 +17,7 @@
 		<ul class="input_list">
 			<li>
 				<span class="input_title">[[#{itemForm.name}]]</span>
-				<span class="input_value" th:text="*{name}"></span>
+				<span class="input_value"  th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span>
 			</li>
 			<li>
 				<span class="input_title">[[#{itemForm.price}]]</span>

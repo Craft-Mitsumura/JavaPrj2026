@@ -49,8 +49,8 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	 * @param pageable ページング情報
 	 * @return カテゴリエンティティのページオブジェクト
 	 */
-	@Query("SELECT c FROM Category c WHERE c.deleteFlag =:deleteFlag ORDER BY c.id Asc")
-	Page<Category> findByDeleteFlagOrderByIdAscPage(
+	@Query("SELECT c FROM Category c WHERE c.deleteFlag =:deleteFlag ORDER BY c.id Desc")
+	Page<Category> findByDeleteFlagOrderByIdDescPage(
 			@Param(value = "deleteFlag") int deleteFlag, Pageable pageable);
 	
 	List<Category> findByDeleteFlagOrderByIdAsc(int deleteFlag);
