@@ -10,5 +10,5 @@ public interface PrizeRepository extends JpaRepository<Prize, Integer> {
 
     Prize findFirstByRequiredPointGreaterThanOrderByRequiredPointAsc(Integer point);
 
-    List<Prize> findAllByOrderByRequiredPointAsc();
+    List<Prize> findAllByOrderByIdDesc();
 }
