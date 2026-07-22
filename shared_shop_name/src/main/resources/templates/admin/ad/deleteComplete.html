@@ -3,7 +3,7 @@
 	th:replace="~{common/layout_3block :: layout(~{::title},~{::body/content()})}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title th:text="'カルーセル式カテゴリリ削除完了 | '+ #{shop.title}"> </title>
 </head>
 <body>
 <div class="complete-container">
@@ -14,7 +14,7 @@
             ✓
         </div>
 
-        <h1>広告削除完了</h1>
+        <h1>カルーセル式カテゴリ削除完了</h1>
 
         <p>
             広告の削除が正常に完了しました。

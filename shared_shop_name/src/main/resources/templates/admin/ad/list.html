@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8" />
 <!--	<title>広告一覧 | 管理画面</title>-->
-	<title th:text="'広告一覧 | '+ #{shop.title}"> </title>
+	<title th:text="'カルーセル式カテゴリ一覧 | '+ #{shop.title}"> </title>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
 			};
 		</script>
 		
-		<h2 class="title">広告一覧</h2>
+		<h2 class="title">カルーセル式カテゴリ一覧</h2>
 
 		<form th:action="@{/admin/ad/regist/input}" method="post" class="sign_up_form">
 			<input style=" padding:1%;" type="submit" value="カルーセル追加" class="menu_button" />
