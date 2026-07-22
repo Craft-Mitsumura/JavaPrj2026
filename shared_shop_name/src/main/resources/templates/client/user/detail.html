@@ -58,7 +58,8 @@
 
 						<p class="prize_name"  th:text="  '商品名　:  '  + ${ nextPrizeName} "></p>
 
-						<p class="prize_point" th:text=" '次回　:   ' +  ${nextPrizePoint} + 'ptで交換'"></p>
+						<p class="prize_point" th:text="${'次回　:   ' + #numbers.formatDecimal(nextPrizePoint, 0, 'COMMA', 0, 'POINT') + 'ptで交換'}"></p>
+						
 					</div>
 					</a>
 					
@@ -66,12 +67,13 @@
 				<div id="pointDiv" > 
 				<div class="current_point">
 					<p>現在ポイント</p>
-					<p th:text="${userBean.point} + ' pt'"></p>
+					<p 	th:text="${#numbers.formatDecimal(userBean.point, 0, 'COMMA', 0, 'POINT') + 'pt'}"></p>
+				
 				</div>
 
 				<div class="next_point">
 					<p>次の景品まで</p>
-					<p th:text="${remainPoint} + ' pt'"></p>
+					<p th:text="${#numbers.formatDecimal(remainPoint, 0, 'COMMA', 0, 'POINT') + 'pt'}"></p>
 				</div>
 
 
@@ -124,7 +126,8 @@
 						<!-- 購入金額 -->
 						<td>
 							<div th:each="orderItem : ${order.orderItemsList}">
-								<span th:text="${orderItem.price * orderItem.quantity}"></span>円
+								<span th:text="${#numbers.formatDecimal((orderItem.price * orderItem.quantity), 0, 'COMMA', 0, 'POINT')}"></span>円
+								
 							</div>
 						</td>
 					</tr>
