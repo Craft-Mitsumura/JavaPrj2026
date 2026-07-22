@@ -20,21 +20,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Promotions;
 import jp.co.sss.shop.form.PromotionsForm;
+import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.PromotionsRepository;
-import jp.co.sss.shop.service.PromotionConverter;
 
 /**
- * @author	金城（チームF）
- * 広告機能-システム管理者向け
+ * @author 金城（チームF）
+ * カルーセルカテゴリ広告機能-システム管理者向け
  * 広告変更系
- *
  */
-
 @Controller
 @RequestMapping("/admin/ad/update")
-@SessionAttributes("updateForm") // セッション持越しを有効化
+@SessionAttributes("updateForm") // セッション持越しを有効化（登録側と統一）
 public class AdminAdUpdateController {
 
 	/**
@@ -42,25 +41,25 @@ public class AdminAdUpdateController {
 	 */
 	@Autowired
 	PromotionsRepository repository;
-	
+
 	/**
-	 * 広告コンバータ
+	 * カテゴリ情報を管理するリポジトリ
 	 */
 	@Autowired
-	PromotionConverter converter;
+	CategoryRepository categoryRepository;
 
 	/**
 	 * 実行環境のルートパスを取得
 	 */
 	private final String BASE_PATH = System.getProperty("user.dir") + File.separator;
-	
+
 	/**
-	 * プロジェクトの images フォルダを指すように修正
+	 * 一時保存フォルダ
 	 */
 	private final String TMP_DIR = BASE_PATH + "images" + File.separator + "image_tmp" + File.separator;
-	
+
 	/**
-	 * プロジェクトの images フォルダを指すように修正
+	 * アップロード保存フォルダ
 	 */
 	private final String UPLOAD_DIR = BASE_PATH + "images" + File.separator + "uploads" + File.separator;
 
@@ -74,10 +73,26 @@ public class AdminAdUpdateController {
 	 */
 	@RequestMapping(path = "/input", method = RequestMethod.POST)
 	public String input(Integer id, Model model, SessionStatus status) throws Exception {
-		status.setComplete(); // 更新画面に来たら必ずクリア
 		Promotions promo = repository.findById(id).get();
-		// ここでEntityからFormへ変換し、モデルに入れる（これがセッションに保存される）
-		model.addAttribute("promotionsForm", converter.convertToForm(promo));
+
+		// フォームにEntityの値を直接詰め替える
+		PromotionsForm form = new PromotionsForm();
+		form.setId(promo.getId());
+		form.setPageName(promo.getPageName());
+
+		// 外部キー（Category）のIDをフォームのcategoryIdにセット
+		if (promo.getCategory() != null) {
+			form.setCategoryId(promo.getCategory().getId());
+		}
+
+		form.setIsActive(promo.getIsActive());
+		form.setTempImageName(promo.getImageName()); // 既存の画像名を一時画像名として保持
+
+		model.addAttribute("updateForm", form);
+
+		// ドロップダウン用のカテゴリ一覧をモデルに格納
+		model.addAttribute("categoryList", categoryRepository.findAll());
+
 		return "admin/ad/update_input";
 	}
 
@@ -90,10 +105,18 @@ public class AdminAdUpdateController {
 	 * @throws IOException 確認中に例外が発生した場合
 	 */
 	@RequestMapping(path = "/check", method = RequestMethod.POST)
-	public String check(@Valid @ModelAttribute("promotionsForm") PromotionsForm form,
+	public String check(@Valid @ModelAttribute("updateForm") PromotionsForm form,
 			BindingResult result, Model model) throws IOException {
-		
+
 		if (result.hasErrors()) {
+			return "admin/ad/update_input";
+		}
+
+		long maxSize = 1024 * 1024; // 1MB
+
+		// 画像サイズチェック
+		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
+			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
 			return "admin/ad/update_input";
 		}
 
@@ -101,50 +124,25 @@ public class AdminAdUpdateController {
 			// カルーセル画像の保存
 			if (form.getImageName() != null && !form.getImageName().isEmpty()) {
 				String fileName = form.getImageName().getOriginalFilename();
-				// 重複チェックを追加（既にある場合は再保存しない）
 				if (form.getTempImageName() == null || !form.getTempImageName().equals(fileName)) {
 					form.getImageName().transferTo(new File(TMP_DIR + fileName));
 					form.setTempImageName(fileName);
 				}
 			}
-
-			// タイトル画像の保存
-			if (form.getHeadingImage() != null && !form.getHeadingImage().isEmpty()) {
-				String fileName = form.getHeadingImage().getOriginalFilename();
-				if (form.getTempHeadingImage() == null || !form.getTempHeadingImage().equals(fileName)) {
-					form.getHeadingImage().transferTo(new File(TMP_DIR + fileName));
-					form.setTempHeadingImage(fileName);
-				}
-			}
-
-			// 動的画像リストの保存処理
-			if (form.getImageSrcs() != null && !form.getImageSrcs().isEmpty()) {
-				java.util.List<String> tempFileNames = new java.util.ArrayList<>();
-				for (org.springframework.web.multipart.MultipartFile file : form.getImageSrcs()) {
-					if (file != null && !file.isEmpty()) {
-						String fileName = file.getOriginalFilename();
-						file.transferTo(new File(TMP_DIR + fileName));
-						tempFileNames.add(fileName);
-					} else {
-						tempFileNames.add("");
-					}
-				}
-				form.setTempImageSrcs(tempFileNames);
-			}
+			Category selectedCategory = categoryRepository.findById(form.getCategoryId()).orElse(null);
+			model.addAttribute("selectedCategory", selectedCategory);
 
 			return "admin/ad/update_check";
 
 		} catch (IOException e) {
-			// ファイルが見つからない等のエラーが発生した場合
 			e.printStackTrace();
-			// モデルにエラーメッセージを追加
 			model.addAttribute("errorMessage", "ファイルのアップロードセッションがタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
 			return "admin/ad/update_input";
 		}
 	}
 
 	/**
-	 * 終了処理
+	 * 終了処理（更新完了）
 	 * @param form 広告フォーム
 	 * @param result バインドリザルト
 	 * @param status セッションステータス
@@ -153,29 +151,25 @@ public class AdminAdUpdateController {
 	 */
 	@RequestMapping(path = "/complete", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String complete(@Valid @ModelAttribute("promotionsForm") PromotionsForm form,
+	public String complete(@Valid @ModelAttribute("updateForm") PromotionsForm form,
 			BindingResult result,
 			SessionStatus status) throws Exception {
-		
-		/* バリテーションチェックオミット
-		if (result.hasErrors()) {
-			return "admin/ad/update_input";
-		}
-		*/
 
 		// 既存データを取得して内容を更新
 		Promotions promo = repository.findById(form.getId()).get();
-		converter.updateEntityFromForm(form, promo); // Formの内容を反映
+		promo.setPageName(form.getPageName());
+		promo.setImageName(form.getTempImageName()); // 一時保存されたファイル名をセット
+
+		// フォームのcategoryIdからCategoryエンティティを取得してセット
+		Category category = categoryRepository.findById(form.getCategoryId()).orElse(null);
+		promo.setCategory(category);
+
+		promo.setIsActive(form.getIsActive());
+
 		repository.save(promo);
 
 		// ファイル移動
 		moveFile(form.getTempImageName());
-		moveFile(form.getTempHeadingImage());
-		if (form.getTempImageSrcs() != null) {
-			for (String fileName : form.getTempImageSrcs()) {
-				moveFile(fileName);
-			}
-		}
 
 		// セッションクリア
 		status.setComplete();
@@ -206,5 +200,4 @@ public class AdminAdUpdateController {
 			}
 		}
 	}
-
 }

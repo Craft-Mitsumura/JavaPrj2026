@@ -4,27 +4,36 @@
 
 <head>
 	<meta charset="UTF-8" />
-<!--	<title>広告登録完了 | シェアードショップ</title>-->
-<title th:text="'広告登録確認 | '+ #{shop.title}"> </title>
+	<title th:text="'カテゴリカルーセル登録完了 | '+ #{shop.title}"> </title>
 </head>
 
-<body class="admin ad_regist_complete">
-	<div th:fragment="content" class="admin ad_list">
-		<h2 class="title">広告追加-完了</h2>
+<body class="admin ad_regis_complete">
+	<div class="complete-container">
 
-		<div class="message_area" style="text-align: center; padding: 40px;">
-			<p style="font-size: 1.2em; margin-bottom: 20px;">広告の登録が正常に完了しました。</p>
-			
-			<div class="action_buttons">
-				<form th:action="@{/admin/ad/list}" method="get" style="display:inline-block; margin: 0 10px;">
-					<input type="submit" value="広告一覧へ戻る" class="menu_button" />
-				</form>
-				
-				<form th:action="@{/admin/ad/regist/input}" method="post" style="display:inline-block; margin: 0 10px;">
-					<input type="submit" value="続けて新規登録" class="menu_button" />
-				</form>
+		<div class="complete-card">
+
+			<div class="check-icon">
+				✓
 			</div>
+
+			<h1>登録完了</h1>
+
+			<p>
+				登録が正常に完了しました。
+			</p>
+
+			<a th:href="@{/admin/ad/list}" class="home-btn">
+				ホームへ戻る
+			</a>
+
+			<a th:href="@{/admin/ad/regist/input}" class="home-btn">
+				続けて新規登録
+			</a>
+
 		</div>
+
 	</div>
 </body>
+
 </html>
+

@@ -3,11 +3,11 @@
 	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-	<title th:text="#{item}+#{title.input.complete}+' | '+ #{shop.title}"> </title>
 	<meta charset="UTF-8" />
+	<title th:text="'カテゴリカルーセル削除完了 | '+ #{shop.title}"> </title>
 </head>
 
-<body class="admin item_regist_complete">
+<body class="admin ad_delete_complete">
 	<div class="complete-container">
 
 		<div class="complete-card">
@@ -16,10 +16,10 @@
 				✓
 			</div>
 
-			<h1>登録完了</h1>
+			<h1>カテゴリカルーセル削除完了</h1>
 
 			<p>
-				登録が正常に完了しました。
+				カルーセルの削除が正常に完了しました。
 			</p>
 
 			<a th:href="@{/admin/ad/list}" class="home-btn">
@@ -30,4 +30,6 @@
 
 	</div>
 </body>
+
 </html>
+

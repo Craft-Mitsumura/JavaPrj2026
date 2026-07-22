@@ -20,18 +20,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Promotions;
 import jp.co.sss.shop.form.PromotionsForm;
+import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.PromotionsRepository;
-import jp.co.sss.shop.service.PromotionConverter;
 
 /**
- * @author	金城（チームF）
- * 広告機能-システム管理者向け
+ * @author 金城（チームF）
+ * カルーセルカテゴリ広告機能-システム管理者向け
  * 広告追加系
- * 
  */
-
 @Controller
 @RequestMapping("/admin/ad/regist")
 @SessionAttributes("registForm") // セッション持越し用
@@ -42,30 +41,30 @@ public class AdminAdRegistController {
 	 */
 	@Autowired
 	PromotionsRepository promotionsRepository;
-	
+
 	/**
-	 * 広告コンバータ
+	 * カテゴリ情報を管理するリポジトリ
 	 */
 	@Autowired
-	private PromotionConverter promotionConverter;
+	CategoryRepository categoryRepository;
 
 	/**
 	 * 実行環境のルートパスを取得 
 	 */
 	private final String BASE_PATH = System.getProperty("user.dir") + File.separator;
-	
+
 	/**
-	 * プロジェクトの images フォルダを指すように修正
+	 * 一時保存フォルダ
 	 */
 	private final String TMP_DIR = BASE_PATH + "images" + File.separator + "image_tmp" + File.separator;
-	
+
 	/**
-	 * プロジェクトの images フォルダを指すように修正
+	 * アップロード保存フォルダ
 	 */
 	private final String UPLOAD_DIR = BASE_PATH + "images" + File.separator + "uploads" + File.separator;
 
 	/**
-	 * コンストラクタ ディレクトリがない場合作動
+	 * コンストラクタ ディレクトリがない場合作成
 	 */
 	public AdminAdRegistController() {
 		File tmpDir = new File(TMP_DIR);
@@ -93,17 +92,17 @@ public class AdminAdRegistController {
 	 * @return "admin/ad/regist_input"
 	 */
 	@RequestMapping("/input")
-	public String input(@ModelAttribute("promotionsForm") PromotionsForm form, SessionStatus status) {
+	public String input(@ModelAttribute("registForm") PromotionsForm form, Model model, SessionStatus status) {
 		status.setComplete(); // 入力画面に来たら必ずクリア
-		// 初回アクセス（レイアウトタイプがnull）なら初期値をセット
+		// 初期値をセット
 		form.setIsActive(1);
-		form.setLayoutType(1);
 		form.setImageName(null);
-		form.setHeadingImage(null);
-
 		form.setTempImageName(null);
-		form.setTempHeadingImage(null);
-		form.setTempImageSrcs(null);
+		form.setCategoryId(null);
+		form.setPageName(null);
+
+		// ドロップダウン用のカテゴリ一覧をモデルに格納
+		model.addAttribute("categoryList", categoryRepository.findAll());
 
 		return "admin/ad/regist_input";
 	}
@@ -118,80 +117,45 @@ public class AdminAdRegistController {
 	 */
 	@RequestMapping(path = "/check", method = RequestMethod.POST)
 	public String check(
-			@Valid @ModelAttribute("promotionsForm") PromotionsForm form,
+			@Valid @ModelAttribute("registForm") PromotionsForm form,
 			BindingResult result,
 			Model model) throws IOException {
 
-		// バリデーションチェック、画像サイズチェック
+		// バリデーションチェック
 		if (result.hasErrors()) {
-			// エラーがある場合は変換処理などをスキップして入力画面へ戻る
+			model.addAttribute("categoryList", categoryRepository.findAll());
+			model.addAttribute("registForm", form);
 			return "admin/ad/regist_input";
 		}
-		
-	    long maxSize = 1024 * 1024;
-	    
-	    // サムネイルとタイトル画像のチェック
-	    if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
-	        model.addAttribute("errorMessage", "サムネイル画像は1MB以内のものを選択してください。");
-	        return "admin/ad/regist_input";
-	    }
-	    if (form.getHeadingImage() != null && form.getHeadingImage().getSize() > maxSize) {
-	        model.addAttribute("errorMessage", "タイトル画像は1MB以内のものを選択してください。");
-	        return "admin/ad/regist_input";
-	    }
-	    // 動的画像リストのチェック
-	    if (form.getImageSrcs() != null) {
-	        for (org.springframework.web.multipart.MultipartFile file : form.getImageSrcs()) {
-	            if (file != null && file.getSize() > maxSize) {
-	                model.addAttribute("errorMessage", "動的画像の中に1MBを超えるファイルが含まれています。");
-	                return "admin/ad/regist_input";
-	            }
-	        }
-	    }
-	    // ----------------------------------------------------
+
+		long maxSize = 1024 * 1024; // 1MB
+
+		// 画像サイズチェック
+		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
+			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+			return "admin/ad/regist_input";
+		}
 
 		try {
-			// カルーセル画像の保存
+			// カルーセル画像の一時保存
 			if (form.getImageName() != null && !form.getImageName().isEmpty()) {
 				String fileName = form.getImageName().getOriginalFilename();
-				// 重複チェックを追加（既にある場合は再保存しない）
 				if (form.getTempImageName() == null || !form.getTempImageName().equals(fileName)) {
 					form.getImageName().transferTo(new File(TMP_DIR + fileName));
 					form.setTempImageName(fileName);
 				}
 			}
-
-			// タイトル画像の保存
-			if (form.getHeadingImage() != null && !form.getHeadingImage().isEmpty()) {
-				String fileName = form.getHeadingImage().getOriginalFilename();
-				if (form.getTempHeadingImage() == null || !form.getTempHeadingImage().equals(fileName)) {
-					form.getHeadingImage().transferTo(new File(TMP_DIR + fileName));
-					form.setTempHeadingImage(fileName);
-				}
-			}
-
-			// 動的画像リストの保存処理
-			if (form.getImageSrcs() != null && !form.getImageSrcs().isEmpty()) {
-				java.util.List<String> tempFileNames = new java.util.ArrayList<>();
-				for (org.springframework.web.multipart.MultipartFile file : form.getImageSrcs()) {
-					if (file != null && !file.isEmpty()) {
-						String fileName = file.getOriginalFilename();
-						file.transferTo(new File(TMP_DIR + fileName));
-						tempFileNames.add(fileName);
-					} else {
-						tempFileNames.add("");
-					}
-				}
-				form.setTempImageSrcs(tempFileNames);
-			}
+			Category selectedCategory = categoryRepository.findById(form.getCategoryId()).orElse(null);
+			model.addAttribute("selectedCategory", selectedCategory);
+			model.addAttribute("registForm", form);
 
 			return "admin/ad/regist_check";
 
 		} catch (IOException e) {
-			// ファイルが見つからない等のエラーが発生した場合
 			e.printStackTrace();
-			// モデルにエラーメッセージを追加
 			model.addAttribute("errorMessage", "ファイルのアップロードセッションがタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
+			model.addAttribute("categoryList", categoryRepository.findAll());
+			model.addAttribute("registForm", form);
 			return "admin/ad/regist_input";
 		}
 	}
@@ -202,42 +166,44 @@ public class AdminAdRegistController {
 	 * @param result 結果
 	 * @param status セッションステータス
 	 * @return 完了画面表示処理へのリダイレクトURL
-	 * @throws Exception  登録処理で予期せぬ例外が発生した場合
+	 * @throws Exception 登録処理で予期せぬ例外が発生した場合
 	 */
 	@RequestMapping(path = "/complete", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String complete(@Valid @ModelAttribute("promotionsForm") PromotionsForm form,
+	public String complete(@Valid @ModelAttribute("registForm") PromotionsForm form,
 			BindingResult result,
 			SessionStatus status) throws Exception {
 
+		// DB登録用エンティティの直接生成・値の詰め替え
+		Promotions entity = new Promotions();
+		entity.setPageName(form.getPageName());
+		entity.setImageName(form.getTempImageName()); // 一時保存されたファイル名をセット
+
+		// フォームのcategoryIdからCategoryエンティティを取得してセット
+		Category category = categoryRepository.findById(form.getCategoryId()).orElse(null);
+		entity.setCategory(category);
+
+		entity.setIsActive(form.getIsActive());
+
 		// DB登録処理
-		Promotions entity = promotionConverter.convertToEntity(form);
-		entity.setDeleteFlag(0);
 		promotionsRepository.save(entity);
 
-		// ファイル移動
+		// 一時保存された画像を本番アップロードディレクトリへ移動
 		moveFile(form.getTempImageName());
-		moveFile(form.getTempHeadingImage());
-		if (form.getTempImageSrcs() != null) {
-			for (String fileName : form.getTempImageSrcs()) {
-				moveFile(fileName);
-			}
-		}
 
 		// セッションクリア
 		status.setComplete();
 
-		// HTMLを返すのではなく、完了画面のURLへ「リダイレクト」させる
 		return "redirect:/admin/ad/regist/complete";
 	}
-	
+
 	/**
 	 * 完了画面表示
 	 * @return "admin/ad/regist_complete"
 	 */
 	@RequestMapping(path = "/complete", method = RequestMethod.GET)
 	public String completeView() {
-	    return "admin/ad/regist_complete";
+		return "admin/ad/regist_complete";
 	}
 
 	/**
@@ -254,5 +220,4 @@ public class AdminAdRegistController {
 			}
 		}
 	}
-
 }

@@ -1,24 +1,21 @@
 package jp.co.sss.shop.entity;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author	金城（チームF）
  * 広告情報のエンティティクラス
  *
  * @author SystemShared
- */ 
+ */
 @Entity
 @Table(name = "promotions")
 public class Promotions {
@@ -30,63 +27,43 @@ public class Promotions {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_promotions_gen")
 	@SequenceGenerator(name = "seq_promotions_gen", sequenceName = "seq_promotions", allocationSize = 1)
 	private Integer id;
-	
+
 	/**
 	 * @author	金城
 	 * カルーセル画像名
 	 */
 	@Column(name = "image_name")
 	private String imageName;
-	
+
 	/**
-	 * @author	金城
-	 * レイアウトタイプ
+	 * @author 金城
+	 * 管理名
 	 */
-	@Column(name = "layout_type")
-	private Integer layoutType;
-	
-	/**
-	 * @author	金城
-	 * 設計書文字列
-	 */
-	@Column(name = "content_json")
-	private String contentJson;
-	
+	@Column(name = "page_name")
+	private String pageName;
+
 	/** 
 	 * @author	金城
 	 * 遷移先URL
 	 */
-	@Column(name = "target_url")
-	private String targetUrl;
-	 
+	@ManyToOne
+	@JoinColumn(name = "target_url", nullable = false)
+	private Category category;
+
 	/**
 	 * @author	金城
 	 * 有効フラグ
 	 */
 	@Column(name = "is_active", insertable = true)
-	private Integer isActive;
-	
-	/**
-	 * @author	金城
-	 * 削除フラグ
-	 */
-	@Column(name = "delete_flag", insertable = true)
-	private Integer deleteFlag;
-	
-	/**
-	 * @author	金城
-	 * 登録日時
-	 */
-	@Column(name = "insert_date", insertable = false, updatable = false)
-	private LocalDateTime insertDate;
-	
+	private Integer isActive = 1;
+
 	/**
 	 * @author	金城
 	 * コンストラクタ
 	 */
 	public Promotions() {
 	}
-	
+
 	/**
 	 * @author	金城
 	 * コンストラクタ：トップ画面用
@@ -95,28 +72,14 @@ public class Promotions {
 	 * @param imageName カルーセル画像名
 	 * @param targetUrl 遷移先URL
 	 */
-	public Promotions(Integer id, String imageName, String targetUrl) {
+	public Promotions(Integer id, String imageName, Category category) {
 		this.id = id;
 		this.imageName = imageName;
-		this.targetUrl = targetUrl;
+		this.category = category;
 	}
-	
-	/**
-	 * @author	金城
-	 * コンストラクタ：広告ページ用
-	 * 
-	 * @param id 広告ID
-	 * @param layoutType レイアウトタイプ
-	 * @param contentJson 設計書文字列
-	 */
-	public Promotions(Integer id, Integer layoutType, String contentJson) {
-		this.id = id;
-		this.layoutType = layoutType;
-		this.contentJson = contentJson;
-	}
-	
+
 	//--------ゲッターセッター-------------
-	
+
 	/**
 	 * @author	金城
 	 * 広告IDの取得
@@ -126,7 +89,7 @@ public class Promotions {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	/**
 	 * @author	金城
 	 * 広告IDのセット
@@ -136,7 +99,7 @@ public class Promotions {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	/**
 	 * @author	金城
 	 * カルーセル画像名の取得
@@ -146,7 +109,7 @@ public class Promotions {
 	public String getImageName() {
 		return imageName;
 	}
-	
+
 	/**
 	 * @author	金城
 	 * カルーセル画像名のセット
@@ -156,67 +119,47 @@ public class Promotions {
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}
-	
+
+	/**
+	 * @author 金城
+	 * 管理名の取得
+	 * 
+	 * @return pageName
+	 */
+	public String getPageName() {
+		return pageName;
+	}
+
+	/**
+	 * @author 金城
+	 * 管理名のセット
+	 * 
+	 * @param pageName
+	 */
+	public void setPageName(String pageName) {
+		this.pageName = pageName;
+	}
+
 	/**
 	 * @author	金城
-	 * レイアウトタイプの取得
+	 * 遷移先カテゴリのURLの取得
 	 * 
-	 * @return layoutType
+	 * @return category
 	 */
-	public Integer getLayoutType() {
-		return layoutType;
+	public Category getCategory() {
+		return category;
 	}
-	
+
 	/**
 	 * @author	金城
-	 * レイアウトタイプのセット
+	 * 遷移先カテゴリのURLのセット
 	 * 
-	 * @param layoutType レイアウトタイプ
+	 * @param category 遷移先カテゴリのURL
 	 */
-	public void setLayoutType(Integer layoutType) {
-		this.layoutType = layoutType;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	
-	/**
-	 * @author	金城
-	 * 設計書文字列の取得
-	 * 
-	 * @return contentJson
-	 */
-	public String getContentJson() {
-		return contentJson;
-	}
-	
-	/**
-	 * @author	金城
-	 * 設計書文字列のセット
-	 * 
-	 * @param contentJson 文字列
-	 */
-	public void setContentJson(String contentJson) {
-		this.contentJson = contentJson;
-	}
-	
-	/**
-	 * @author	金城
-	 * 遷移先URLの取得
-	 * 
-	 * @return targetUrl
-	 */
-	public String getTargetUrl() {
-		return targetUrl;
-	}
-	
-	/**
-	 * @author	金城
-	 * 遷移先URLのセット
-	 * 
-	 * @param targetUrl 遷移先URL
-	 */
-	public void setTargetUrl(String targetUrl) {
-		this.targetUrl = targetUrl;
-	}
-	
+
 	/**
 	 * @author	金城
 	 * 有効フラグの取得
@@ -226,7 +169,6 @@ public class Promotions {
 	public Integer getIsActive() {
 		return isActive;
 	}
-	
 
 	/**
 	 * @author	金城
@@ -237,61 +179,5 @@ public class Promotions {
 	public void setIsActive(Integer isActive) {
 		this.isActive = isActive;
 	}
-	
-	/**
-	 * @author	金城
-	 * 削除フラグの取得
-	 * 
-	 * @return deleteFlag
-	 */
-	public Integer getDeleteFlag() {
-		return deleteFlag;
-	}
-	
-	/**
-	 * @author	金城
-	 * 削除フラグのセット
-	 * 
-	 * @param deleteFlag 削除フラグ
-	 */
-	public void setDeleteFlag(Integer deleteFlag) {
-		this.deleteFlag = deleteFlag;
-	}
-	
-	/**
-	 * @author	金城
-	 * 登録日時の取得
-	 * 
-	 * @return insertDate
-	 */
-	public LocalDateTime getInsertDate() {
-		return insertDate;
-	}
-	
-	/**
-	 * @author	金城
-	 * 登録日時のセット
-	 * 
-	 * @param insertDate 登録日時
-	 * 
-	 */
-	public void setInsertDate(LocalDateTime insertDate) {
-		this.insertDate = insertDate;
-	}
-	
-	/**
-	 * adTitle取得用
-	 * @return 文字列
-	 */
-	public String getAdTitle() {
-	    try {
-	        // 文字列の contentJson を解析して、"広告題名" というキーの値を取り出す
-	        ObjectMapper mapper = new ObjectMapper();
-	        JsonNode root = mapper.readTree(this.contentJson);
-	        return root.get("広告題名").asText();
-	    } catch (Exception e) {
-	        return "取得失敗";
-	    }
-	}
-	
+
 }

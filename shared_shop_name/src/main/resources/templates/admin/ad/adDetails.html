@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title>カルーセル式カテゴリ詳細 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin prize_detail">
+
+<div id="adminPrizeDetail">
+
+	<h2 class="title">カルーセル式カテゴリ詳細</h2>
+
+	<div class="info_form_area" >
+
+		<div th:each= "item : ${items}" class="prize_detail_area">
+          
+          
+              
+		    <div class="prize_image_area">
+	        <img th:if="${item.imageName != null}"
+		             th:src="@{/images/uploads/{image}(image=${item.imageName})}" />
+
+		        <img th:if="${item.imageName == null}"
+		             th:src="@{/images/common/no_image.jpg}" />
+		    </div> 
+
+		     <ul class="input_list">
+
+		        <li>
+		            <span class="input_title">Layout Type</span>
+		            <span class="input_value" th:text="${item.layoutType}"></span>
+		        </li>
+
+		        <li>
+		            <span class="input_title">Target Url</span>
+		            <span class="input_value" th:text="${item.targetUrl}"></span>
+		        </li>
+
+		        <li>
+		            <span class="input_title">Content Json</span>
+		            <span class="input_value" th:text="${contentJson}"></span>
+		        </li>
+
+		    </ul>
+
+		    <div class="detail_button_area">
+
+		        <form th:action="@{/admin/ad/list}" method="get">
+		            <input type="submit" value="戻る" class="back_button">
+		        </form>
+
+		       <form th:action="@{/admin/ad/update/input(id=${item.id})}" method="post" style="display:inline;">
+							<input type="submit" class="changeBtn" value="変更" />
+						</form>
+
+				<form th:action="@{/admin/ad/delete/confirm(id=${item.id})}" method="post" style="display:inline;"
+							>
+
+							<input type="hidden" name="id" th:value="${item.id}" />
+
+							<input type="submit" value="削除" id="deleteBtn" />
+						</form>
+		    </div>
+
+		</div>
+
+	</div>
+
+</div> 
+
+</body>
+</html>

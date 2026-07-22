@@ -64,7 +64,8 @@ public class URLCheck {
 				|| requestURL.indexOf("admin/category") != -1
 				|| requestURL.indexOf("admin/item") != -1
 				|| requestURL.indexOf("admin/order") != -1
-			    || requestURL.indexOf("admin/prize") != -1) {
+			    || requestURL.indexOf("admin/prize") != -1
+		    	|| requestURL.indexOf("ad/details") != -1) {
 			// URLのリクエスト先がフィルタ実行対象である場合
 			isCheckURLOK = true;
 		} else {

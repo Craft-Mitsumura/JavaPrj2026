@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.repository.PromotionsRepository;
-import jp.co.sss.shop.service.PromotionConverter;
 
 /**
  * @author	金城（チームF）
@@ -27,12 +28,6 @@ public class AdminAdShowController{
 	PromotionsRepository repository;
 	
 	/**
-	 * JSONコンバーター
-	 */
-	@Autowired
-	PromotionConverter converter;
-	
-	/**
 	 * セッション情報
 	 */
 	@Autowired
@@ -47,10 +42,19 @@ public class AdminAdShowController{
     @GetMapping("/admin/ad/list")
     public String list(Model model) {
         // 削除フラグを引数に検索
-    	model.addAttribute("promotions", repository.findByDeleteFlagOrderByIsActiveDescIdAsc(0));
+    	model.addAttribute("promotions", repository.findAllByOrderByIsActiveDescIdAsc());
         
         return "admin/ad/list";
 	}
+    
+    @GetMapping("/ad/details/{id}")
+    public String adDetails(
+    		Model model ,
+    		@PathVariable(required= true) Integer id 
+    		) {
+    	model.addAttribute("items" , repository.findById(id).orElse(null));
+    	return"admin/ad/adDetails";
+    }
     
     
 }
