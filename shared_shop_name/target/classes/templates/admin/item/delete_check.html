@@ -17,11 +17,11 @@
 		<ul class="input_list">
 			<li>
 				<span class="input_title">[[#{itemForm.name}]]</span>
-				<span class="input_value"  th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span>
+				<span class="input_value" th:text="*{name}"></span>
 			</li>
 			<li>
 				<span class="input_title">[[#{itemForm.price}]]</span>
-				<span class="input_value" th:text="*{price}"></span>
+				<span class="input_value"  th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span>
 			</li>
 			<li>
 				<span class="input_title">[[#{data.category}]]</span>
@@ -29,7 +29,7 @@
 			</li>
 			<li>
 				<span class="input_title">[[#{itemForm.stock}]]</span>
-				<span class="input_value" th:text="*{stock}"></span>
+				<span class="input_value"  th:text="*{#numbers.formatDecimal(stock, 0, 'COMMA', 0, 'POINT')}"></span>
 			</li>
 
 			<!-- カテゴリごとのJSON項目表示 -->
