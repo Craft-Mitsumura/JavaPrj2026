@@ -10,10 +10,10 @@
 <body>
 	<div th:fragment="content" class="admin ad_list">
 	<div id="adminOrderList">
-		<h2 class="title">カルーセル一覧</h2>
+		<h2 class="title">カルーセル式カテゴリ一覧</h2>
 
 		<form th:action="@{/admin/ad/regist/input}" method="post" class="sign_up_form">
-			<input type="submit" value="新規追加" class="menu_button" />
+			<input type="submit" value="カルーセル新規登録" class="menu_button" />
 		</form>
 
 		<p th:if="${promotions == null or #lists.isEmpty(promotions)}" th:text="'登録されている広告はありません。'"></p>

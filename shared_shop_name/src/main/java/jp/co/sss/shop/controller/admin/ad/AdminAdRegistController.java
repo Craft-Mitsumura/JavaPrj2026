@@ -86,23 +86,26 @@ public class AdminAdRegistController {
 	}
 
 	/**
-	 * 入力画面
-	 * @param form 広告フォーム
-	 * @param status セッション
-	 * @return "admin/ad/regist_input"
+	 * 新規登録の入り口（POST）
+	 * メニュー等から最初にここへPOSTでアクセスし、古いセッションをクリアして新しいフォームをセットする
+	 * @return admin/ad/regist_input
 	 */
-	@RequestMapping("/input")
-	public String input(@ModelAttribute("registForm") PromotionsForm form, Model model, SessionStatus status) {
-		status.setComplete(); // 入力画面に来たら必ずクリア
-		// 初期値をセット
-		form.setIsActive(1);
-		form.setImageName(null);
-		form.setTempImageName(null);
-		form.setCategoryId(null);
-		form.setPageName(null);
+	@RequestMapping(path = "/input", method = RequestMethod.POST)
+	public String registInputPost(SessionStatus status) {
+		// 古いセッション状態をクリア
+		status.setComplete();
 
+		return "redirect:/admin/ad/regist/input";
+	}
+
+	/**
+	 * 入力画面表示（GET）
+	 * @return "admin/ad/regist_input" 
+	 */
+	@RequestMapping(path = "/input", method = RequestMethod.GET)
+	public String registInputGet(@ModelAttribute("registForm") PromotionsForm form, Model model) {
 		// ドロップダウン用のカテゴリ一覧をモデルに格納
-		model.addAttribute("categoryList", categoryRepository.findAll());
+		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 
 		return "admin/ad/regist_input";
 	}
@@ -123,7 +126,7 @@ public class AdminAdRegistController {
 
 		// バリデーションチェック
 		if (result.hasErrors()) {
-			model.addAttribute("categoryList", categoryRepository.findAll());
+			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 			model.addAttribute("registForm", form);
 			return "admin/ad/regist_input";
 		}
@@ -154,7 +157,7 @@ public class AdminAdRegistController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "ファイルのアップロードセッションがタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
-			model.addAttribute("categoryList", categoryRepository.findAll());
+			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 			model.addAttribute("registForm", form);
 			return "admin/ad/regist_input";
 		}
