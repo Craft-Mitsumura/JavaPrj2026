@@ -43,7 +43,8 @@
 				<th>[[#{data.basket.stock.status}]]</th>
 			</tr>
 			<tr th:each="item, status: ${session.basketBeans}">
-				<td><a th:href="@{/client/item/detail/{id}(id=${item.id})}" th:text="${item.name}"></a></td>
+				<td><a th:href="@{/client/item/detail/{id}(id=${item.id}, isEngravingSelected=${item.isEngravingSelected}, engravingText=${item.engravingText}, fontType=${item.fontType})}"
+						th:text="${item.name}"></a></td>
 				<td>
 					<th:block th:if="${item.isEngravingSelected}">
 						<div style="font-size: 0.9em; color: #555;">
