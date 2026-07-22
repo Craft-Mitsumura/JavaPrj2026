@@ -58,7 +58,7 @@ public class AdminCategoryShowController {
 
 		// 表示画面でページングが必要なため、ページ情報付きのカテゴリ情報を取得する検索を行う
 		Page<Category> categoriesPage = categoryRepository
-				.findByDeleteFlagOrderByIdAscPage(Constant.NOT_DELETED, pageable);
+				.findByDeleteFlagOrderByIdDescPage(Constant.NOT_DELETED, pageable);
 
 		// カテゴリ情報をViewへ渡す
 		//ページ情報付きの検索結果からgetContent()メソッドを使用してレコード情報のみを取り出す

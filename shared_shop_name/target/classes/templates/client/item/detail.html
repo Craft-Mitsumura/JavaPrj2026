@@ -73,7 +73,7 @@
 				<dt>[[#{data.item.name}]]</dt>
 				<dd th:text="*{name}"></dd>
 				<dt>[[#{data.item.price}]]</dt>
-				<dd th:text="*{price}"></dd>
+				<dd  th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></dd>
 				<dt>[[#{data.item.stock}]]</dt>
 				<dd th:if="*{stock > 5}" th:text="#{data.in.stock}"></dd>
 				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
