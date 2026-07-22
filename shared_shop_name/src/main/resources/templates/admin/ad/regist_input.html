@@ -10,7 +10,7 @@
 <body class="admin ad_regist_input">
 	<div th:fragment="content" class="admin ad_list">
 		<div id="adminItemInput">
-			<h2 class="title">カテゴリカルーセル登録</h2>
+			<h2 class="title">カテゴリカルーセル登録入力</h2>
 			<p class="input_message">登録内容を入力してください。</p>
 
 			<div class="user_info_form_area">
@@ -36,13 +36,14 @@
 						<!-- 2. 画像ファイルアップロード & プレビュー -->
 						<li>
 							<label><span class="input_title">画像</span></label>
-							<input type="file" id="upload_file" th:field="*{imageName}" onchange="previewImage(this, 'preview-imageName')" />
+							<input type="file" id="upload_file" th:field="*{imageName}"
+								onchange="previewImage(this, 'preview-imageName')" />
 							<input type="hidden" th:field="*{tempImageName}" />
 
-							<span th:if="*{tempImageName != null}">
+							<span th:if="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
 								<img id="preview-imageName" th:src="@{'/images/image_tmp/' + *{tempImageName}}" />
 							</span>
-							<span th:unless="*{tempImageName != null}">
+							<span th:unless="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
 								<img id="preview-imageName" th:src="@{/images/common/no_image.jpg}" />
 							</span>
 						</li>
@@ -62,7 +63,7 @@
 						<li class="input_field">
 							<label class="input_title">有効/無効</label>
 							<div class="checkbox_container">
-								<input type="checkbox" th:field="*{isActive}" value="1" /> 
+								<input type="checkbox" th:field="*{isActive}" value="1" />
 							</div>
 						</li>
 					</ul>

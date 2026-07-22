@@ -91,7 +91,7 @@ public class AdminAdUpdateController {
 		model.addAttribute("updateForm", form);
 
 		// ドロップダウン用のカテゴリ一覧をモデルに格納
-		model.addAttribute("categoryList", categoryRepository.findAll());
+		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 
 		return "admin/ad/update_input";
 	}
@@ -109,6 +109,7 @@ public class AdminAdUpdateController {
 			BindingResult result, Model model) throws IOException {
 
 		if (result.hasErrors()) {
+			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 			return "admin/ad/update_input";
 		}
 
@@ -117,6 +118,7 @@ public class AdminAdUpdateController {
 		// 画像サイズチェック
 		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
 			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 			return "admin/ad/update_input";
 		}
 
@@ -137,6 +139,7 @@ public class AdminAdUpdateController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "ファイルのアップロードセッションがタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
+			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 			return "admin/ad/update_input";
 		}
 	}
