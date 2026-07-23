@@ -2459,6 +2459,8 @@ p.link_center {
     border-radius:10px;
     overflow:hidden;
     box-shadow:0 3px 10px rgba(0,0,0,.08);
+	width: 650px;
+	height: 450px;
 }
 
 #adConfirm .confirm-table{
@@ -3863,7 +3865,12 @@ p.link_center {
 	
 }
 
-
+.preview-image{
+    width:200px;
+    height:200px;
+    object-fit:contain;
+    border:1px solid #ccc;
+}
 /* ===== 景品詳細 ===== */
 
 #adminPrizeDetail .info_form_area {
@@ -3954,4 +3961,17 @@ p.link_center {
     height: 55px !important;
     padding: 15px 40px !important;
     font-size: 18px !important;
+}
+
+#adConfirm #deleteBtn{
+    min-width:150px;
+    padding:12px 25px;
+    background:#d9534f;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+}
+
+#adConfirm #deleteBtn:hover{
+    background:#c9302c;
 }

@@ -39,7 +39,7 @@ public class CarouselInterceptor implements HandlerInterceptor {
         
         // トップページ（index）を表示する場合にのみ処理を実行
         if (modelAndView != null && "index".equals(modelAndView.getViewName())) {
-            List<Promotions> adList = promotionsRepository.findAllByOrderByIsActiveDescIdAsc();
+            List<Promotions> adList = promotionsRepository.findAllByOrderByIsActiveDescIdDesc();
             modelAndView.addObject("adList", adList);
         }
     }

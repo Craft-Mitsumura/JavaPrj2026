@@ -191,6 +191,10 @@ public class AdminAdUpdateController {
 			return "redirect:/syserror";
 		}
 
+		if (updateForm.getIsActive() == null) {
+			updateForm.setIsActive(0);
+		}
+
 		Category selectedCategory = categoryRepository.findById(updateForm.getCategoryId()).orElse(null);
 		model.addAttribute("selectedCategory", selectedCategory);
 		model.addAttribute("updateForm", updateForm);
