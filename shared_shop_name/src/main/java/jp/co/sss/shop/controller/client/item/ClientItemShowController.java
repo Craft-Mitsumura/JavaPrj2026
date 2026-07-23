@@ -118,7 +118,7 @@ public class ClientItemShowController {
 		model.addAttribute("rankings", findByRanking);
 
 		// カルーセル広告一覧
-		List<Promotions> adList = promotionsRepository.findAllByOrderByIsActiveDescIdAsc();
+		List<Promotions> adList = promotionsRepository.findAllByOrderByIsActiveDescIdDesc();
 
 		// デバッグ用
 		System.out.println("広告件数：" + adList.size());

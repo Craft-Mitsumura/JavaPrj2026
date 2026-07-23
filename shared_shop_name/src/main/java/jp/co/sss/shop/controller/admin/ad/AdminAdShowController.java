@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.entity.Promotions;
 import jp.co.sss.shop.repository.PromotionsRepository;
 
 /**
@@ -42,18 +44,37 @@ public class AdminAdShowController{
     @GetMapping("/admin/ad/list")
     public String list(Model model) {
         // 削除フラグを引数に検索
-    	model.addAttribute("promotions", repository.findAllByOrderByIsActiveDescIdAsc());
+    	model.addAttribute("promotions", repository.findAllByOrderByIsActiveDescIdDesc());
         
         return "admin/ad/list";
 	}
     
-    @GetMapping("/ad/details/{id}")
-    public String adDetails(
-    		Model model ,
-    		@PathVariable(required= true) Integer id 
-    		) {
-    	model.addAttribute("items" , repository.findById(id).orElse(null));
-    	return"admin/ad/adDetails";
+    /**
+     * 広告詳細表示
+     * URL: /admin/ad/details/{id}
+     * @param id 広告ID
+     * @param model モデル
+     * @return 広告詳細画面
+     */
+    @RequestMapping(path = "/admin/ad/details/{id}", method = { RequestMethod.GET, RequestMethod.POST })
+    public String adDetails(@PathVariable Integer id, Model model) {
+
+        // 表示対象の広告情報を取得（存在しない場合はエラーページ等へリダイレクト）
+        Promotions promotion = repository.findById(id).orElse(null);
+
+        if (promotion == null) {
+            // 対象が無い場合の安全なハンドリング
+            return "redirect:/syserror";
+        }
+
+        // 広告情報をViewへ渡す
+        model.addAttribute("promotion", promotion);
+
+        // 必要に応じて関連するフォームや不要なセッションのクリアを行う場合
+        // session.removeAttribute("registForm");
+        // session.removeAttribute("updateForm");
+
+        return "admin/ad/adDetails";
     }
     
     
