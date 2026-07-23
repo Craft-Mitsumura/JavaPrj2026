@@ -33,7 +33,8 @@
 					<!-- 3. 遷移先カテゴリ名 -->
 					<li>
 						<span class="input_title">遷移先カテゴリ</span>
-						<span class="input_value" th:text="${selectedCategory != null ? selectedCategory.name : ''}"></span>
+						<span class="input_value"
+							th:text="${selectedCategory != null ? selectedCategory.name : ''}"></span>
 					</li>
 
 					<!-- 4. 有効/無効 -->
@@ -44,11 +45,12 @@
 				</ul>
 
 				<!-- 登録実行フォーム -->
-				<form th:action="@{/admin/ad/regist/complete}" method="post" class="user_info_form" th:object="${registForm}">
+				<form th:action="@{/admin/ad/regist/complete}" method="post" class="user_info_form"
+					th:object="${registForm}">
 					<input type="hidden" th:field="*{pageName}" />
 					<input type="hidden" th:field="*{tempImageName}" />
 					<input type="hidden" th:field="*{categoryId}" />
-					<input type="hidden" th:field="*{isActive}" />
+					<input type="hidden" name="isActive" th:value="*{isActive != null ? isActive : 0}" />
 
 					<input type="submit" value="登録" class="send_button" />
 				</form>
@@ -58,7 +60,7 @@
 					<input type="hidden" th:field="*{pageName}" />
 					<input type="hidden" th:field="*{tempImageName}" />
 					<input type="hidden" th:field="*{categoryId}" />
-					<input type="hidden" th:field="*{isActive}" />
+					<input type="hidden" name="isActive" th:value="*{isActive != null ? isActive : 0}" />
 
 					<input type="submit" value="戻る" class="back_button" />
 				</form>
