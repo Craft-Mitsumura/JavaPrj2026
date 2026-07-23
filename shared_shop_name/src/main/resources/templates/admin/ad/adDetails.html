@@ -1,75 +1,62 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
 
 <head>
-	<title>カルーセル式カテゴリ詳細 | [[#{shop.title}]]</title>
+	<title th:text="'カルーセル式カテゴリ詳細 | '+ #{shop.title}">カルーセル式カテゴリ詳細</title>
 	<meta charset="UTF-8" />
 </head>
 
-<body class="admin prize_detail">
+<body class="admin item_detail_admin">
 
-<div id="adminPrizeDetail">
+<div id="adminItemDetail" th:fragment="content">
 
 	<h2 class="title">カルーセル式カテゴリ詳細</h2>
 
-	<div class="info_form_area" >
+	<div class="info_form_area" th:object="${promotion}">
+		<div class="item_detail_area">
+			
+			<div class="item_image_area">
+				<span th:if="*{imageName != null}">
+					<img th:src="@{/images/uploads/{image}(image=*{imageName})}"></img>
+				</span>
+				<span th:if="*{imageName == null}">
+					<img th:src="@{/images/common/no_image.jpg}"></img>
+				</span>
+			</div>
 
-		<div th:each= "item : ${items}" class="prize_detail_area">
-          
-          
-              
-		    <div class="prize_image_area">
-	        <img th:if="${item.imageName != null}"
-		             th:src="@{/images/uploads/{image}(image=${item.imageName})}" />
+			<dl class="item_detail_list">
+				<dt>管理名</dt>
+				<dd th:text="*{pageName}"></dd>
 
-		        <img th:if="${item.imageName == null}"
-		             th:src="@{/images/common/no_image.jpg}" />
-		    </div> 
+				<dt>遷移先カテゴリ</dt>
+				<dd th:text="*{category != null ? category.name : ''}"></dd>
 
-		     <ul class="input_list">
-
-		        <li>
-		            <span class="input_title">Layout Type</span>
-		            <span class="input_value" th:text="${item.layoutType}"></span>
-		        </li>
-
-		        <li>
-		            <span class="input_title">Target Url</span>
-		            <span class="input_value" th:text="${item.targetUrl}"></span>
-		        </li>
-
-		        <li>
-		            <span class="input_title">Content Json</span>
-		            <span class="input_value" th:text="${contentJson}"></span>
-		        </li>
-
-		    </ul>
-
-		    <div class="detail_button_area">
-
-		        <form th:action="@{/admin/ad/list}" method="get">
-		            <input type="submit" value="戻る" class="back_button">
-		        </form>
-
-		       <form th:action="@{/admin/ad/update/input(id=${item.id})}" method="post" style="display:inline;">
-							<input type="submit" class="changeBtn" value="変更" />
-						</form>
-
-				<form th:action="@{/admin/ad/delete/confirm(id=${item.id})}" method="post" style="display:inline;"
-							>
-
-							<input type="hidden" name="id" th:value="${item.id}" />
-
-							<input type="submit" value="削除" id="deleteBtn" />
-						</form>
-		    </div>
+				<dt>有効/無効</dt>
+				<dd th:text="*{isActive == 1 ? '有効' : '無効'}"></dd>
+			</dl>
 
 		</div>
 
+		<div class="detail_button_area">
+			<form th:action="@{/admin/ad/list}" method="get">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+
+			<form th:action="@{/admin/ad/update/input}" method="post">
+				<input type="hidden" name="id" th:value="*{id}" />
+				<input type="submit" class="changeBtn" value="変更" />
+			</form>
+
+			<form th:action="@{/admin/ad/delete/confirm}" method="post">
+				<input type="hidden" name="id" th:value="*{id}" />
+				<input type="submit" value="削除" id="deleteBtn" />
+			</form>
+		</div>
 	</div>
 
-</div> 
+</div>
 
 </body>
+
 </html>

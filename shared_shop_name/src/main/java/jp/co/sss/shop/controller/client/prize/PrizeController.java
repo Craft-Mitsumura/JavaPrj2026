@@ -21,11 +21,11 @@ public class PrizeController {
     @GetMapping("/list")
     public String list(Model model) {
 
-        List<Prize> prizeList = prizeRepository.findAllByOrderByRequiredPointAsc();
+        List<Prize> prizeList = prizeRepository.findAllByOrderByIdDesc();
 
         model.addAttribute("prizeList", prizeList);
         model.addAttribute("pageClass", "prize-main");
-        
+
         return "client/prize/list";
     }
 }

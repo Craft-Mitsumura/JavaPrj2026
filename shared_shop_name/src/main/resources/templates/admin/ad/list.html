@@ -30,7 +30,9 @@
 			<tbody>
 				<tr th:each="ad : ${promotions}">
 					<td th:text="${ad.id}"></td>
-					<td th:text="${ad.pageName}"></td>
+					<td>
+						<a th:href="@{/admin/ad/details/{id}(id=${ad.id})}" th:text="${ad.pageName}"></a>
+					</td>
 					<td>
 						<span th:text="${ad.isActive == 1 ? '有効' : '無効'}">有効</span>
 					</td>
