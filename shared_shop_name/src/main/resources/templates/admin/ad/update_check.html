@@ -53,7 +53,7 @@
 					<input type="hidden" th:field="*{pageName}" />
 					<input type="hidden" th:field="*{tempImageName}" />
 					<input type="hidden" th:field="*{categoryId}" />
-					<input type="hidden" th:field="*{isActive}" />
+					<input type="hidden" name="isActive" th:value="*{isActive != null ? isActive : 0}" />
 
 					<input type="submit" value="更新" class="send_button" />
 				</form>
