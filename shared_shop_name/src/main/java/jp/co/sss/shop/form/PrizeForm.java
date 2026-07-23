@@ -10,18 +10,19 @@ public class PrizeForm {
 
     private Integer id;
 
-    @NotBlank
+
+    @NotBlank(message = "{prize.name.required}")
     private String name;
 
-    @NotNull(message = "必要ポイントを入力してください")
-    @Min(value = 1, message = "必要ポイントは1以上で入力してください")
+    @NotNull(message = "{prize.requiredPoint.required}")
+    @Min(value = 1, message = "{prize.requiredPoint.min}")
     private Integer requiredPoint;
 
-    @NotBlank
+    @NotBlank(message = "{prize.description.required}")
     private String description;
-    
+
     private String image;
-    
+
     private MultipartFile imageFile;
     
     
