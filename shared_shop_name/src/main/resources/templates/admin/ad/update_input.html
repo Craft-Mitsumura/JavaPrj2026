@@ -11,7 +11,7 @@
 	<div th:fragment="content" class="admin ad_list">
 		<div id="adminItemInput">
 			<h2 class="title">カテゴリカルーセル変更入力</h2>
-			<p class="input_message">変更内容を入力してください。</p>
+			<p class="input_message">変更する情報を入力してください。</p>
 
 			<div class="user_info_form_area">
 				<form th:action="@{/admin/ad/update/check}" enctype="multipart/form-data" method="post"
@@ -43,7 +43,7 @@
 							<input type="hidden" th:field="*{tempImageName}" />
 
 							<span th:if="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
-								<img id="preview-imageName" th:src="@{'/images/image_tmp/' + *{tempImageName}}" />
+								<img id="preview-imageName" th:src="@{'/images/uploads/' + *{tempImageName}}" />
 							</span>
 							<span th:unless="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
 								<img id="preview-imageName" th:src="@{/images/common/no_image.jpg}" />
@@ -65,7 +65,7 @@
 						<li class="input_field">
 							<label class="input_title">有効/無効</label>
 							<div class="checkbox_container">
-								<input type="checkbox" th:field="*{isActive}" value="1" /> 
+								<input type="checkbox" th:field="*{isActive}" value="1" />
 							</div>
 						</li>
 					</ul>
@@ -73,9 +73,9 @@
 					<input type="submit" value="確認" class="send_button" />
 				</form>
 
-				<!-- 一覧へ戻るフォーム -->
-				<form th:action="@{/admin/ad/list}" method="get">
-					<input type="submit" value="戻る" class="back_button" />
+				<!-- 詳細画面へ戻るフォーム（GETメソッドでIDを渡す） -->
+				<form th:action="@{/admin/ad/details/{id}(id=*{id})}" method="get" th:object="${updateForm}">
+				    <input type="submit" value="戻る" class="back_button" />
 				</form>
 
 				<!-- 画像プレビュー用スクリプト -->

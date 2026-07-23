@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
 	<title th:text="'カルーセル式カテゴリ詳細 | '+ #{shop.title}">カルーセル式カテゴリ詳細</title>
@@ -43,9 +43,8 @@
 				<input type="submit" value="戻る" class="back_button" />
 			</form>
 
-			<form th:action="@{/admin/ad/update/input}" method="post">
-				<input type="hidden" name="id" th:value="*{id}" />
-				<input type="submit" class="changeBtn" value="変更" />
+			<form th:action="@{/admin/ad/update/input/{id}(id=*{id})}" method="post">
+			    <input type="submit" class="changeBtn" value="変更" />
 			</form>
 
 			<form th:action="@{/admin/ad/delete/confirm}" method="post">

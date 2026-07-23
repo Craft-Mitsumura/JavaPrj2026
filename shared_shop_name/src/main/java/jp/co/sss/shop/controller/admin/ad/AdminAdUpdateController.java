@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -33,7 +35,7 @@ import jp.co.sss.shop.repository.PromotionsRepository;
  */
 @Controller
 @RequestMapping("/admin/ad/update")
-@SessionAttributes("updateForm") // セッション持越しを有効化（登録側と統一）
+@SessionAttributes("updateForm")
 public class AdminAdUpdateController {
 
 	/**
@@ -47,6 +49,12 @@ public class AdminAdUpdateController {
 	 */
 	@Autowired
 	CategoryRepository categoryRepository;
+
+	/**
+	 * セッション
+	 */
+	@Autowired
+	HttpSession session;
 
 	/**
 	 * 実行環境のルートパスを取得
@@ -64,32 +72,65 @@ public class AdminAdUpdateController {
 	private final String UPLOAD_DIR = BASE_PATH + "images" + File.separator + "uploads" + File.separator;
 
 	/**
-	 * 入力画面：IDを受け取ってセッションに詰める
+	 * 変更入力画面 初期表示処理(POST)
+	 * 詳細画面や一覧からIDを受け取り、フォームを生成してセッションに詰めてからGETへリダイレクト
 	 * @param id ID
-	 * @param model モデル
-	 * @param status ステータス
-	 * @return "admin/ad/update_input"
-	 * @throws Exception ID受け取りに例外が発生した場合
+	 * @return "redirect:/admin/ad/update/input"
 	 */
-	@RequestMapping(path = "/input", method = RequestMethod.POST)
-	public String input(Integer id, Model model, SessionStatus status) throws Exception {
-		Promotions promo = repository.findById(id).get();
+	@RequestMapping(path = "/input/{id}", method = RequestMethod.POST)
+	public String updateInputInit(@PathVariable Integer id) {
+
+		// セッションスコープより入力情報を取り出す
+		PromotionsForm updateForm = (PromotionsForm) session.getAttribute("updateForm");
+
+		// 新規に開いた場合（あるいは別IDの場合）、DBから取得してセッションを初期化
+		Promotions promo = repository.findById(id).orElse(null);
+		if (promo == null) {
+			return "redirect:/syserror";
+		}
 
 		// フォームにEntityの値を直接詰め替える
-		PromotionsForm form = new PromotionsForm();
-		form.setId(promo.getId());
-		form.setPageName(promo.getPageName());
+		updateForm = new PromotionsForm();
+		updateForm.setId(promo.getId());
+		updateForm.setPageName(promo.getPageName());
 
 		// 外部キー（Category）のIDをフォームのcategoryIdにセット
 		if (promo.getCategory() != null) {
-			form.setCategoryId(promo.getCategory().getId());
+			updateForm.setCategoryId(promo.getCategory().getId());
 		}
 
-		form.setIsActive(promo.getIsActive());
-		form.setTempImageName(promo.getImageName()); // 既存の画像名を一時画像名として保持
+		updateForm.setIsActive(promo.getIsActive());
+		updateForm.setTempImageName(promo.getImageName()); // 既存の画像名を一時画像名として保持
 
-		model.addAttribute("updateForm", form);
+		// セッションに保持
+		session.setAttribute("updateForm", updateForm);
 
+		// GETメソッドへリダイレクト
+		return "redirect:/admin/ad/update/input";
+	}
+
+	/**
+	 * 変更入力画面 表示処理(GET)
+	 * @param model モデル
+	 * @return "admin/ad/update_input"
+	 */
+	@RequestMapping(path = "/input", method = RequestMethod.GET)
+	public String updateInput(Model model) {
+
+		// セッションから入力フォーム表示情報取得
+		PromotionsForm updateForm = (PromotionsForm) session.getAttribute("updateForm");
+		if (updateForm == null) {
+			return "redirect:/syserror";
+		}
+
+		// バリデーションエラー情報があれば復元
+		BindingResult result = (BindingResult) session.getAttribute("result");
+		if (result != null) {
+			model.addAttribute("org.springframework.validation.BindingResult.updateForm", result);
+			session.removeAttribute("result");
+		}
+
+		model.addAttribute("updateForm", updateForm);
 		// ドロップダウン用のカテゴリ一覧をモデルに格納
 		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 
@@ -101,25 +142,23 @@ public class AdminAdUpdateController {
 	 * @param form 広告フォーム
 	 * @param result バインドリザルト
 	 * @param model モデル
-	 * @return "admin/ad/update_input"
-	 * @throws IOException 確認中に例外が発生した場合
+	 * @return エラー時は入力画面へリダイレクト、成功時は確認画面へリダイレクト
 	 */
 	@RequestMapping(path = "/check", method = RequestMethod.POST)
 	public String check(@Valid @ModelAttribute("updateForm") PromotionsForm form,
-			BindingResult result, Model model) throws IOException {
+			BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
-			return "admin/ad/update_input";
+			session.setAttribute("result", result);
+			return "redirect:/admin/ad/update/input";
 		}
 
 		long maxSize = 1024 * 1024; // 1MB
 
 		// 画像サイズチェック
 		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
-			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
-			return "admin/ad/update_input";
+			// エラー時はセッション等にメッセージを詰めるか、簡易的に戻す
+			return "redirect:/admin/ad/update/input";
 		}
 
 		try {
@@ -131,32 +170,60 @@ public class AdminAdUpdateController {
 					form.setTempImageName(fileName);
 				}
 			}
-			Category selectedCategory = categoryRepository.findById(form.getCategoryId()).orElse(null);
-			model.addAttribute("selectedCategory", selectedCategory);
 
-			return "admin/ad/update_check";
+			return "redirect:/admin/ad/update/check";
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			model.addAttribute("errorMessage", "ファイルのアップロードセッションがタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
-			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
-			return "admin/ad/update_input";
+			return "redirect:/admin/ad/update/input";
 		}
 	}
 
 	/**
-	 * 終了処理（更新完了）
-	 * @param form 広告フォーム
-	 * @param result バインドリザルト
+	 * 変更確認画面 表示処理 (GET)
+	 * @param model モデル
+	 * @return "admin/ad/update_check"
+	 */
+	@RequestMapping(path = "/check", method = RequestMethod.GET)
+	public String updateCheck(Model model) {
+		PromotionsForm updateForm = (PromotionsForm) session.getAttribute("updateForm");
+		if (updateForm == null) {
+			return "redirect:/syserror";
+		}
+
+		Category selectedCategory = categoryRepository.findById(updateForm.getCategoryId()).orElse(null);
+		model.addAttribute("selectedCategory", selectedCategory);
+		model.addAttribute("updateForm", updateForm);
+
+		// 画像の表示パスを判定して渡す
+		String imagePath = "/images/common/no_image.jpg";
+		if (updateForm.getTempImageName() != null && !updateForm.getTempImageName().isEmpty()) {
+			File tmpFile = new File(TMP_DIR + updateForm.getTempImageName());
+			if (tmpFile.exists()) {
+				imagePath = "/images/image_tmp/" + updateForm.getTempImageName();
+			} else {
+				imagePath = "/images/uploads/" + updateForm.getTempImageName();
+			}
+		}
+		model.addAttribute("imagePath", imagePath);
+
+		return "admin/ad/update_check";
+	}
+
+	/**
+	 * 終了処理（更新完了）(POST)
 	 * @param status セッションステータス
-	 * @return 完了画面 
-	 * @throws Exception 登録処理で予期せぬ例外が発生した場合 
+	 * @return "redirect:/admin/ad/update/complete"
+	 * @throws Exception 例外
 	 */
 	@RequestMapping(path = "/complete", method = RequestMethod.POST)
 	@Transactional(rollbackFor = Exception.class)
-	public String complete(@Valid @ModelAttribute("updateForm") PromotionsForm form,
-			BindingResult result,
-			SessionStatus status) throws Exception {
+	public String complete(SessionStatus status) throws Exception {
+
+		PromotionsForm form = (PromotionsForm) session.getAttribute("updateForm");
+		if (form == null) {
+			return "redirect:/syserror";
+		}
 
 		// 既存データを取得して内容を更新
 		Promotions promo = repository.findById(form.getId()).get();
@@ -176,12 +243,13 @@ public class AdminAdUpdateController {
 
 		// セッションクリア
 		status.setComplete();
+		session.removeAttribute("updateForm");
 
 		return "redirect:/admin/ad/update/complete";
 	}
 
 	/**
-	 * 完了画面表示
+	 * 完了画面表示 (GET)
 	 * @return "admin/ad/update_complete"
 	 */
 	@RequestMapping(path = "/complete", method = RequestMethod.GET)
