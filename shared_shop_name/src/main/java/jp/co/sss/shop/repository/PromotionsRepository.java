@@ -18,5 +18,5 @@ public interface PromotionsRepository extends JpaRepository<Promotions, Integer>
 	 * トップページ用：有効フラグの降順、IDの昇順で広告をすべて取得
 	 * @return 広告エンティティのリスト
 	 */
-	List<Promotions> findAllByOrderByIsActiveDescIdAsc();
+	List<Promotions> findAllByOrderByIsActiveDescIdDesc();
 }

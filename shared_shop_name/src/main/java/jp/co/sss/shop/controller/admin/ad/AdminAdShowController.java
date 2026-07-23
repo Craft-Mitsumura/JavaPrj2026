@@ -44,7 +44,7 @@ public class AdminAdShowController{
     @GetMapping("/admin/ad/list")
     public String list(Model model) {
         // 削除フラグを引数に検索
-    	model.addAttribute("promotions", repository.findAllByOrderByIsActiveDescIdAsc());
+    	model.addAttribute("promotions", repository.findAllByOrderByIsActiveDescIdDesc());
         
         return "admin/ad/list";
 	}
