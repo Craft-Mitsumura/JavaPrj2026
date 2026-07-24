@@ -66,7 +66,7 @@
 
 		        <div class="prize_card" th:each="prize : ${prizeList}">
 
-		            <div class="point" th:text="${prize.requiredPoint} + ' pt'"></div>
+		            <div class="point" th:text="|${#numbers.formatInteger(prize.requiredPoint,3,'COMMA')}| + ' pt'"></div>
 
 		            <div class="timeline_dot"></div>
 

@@ -3865,7 +3865,12 @@ p.link_center {
 	
 }
 
-
+.preview-image{
+    width:200px;
+    height:200px;
+    object-fit:contain;
+    border:1px solid #ccc;
+}
 /* ===== 景品詳細 ===== */
 
 #adminPrizeDetail .info_form_area {

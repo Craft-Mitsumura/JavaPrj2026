@@ -27,7 +27,7 @@ public class PromotionsForm implements Serializable {
 	/**
 	 * 遷移先カテゴリID（categoriesテーブルのid）
 	 */
-	@NotNull(message = "遷移先カテゴリは必須です")
+	@NotNull(message = "遷移先カテゴリを選択してください。")
 	private Integer categoryId;
 
 	/**
@@ -38,8 +38,8 @@ public class PromotionsForm implements Serializable {
 	/**
 	 * 管理画面での表記名（管理名）
 	 */
-	@NotBlank(message = "管理名は必須です")
-	@Size(max = 100, message = "管理名は100文字以内で入力してください")
+	@NotBlank(message = "管理名は必須です。")
+	@Size(max = 100, message = "管理名は100文字以内で入力してください。")
 	private String pageName;
 
 	/**
@@ -57,7 +57,7 @@ public class PromotionsForm implements Serializable {
 	 * サムネイル画像が選択されているか、または既に一時保存されているかを検証します。
 	 * @return 検証結果（有効な場合はtrue）
 	 */
-	@AssertTrue(message = "画像を選択してください")
+	@AssertTrue(message = "画像を選択してください。")
 	public boolean isImageNameValid() {
 		return (this.tempImageName != null && !this.tempImageName.isEmpty())
 				|| (this.imageName != null && !this.imageName.isEmpty());

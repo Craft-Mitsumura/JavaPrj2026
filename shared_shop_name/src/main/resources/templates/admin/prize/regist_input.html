@@ -63,20 +63,15 @@
 
 
 				<li>
-					<label>
-						<span class="input_title">画像</span>
-					</label>
+				    <label>
+				        <span class="input_title">画像</span>
+				    </label>
 
-					<input type="file" th:field="*{imageFile}" />
+				    <input type="file" th:field="*{imageFile}" id="imageFile" />
 
-					<span th:unless="${#strings.isEmpty(prizeForm.image)}">
-						<img th:src="@{/images/{image}(image=${prizeForm.image})}">
-					</span>
-
-					<span th:if="${#strings.isEmpty(prizeForm.image)}">
-						<img th:src="@{/images/common/no_image.jpg}">
-					</span>
-
+				    <img id="preview"
+				         class="preview-image"
+				         th:src="@{/images/common/no_image.jpg}">
 				</li>
 
 
@@ -94,6 +89,15 @@
 
 
 	</div>
+	<script>
+	document.getElementById("imageFile").addEventListener("change", function(e) {
+	    const file = e.target.files[0];
+
+	    if (file) {
+	        document.getElementById("preview").src = URL.createObjectURL(file);
+	    }
+	});
+	</script>
 
 </body>
 
