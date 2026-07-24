@@ -54,14 +54,14 @@
 						<span>-</span>
 					</th:block>
 				</td>
-				<td th:text="${orderItem.price}"></td>
+				<td th:text="|${#numbers.formatInteger(orderItem.price,3,'COMMA')}|"></td>
 				<td th:text="${orderItem.orderNum}"></td>
-				<td th:text="${orderItem.subtotal}"></td>
+				<td th:text="|${#numbers.formatInteger(orderItem.subtotal,3,'COMMA')}|"></td>
 			</tr>
 			<tr>
 				<td colspan="4"></td>
 				<td class="total">[[#{data.total}]]</td>
-				<td class="total" th:text="${total}"></td>
+				<td class="total" th:text="|\${#numbers.formatInteger(total,3,'COMMA')}|"></td>
 			</tr>
 		</table>
 		<div class="user_info_form_area">
