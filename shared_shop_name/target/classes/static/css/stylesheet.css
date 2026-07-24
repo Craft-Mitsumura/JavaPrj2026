@@ -3976,6 +3976,69 @@ p.link_center {
     background:#c9302c;
 }
 
+
+#NewUserForm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+#NewUserForm .user_info_form_area {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+#NewUserForm .input_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#NewUserForm .input_list li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+#NewUserForm .input_title {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#NewUserForm input[type="text"],
+#NewUserForm input[type="email"],
+#NewUserForm input[type="password"],
+#NewUserForm textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#NewUserForm textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+#NewUserForm .send_button,
+#NewUserForm .back_button {
+    width: 180px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
 /* 広告用 */
 #adminAdInput{
     max-width: 900px;
@@ -4252,3 +4315,4 @@ p.link_center {
     border-radius: 6px;
     object-fit: contain;
 }
+
