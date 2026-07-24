@@ -26,13 +26,13 @@
 				</div>
 
 				<dl class="item_detail_list">
-					<dt>管理名</dt>
+					<dt>[[#{ad.pageName}]]</dt>
 					<dd th:text="*{pageName}"></dd>
 
-					<dt>遷移先カテゴリ</dt>
+					<dt>[[#{ad.category}]]</dt>
 					<dd th:text="*{category != null ? category.name : ''}"></dd>
 
-					<dt>有効/無効</dt>
+					<dt>[[#{ad.isActive}]]</dt>
 					<dd th:text="*{isActive == 1 ? '有効' : '無効'}"></dd>
 				</dl>
 
