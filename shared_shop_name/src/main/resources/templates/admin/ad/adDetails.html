@@ -9,52 +9,51 @@
 
 <body class="admin item_detail_admin">
 
-<div id="adminItemDetail" th:fragment="content">
+	<div id="adminAdDetail" th:fragment="content">
 
-	<h2 class="title">カルーセル式カテゴリ詳細</h2>
+		<h2 class="title">カルーセル式カテゴリ詳細</h2>
 
-	<div class="info_form_area" th:object="${promotion}">
-		<div class="item_detail_area">
-			
-			<div class="item_image_area">
-				<span th:if="*{imageName != null}">
-					<img th:src="@{/images/uploads/{image}(image=*{imageName})}"></img>
-				</span>
-				<span th:if="*{imageName == null}">
-					<img th:src="@{/images/common/no_image.jpg}"></img>
-				</span>
+		<div class="info_form_area" th:object="${promotion}">
+			<div class="item_detail_area">
+
+				<div class="item_image_area">
+					<span th:if="*{imageName != null}">
+						<img th:src="@{/images/uploads/{image}(image=*{imageName})}"></img>
+					</span>
+					<span th:if="*{imageName == null}">
+						<img th:src="@{/images/common/no_image.jpg}"></img>
+					</span>
+				</div>
+
+				<dl class="item_detail_list">
+					<dt>管理名</dt>
+					<dd th:text="*{pageName}"></dd>
+
+					<dt>遷移先カテゴリ</dt>
+					<dd th:text="*{category != null ? category.name : ''}"></dd>
+
+					<dt>有効/無効</dt>
+					<dd th:text="*{isActive == 1 ? '有効' : '無効'}"></dd>
+				</dl>
+
 			</div>
 
-			<dl class="item_detail_list">
-				<dt>管理名</dt>
-				<dd th:text="*{pageName}"></dd>
+			<div class="detail_button_area">
+				<form th:action="@{/admin/ad/list}" method="get">
+					<input type="submit" value="戻る" class="back_button" />
+				</form>
 
-				<dt>遷移先カテゴリ</dt>
-				<dd th:text="*{category != null ? category.name : ''}"></dd>
+				<form th:action="@{/admin/ad/update/input/{id}(id=*{id})}" method="post">
+					<input type="submit" class="changeBtn" value="変更" />
+				</form>
 
-				<dt>有効/無効</dt>
-				<dd th:text="*{isActive == 1 ? '有効' : '無効'}"></dd>
-			</dl>
-
+				<form th:action="@{/admin/ad/delete/delete_check/{id}(id=*{id})}" method="post" style="display:inline;">
+					<input type="submit" value="削除" id="deleteBtn" />
+				</form>
+			</div>
 		</div>
 
-		<div class="detail_button_area">
-			<form th:action="@{/admin/ad/list}" method="get">
-				<input type="submit" value="戻る" class="back_button" />
-			</form>
-
-			<form th:action="@{/admin/ad/update/input/{id}(id=*{id})}" method="post">
-			    <input type="submit" class="changeBtn" value="変更" />
-			</form>
-
-			<form th:action="@{/admin/ad/delete/confirm}" method="post">
-				<input type="hidden" name="id" th:value="*{id}" />
-				<input type="submit" value="削除" id="deleteBtn" />
-			</form>
-		</div>
 	</div>
-
-</div>
 
 </body>
 

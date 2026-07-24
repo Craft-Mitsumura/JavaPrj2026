@@ -19,7 +19,7 @@
 	
 	<div class="container" style="position: relative; min-height: 80vh;">
 
-		<aside th:if="${session.user.authority == 2}" class="admin_sidebar" style="position: absolute; left: 0; top: 20px; width: 200px; z-index: 10;">
+		<aside th:unless="${session.user != null and session.user.authority == 0}" class="admin_sidebar" style="position: absolute; left: 0; top: 20px; width: 200px; z-index: 10;">
 			<div class="border border-gray-200 rounded-md p-5 mr-9">
 				<h2 class="font-bold text-lg" th:text="#{admin.menu}">運用メニュー</h2><br>
 				

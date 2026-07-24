@@ -3975,3 +3975,344 @@ p.link_center {
 #adConfirm #deleteBtn:hover{
     background:#c9302c;
 }
+
+
+#NewUserForm {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+#NewUserForm .user_info_form_area {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+#NewUserForm .input_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#NewUserForm .input_list li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+#NewUserForm .input_title {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+#NewUserForm input[type="text"],
+#NewUserForm input[type="email"],
+#NewUserForm input[type="password"],
+#NewUserForm textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#NewUserForm textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+#NewUserForm .send_button,
+#NewUserForm .back_button {
+    width: 180px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* 広告用 */
+#adminAdInput{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminAdInput:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminAdInput .title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#adminAdInput .input_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminAdInput .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#adminAdInput .input_list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminAdInput .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: bold;
+    color: #555;
+    padding-top: 8px;
+}
+
+#adminAdInput input[type="text"],
+#adminAdInput textarea,
+#adminAdInput select,
+#adminAdInput input[type="file"]{
+    flex: 1;
+    width: 100%;
+}
+
+#adminAdInput textarea{
+    min-height: 120px;
+    resize: vertical;
+}
+
+#adminAdInput img{
+    width: 120px;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+#adminAdInput .checkbox_container{
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+}
+#adminAdUpdateCheck{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminAdUpdateCheck:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminAdUpdateCheck .title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#adminAdUpdateCheck .check_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminAdUpdateCheck .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#adminAdUpdateCheck .input_list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminAdUpdateCheck .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#adminAdUpdateCheck .input_value{
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminAdUpdateCheck img{
+    width: 120px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+#adminAdDetail{
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminAdDetail:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminAdDetail .title{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#adminAdDetail .item_detail_area{
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+#adminAdDetail .item_image_area{
+    flex: 0 0 250px;
+    text-align: center;
+}
+
+#adminAdDetail .item_image_area img{
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+}
+
+#adminAdDetail .item_detail_list{
+    flex: 1;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    row-gap: 14px;
+    column-gap: 20px;
+    margin: 0;
+}
+
+#adminAdDetail .item_detail_list dt{
+    font-weight: bold;
+    color: #555;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminAdDetail .item_detail_list dd{
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminAdDetail .detail_button_area{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+#adminAdDetail .delete:hover {
+    background: #b71c1c;
+    color: white;
+}
+
+
+#adminAdDeleteCheck{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+#adminAdDeleteCheck:hover{
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+#adminAdDeleteCheck .title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#adminAdDeleteCheck .check_message{
+    text-align: center;
+    margin-bottom: 25px;
+    color: #666;
+}
+
+#adminAdDeleteCheck .input_list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#adminAdDeleteCheck .input_list li{
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#adminAdDeleteCheck .input_title{
+    width: 180px;
+    min-width: 180px;
+    font-weight: bold;
+    color: #555;
+}
+
+#adminAdDeleteCheck .input_value{
+    flex: 1;
+    color: #333;
+    word-break: break-word;
+}
+
+#adminAdDeleteCheck img{
+    width: 120px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
