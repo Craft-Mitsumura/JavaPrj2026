@@ -9,6 +9,7 @@
 
 <body class="user user_regist_check">
 	<h2 th:class="title" th:text="#{user}+#{title.input.check}"></h2>
+	<div id="adminCategoryConfirm">
 	<p th:class="check_message" th:text="#{msg.regist.check}"></p>
 	<div class="user_info_form_area">
 		<ul class="input_list"  th:object="${userForm}">
@@ -45,6 +46,7 @@
 		<form th:action="@{/client/user/regist/input/init}" method="get" class="update">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 
