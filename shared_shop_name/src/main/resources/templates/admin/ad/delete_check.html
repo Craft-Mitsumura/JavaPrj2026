@@ -9,13 +9,14 @@
 
 <body class="admin ad_delete_check">
 	<div th:fragment="content" class="admin ad_list">
-		<div id="adminItemDeleteCheck">
+		<div id="adminAdDeleteCheck">
 			<h2 class="title">カルーセル式カテゴリ削除確認</h2>
 			<p class="check_message">以下の内容を削除します。</p>
 
-			<div class="user_info_form_area" th:object="${updateForm}">
-				<input type="hidden" th:field="*{id}" />
-				<ul class="input_list">
+			<div class="user_info_form_area">
+				<ul class="input_list" th:object="${deleteform}">
+					<input type="hidden" th:field="*{id}" />
+
 					<!-- 1. 管理名 -->
 					<li>
 						<span class="input_title">管理名</span>
@@ -25,14 +26,15 @@
 					<li>
 						<span class="input_title">画像</span>
 						<span class="input_value">
-							<img th:if="*{tempImageName != null}" th:src="@{'/images/uploads/' + *{tempImageName}}"/>
-							<img th:unless="*{tempImageName != null}" th:src="@{/images/common/no_image.jpg}"/>
+							<img th:if="*{tempImageName != null}" th:src="@{'/images/uploads/' + *{tempImageName}}" />
+							<img th:unless="*{tempImageName != null}" th:src="@{/images/common/no_image.jpg}" />
 						</span>
 					</li>
 					<!-- 3. 遷移先カテゴリ名 -->
 					<li>
 						<span class="input_title">遷移先カテゴリ</span>
-						<span class="input_value" th:text="${selectedCategory != null ? selectedCategory.name : ''}"></span>
+						<span class="input_value"
+							th:text="${selectedCategory != null ? selectedCategory.name : ''}"></span>
 					</li>
 					<!-- 4. 有効/無効 -->
 					<li>
@@ -42,7 +44,8 @@
 				</ul>
 
 				<!-- 削除実行フォーム -->
-				<form th:action="@{/admin/ad/delete/complete}" method="post" th:object="${updateForm}" class="user_info_form">
+				<form th:action="@{/admin/ad/delete/complete}" method="post" th:object="${deleteform}"
+					class="user_info_form">
 					<input type="hidden" th:field="*{id}" />
 					<input type="submit" value="削除" class="delete" />
 				</form>

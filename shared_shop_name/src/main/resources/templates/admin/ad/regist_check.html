@@ -9,7 +9,7 @@
 
 <body class="admin ad_regist_check">
 	<div th:fragment="content" class="admin ad_list">
-		<div id="adminItemInput">
+		<div id="adminAdUpdateCheck">
 			<h2 class="title">カルーセル式カテゴリ登録確認</h2>
 			<p class="check_message">以下の情報で登録します。</p>
 
@@ -56,12 +56,7 @@
 				</form>
 
 				<!-- 入力画面へ戻るフォーム -->
-				<form th:action="@{/admin/ad/regist/input}" method="get" th:object="${registForm}">
-					<input type="hidden" th:field="*{pageName}" />
-					<input type="hidden" th:field="*{tempImageName}" />
-					<input type="hidden" th:field="*{categoryId}" />
-					<input type="hidden" name="isActive" th:value="*{isActive != null ? isActive : 0}" />
-
+				<form th:action="@{/admin/ad/regist/input}" method="get">
 					<input type="submit" value="戻る" class="back_button" />
 				</form>
 			</div>

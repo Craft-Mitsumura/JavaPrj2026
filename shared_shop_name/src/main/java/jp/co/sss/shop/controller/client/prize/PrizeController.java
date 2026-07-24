@@ -21,7 +21,7 @@ public class PrizeController {
     @GetMapping("/list")
     public String list(Model model) {
 
-        List<Prize> prizeList = prizeRepository.findAllByOrderByIdDesc();
+    	List<Prize> prizeList = prizeRepository.findAllByOrderByRequiredPointAsc();
 
         model.addAttribute("prizeList", prizeList);
         model.addAttribute("pageClass", "prize-main");
