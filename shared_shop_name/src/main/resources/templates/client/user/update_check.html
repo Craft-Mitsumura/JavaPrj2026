@@ -11,6 +11,7 @@
 <body class="user user_update_check">
 
 	<h2 th:class="title" th:text="#{user}+#{title.update.check}"></h2>
+	<div id="adminUserUpdateCheck">
 	<p th:class="check_message" th:text="#{msg.update.check}"></p>
 	<div class="user_info_form_area"  th:object="${userForm}">
 		<ul class="input_list">
@@ -49,6 +50,7 @@
 			<input type="hidden" name="newEmail" th:value="${newEmail}" />
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 

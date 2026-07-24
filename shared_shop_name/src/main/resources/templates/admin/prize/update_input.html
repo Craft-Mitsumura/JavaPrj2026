@@ -10,9 +10,9 @@
 		<body class="admin prize_update_input">
 
 			<h2 class="title">景品変更</h2>
-			<p class="input_message">変更する情報を入力してください。</p>
-
+ <div id="NewUserForm"> 
 			<div class="user_info_form_area">
+			<p class="input_message">変更する情報を入力してください。</p>
 
 				<form th:action="@{/admin/prize/update/check}"
 					  th:object="${prizeForm}"
@@ -83,6 +83,6 @@
 				</form>
 
 			</div>
-
+</div>
 		</body>
 		</html>

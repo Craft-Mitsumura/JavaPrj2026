@@ -3,18 +3,32 @@
       	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <title>景品編集完了</title>
+    <title>譎ｯ蜩∫ｷｨ髮�螳御ｺ�</title>
 </head>
 
 <body>
 
-<h2>景品を更新しました。</h2>
+<div class="complete-container">
 
-<p>
-    <a th:href="@{/admin/prize/list}">
-        景品一覧へ戻る
-    </a>
-</p>
+    <div class="complete-card">
+
+        <div class="check-icon">
+            ✓
+        </div>
+
+        <h1>会員登録完了</h1>
+
+        <p>
+      景品情報の変更完了しました。
+        </p>
+
+        <a th:href="@{/admin/prize/list}" class="home-btn">
+          景品一覧へ戻る
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 </html>
