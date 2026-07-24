@@ -20,7 +20,7 @@ public class AdminPrizeListController {
     @RequestMapping(path = "/admin/prize/list", method = { RequestMethod.GET, RequestMethod.POST })
     public String showPrizeList(Model model) {
     	
-        List<Prize> prizeList = prizeRepository.findAllByOrderByIdDesc();
+    	List<Prize> prizeList = prizeRepository.findAllByOrderByIdDesc();
 
         model.addAttribute("prizes", prizeList);
 

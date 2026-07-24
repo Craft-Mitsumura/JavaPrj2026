@@ -91,7 +91,7 @@ public class AdminAdRegistController {
 	 * @return admin/ad/regist_input
 	 */
 	@RequestMapping(path = "/input", method = RequestMethod.POST)
-	public String registInputPost(SessionStatus status) {
+	public String registInputInit(SessionStatus status) {
 		// 古いセッション状態をクリア
 		status.setComplete();
 
@@ -103,7 +103,7 @@ public class AdminAdRegistController {
 	 * @return "admin/ad/regist_input" 
 	 */
 	@RequestMapping(path = "/input", method = RequestMethod.GET)
-	public String registInputGet(@ModelAttribute("registForm") PromotionsForm form, Model model) {
+	public String registInput(@ModelAttribute("registForm") PromotionsForm form, Model model) {
 		// ドロップダウン用のカテゴリ一覧をモデルに格納
 		model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
 

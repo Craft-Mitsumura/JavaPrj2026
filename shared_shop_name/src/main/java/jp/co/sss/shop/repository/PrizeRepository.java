@@ -10,5 +10,9 @@ public interface PrizeRepository extends JpaRepository<Prize, Integer> {
 
     Prize findFirstByRequiredPointGreaterThanOrderByRequiredPointAsc(Integer point);
 
+    // 一般会員用
+    List<Prize> findAllByOrderByRequiredPointAsc();
+
+    // 管理者用
     List<Prize> findAllByOrderByIdDesc();
 }
