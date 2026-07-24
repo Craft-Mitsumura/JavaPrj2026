@@ -10,8 +10,8 @@
 
 <body class="user user_update_input">
 	<h2 class="title" th:text="#{user}+'情報'+#{title.update.input}"></h2>
-	<p th:class="input_message" th:text="#{msg.update.input}"></p>
-
+	<p style="margin:auto; text-align:center;" th:class="input_message" th:text="#{msg.update.input}"></p>
+ <div id="NewUserForm"> 
 	<div class="user_info_form_area">
 
 		<form th:action="@{/client/user/update/check}" method="post" class="user_info_form" th:object="${userForm}">
@@ -83,6 +83,7 @@
 					<form th:action="@{/}" method="post">
 						<input type="submit" value="戻る" class="back_button" />
 					</form>
+				</div>
 				</div>
 			</body>
 
