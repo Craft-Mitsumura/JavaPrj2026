@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{common/layout_4blockAdmin :: layout(~{::title},~{::body/content()})}">
+th:replace="~{common/layout_3block :: layout(~{::title},~{::body/content()})}">
 
 <head>
 <meta charset="UTF-8">
@@ -8,14 +8,28 @@
 </head>
 
 <body>
+<div class="complete-container">
 
-<h2>景品削除完了</h2>
+    <div class="complete-card">
 
-<p>景品を削除しました。</p>
+        <div class="check-icon">
+            ✓
+        </div>
 
-<form th:action="@{/admin/prize/list}" method="get">
-    <input type="submit" value="景品一覧へ戻る">
-</form>
+        <h1>景品削除完了</h1>
+
+        <p>
+景品を削除が完了しました。
+        </p>
+
+        <a  th:href="@{/admin/prize/list}" class="home-btn">
+            ホームへ戻る
+        </a>
+
+    </div>
+
+</div>
+
 
 </body>
 </html>

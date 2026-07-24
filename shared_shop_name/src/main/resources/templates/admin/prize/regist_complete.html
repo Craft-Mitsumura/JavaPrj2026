@@ -9,18 +9,29 @@
 
 <body class="admin prize_regist_complete">
 
-	<h2 class="title">景品登録完了</h2>
+	<div class="complete-container">
 
-	<p class="complete_message">
-		景品を登録しました。
-	</p>
+		<div class="complete-card">
 
-	<p class="complete_link">
-		<a th:href="@{/admin/prize/list}">
-			景品一覧へ戻る
-		</a>
-	</p>
+			<div class="check-icon">
+				✓
+			</div>
 
+			<h1>景品登録完了</h1>
+
+			<p>
+				景品の登録が正常に完了しました。
+			</p>
+
+			<a th:href="@{/admin/prize/list}" class="home-btn">
+				景品一覧へ戻る
+			</a>
+
+		</div>
+
+	</div>
 </body>
 
 </html>
+
+
