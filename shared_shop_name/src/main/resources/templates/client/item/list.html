@@ -64,7 +64,7 @@
 					<!-- 商品価格 -->
 					<div class="price">
 
-						¥<span th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+						¥<span th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}"></span>
 
 					</div>
 

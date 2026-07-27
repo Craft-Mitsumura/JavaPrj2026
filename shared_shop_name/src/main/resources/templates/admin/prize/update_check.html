@@ -23,7 +23,7 @@
 
             <li>
                 <span class="input_title">必要ポイント</span>
-                <span class="input_value" th:text="${prizeForm.requiredPoint} + ' pt'"></span>
+                <span class="input_value" th:text="${#numbers.formatInteger(prizeForm.requiredPoint, 0, 'COMMA')} + ' pt'"></span>
             </li>
 
             <li>

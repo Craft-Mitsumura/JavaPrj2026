@@ -59,7 +59,7 @@
 				<td th:text="${item.orderNum}"></td>
 
 				<td>
-					¥<span th:text="${#numbers.formatInteger(item.price * item.orderNum, 3, 'COMMA')}"></span>
+					¥<span th:text="${#numbers.formatInteger(item.price * item.orderNum, 0, 'COMMA')}"></span>
 				</td>
 
 				<td>
@@ -80,7 +80,7 @@
 		<th:block th:if="${session.basketBeans != null}">
 			<div class="basket_total">
 				合計金額：
-				<span th:text="${#numbers.formatInteger(totalPrice, 3, 'COMMA')}"></span>円
+				<span th:text="${#numbers.formatInteger(totalPrice, 0, 'COMMA')}"></span>円
 			</div>
 		</th:block>
 		<div class="user_info_form_area shopping_button">
@@ -142,7 +142,7 @@
 						<div class="card-footer">
 							<div class="price">
 								<span class="currency">¥</span><span
-									th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')}"></span>
+									th:text="${#numbers.formatInteger(item.price, 0, 'COMMA')}"></span>
 							</div>
 
 

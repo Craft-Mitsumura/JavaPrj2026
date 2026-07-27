@@ -47,7 +47,7 @@
 			    </td>
 
 			    <!-- 必要ポイント -->
-			    <td th:text="|${#numbers.formatInteger(prize.requiredPoint,3,'COMMA')}| + ' pt'"></td>
+			    <td th:text="|${#numbers.formatInteger(prize.requiredPoint,0,'COMMA')}| + ' pt'"></td>
 
 			    <td>
 			        <form th:action="@{/admin/prize/update/input/{id}(id=${prize.id})}" method="post">
