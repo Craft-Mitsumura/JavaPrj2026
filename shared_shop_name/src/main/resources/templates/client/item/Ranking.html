@@ -56,7 +56,7 @@
 				<div class="ranking-name" th:text="${item.name}">
 				</div>
 
-				<div class="ranking-price" th:text="|￥${#numbers.formatInteger(item.price,3,'COMMA')}|">
+				<div class="ranking-price" th:text="|￥${#numbers.formatInteger(item.price,0,'COMMA')}|">
 				</div>
 			</div>
 

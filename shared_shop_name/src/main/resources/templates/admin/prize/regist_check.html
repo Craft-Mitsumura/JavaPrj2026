@@ -23,7 +23,7 @@
 
 			<li>
 				<span class="input_title">必要ポイント</span>
-				<span class="input_value" th:text="*{requiredPoint}"></span>
+				<span class="input_value" th:text="*{#numbers.formatInteger(requiredPoint, 0, 'COMMA')}"></span>
 			</li>
 
 			<li>
