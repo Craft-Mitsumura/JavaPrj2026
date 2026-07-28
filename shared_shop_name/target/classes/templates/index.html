@@ -53,7 +53,7 @@
 
 						<!-- 価格 -->
 						<div class="price">
-							¥<span th:text="|${#numbers.formatInteger(item.price,3,'COMMA')}|"></span>
+							¥<span th:text="|${#numbers.formatInteger(item.price,0,'COMMA')}|"></span>
 						</div>
 
 					</div>
@@ -108,7 +108,7 @@
 				<div class="rank-info">
 					<p class="ranking-rank">2位</p>
 					<p class="rank-name" th:text="*{name}"></p>
-					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,0,'COMMA')}|">
 					</p>
 				</div>
 
@@ -134,7 +134,7 @@
 				<div class="rank-info">
 					<p class="ranking-rank">1位</p>
 					<p class="rank-name" th:text="*{name}"></p>
-					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,0,'COMMA')}|">
 					</p>
 				</div>
 			</a>
@@ -162,7 +162,7 @@
 				<div class="rank-info">
 					<p class="ranking-rank">3位</p>
 					<p class="rank-name" th:text="*{name}"></p>
-					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,3,'COMMA')}|">
+					<p class="rank-price" th:text="|￥*{#numbers.formatInteger(price,0,'COMMA')}|">
 					</p>
 				</div>
 			</a>
