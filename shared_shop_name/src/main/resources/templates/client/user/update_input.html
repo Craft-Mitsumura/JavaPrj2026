@@ -14,7 +14,7 @@
  <div id="NewUserForm"> 
 	<div class="user_info_form_area">
 
-		<form th:action="@{/client/user/update/check}" method="post" class="user_info_form" th:object="${userForm}">
+		<form th:action="@{/client/user/update/check}" method="post" class="user_info_form" th:object="${userForm}" novalidate>
 
 			<ul class="input_list">
 				<li>
@@ -22,6 +22,7 @@
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title" th:text="#{userForm.email}"></span></label>
+					
 					<input type="text" name="oldEmail" th:value="${oldEmail}" />
 				</li>
 				<li>
@@ -36,11 +37,19 @@
 			<ul class="input_list">
 				<li>
 					<label><span class="input_title">新しい[[#{userForm.email}]]</span></label>
+					<div th:if="${newEmailErrorMessage}"
+					     th:text="${newEmailErrorMessage}"
+					     style="color:red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<input type="text" name="newEmail" th:value="${newEmail}" />
 				</li>
 
 				<li>
 					<label><span class="input_title">新しい[[#{userForm.password}]]</span></label>
+					<div th:if="${newPasswordErrorMessage}"
+					     th:text="${newPasswordErrorMessage}"
+					     style="color:red;  font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<input type="password" name="newPassword" />
 				</li>
 
