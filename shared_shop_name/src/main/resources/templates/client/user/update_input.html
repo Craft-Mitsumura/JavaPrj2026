@@ -41,6 +41,10 @@
 					     th:text="${newEmailErrorMessage}"
 					     style="color:red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
+					<div th:if="${authErrorMessage}"
+					     th:text="${authErrorMessage}"
+					     style="color: red; font-size: 0.9em; font-weight: bold; margin-bottom: 4px;">
+					</div>
 					<input type="text" name="newEmail" th:value="${newEmail}" />
 				</li>
 
