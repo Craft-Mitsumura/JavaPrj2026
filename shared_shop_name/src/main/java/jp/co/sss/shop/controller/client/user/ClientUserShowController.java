@@ -116,10 +116,8 @@ public class ClientUserShowController {
 	 * @param model リクエストスコープ
 	 * @return client/user/regist_input 会員情報登録入力画面を表示
 	 */
-	@RequestMapping("/client/user/regist/input/init")
+	@RequestMapping("/client/user/regist/input")
 	public String registInput(Model model
-			
-			
 			) {
 
 		// 入力フォーム用の会員情報を作成
