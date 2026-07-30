@@ -22,6 +22,7 @@
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title" th:text="#{userForm.email}"></span></label>
+					
 					<input type="text" name="oldEmail" th:value="${oldEmail}" />
 				</li>
 				<li>
@@ -36,11 +37,23 @@
 			<ul class="input_list">
 				<li>
 					<label><span class="input_title">新しい[[#{userForm.email}]]</span></label>
+					<div th:if="${newEmailErrorMessage}"
+					     th:text="${newEmailErrorMessage}"
+					     style="color:red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
+					<div th:if="${authErrorMessage}"
+					     th:text="${authErrorMessage}"
+					     style="color: red; font-size: 0.9em; font-weight: bold; margin-bottom: 4px;">
+					</div>
 					<input type="text" name="newEmail" th:value="${newEmail}" />
 				</li>
 
 				<li>
 					<label><span class="input_title">新しい[[#{userForm.password}]]</span></label>
+					<div th:if="${newPasswordErrorMessage}"
+					     th:text="${newPasswordErrorMessage}"
+					     style="color:red;  font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<input type="password" name="newPassword" />
 				</li>
 
