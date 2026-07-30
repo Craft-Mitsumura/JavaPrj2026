@@ -139,46 +139,49 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping(path = "/client/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(
-			@Valid @ModelAttribute("userForm") UserBean userBean,
-			BindingResult result,
-			Model model,
-			HttpSession session) {
+	        @Valid @ModelAttribute("userForm") UserBean userBean,
+	        BindingResult result,
+	        Model model,
+	        HttpSession session) {
 
-		// 必須項目が未入力
-		if (result.hasErrors()) {
-			return "client/user/regist_input";
-		}
-		
-		//現役会員に同じメールアドレスがいるか重複チェック
-		User activeUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 0);
+	    // バリデーションエラーがあるかどうか
+	    boolean hasError = result.hasErrors();
 
-		if (activeUser != null) {
-			// 重複していたらエラー
-			result.rejectValue("email", "msg.regist.email.duplicate");
-			return "client/user/regist_input";
-		}
+	    // メールアドレス重複チェック（論理削除済みも含む）
+	    User duplicateUser = userRepository.findByEmail(userBean.getEmail());
 
-		// 退会済み会員の中に同じメールアドレスがいるかチェック
-		User deletedUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 1);
+	    if (duplicateUser != null) {
 
-		if (deletedUser != null) {
-			// 該当する退会済み会員がある場合、そのIDをBeanに退避させる
-			userBean.setId(deletedUser.getId());
-		} else {
-			// 完全新規
-			userBean.setId(null);
-		}
+	        // 現役会員ならエラー
+	        if (duplicateUser.getDeleteFlag() == 0) {
+	            result.rejectValue("email", "msg.regist.email.duplicate");
+	            hasError = true;
+	        }
 
-		// 登録する会員情報をセッションに保存
-		session.setAttribute("registUser", userBean);
+	        // 退会済み会員ならIDを引き継ぐ
+	        if (duplicateUser.getDeleteFlag() == 1) {
+	            userBean.setId(duplicateUser.getId());
+	        }
 
-		// 確認画面へ渡す
-		model.addAttribute("userForm", userBean);
+	    } else {
+	        // 完全新規
+	        userBean.setId(null);
+	    }
 
-		// 会員登録確認画面へ遷移
-		return "client/user/regist_check";
+	    // エラーが1つでもあれば入力画面へ戻る
+	    if (hasError) {
+	        return "client/user/regist_input";
+	    }
+
+	    // 登録する会員情報をセッションに保存
+	    session.setAttribute("registUser", userBean);
+
+	    // 確認画面へ渡す
+	    model.addAttribute("userForm", userBean);
+
+	    // 確認画面へ
+	    return "client/user/regist_check";
 	}
-
 	/**
 	 * 会員情報登録完了処理（新規追加 ＆ 既存データの復活UPDATE対応版）
 	 * @author 手塚
@@ -302,7 +305,7 @@ public class ClientUserShowController {
 
 		    // ★形式が正しい場合だけ重複チェック
 		    if (!hasError && !newEmail.equals(pastUser.getEmail())) {
-		        User duplicateUser = userRepository.findByEmailAndDeleteFlag(newEmail, 0);
+		    	User duplicateUser = userRepository.findByEmail(newEmail);
 		        if (duplicateUser != null) {
 		            model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
 		            hasError = true;
