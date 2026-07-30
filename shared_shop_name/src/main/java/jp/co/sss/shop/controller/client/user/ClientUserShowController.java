@@ -293,15 +293,22 @@ public class ClientUserShowController {
 
 		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
 		if (newEmail != null && !newEmail.trim().isEmpty()) {
-			// メールアドレスの重複チェック
-			if (!newEmail.equals(pastUser.getEmail())) {
-				// 重複確認
-				User duplicateUser = userRepository.findByEmailAndDeleteFlag(newEmail, 0);
-				if (duplicateUser != null) {
-					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
-					hasError = true;
-				}
-			}
+
+		    // ★メールアドレス形式チェック
+		    if (!newEmail.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+		        model.addAttribute("newEmailErrorMessage", "メールアドレスの形式が正しくありません。");
+		        hasError = true;
+		    }
+
+		    // ★形式が正しい場合だけ重複チェック
+		    if (!hasError && !newEmail.equals(pastUser.getEmail())) {
+		        User duplicateUser = userRepository.findByEmailAndDeleteFlag(newEmail, 0);
+		        if (duplicateUser != null) {
+		            model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
+		            hasError = true;
+		        }
+		    }
+
 			userBean.setEmail(newEmail);
 		} else {
 			userBean.setEmail(pastUser.getEmail()); 
@@ -309,19 +316,35 @@ public class ClientUserShowController {
 
 		// 新しいパスワードが入力されていたら上書き、空欄なら元のパスワードをそのまま引き継ぐ
 		if (newPassword != null && !newPassword.trim().isEmpty()) {
-			userBean.setPassword(newPassword);
+
+		    // 8～16文字チェック
+		    if (newPassword.length() < 8 || newPassword.length() > 16) {
+		        model.addAttribute("newPasswordErrorMessage",
+		                "パスワードは8～16文字で入力してください。");
+		        hasError = true;
+		    }
+
+		    userBean.setPassword(newPassword);
+
 		} else {
-			userBean.setPassword(pastUser.getPassword()); 
+		    userBean.setPassword(pastUser.getPassword());
 		}
 
 		// 旧メールアドレスと旧パスワードの確認
 		if (!hasError) {
-			if (!oldEmail.equals(pastUser.getEmail()) || !oldPassword.equals(pastUser.getPassword())) {
-				model.addAttribute("authErrorMessage", "旧メールアドレスまたは旧パスワードが正しくありません。");
-				hasError = true;
-			}
-		}
 
+		    if (!oldEmail.equals(pastUser.getEmail())) {
+		        model.addAttribute("oldEmailErrorMessage",
+		                "登録されているメールアドレスと一致しません。");
+		        hasError = true;
+		    }
+
+		    if (!oldPassword.equals(pastUser.getPassword())) {
+		        model.addAttribute("oldPasswordErrorMessage",
+		                "登録されているパスワードと一致しません。");
+		        hasError = true;
+		    }
+		}
 		// 名前、郵便番号、住所、電話番号の個別必須チェック
 		if (userBean.getName() == null || userBean.getName().trim().isEmpty()) {
 			result.rejectValue("name", "msg.regist.input");
