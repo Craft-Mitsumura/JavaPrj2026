@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 <head  >
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title th:text="'お問い合わせ | ' + #{shop.title}"></title>
 </head>
 <link rel="stylesheet" th:href="@{/css/Review.css}">
 
@@ -10,7 +11,7 @@
 <div > 
 <div class="contact-container">
 
-
+     <div id ="contact-container">
 	<h2>Contact Us</h2>
 	<p class="contact-text">
 	    If you have any questions, suggestions, or feedback, please send us a message.
@@ -60,19 +61,19 @@
                 required></textarea>
         </div>
 
-        <button type="submit" class="send-btn">
+        <button type="submit" th:href="@{/}" class="send-btn">
             Send Message
         </button>
                  
        
-            <a class="send-btn" id="backBtn" th:href="@{/}"> トップへ戻る </a>
+            <a class="back_button" id="backBtn"   th:href="@{/}"> トップへ戻る </a>
         
         
 
     </form>
  
 
-
+</div>
 </div>
 </div>
 </body>

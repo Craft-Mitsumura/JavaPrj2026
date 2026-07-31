@@ -419,7 +419,7 @@ public class ClientUserShowController {
 		session.removeAttribute("updateUser");
 
 		// 二重送信を防ぐため、完了画面の表示URLへリダイレクト
-		return "redirect:/client/user/update/complete/init";
+		return "redirect:/client/user/update/complete";
 	}
 
 	/**
@@ -427,7 +427,7 @@ public class ClientUserShowController {
 	 * @author 手塚
 	 * @return client/user/update_complete 編集完了画面を表示
 	 */
-	@RequestMapping(path = "/client/user/update/complete/init", method = RequestMethod.GET)
+	@RequestMapping(path = "/client/user/update/complete", method = RequestMethod.GET)
 	public String updateCompleteInit() {
 		return "client/user/update_complete";
 	}
@@ -468,7 +468,7 @@ public class ClientUserShowController {
 			userRepository.save(user);
 		}
 
-		return "redirect:/client/user/delete/complete/init";
+		return "redirect:/client/user/delete/complete";
 	}
 
 	/**
@@ -476,7 +476,7 @@ public class ClientUserShowController {
 	 * @param session セッションスコープ
 	 * @return client/user/delete_complete 削除完了画面
 	 */
-	@RequestMapping(path = "/client/user/delete/complete/init", method = RequestMethod.GET)
+	@RequestMapping(path = "/client/user/delete/complete", method = RequestMethod.GET)
 	public String deleteCompleteInit(HttpSession session) {
 		
 		// 画面表示時に安全にセッションを無効化（ログアウト）
@@ -489,7 +489,7 @@ public class ClientUserShowController {
 
 	    @GetMapping("/client/review/form")
 	    public String showReviewForm() {
-	    	System.out.println("triggred");
+	    
 	        return "client/review/reviewForm";
 	    }
 
@@ -502,9 +502,10 @@ public class ClientUserShowController {
 	           ) {
 
 	        mailService.sendMail(name, email, subject , message);
-
+      
 	        return "redirect:/";
 	    }
+	    
 	}
 	
 
