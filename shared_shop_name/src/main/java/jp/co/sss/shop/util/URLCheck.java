@@ -111,12 +111,13 @@ public class URLCheck {
 	 */
 	public static boolean isURLForNonLogin(String requestURL, String contextPath) {
 
-		boolean isCheckURLOK = false;
+		boolean isCheckURLOK = false; 
 		if (!URLCheck.isURLForStaticFile(requestURL)
 				&& !requestURL.endsWith("/login")
 				&& !requestURL.endsWith(contextPath + "/")
-				
+				&& !requestURL.endsWith("/home/redirect")
 			    && !requestURL.endsWith("/client/review/form")
+			    && !requestURL.endsWith("/client/review/input")
 			    && !requestURL.contains("/client/item/list")
 			    && requestURL.indexOf("/client/item/lists/") == -1	
 				&& requestURL.indexOf("/client/category/lists/") == -1
