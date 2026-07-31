@@ -465,7 +465,7 @@ public class ClientUserShowController {
 
 	    @GetMapping("/client/review/form")
 	    public String showReviewForm() {
-	    	System.out.println("triggred");
+	    
 	        return "client/review/reviewForm";
 	    }
 
@@ -478,9 +478,10 @@ public class ClientUserShowController {
 	           ) {
 
 	        mailService.sendMail(name, email, subject , message);
-
+      
 	        return "redirect:/";
 	    }
+	    
 	}
 	
 
