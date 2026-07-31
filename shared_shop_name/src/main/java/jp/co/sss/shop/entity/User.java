@@ -9,6 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 /**
  * 会員情報エンティティクラス
@@ -30,37 +34,46 @@ public class User {
 	/**
 	 * 会員メールアドレス
 	 */
-	@Column
+	@NotBlank
+	@Email
 	private String email;
 
 	/**
 	 * パスワード
 	 */
-	@Column
+	@NotBlank
+	@Size(min = 8, max = 16)
+	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String password;
 
 	/**
 	 * 会員名
 	 */
-	@Column
+	@NotBlank
+	@Size(min = 1, max = 30, message = "{text.maxsize.message}")
 	private String name;
 
 	/**
 	 * 郵便番号
 	 */
-	@Column
+	@NotBlank
+	@Size(min = 7, max = 7, message = "{text.fixsize.message}")
+	@Pattern(regexp = "^[0-9]+$", message = "{userRegist.numberpattern.message}")
 	private String postalCode;
 
 	/**
 	 * 住所
 	 */
-	@Column
+	@NotBlank
+	@Size(min = 1, max = 150, message = "{text.maxsize.message}")
 	private String address;
 
 	/**
 	 * 電話番号
 	 */
-	@Column
+	@NotBlank
+	@Size(min = 10, max = 11)
+	@Pattern(regexp = "^[0-9]+$", message = "{userRegist.numberpattern.message}")
 	private String phoneNumber;
 
 	/**
