@@ -6,7 +6,7 @@
 <body><footer th:fragment="layout-footer" class="footer">
 
     <div class="footer-container">
-
+<th:block th:if="${session.user == null or session.user.authority == 2}">
         <!-- Logo / About -->
         <div class="footer-section">
             <h4 >Avoir Shop</h4>
@@ -23,6 +23,7 @@
         <div class="footer-section">
             <h4 >Customer Service</h4>
             <ul>
+           
                 <li><a th:href="@{/client/review/form}">Contact Us</a></li>
                 <li><a th:href="@{/client/show/all}">FAQ</a></li>
                 <li><a href="#">Shipping</a></li>
@@ -68,7 +69,7 @@
         </div>
 
     </div>
-
+  </block>
     <div class="footer-bottom">
         <small>
             © 2026 avoir Shop. All Rights Reserved.
