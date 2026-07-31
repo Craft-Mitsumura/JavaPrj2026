@@ -2,6 +2,7 @@ package jp.co.sss.shop.bean;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -20,14 +21,14 @@ public class UserBean {
 	/**
 	 * 会員メールアドレス
 	 */
-	@NotBlank
+	@NotNull
 	@Email
 	private String email;
 	
 	/**
 	 * パスワード
 	 */
-	@NotBlank
+	@NotNull
 	@Size(min = 8, max = 16)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String password;
