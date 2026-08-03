@@ -472,11 +472,15 @@
 
 						if (result === "added") {
 							favoriteText.textContent = "♥ お気に入り済み";
-							location.reload();
+							setTimeout(() => {
+								window.location.href = "/shared_shop";
+							}, 300);
 
 						} else if (result === "detached") {
 							favoriteText.textContent = "♡ お気に入り";
-							location.reload();
+							setTimeout(() => {
+								window.location.href = "/shared_shop";
+							}, 300);
 
 						} else if (result === "ng") {
 							alert("ログインしてください");
