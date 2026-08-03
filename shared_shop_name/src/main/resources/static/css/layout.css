@@ -352,7 +352,8 @@ aside.admin_menu {
 footer {
 	background-color: black;
 	text-align: center;
-	
+	/* position:fixed;
+	bottom: 0; */
 	width: 100%;
 	bottom:0;
 }
