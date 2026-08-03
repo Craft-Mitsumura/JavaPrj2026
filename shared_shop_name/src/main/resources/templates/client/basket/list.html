@@ -108,8 +108,8 @@
 					<div class="card-image-wrapper">
 						<!-- favorite btn -->
 						<form th:action="@{/client/favorite/add}" method="POST" class="favorite-form">
-							<input type="hidden" name="itemId" th:value="${item.id}" />
-							<button type="submit" class="btn-favorite" aria-label="Add to favorite">
+							<input type="hidden" name="itemId" class="favoriteItemId" th:value="${item.id}" />
+							<button type="button" class="btn-favorite" aria-label="Add to favorite">
 								<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="currentColor"
 									stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="heart-icon">
 									<path
@@ -182,7 +182,9 @@
 
 		document.querySelectorAll(".btn-favorite").forEach(button => {
 
-			button.addEventListener("click", function () {
+			button.addEventListener("click", function (e) {
+				e.preventDefault(); // Prevent form submission
+				e.stopPropagation();
 
 				const itemId = this.parentElement.querySelector(".favoriteItemId").value;
 
@@ -199,15 +201,28 @@
 						const heart = this.querySelector(".heart-icon");
 
 						if (result === "added") {
+							// Fill the heart SVG
+							heart.setAttribute("fill", "currentColor");
 							heart.classList.add("favorite");
-							window.location.href = "/shared_shop";
+							// Reload to update favorite count in header
+							setTimeout(() => {
+								window.location.href = "/shared_shop";
+							}, 300);
 						} else if (result === "detached") {
+							// Unfill the heart
+							heart.setAttribute("fill", "none");
 							heart.classList.remove("favorite");
-							location.reload();
+							// Reload to update favorite count
+							setTimeout(() => {
+								window.location.href = "/shared_shop";
+							}, 300);
 						} else if (result === "ng") {
 							alert("ログインしてください");
 						}
 
+					})
+					.catch(error => {
+						console.error('Fetch error:', error);
 					});
 
 			});

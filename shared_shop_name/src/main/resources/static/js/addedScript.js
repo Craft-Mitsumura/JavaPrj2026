@@ -68,7 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
 						if (favoriteText) {
 							favoriteText.textContent = "♥ お気に入り済み";
 						}
-						location.reload();
+						// Redirect to home page to update favorite count
+						setTimeout(() => {
+							window.location.href = "/shared_shop";
+						}, 300);
 
 					} else if (result === "detached") {
 						if (favoriteText) {
@@ -80,10 +83,13 @@ document.addEventListener('DOMContentLoaded', function() {
 							row.remove();
 							// Reload if no more items
 							if (document.querySelectorAll(".list_table tbody tr").length === 0) {
-								location.reload();
+								window.location.href = "/shared_shop";
 							}
 						} else {
-							location.reload();
+							// Redirect to home page
+							setTimeout(() => {
+								window.location.href = "/shared_shop";
+							}, 300);
 						}
 
 					} else if (result === "ng") {
