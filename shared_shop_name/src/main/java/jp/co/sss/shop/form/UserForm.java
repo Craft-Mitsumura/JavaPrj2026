@@ -42,7 +42,7 @@ public class UserForm implements Serializable {
 	 * 会員名
 	 */
 	@NotBlank
-	@Size(min = 1, max = 30, message = "{text.maxsize.message}")
+	@Size(min = 1, max = 15, message = "{text.maxsize.message}")
 	private String	name;
 
 	/**
