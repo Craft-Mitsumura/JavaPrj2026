@@ -429,6 +429,10 @@ public class ClientOrderRegistController {
 		    item.setStock(item.getStock() - basket.getOrderNum());
 		    itemRepository.save(item);
 
+
+			itemRepository.save(item);
+			
+
 		    // ===== ランキング更新 =====
 		    Date salesMonth = Date.valueOf(LocalDate.now().withDayOfMonth(1));
 
@@ -459,6 +463,7 @@ public class ClientOrderRegistController {
 
 		        rankingRepository.save(ranking);
 		    }
+
 		}
 
 		// 購入ポイント加算（500円で1ポイント）
