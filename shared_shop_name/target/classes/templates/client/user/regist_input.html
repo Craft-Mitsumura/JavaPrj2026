@@ -13,7 +13,7 @@
   <div id="NewUserForm"> 
 	<div   class="user_info_form_area">
 
-		<form th:action="@{/client/user/regist/check}" method="post" class="user_info_form" th:object="${userForm}">
+		<form th:action="@{/client/user/regist/check}" method="post" class="user_info_form" th:object="${userForm}" novalidate>
 
 			<ul class="input_list">
 				<li>

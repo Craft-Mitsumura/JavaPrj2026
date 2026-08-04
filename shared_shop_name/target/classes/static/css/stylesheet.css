@@ -2330,8 +2330,8 @@ p.link_center {
 .footer{
     background:#000;
     color:#fff;
-    margin-top:60px;
-    position:relative;
+     margin-top:60px; 
+   
 }
 
 .footer-container{
@@ -4316,3 +4316,96 @@ p.link_center {
     object-fit: contain;
 }
 
+#contact-container {
+    width: 100%;
+    max-width: 750px;
+    margin: 50px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    box-sizing: border-box;
+}
+
+#contact-container h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#contact-container .contact-text {
+    text-align: center;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+#contact-container .form-group {
+    margin-bottom: 22px;
+}
+
+#contact-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+#contact-container input,
+#contact-container textarea {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: .2s;
+}
+
+#contact-container input:focus,
+#contact-container textarea:focus {
+    outline: none;
+    border-color: #000;
+}
+
+#contact-container textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+#contact-container .send-btn {
+    
+  width: 180px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background:  #edf9fe;
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: .25s;
+}
+
+#contact-container .send-btn:hover {
+    background: #12529d;
+    color: #fff;
+}
+
+#contact-container #backBtn {
+    margin-top: 12px;
+    color: #555;
+    background:#ddd;
+	text-decoration: none;
+    padding: 10px 20px;
+    border:1px solid #000;
+    border-radius:8px;
+    
+}
+#contact-container #backBtn:hover{
+	background:rgb(117, 117, 117);
+	color:#fff;
+	text-align:center;
+	
+}
