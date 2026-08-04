@@ -419,6 +419,7 @@ public class ClientOrderRegistController {
 			item.setStock(item.getStock() - basket.getOrderNum());
 
 			itemRepository.save(item);
+			
 		}
 
 		// 購入ポイント加算（500円で1ポイント）
