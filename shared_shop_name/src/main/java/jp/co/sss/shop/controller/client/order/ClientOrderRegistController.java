@@ -1,5 +1,7 @@
 package jp.co.sss.shop.controller.client.order;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +24,13 @@ import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
+import jp.co.sss.shop.entity.Rankings;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.OrderForm;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.OrderItemRepository;
 import jp.co.sss.shop.repository.OrderRepository;
+import jp.co.sss.shop.repository.RankingRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
 /**
@@ -61,6 +65,12 @@ public class ClientOrderRegistController {
 	 */
 	@Autowired
 	OrderItemRepository orderItemRepository;
+	
+	/**
+	 * ランキングリポジトリ
+	 */
+	@Autowired
+	RankingRepository  rankingRepository;
 
 	/**
 	 * 【処理1】ご注文のお手続きボタン押下時処理。
@@ -393,46 +403,78 @@ public class ClientOrderRegistController {
 		// 注文商品情報を保存
 		for (BasketBean basket : basketBeans) {
 
-			// 商品情報取得
-			Item item = itemRepository.findById(basket.getId()).get();
+		    // 商品情報取得
+		    Item item = itemRepository.findById(basket.getId())
+		            .orElseThrow(() -> new RuntimeException("商品が存在しません ID=" + basket.getId()));
 
-			// 注文商品エンティティ作成
-			OrderItem orderItem = new OrderItem();
+		    System.out.println("===== 商品情報 =====");
+		    System.out.println("Basket ID : " + basket.getId());
+		    System.out.println("Item ID   : " + item.getId());
 
-			orderItem.setOrder(order);
-			orderItem.setItem(item);
-			orderItem.setQuantity(basket.getOrderNum());
-			orderItem.setPrice(item.getPrice());
+		    // 注文商品エンティティ作成
+		    OrderItem orderItem = new OrderItem();
 
-			// 刻印情報
-			orderItem.setIsEngravingRequested(basket.isEngravingSelected() ? 1 : 0);
-		    orderItem.setEngravingText(basket.getEngravingText());
-		    orderItem.setEngravingFont(basket.getFontType());
+		    orderItem.setOrder(order);
+		    orderItem.setItem(item);
+		    orderItem.setQuantity(basket.getOrderNum());
+		    orderItem.setPrice(item.getPrice());
 
-			// 保存
-			orderItemRepository.save(orderItem);
+		    // 保存
+		    orderItemRepository.save(orderItem);
 
-			// 合計金額計算
-			totalPrice += item.getPrice() * basket.getOrderNum();
+		    // 合計金額計算
+		    totalPrice += item.getPrice() * basket.getOrderNum();
 
-			// 在庫更新
-			item.setStock(item.getStock() - basket.getOrderNum());
+		    // 在庫更新
+		    item.setStock(item.getStock() - basket.getOrderNum());
+		    itemRepository.save(item);
+
 
 			itemRepository.save(item);
 			
+
+		    // ===== ランキング更新 =====
+		    Date salesMonth = Date.valueOf(LocalDate.now().withDayOfMonth(1));
+
+		    Rankings ranking = rankingRepository.findBySalesMonthAndItem_Id(
+		            salesMonth, item.getId());
+
+		    if (ranking == null) {
+
+		        System.out.println("ランキング新規作成");
+		        System.out.println("保存するITEM_ID = " + item.getId());
+
+		        ranking = new Rankings();
+		        ranking.setSalesMonth(salesMonth);
+		        ranking.setItem(item);
+		        ranking.setTotal(basket.getOrderNum());
+
+		        System.out.println("ranking.getItem() = "
+		                + (ranking.getItem() == null ? "null" : ranking.getItem().getId()));
+
+		        rankingRepository.save(ranking);
+
+		    } else {
+
+		        System.out.println("ランキング更新");
+		        System.out.println("現在の合計 = " + ranking.getTotal());
+
+		        ranking.setTotal(ranking.getTotal() + basket.getOrderNum());
+
+		        rankingRepository.save(ranking);
+		    }
+
 		}
 
 		// 購入ポイント加算（500円で1ポイント）
 		int addPoint = totalPrice / 500;
-
 		user.setPoint(user.getPoint() + addPoint);
-
 		userRepository.save(user);
 
 		session.removeAttribute("orderForm");
 		session.removeAttribute("basketBeans");
 
-		// 注文完了画面表示処理にリダイレクト
+		// 注文完了画面
 		return "redirect:/client/order/complete";
 	}
 
