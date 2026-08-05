@@ -259,6 +259,7 @@ public class ClientUserShowController {
 		return "client/user/update_input";
 	}
 
+	/*saga*/
 	/**
 	 * 会員情報編集確認画面（重複チェックの論理削除バグ修正、空欄回避対応版）
 	 * @author 手塚
