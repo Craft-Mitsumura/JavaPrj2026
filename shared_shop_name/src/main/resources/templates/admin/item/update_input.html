@@ -8,7 +8,7 @@
 </head>
 
 <body class="admin item_update_input">
-  <div  id="adminItemInput"> 
+  <div id="adminItemInput"> 
 	<h2 th:class="title" th:text="#{item}+#{title.update.input}"></h2>
 	<p th:class="input_message" th:text="#{msg.update.input}"></p>
 
@@ -22,8 +22,8 @@
 				<br />
 			</th:block>
 			<ul class="input_list">
-				<!-- ★ここが重要です：これが無いと更新時にIDがnullになります -->
-				    <input type="hidden" th:field="*{id}" />
+				<!-- ★これが無いと更新時にIDがnullになります -->
+				<input type="hidden" th:field="*{id}" />
 				<li>
 					<label><span class="input_title">[[#{itemForm.name}]]</span></label>
 					<input type="text" th:field="*{name}" />
@@ -38,35 +38,36 @@
 				</li>
 				<li>
 					<label><span class="input_title">[[#{data.category}]]</span></label>
-					<select name="categoryId">
+					<!-- ▼ 登録画面と同じように id と onchange を追加 -->
+					<select name="categoryId" id="categoryId" onchange="toggleFields()">
 						<option th:each="category: ${categories}" th:value="${category.id}"
 							th:selected="${category.id == itemForm.categoryId}" th:text="${category.name}"></option>
 					</select>
 				</li>
-				<!-- JSON関連項目 -->
-				<li
-					th:if="*{categoryId == 1 or categoryId == 2 or categoryId == 3 or categoryId == 4 or categoryId == 5 or categoryId == 6}">
+
+				<!-- ▼ 登録画面と同じ動的フィールドの記述に統一 -->
+				<li class="dynamic-field" data-category="1,2,3,4,5,6">
 					<label><span class="input_title">[[#{itemForm.varNumber}]]</span></label>
 					<input type="text" th:field="*{varNumber}" />
 				</li>
-				<li
-					th:if="*{categoryId == 1 or categoryId == 2 or categoryId == 3 or categoryId == 4 or categoryId == 6}">
+				<li class="dynamic-field" data-category="1,2,3,4,6">
 					<label><span class="input_title">[[#{itemForm.colorPattern}]]</span></label>
 					<input type="text" th:field="*{colorPattern}" />
 				</li>
-				<li th:if="*{categoryId == 1 or categoryId == 3}">
+				<li class="dynamic-field" data-category="1,3">
 					<label><span class="input_title">[[#{itemForm.nibDiameter}]]</span></label>
 					<input type="text" th:field="*{nibDiameter}" />
 				</li>
-				<li th:if="*{categoryId == 2 or categoryId == 6}">
+				<li class="dynamic-field" data-category="2,6">
 					<label><span class="input_title">[[#{itemForm.leadDiameter}]]</span></label>
 					<input type="text" th:field="*{leadDiameter}" />
 				</li>
-				<li th:if="*{categoryId == 5}">
+				<li class="dynamic-field" data-category="5">
 					<label><span class="input_title">[[#{itemForm.inkVolume}]]</span></label>
 					<input type="text" th:field="*{inkVolume}" />
 				</li>
 				<!-- JSON関連項目 ここまで -->
+
 				<!-- 追加分(刻印機能） -->
 				<li class="input_field">
 					<label class="input_title">刻印サービス</label>
@@ -78,7 +79,7 @@
 				<li>
 					<label>
 						<span class="input_title">[[#{itemForm.description}]]</span>
-						<textarea style="width:100%;"  th:field="*{description}"></textarea>
+						<textarea style="width:100%;" th:field="*{description}"></textarea>
 					</label>
 				</li>
 				<li>
@@ -100,6 +101,28 @@
 		</form>
 	</div>
 	</div>
+
+	<!-- ▼ 登録画面と同じJavaScriptを追加 -->
+	<script>
+		function toggleFields() {
+			var categoryId = document.getElementById('categoryId').value;
+			var fields = document.querySelectorAll('.dynamic-field');
+
+			fields.forEach(function (field) {
+				var allowedCategories = field.getAttribute('data-category').split(',');
+				if (allowedCategories.includes(categoryId)) {
+					field.style.display = 'block';
+				} else {
+					field.style.display = 'none';
+					var input = field.querySelector('input');
+					if (input) input.value = '';
+				}
+			});
+		}
+
+		// ページ読み込み時（すでに選択されているカテゴリを反映）と、カテゴリ変更時に実行
+		document.addEventListener('DOMContentLoaded', toggleFields);
+	</script>
 </body>
 
 </html>

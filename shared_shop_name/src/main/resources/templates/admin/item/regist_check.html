@@ -66,8 +66,9 @@
 			<li>
 				<span class="input_title">[[#{data.item.image}]]</span>
 				<span class="input_value">
-					<img th:if="*{image != null}" th:src="@{/images/{itemFileName}(itemFileName=*{image})}"></img>
-					<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"></img>
+					<img th:src="@{/images/{itemFileName}(itemFileName=*{image})}"
+					    th:unless="*{#strings.isEmpty(image)}"></img>
+					<img th:src="@{/images/common/no_image.jpg}" th:if="*{#strings.isEmpty(image)}"></img>
 				</span>
 			</li>
 		</ul>

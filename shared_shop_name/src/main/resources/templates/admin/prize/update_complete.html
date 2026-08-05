@@ -3,7 +3,8 @@
       	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <title>譎ｯ蜩∫ｷｨ髮�螳御ｺ�</title>
+   <title th:text="#{prize}+#{title.update.complete}+' | '+ #{shop.title}"> </title>
+    <meta charset="UTF-8" />
 </head>
 
 <body>
@@ -19,11 +20,11 @@
         <h1>景品変更完了</h1>
 
         <p>
-      景品情報の変更が正常に完了しました。
+         景品情報の変更が正常に完了しました。
         </p>
 
         <a th:href="@{/admin/prize/list}" class="home-btn">
-          ホームへ戻る
+            景品一覧表示へ戻る
         </a>
 
     </div>
