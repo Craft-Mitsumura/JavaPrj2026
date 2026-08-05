@@ -22,6 +22,10 @@
 
 			<ul class="input_list">
 				<li>
+					<div th:if="${#fields.hasErrors('email')}"
+					     th:errors="*{email}"
+					     style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
+					</div>
 					<label><span class="input_title">[[#{userForm.email}]]</span></label>
 					
 					<input type="text"  th:field="*{email}" />
