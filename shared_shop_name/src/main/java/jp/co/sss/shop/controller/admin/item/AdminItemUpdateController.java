@@ -139,6 +139,8 @@ public class AdminItemUpdateController {
 		}
 
 		model.addAttribute("itemForm", itemForm);
+		
+		model.addAttribute("categories", categoryRepository.findAll());
 
 		// 変更入力画面　表示
 		return "admin/item/update_input";
