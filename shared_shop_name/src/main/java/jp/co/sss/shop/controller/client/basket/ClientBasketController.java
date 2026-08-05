@@ -51,6 +51,7 @@ public class ClientBasketController {
 	@RequestMapping(path = "client/basket/add", method = { RequestMethod.GET, RequestMethod.POST })
 	public String add(HttpSession session,
 			@RequestParam Integer id,
+		 
 			@RequestParam(required = false) String from,
 			// 追加分
 			@RequestParam(name = "quantity", defaultValue = "1") Integer quantity,
@@ -62,6 +63,7 @@ public class ClientBasketController {
 		System.out.println("★デバッグ: Requested=" + isEngravingSelected);
 		System.out.println("★デバッグ: Text=" + engravingText);
 		System.out.println("★デバッグ: Font=" + fontType);
+		System.out.println("★デバッグ: Quantity=" + quantity);
 
 		// itemにはidの値が同じである場合情報代入する
 		Item item = itemRepository.findById(id).orElse(null);
@@ -101,8 +103,10 @@ public class ClientBasketController {
 			session.setAttribute("maxEngravingId", maxId); // セッションを更新
 
 			// 追加処理
+			// 新規追加時はリクエストの数量をセットする（以前はデフォルト1のままだったため、
+			// 10本まとめ買いをしても最初の追加が1になってしまっていました）
 			BasketBean basketBeanNew = new BasketBean(
-					item.getId(), item.getName(), item.getStock(), item.getPrice(),
+					item.getId(), item.getName(), item.getStock(), item.getPrice(), quantity,
 					isEngravingSelected, engravingText, fontType, maxId);
 			basketBeans.add(basketBeanNew);
 		}
