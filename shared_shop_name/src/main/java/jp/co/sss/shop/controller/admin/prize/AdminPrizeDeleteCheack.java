@@ -11,10 +11,10 @@ import jp.co.sss.shop.repository.PrizeRepository;
 
 @Controller
 
-public class AdminPrizeDeleteConfirm {
+public class AdminPrizeDeleteCheack {
 	@Autowired
 	PrizeRepository  pRepo ;
-	@RequestMapping(path ="/admin/prize/delete/confirm" , method= RequestMethod.POST)
+	@RequestMapping(path ="/admin/prize/delete/cheak" , method= RequestMethod.POST)
 	public String confirmDelete(
 			Model model ,
 			@RequestParam("id") Integer id
@@ -24,6 +24,6 @@ public class AdminPrizeDeleteConfirm {
 		System.out.println(id);
 		model.addAttribute("prize" , pRepo.findById(id).orElse(null));
 		System.out.println("削除確認画面に遷移");
-		return"admin/prize/prizeConfirm"; 	
+		return"admin/prize/prizeDeleteCheack"; 	
 	}
 }
