@@ -14,7 +14,7 @@ import jp.co.sss.shop.repository.PrizeRepository;
 public class AdminPrizeDeleteCheack {
 	@Autowired
 	PrizeRepository  pRepo ;
-	@RequestMapping(path ="/admin/prize/delete/cheak" , method= RequestMethod.POST)
+	@RequestMapping(path ="/admin/prize/delete/check" , method= RequestMethod.POST)
 	public String confirmDelete(
 			Model model ,
 			@RequestParam("id") Integer id
@@ -24,6 +24,6 @@ public class AdminPrizeDeleteCheack {
 		System.out.println(id);
 		model.addAttribute("prize" , pRepo.findById(id).orElse(null));
 		System.out.println("削除確認画面に遷移");
-		return"admin/prize/prizeDeleteCheack"; 	
+		return"admin/prize/prizeDeleteCheck"; 	
 	}
 }

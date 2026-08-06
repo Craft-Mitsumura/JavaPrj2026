@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title>景品削除確認 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin prize_delete_check">
+
+	<div id="adminPrizeDeleteCheck">
+
+		<h2 class="title">景品削除確認</h2>
+
+		<div class="info_form_area" th:object="${prize}">
+
+			<p class="delete_message">
+				以下の内容を削除します。
+			</p>
+
+			<div class="prize_detail_area">
+
+				<!-- 景品画像 -->
+				<div class="prize_image_area">
+					<img th:if="*{image != null}"
+						th:src="@{/images/{image}(image=*{image})}" />
+
+					<img th:if="*{image == null}"
+						th:src="@{/images/common/no_image.jpg}" />
+				</div>
+
+				<ul class="input_list">
+
+					<li>
+						<span class="input_title">景品名</span>
+						<span class="input_value" th:text="*{name}"></span>
+					</li>
+
+					<li>
+						<span class="input_title">必要ポイント</span>
+						<span class="input_value"
+							th:text="*{#numbers.formatInteger(requiredPoint, 0, 'COMMA')} + ' pt'">
+						</span>
+					</li>
+
+					<li>
+						<span class="input_title">説明</span>
+						<span class="input_value" th:text="*{description}"></span>
+					</li>
+
+				</ul>
+
+				<div class="detail_button_area">
+
+					<!-- 削除 -->
+					<form th:action="@{/admin/prize/delete}" method="post">
+
+						<input type="hidden" name="id" th:value="*{id}">
+
+						<input type="submit"
+							value="削除"
+							id="deleteBtn">
+
+					</form>
+
+					<!-- 戻る -->
+					<form th:action="@{/admin/prize/show/{id}(id=*{id})}" method="get">
+
+						<input type="submit"
+							value="戻る"
+							class="back_button">
+
+					</form>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
