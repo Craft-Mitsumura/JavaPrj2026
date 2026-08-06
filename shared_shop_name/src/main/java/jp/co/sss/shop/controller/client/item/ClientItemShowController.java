@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -218,8 +219,19 @@ public class ClientItemShowController {
 				PageRequest.of(page, 20)
 		);
 
-		model.addAttribute("items", itemPage.getContent());
-		model.addAttribute("page", itemPage);
+		// 追加安全策: 念のため取得後にdeleteFlagを再チェックし、削除フラグが立っている商品を除外する
+		List<Item> filteredItems = new ArrayList<>();
+		for (Item it : itemPage.getContent()) {
+			Integer df = it.getDeleteFlag();
+			if (df == null || df.intValue() == Constant.NOT_DELETED) {
+				filteredItems.add(it);
+			} else {
+				System.out.println("Filtered out deleted item id=" + it.getId());
+			}
+		}
+		Page<Item> filteredPage = new PageImpl<>(filteredItems, itemPage.getPageable(), filteredItems.size());
+		model.addAttribute("items", filteredPage.getContent());
+		model.addAttribute("page", filteredPage);
 
 		model.addAttribute(
 				"categories",
@@ -303,8 +315,19 @@ public class ClientItemShowController {
 				Constant.NOT_DELETED,
 				PageRequest.of(page, 20));
 
-		model.addAttribute("items", itemPage.getContent());
-		model.addAttribute("page", itemPage);
+		// 追加安全策: 念のため取得後にdeleteFlagを再チェック
+		List<Item> filteredItems2 = new ArrayList<>();
+		for (Item it : itemPage.getContent()) {
+			Integer df = it.getDeleteFlag();
+			if (df == null || df.intValue() == Constant.NOT_DELETED) {
+				filteredItems2.add(it);
+			} else {
+				System.out.println("Filtered out deleted item id=" + it.getId());
+			}
+		}
+		Page<Item> filteredPage2 = new PageImpl<>(filteredItems2, itemPage.getPageable(), filteredItems2.size());
+		model.addAttribute("items", filteredPage2.getContent());
+		model.addAttribute("page", filteredPage2);
 
 		model.addAttribute(
 			    "categories",
