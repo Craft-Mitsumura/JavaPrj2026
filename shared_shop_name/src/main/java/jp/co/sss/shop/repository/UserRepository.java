@@ -50,5 +50,14 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 * @return 会員エンティティ
 	 */
 	User findByIdAndDeleteFlag(Integer id, int deleteFlg);
+	
+	/**
+	 * メールアドレスが一致し、かつ delete_flag が引数の値と一致するものを取得
+	 * @author 金城
+	 * @param email
+	 * @param deleteFlag
+	 * @return
+	 */
+	User findByEmailAndDeleteFlag(String email, Integer deleteFlag);
 
 }
