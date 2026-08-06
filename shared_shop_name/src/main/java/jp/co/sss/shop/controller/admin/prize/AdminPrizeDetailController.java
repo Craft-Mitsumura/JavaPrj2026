@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import jp.co.sss.shop.repository.PrizeRepository;
 
 @Controller
-public class AdminPrizeDeleteController {
+public class AdminPrizeDetailController {
 
     @Autowired
     PrizeRepository prizeRepository;
