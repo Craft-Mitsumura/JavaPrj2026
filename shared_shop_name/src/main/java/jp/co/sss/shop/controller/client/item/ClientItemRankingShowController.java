@@ -45,7 +45,7 @@ public class ClientItemRankingShowController {
 		LocalDate firstDateOfMonth = today.withDayOfMonth(1);
 		List<Item> findByRanking = new ArrayList<>();
 		// 画面のカテゴリー一覧に表示するため、すべてのカテゴリーを取得してModelにセット
-		model.addAttribute("categories", caterepo.findAll());
+		model.addAttribute("categories", caterepo.findByDeleteFlagOrderByIdAsc(0));
 
 		//		全件ランキング表示
 		if (categoryId == null) {
