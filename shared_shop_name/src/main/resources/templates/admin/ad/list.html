@@ -14,7 +14,7 @@
 			<h2 th:class="title" th:text="#{admin.ad.category.list}"></h2>
 			
 			<div th:if="${promotions == null or #lists.isEmpty(promotions)}">
-			    <p th:text="#{msg.admin.list.none(#{item})}"></p>
+			    <p>カルーセル式カテゴリ情報は登録されていません。</p>
 			</div>
 
 			<form th:action="@{/admin/ad/regist/input}" method="post" class="sign_up_form">
