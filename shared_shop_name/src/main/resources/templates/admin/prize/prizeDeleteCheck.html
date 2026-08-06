@@ -7,9 +7,9 @@
 	<meta charset="UTF-8" />
 </head>
 
-<body class="admin prize_delete_check">
+<body class="admin prize_detail">
 
-	<div id="adminPrizeDeleteCheck">
+	<div id="adminPrizeDetail">
 
 		<h2 class="title">景品削除確認</h2>
 
@@ -23,11 +23,9 @@
 
 				<!-- 景品画像 -->
 				<div class="prize_image_area">
-					<img th:if="*{image != null}"
-						th:src="@{/images/{image}(image=*{image})}" />
+					<img th:if="*{image != null}" th:src="@{/images/{image}(image=*{image})}" />
 
-					<img th:if="*{image == null}"
-						th:src="@{/images/common/no_image.jpg}" />
+					<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}" />
 				</div>
 
 				<ul class="input_list">
@@ -58,18 +56,14 @@
 
 						<input type="hidden" name="id" th:value="*{id}">
 
-						<input type="submit"
-							value="削除"
-							id="deleteBtn">
+						<input type="submit" value="削除" id="deleteBtn">
 
 					</form>
 
 					<!-- 戻る -->
 					<form th:action="@{/admin/prize/show/{id}(id=*{id})}" method="get">
 
-						<input type="submit"
-							value="戻る"
-							class="back_button">
+						<input type="submit" value="戻る" class="back_button">
 
 					</form>
 
@@ -82,4 +76,5 @@
 	</div>
 
 </body>
+
 </html>
