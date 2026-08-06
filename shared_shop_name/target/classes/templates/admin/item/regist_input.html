@@ -79,12 +79,12 @@
 					<!-- 追加分(刻印機能）終わり -->
 					<li>
 						<label><span class="input_title">[[#{data.item.image}]]</span></label>
-						<input type="file" id="upload_file" name="imageFile" />
+						<input type="file" id="upload_file" name="imageFile" onchange="previewImage(this);" />
 						<span th:unless="*{#strings.isEmpty(image)}">
-							<img th:src="@{/images/{image}(image=*{image})}"></img>
+							<img id="preview" th:src="@{/images/{image}(image=*{image})}"></img>
 						</span>
 						<span th:if="*{#strings.isEmpty(image)}">
-							<img th:src="@{/images/common/no_image.jpg}"></img>
+							<img id="preview" th:src="@{/images/common/no_image.jpg}"></img>
 						</span>
 					</li>
 				</ul>
@@ -111,6 +111,16 @@
 							if (input) input.value = '';
 						}
 					});
+				}
+				// ▼ 画像プレビュー用関数
+				function previewImage(obj) {
+					var fileReader = new FileReader();
+					fileReader.onload = (function () {
+						document.getElementById('preview').src = fileReader.result;
+					});
+					if (obj.files && obj.files[0]) {
+						fileReader.readAsDataURL(obj.files[0]);
+					}
 				}
 
 				// ページ読み込み時と、カテゴリ変更時に実行

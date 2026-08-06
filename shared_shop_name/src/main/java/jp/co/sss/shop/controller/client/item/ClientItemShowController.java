@@ -211,9 +211,12 @@ public class ClientItemShowController {
 			@RequestParam(defaultValue = "0") int page,
 			Model model) {
 
-		Page<Item> itemPage = itemRepository.findByCategoryId(
+		// カテゴリ内の商品一覧（未削除のみ）をページングで取得
+		Page<Item> itemPage = itemRepository.findByCategoryIdAndDeleteFlag(
 				id,
-				PageRequest.of(page, 20));
+				Constant.NOT_DELETED,
+				PageRequest.of(page, 20)
+		);
 
 		model.addAttribute("items", itemPage.getContent());
 		model.addAttribute("page", itemPage);
@@ -294,8 +297,10 @@ public class ClientItemShowController {
 			@RequestParam(defaultValue = "0") int page
 			) {
 	  System.out.println("triggred");
-	  Page<Item> itemPage = itemRepository.findByCategoryId(
+	  // 広告ページからカテゴリ内の商品一覧（未削除のみ）をページングで取得
+	  Page<Item> itemPage = itemRepository.findByCategoryIdAndDeleteFlag(
 				id,
+				Constant.NOT_DELETED,
 				PageRequest.of(page, 20));
 
 		model.addAttribute("items", itemPage.getContent());

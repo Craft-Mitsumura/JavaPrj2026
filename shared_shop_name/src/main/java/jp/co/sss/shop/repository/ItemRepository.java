@@ -123,6 +123,16 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return 商品ページ
 	 */
 	Page<Item> findByCategoryId(Integer id, Pageable pageable);
+
+	/**
+	 * カテゴリ指定の商品一覧（ページング対応・未削除のみ取得）
+	 * 画面側でカテゴリページを表示する際に利用します。
+	 * @param categoryId カテゴリID
+	 * @param deleteFlag 削除フラグ
+	 * @param pageable ページ情報
+	 * @return 商品ページ
+	 */
+	Page<Item> findByCategoryIdAndDeleteFlag(Integer categoryId, Integer deleteFlag, Pageable pageable);
 	
 	/**
 	 * 【トップページ用】未削除の新着商品を最大4件取得（IDの降順）
@@ -156,6 +166,9 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @return
 	 */
 	List<Item> findByNameAndDeleteFlagAndIdNot(String name, Integer deleteFlag, Integer id);
-
-	List<Item> findByCategoryIdAndDeleteFlag(Integer categoryId, Integer deleteFlag);
+	Page<Item> findByDeleteFlagAndId(
+	        Integer deleteFlag,
+	        Integer id,
+	        Pageable pageable
+	);	List<Item> findByCategoryIdAndDeleteFlag(Integer categoryId, Integer deleteFlag);
 }
