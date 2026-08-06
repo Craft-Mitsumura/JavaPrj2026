@@ -54,7 +54,7 @@
 			            <input type="submit" value="変更" class="changeBtn"/>
 			        </form>
 
-			        <form th:action="@{/admin/prize/delete/confirm}" method="post"
+			        <form th:action="@{/admin/prize/delete/check}" method="post"
 			              >
 			            <input type="hidden" name="id" th:value="${prize.id}">
 			            <input type="submit" value="削除" id="deleteBtn">
