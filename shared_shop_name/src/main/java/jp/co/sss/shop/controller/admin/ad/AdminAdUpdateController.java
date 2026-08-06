@@ -83,7 +83,7 @@ public class AdminAdUpdateController {
 		// セッションスコープより入力情報を取り出す
 		PromotionsForm updateForm = (PromotionsForm) session.getAttribute("updateForm");
 
-		// 新規に開いた場合（あるいは別IDの場合）、DBから取得してセッションを初期化
+		// 指定されたIDのカルーセル式カテゴリをDBから取得。存在しない場合はエラー画面へ飛ばす
 		Promotions promo = repository.findById(id).orElse(null);
 		if (promo == null) {
 			return "redirect:/syserror";
