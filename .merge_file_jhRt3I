@@ -5,58 +5,6 @@
 <head>
 	<title th:text="#{item}+#{title.detail}+' | '+ #{shop.title}"> </title>
 	<meta charset="UTF-8" />
-	<style>
-		/* --- 文房具特有カラーの定義 --- */
-
-		/* 単色系 */
-		.color-bordeaux {
-			background-color: #800020 !important;
-		}
-
-		.color-cream {
-			background-color: #FFFDD0 !important;
-		}
-
-		.color-gold {
-			background-color: #FFD700 !important;
-		}
-
-		.color-silver {
-			background-color: #C0C0C0 !important;
-		}
-
-		.color-sumire {
-			background-color: #6a4c9f !important;
-		}
-
-		/* すみれ色: 落ち着いた紫 */
-		.color-purple {
-			background-color: #800080 !important;
-		}
-
-		/* パープル: 標準的な紫 */
-		.color-indigo {
-			background-color: #4b0082 !important;
-		}
-
-		/* インディゴ: 深い藍色 */
-
-		/* グラデーション・模様系 */
-		.color-marble {
-			background: linear-gradient(45deg, #e0e0e0 25%, #f8f8f8 25%, #f8f8f8 50%, #e0e0e0 50%, #e0e0e0 75%, #f8f8f8 75%, #f8f8f8 100%) !important;
-			border: 1px solid #ccc !important;
-		}
-
-		.color-tortoise {
-			/* べっ甲 */
-			background: linear-gradient(45deg, #4b3621, #d2691e, #4b3621) !important;
-		}
-
-		.color-clear {
-			background: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 50%, #ccc 50%, #ccc 75%, transparent 75%, transparent 100%) !important;
-			background-size: 10px 10px;
-		}
-	</style>
 </head>
 
 <body class="user">
@@ -67,13 +15,13 @@
 		<div class="item_detail_area">
 			<div class="item_image_area">
 				<img th:if="*{image != null}" th:src="@{/images/{image}(image=*{image})}"></img>
-				<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg}"></img>
+				<img th:if="*{image == null}" th:src="@{/images/common/no_image.jpg escape}"></img>
 			</div>
 			<dl class="item_detail_list">
 				<dt>[[#{data.item.name}]]</dt>
 				<dd th:text="*{name}"></dd>
 				<dt>[[#{data.item.price}]]</dt>
-				<dd  th:text="'￥'+ *{#numbers.formatInteger(price, 0, 'COMMA')}"></dd>
+				<dd th:text="*{price}"></dd>
 				<dt>[[#{data.item.stock}]]</dt>
 				<dd th:if="*{stock > 5}" th:text="#{data.in.stock}"></dd>
 				<dd th:if="*{stock >= 1 and 5 >= stock }" th:text="*{stock}"></dd>
@@ -87,35 +35,15 @@
 				                   not #strings.isEmpty(item.inkVolume)}">
 					<dt>スペック</dt>
 					<dd>
-						<div class="variation_group" th:if="${not #lists.isEmpty(variationList)}"
-							style="display: flex; gap: 10px; flex-wrap: wrap;">
+						<div class="variation_group" th:if="${not #lists.isEmpty(variationList)}">
 							<th:block th:each="v : ${variationList}">
 								<a th:href="@{/client/item/detail/{id}(id=${v.id})}"
-									style="text-decoration: none; color: inherit;">
-
-									<!-- カード本体 -->
-									<div th:style="'width: 80px; padding: 8px; border: 2px solid ' + (${v.id == item.id} ? '#1a5fb4' : '#ccc') + '; ' +
-						                           'border-radius: 8px; text-align: center; background-color: white; cursor: pointer;'"
-										class="var_card">
-
-										<!-- 色の丸アイコン -->
-										<div th:style="'width: 40px; height: 40px; border-radius: 50%; background-color: ' + ${v.colorPattern} + '; ' +
-						                               'margin: 0 auto 8px auto; border: 1px solid #ddd;'">
-										</div>
-
-										<!-- テキスト情報 -->
-										<div
-											style="font-size: 13px; font-weight: bold; display: flex; flex-direction: column; gap: 2px;">
-											<!-- 色名 -->
-											<span th:text="${v.colorPattern}"></span>
-
-											<!-- サイズ情報 -->
-											<span th:if="${v.nibDiameter != null}" th:text="${v.nibDiameter}"></span>
-											<span th:if="${v.leadDiameter != null}"
-												th:text="${v.leadDiameter} + 'mm'"></span>
-											<span th:if="${v.inkVolume != null}" th:text="${v.inkVolume}"></span>
-										</div>
-									</div>
+									th:classappend="${v.id == item.id} ? 'selected_btn' : ''" class="var_btn">
+									<span th:text="${v.colorPattern} + 
+									              (${v.nibDiameter} != null and ${v.nibDiameter} != '' ? ' ' + ${v.nibDiameter} : '') +
+									              (${v.leadDiameter} != null ? ' ' + ${v.leadDiameter} + 'mm' : '') +
+									              (${v.inkVolume} != null and ${v.inkVolume} != '' ? ' ' + ${v.inkVolume} : '')">
+									</span>
 								</a>
 							</th:block>
 						</div>
@@ -145,119 +73,117 @@
 			</dl>
 		</div>
 
-		<th:block th:if="${item.isEngravable == 1}">
-			<div class="option_checkbox_area" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
-				<h3 style="background-color: #a4d5ee; margin: -10px -10px 10px -10px; padding: 5px;">オプション</h3>
-				<label>
-					<input type="checkbox" id="engraving_trigger" th:checked="${paramIsEngravingSelected}" />
-					刻印サービスを希望する
-				</label>
+
+		<div class="option_checkbox_area" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+			<h3 style="background-color: #a4d5ee; margin: -10px -10px 10px -10px; padding: 5px;">オプション</h3>
+			<label>
+				<input type="checkbox" id="engraving_trigger" name="engravingRequested" value="true" />
+				刻印サービスを希望する
+			</label>
+		</div>
+
+		<div id="engraving_form_container" class="hidden_form_area">
+			<div style="margin-bottom: 10px;">
+				<label><strong>刻印文字列（最大15文字）</strong></label>
+				<input type="text" name="engravingText" id="engraving_text" maxlength="15" style="width: 100%;" />
 			</div>
 
-			<div id="engraving_form_container" class="hidden_form_area">
-				<div style="margin-bottom: 10px;">
-					<label><strong>刻印文字列（最大15文字）</strong></label>
-					<input type="text" name="engravingText" id="engraving_text" maxlength="15" style="width: 100%;"
-						th:value="${paramEngravingText}" />
-				</div>
+			<div style="margin-bottom: 10px;">
+				<label><strong>フォント</strong></label>
+				<select name="engravingFont" id="engraving_font" style="width: 100%;">
+					<option value="">--</option>
+					<option value="Serif">Serif</option>
+					<option value="Script">Script</option>
+					<option value="Sans">Sans</option>
+				</select>
+			</div>
 
-				<div style="margin-bottom: 10px;">
-					<label><strong>フォント</strong></label>
-					<select name="fontType" id="engraving_font" style="width: 100%;">
-						<option value="">--</option>
-						<option value="Serif" th:selected="${paramFontType == 'Serif'}">Serif</option>
-						<option value="Script" th:selected="${paramFontType == 'Script'}">Script</option>
-						<option value="Sans" th:selected="${paramFontType == 'Sans'}">Sans</option>
-					</select>
-				</div>
+			<div class="preview_area" style="margin-top: 15px;">
+				<label><strong>シミュレーションイメージ</strong></label>
 
-				<div class="preview_area" style="margin-top: 15px;">
-					<label><strong>シミュレーションイメージ</strong></label>
+				<div class="preview_main_layout"
+					style="display: flex; gap: 20px; align-items: stretch; margin-top: 10px;">
 
-					<div class="preview_main_layout"
-						style="display: flex; gap: 20px; align-items: stretch; margin-top: 10px;">
+					<div class="preview_left_block" style="flex: 0 0 auto; text-align: center;">
+						<div class="preview_window"
+							style="width: 280px; height: 280px; overflow: hidden; position: relative; border: 1px solid #ccc; background-color: #ffffff; border-radius: 4px; box-shadow: inset 0 0 8px rgba(0,0,0,0.05);">
 
-						<div class="preview_left_block" style="flex: 0 0 auto; text-align: center;">
-							<div class="preview_window"
-								style="width: 280px; height: 280px; overflow: hidden; position: relative; border: 1px solid #ccc; background-color: #ffffff; border-radius: 4px; box-shadow: inset 0 0 8px rgba(0,0,0,0.05);">
+							<div id="preview_canvas_container"
+								style="width: 280px; height: 280px; position: absolute; top: 0; left: 0; transform-origin: center center;">
 
-								<div id="preview_canvas_container"
-									style="width: 280px; height: 280px; position: absolute; top: 0; left: 0; transform-origin: center center;">
+								<img th:src="@{/images/common/preview_base.jpg}" alt="Preview" id="preview_base_img"
+									style="width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; transition: all 0.1s ease;">
 
-									<img th:src="@{/images/common/preview_base.jpg}" alt="Preview" id="preview_base_img"
-										style="width: 100%; height: 100%; object-fit: contain; position: absolute; top: 0; left: 0; transition: all 0.1s ease;">
-
-									<div id="preview_text_overlay"
-										style="position: absolute; top: 50%; left: 50%; transform-origin: center center; color: #ffffff; font-weight: bold; font-size: 14px; white-space: nowrap; pointer-events: none; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); letter-spacing: 0.1em; transition: all 0.1s ease;">
-									</div>
+								<div id="preview_text_overlay"
+									style="position: absolute; top: 50%; left: 50%; transform-origin: center center; color: #ffffff; font-weight: bold; font-size: 14px; white-space: nowrap; pointer-events: none; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); letter-spacing: 0.1em; transition: all 0.1s ease;">
 								</div>
 							</div>
 						</div>
+					</div>
 
-						<div class="preview_controllers"
-							style="flex: 1; background: #f5f5f5; border: 1px solid #ddd; padding: 16px; border-radius: 4px; min-width: 280px; box-sizing: border-box;">
+					<div class="preview_controllers"
+						style="flex: 1; background: #f5f5f5; border: 1px solid #ddd; padding: 16px; border-radius: 4px; min-width: 280px; box-sizing: border-box;">
 
-							<div style="margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
-								<label style="font-size: 13px;"><strong>文字色:</strong></label>
-								<select id="engraving_color" style="padding: 3px 8px;">
-									<option value="#ffffff">ホワイト</option>
-									<option value="#000000">ブラック</option>
-									<option value="#gold" style="color: #b8860b;">ゴールド調</option>
-									<option value="#silver" style="color: #7f8c8d;">シルバー調</option>
-								</select>
+						<div style="margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+							<label style="font-size: 13px;"><strong>文字色:</strong></label>
+							<select id="engraving_color" style="padding: 3px 8px;">
+								<option value="#ffffff">ホワイト</option>
+								<option value="#000000">ブラック</option>
+								<option value="#gold" style="color: #b8860b;">ゴールド調</option>
+								<option value="#silver" style="color: #7f8c8d;">シルバー調</option>
+							</select>
+						</div>
+
+						<div style="display: flex; gap: 50px; justify-content: center;">
+
+							<div style="text-align: center;">
+								<span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">📷
+									画像の位置</span>
+								<div
+									style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
+									<button type="button" id="btn_img_up"
+										style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
+									<button type="button" id="btn_img_left"
+										style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
+									<button type="button" id="btn_img_down"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
+									<button type="button" id="btn_img_right"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
+									<button type="button" id="btn_img_l_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
+									<button type="button" id="btn_img_reset"
+										style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
+									<button type="button" id="btn_img_r_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
+								</div>
 							</div>
 
-							<div style="display: flex; gap: 50px; justify-content: center;">
-
-								<div style="text-align: center;">
-									<span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">📷
-										画像の位置</span>
-									<div
-										style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
-										<button type="button" id="btn_img_up"
-											style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
-										<button type="button" id="btn_img_left"
-											style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
-										<button type="button" id="btn_img_down"
-											style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
-										<button type="button" id="btn_img_right"
-											style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
-										<button type="button" id="btn_img_l_rot"
-											style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
-										<button type="button" id="btn_img_reset"
-											style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
-										<button type="button" id="btn_img_r_rot"
-											style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
-									</div>
-								</div>
-
-								<div style="text-align: center;">
-									<span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">✍
-										文字の位置</span>
-									<div
-										style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
-										<button type="button" id="btn_txt_up"
-											style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
-										<button type="button" id="btn_txt_left"
-											style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
-										<button type="button" id="btn_txt_down"
-											style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
-										<button type="button" id="btn_txt_right"
-											style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
-										<button type="button" id="btn_txt_l_rot"
-											style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
-										<button type="button" id="btn_txt_reset"
-											style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
-										<button type="button" id="btn_txt_r_rot"
-											style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
-									</div>
+							<div style="text-align: center;">
+								<span style="font-size: 12px; display: block; margin-bottom: 6px; color: #555;">✍
+									文字の位置</span>
+								<div
+									style="display: grid; grid-template-columns: repeat(3, 30px); gap: 4px; justify-content: center; margin: 4px;">
+									<button type="button" id="btn_txt_up"
+										style="grid-column: 2; width:30px;height:30px;cursor:pointer; margin: 4px;">↑</button>
+									<button type="button" id="btn_txt_left"
+										style="grid-column: 1; width:30px;height:30px;cursor:pointer; margin: 4px;">←</button>
+									<button type="button" id="btn_txt_down"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">↓</button>
+									<button type="button" id="btn_txt_right"
+										style="width:30px;height:30px;cursor:pointer; margin: 4px;">→</button>
+									<button type="button" id="btn_txt_l_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↩</button>
+									<button type="button" id="btn_txt_reset"
+										style="width:30px;height:30px;font-size:10px;padding:0;cursor:pointer; margin: 4px;">R</button>
+									<button type="button" id="btn_txt_r_rot"
+										style="width:30px;height:30px;font-size:11px;cursor:pointer; margin: 4px;">↪</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</th:block>
+		</div>
 
 		<div class="detail_button_area" style="margin-top: 20px; display:flex; align-items:center;">
 			<th:block th:if="*{stock > 0}">
@@ -266,12 +192,9 @@
 					<input type="hidden" th:field="*{id}" />
 					<input type="hidden" name="purchaseType" value="single" />
 					<input type="hidden" name="formColor" class="form_color_input" value="ブラック" />
-
-					<input type="hidden" name="isEngravingSelected" id="form_is_engraving_single" value="false" />
 					<input type="hidden" name="engravingText" class="form_engraving_text" value="" />
-					<input type="hidden" name="fontType" class="form_engraving_font" value="" />
-					<!-- <input type="submit" name ="quality" value="1" class="send_button" /> -->
-					<button type="submit" name="quantity" value="1" class="send_button"> 買い物かごに入れる </button>
+					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
+					<input type="submit" value="買い物かごに入れる" class="send_button" />
 				</form>
 
 				<form th:action="@{/client/basket/add}" method="post" class="user_info_form"
@@ -279,15 +202,9 @@
 					<input type="hidden" th:field="*{id}" />
 					<input type="hidden" name="purchaseType" value="bulk" />
 					<input type="hidden" name="formColor" class="form_color_input" value="ブラック" />
-
-					<input type="hidden" name="isEngravingSelected" id="form_is_engraving_bulk" value="false" />
 					<input type="hidden" name="engravingText" class="form_engraving_text" value="" />
-					<input type="hidden" name="fontType" class="form_engraving_font" value="" />
-					<!-- <input type="submit"　 name ="quality" value="10"  class="send_button" style="background-color: #e67e22;" />
-									 -->
-					<button type="submit" name="quantity" value="10" class="send_button"
-						style="background-color: #e67e22;"> 10本まとめ買いをする </button>
-
+					<input type="hidden" name="engravingFont" class="form_engraving_font" value="" />
+					<input type="submit" value="10本まとめ買いする" class="send_button" style="background-color: #e67e22;" />
 				</form>
 
 			</th:block>
@@ -324,12 +241,6 @@
 			const hiddenTexts = document.querySelectorAll('.form_engraving_text');
 			const hiddenFonts = document.querySelectorAll('.form_engraving_font');
 
-			// Hiddenフィールドの同期用
-			const hiddenEngravings = [
-				document.getElementById('form_is_engraving_single'),
-				document.getElementById('form_is_engraving_bulk')
-			];
-
 			let imgPos = {x: 0, y: 0};
 			let imgRotate = 0;
 
@@ -339,13 +250,7 @@
 			const MOVE_STEP = 4;
 			const ROTATE_STEP = 2;
 
-			if (trigger && trigger.checked) {
-				formContainer.style.display = 'block';
-				hiddenEngravings.forEach(h => h.value = "true");
-				updatePreview();
-			} else {
-				formContainer.style.display = 'none';
-			}
+			formContainer.style.display = 'none';
 
 			function updatePreview() {
 				const textValue = engravingInput.value;
@@ -409,13 +314,10 @@
 			document.getElementById('btn_txt_reset').addEventListener('click', () => {txtPos = {x: 0, y: 0}; txtRotate = 0; applyPositions();});
 
 			function toggleEngravingForm() {
-				const isChecked = trigger.checked;
-				formContainer.style.display = isChecked ? 'block' : 'none';
-
-				// Hiddenフィールドに値を同期
-				hiddenEngravings.forEach(h => h.value = isChecked ? "true" : "false");
-
-				if (!isChecked) {
+				if (trigger.checked) {
+					formContainer.style.display = 'block';
+				} else {
+					formContainer.style.display = 'none';
 					engravingInput.value = '';
 					fontSelect.value = '';
 					imgPos = {x: 0, y: 0}; imgRotate = 0;
@@ -472,15 +374,11 @@
 
 						if (result === "added") {
 							favoriteText.textContent = "♥ お気に入り済み";
-							setTimeout(() => {
-								window.location.href = "/shared_shop";
-							}, 300);
+							location.reload();
 
 						} else if (result === "detached") {
 							favoriteText.textContent = "♡ お気に入り";
-							setTimeout(() => {
-								window.location.href = "/shared_shop";
-							}, 300);
+							location.reload();
 
 						} else if (result === "ng") {
 							alert("ログインしてください");
