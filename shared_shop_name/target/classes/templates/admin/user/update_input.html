@@ -16,13 +16,17 @@
 				<!-- ▼ エラーの順序をコントロールする -->
 				<th:block th:if="${#fields.hasErrors()}">
 					<ul class="error_list">
-						<li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
-						<li th:each="err : ${#fields.errors('password')}" th:text="${err}"></li>
-						<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
-						<li th:each="err : ${#fields.errors('postalCode')}" th:text="${err}"></li>
-						<li th:each="err : ${#fields.errors('address')}" th:text="${err}"></li>
-						<li th:each="err : ${#fields.errors('phoneNumber')}" th:text="${err}"></li>
-						<li th:each="err : ${#fields.errors('authority')}" th:text="${err}"></li>
+						<!-- 1. フィールドに紐づかないエラーを表示 -->
+						<li th:each="err : ${#fields.globalDetailedErrors()}" th:text="${err.message}"></li>
+						<!-- 2. 各フィールドのエラーを指定順に表示 -->
+						<li th:each="err : ${#fields.detailedErrors('email')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('password')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('name')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('postalCode')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('address')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('phoneNumber')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('authority')}" th:text="${err.message}"></li>
+
 					</ul>
 					<br />
 				</th:block>
