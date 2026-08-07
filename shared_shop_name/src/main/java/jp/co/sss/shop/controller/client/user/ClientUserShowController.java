@@ -286,6 +286,7 @@ public class ClientUserShowController {
 			@RequestParam(value = "newEmail", required = true) String newEmail,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
 			@RequestParam(value= "postalCode", required = true) String postalCode,
+			@RequestParam(value="name", required = true) String name,
 			Model model,
 			HttpSession session) {
 
@@ -303,7 +304,10 @@ public class ClientUserShowController {
 			hasError = true;
 		}
 		
-		
+		if(name == null || name.trim().isEmpty()) {
+			model.addAttribute("nameErrorMessage", "名前は必須項目です。");
+			hasError = true;
+		}
 		 
 		if (newPassword == null || newPassword.trim().isEmpty()) {
 			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
@@ -572,4 +576,3 @@ public class ClientUserShowController {
 	    
 	}
 	
-
