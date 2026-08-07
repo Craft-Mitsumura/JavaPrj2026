@@ -65,7 +65,7 @@
 					<input type="text" th:field="*{name}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('postalCode')}" th:text="#{msg.regist.input}"
+					<div th:if="${#fields.hasErrors('postalCode')}" th:text="${nameErrorMessage}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					
@@ -73,14 +73,14 @@
 					<input type="text" th:field="*{postalCode}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('address')}" th:text="#{msg.regist.input}"
+					<div th:if="${#fields.hasErrors('address')}" th:text="${addressErrorMessage}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title" th:text="#{userForm.address}"></span></label>
 					<textarea rows="6" th:field="*{address}"></textarea>
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('phoneNumber')}" th:text="#{msg.regist.input}"
+					<div th:if="${#fields.hasErrors('phoneNumber')}" th:text="${phoneNumberErrorMessage}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;"></div>
 					<label><span class="input_title" th:text="#{userForm.phoneNumber}"></span></label>
 					<input type="text" th:field="*{phoneNumber}" />
