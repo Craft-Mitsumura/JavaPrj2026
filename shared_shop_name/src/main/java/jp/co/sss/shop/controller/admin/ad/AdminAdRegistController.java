@@ -131,9 +131,9 @@ public class AdminAdRegistController {
 			return "admin/ad/regist_input";
 		}
 
+		// 画像サイズチェック
 		long maxSize = 1024 * 1024; // 1MB
 
-		// 画像サイズチェック
 		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
 			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
 			return "admin/ad/regist_input";

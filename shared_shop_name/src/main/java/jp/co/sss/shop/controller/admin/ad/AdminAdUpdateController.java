@@ -153,11 +153,11 @@ public class AdminAdUpdateController {
 			return "redirect:/admin/ad/update/input";
 		}
 
+		// 画像サイズチェック
 		long maxSize = 1024 * 1024; // 1MB
 
-		// 画像サイズチェック
 		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
-			// エラー時はセッション等にメッセージを詰めるか、簡易的に戻す
+			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
 			return "redirect:/admin/ad/update/input";
 		}
 

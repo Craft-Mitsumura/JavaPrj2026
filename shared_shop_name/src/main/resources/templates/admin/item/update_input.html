@@ -19,8 +19,9 @@
 					<ul class="error_list">
 						<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
 					</ul>
-					<br />
 				</th:block>
+				<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
+				
 				<ul class="input_list">
 					<!-- ★これが無いと更新時にIDがnullになります -->
 					<input type="hidden" th:field="*{id}" />
