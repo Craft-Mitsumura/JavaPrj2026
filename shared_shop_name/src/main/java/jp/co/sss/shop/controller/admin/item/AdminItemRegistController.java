@@ -130,7 +130,7 @@ public class AdminItemRegistController {
 	 * 	入力値エラーなし："redirect:/admin/item/regist/check" 登録確認画面　表示処理
 	 */
 	@RequestMapping(path = "/admin/item/regist/check", method = RequestMethod.POST)
-	public String registInputCheck(@Valid @ModelAttribute ItemForm form, BindingResult result) {
+	public String registInputCheck(@Valid @ModelAttribute ItemForm form, BindingResult result, Model model) {
 
 		// 選択したカテゴリの名前をFormクラスにセット
 		if (form.getCategoryId() != null) {
@@ -154,6 +154,14 @@ public class AdminItemRegistController {
 			session.setAttribute("result", result);
 			// 登録入力画面　表示処理
 			return "redirect:/admin/item/regist/input";
+		}
+		
+		// 画像サイズチェック
+		long maxSize = 1024 * 1024; // 1MB
+
+		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
+			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+			return "redirect:/admin/ad/update/input";
 		}
 
 		//ファイルアップロード処理呼び出す 戻り値 成功時:ファイル名、失敗時:null
