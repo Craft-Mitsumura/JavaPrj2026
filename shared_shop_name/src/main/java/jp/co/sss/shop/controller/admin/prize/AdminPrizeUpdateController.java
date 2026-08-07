@@ -21,140 +21,148 @@ import jp.co.sss.shop.service.UploadFileService;
 @Controller
 public class AdminPrizeUpdateController {
 
-    @Autowired
-    PrizeRepository prizeRepository;
+	@Autowired
+	PrizeRepository prizeRepository;
 
-    @Autowired
-    BeanTools beanTools;
+	@Autowired
+	BeanTools beanTools;
 
-    @Autowired
-    HttpSession session;
-    
-    @Autowired
-    UploadFileService upfileService;
+	@Autowired
+	HttpSession session;
 
-    /**
-     * 編集画面初期表示
-     */
-    @RequestMapping(path = "/admin/prize/update/input/{id}", method = RequestMethod.POST)
-    public String updateInputInit(@PathVariable Integer id) {
+	@Autowired
+	UploadFileService upfileService;
 
-        Prize prize = prizeRepository.findById(id).orElse(null);
+	/**
+	 * 編集画面初期表示
+	 */
+	@RequestMapping(path = "/admin/prize/update/input/{id}", method = RequestMethod.POST)
+	public String updateInputInit(@PathVariable Integer id) {
 
-        if (prize == null) {
-            return "redirect:/syserror";
-        }
+		Prize prize = prizeRepository.findById(id).orElse(null);
 
-        PrizeForm prizeForm = beanTools.copyEntityToPrizeForm(prize);
+		if (prize == null) {
+			return "redirect:/syserror";
+		}
 
-        session.setAttribute("prizeForm", prizeForm);
+		PrizeForm prizeForm = beanTools.copyEntityToPrizeForm(prize);
 
-        return "redirect:/admin/prize/update/input";
-    }
+		session.setAttribute("prizeForm", prizeForm);
 
-    /**
-     * 編集画面表示
-     */
-    @RequestMapping(path = "/admin/prize/update/input", method = RequestMethod.GET)
-    public String updateInput(Model model) {
+		return "redirect:/admin/prize/update/input";
+	}
 
-        PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
+	/**
+	 * 編集画面表示
+	 */
+	@RequestMapping(path = "/admin/prize/update/input", method = RequestMethod.GET)
+	public String updateInput(Model model) {
 
-        if (prizeForm == null) {
-            return "redirect:/syserror";
-        }
+		PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
 
-        BindingResult result = (BindingResult) session.getAttribute("result");
+		if (prizeForm == null) {
+			return "redirect:/syserror";
+		}
 
-        if (result != null) {
-            model.addAttribute(
-                "org.springframework.validation.BindingResult.prizeForm",
-                result);
-            session.removeAttribute("result");
-        }
+		BindingResult result = (BindingResult) session.getAttribute("result");
 
-        model.addAttribute("prizeForm", prizeForm);
+		if (result != null) {
+			model.addAttribute(
+					"org.springframework.validation.BindingResult.prizeForm",
+					result);
+			session.removeAttribute("result");
+		}
 
-        return "admin/prize/update_input";
-    }
-    
-    @RequestMapping(path = "/admin/prize/update/check", method = RequestMethod.POST)
-    public String updateInputCheck(@Valid @ModelAttribute PrizeForm form,
-                                   BindingResult result) {
+		model.addAttribute("prizeForm", prizeForm);
 
-        // セッションに保存されている元データ
-        PrizeForm lastPrizeForm = (PrizeForm) session.getAttribute("prizeForm");
+		return "admin/prize/update_input";
+	}
 
-        if (lastPrizeForm == null) {
-            return "redirect:/syserror";
-        }
+	@RequestMapping(path = "/admin/prize/update/check", method = RequestMethod.POST)
+	public String updateInputCheck(@Valid @ModelAttribute PrizeForm form,
+			BindingResult result, Model model) {
 
-        // 入力内容をセッションへ保存
-        session.setAttribute("prizeForm", form);
+		// セッションに保存されている元データ
+		PrizeForm lastPrizeForm = (PrizeForm) session.getAttribute("prizeForm");
 
-        // 入力エラー
-        if (result.hasErrors()) {
-            session.setAttribute("result", result);
-            return "redirect:/admin/prize/update/input";
-        }
+		if (lastPrizeForm == null) {
+			return "redirect:/syserror";
+		}
 
-        // 画像アップロード
-        String imageName = upfileService.saveUploadFile(form.getImageFile());
+		// 入力内容をセッションへ保存
+		session.setAttribute("prizeForm", form);
 
-        if (imageName != null) {
-            form.setImage(imageName);
-        } else {
-            // 新しい画像を選択しなかった場合は以前の画像を使用
-            form.setImage(lastPrizeForm.getImage());
-        }
+		// 入力エラー
+		if (result.hasErrors()) {
+			session.setAttribute("result", result);
+			return "redirect:/admin/prize/update/input";
+		}
 
-        return "redirect:/admin/prize/update/check";
-    }
-    
-    @RequestMapping(path = "/admin/prize/update/check", method = RequestMethod.GET)
-    public String updateCheck(Model model) {
+		// 画像サイズチェック
+		long maxSize = 1024 * 1024; // 1MB
 
-        PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
+		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
+			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+			return "redirect:/admin/ad/update/input";
+		}
 
-        if (prizeForm == null) {
-            return "redirect:/syserror";
-        }
+		// 画像アップロード
+		String imageName = upfileService.saveUploadFile(form.getImageFile());
 
-        model.addAttribute("prizeForm", prizeForm);
+		if (imageName != null) {
+			form.setImage(imageName);
+		} else {
+			// 新しい画像を選択しなかった場合は以前の画像を使用
+			form.setImage(lastPrizeForm.getImage());
+		}
 
-        return "admin/prize/update_check";
-    }
-    
-    @RequestMapping(path = "/admin/prize/update/complete", method = RequestMethod.POST)
-    public String updateComplete() {
+		return "redirect:/admin/prize/update/check";
+	}
 
-        PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
+	@RequestMapping(path = "/admin/prize/update/check", method = RequestMethod.GET)
+	public String updateCheck(Model model) {
 
-        if (prizeForm == null) {
-            return "redirect:/syserror";
-        }
+		PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
 
-        Prize prize = prizeRepository.findById(prizeForm.getId()).orElse(null);
+		if (prizeForm == null) {
+			return "redirect:/syserror";
+		}
 
-        if (prize == null) {
-            return "redirect:/syserror";
-        }
+		model.addAttribute("prizeForm", prizeForm);
 
-        prize.setName(prizeForm.getName());
-        prize.setRequiredPoint(prizeForm.getRequiredPoint());
-        prize.setImage(prizeForm.getImage());
-        prize.setDescription(prizeForm.getDescription());
+		return "admin/prize/update_check";
+	}
 
-        prizeRepository.save(prize);
+	@RequestMapping(path = "/admin/prize/update/complete", method = RequestMethod.POST)
+	public String updateComplete() {
 
-        session.removeAttribute("prizeForm");
+		PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
 
-        return "redirect:/admin/prize/update/complete";
-    }
-    
-    @RequestMapping(path = "/admin/prize/update/complete", method = RequestMethod.GET)
-    public String updateCompleteFinish() {
+		if (prizeForm == null) {
+			return "redirect:/syserror";
+		}
 
-        return "admin/prize/update_complete";
-    }
+		Prize prize = prizeRepository.findById(prizeForm.getId()).orElse(null);
+
+		if (prize == null) {
+			return "redirect:/syserror";
+		}
+
+		prize.setName(prizeForm.getName());
+		prize.setRequiredPoint(prizeForm.getRequiredPoint());
+		prize.setImage(prizeForm.getImage());
+		prize.setDescription(prizeForm.getDescription());
+
+		prizeRepository.save(prize);
+
+		session.removeAttribute("prizeForm");
+
+		return "redirect:/admin/prize/update/complete";
+	}
+
+	@RequestMapping(path = "/admin/prize/update/complete", method = RequestMethod.GET)
+	public String updateCompleteFinish() {
+
+		return "admin/prize/update_complete";
+	}
 }

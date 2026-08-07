@@ -86,25 +86,30 @@ public class AdminItemUpdateController {
 
 			// 初期表示用フォーム情報の生成しIDで取得した値を入力フォーム情報としてセット
 			itemForm = beanTools.copyEntityToItemForm(item);
-			
+
 			// --- 追加分(JSON) ---
 			if (item.getVariationJson() != null) {
-			    try {
-			        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-			        com.fasterxml.jackson.databind.JsonNode root = mapper.readTree(item.getVariationJson());
+				try {
+					com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+					com.fasterxml.jackson.databind.JsonNode root = mapper.readTree(item.getVariationJson());
 
-			        // 各項目が存在する場合のみセットする
-			        if (root.has("var_Number")) itemForm.setVarNumber(root.get("var_Number").asInt());
-			        if (root.has("color_pattern")) itemForm.setColorPattern(root.get("color_pattern").asText());
-			        if (root.has("nib_diameter")) itemForm.setNibDiameter(root.get("nib_diameter").asText());
-			        if (root.has("lead_diameter")) itemForm.setLeadDiameter(root.get("lead_diameter").asText());
-			        if (root.has("ink_volume")) itemForm.setInkVolume(root.get("ink_volume").asText());
-			    } catch (Exception e) {
-			        e.printStackTrace();
-			    }
+					// 各項目が存在する場合のみセットする
+					if (root.has("var_Number"))
+						itemForm.setVarNumber(root.get("var_Number").asInt());
+					if (root.has("color_pattern"))
+						itemForm.setColorPattern(root.get("color_pattern").asText());
+					if (root.has("nib_diameter"))
+						itemForm.setNibDiameter(root.get("nib_diameter").asText());
+					if (root.has("lead_diameter"))
+						itemForm.setLeadDiameter(root.get("lead_diameter").asText());
+					if (root.has("ink_volume"))
+						itemForm.setInkVolume(root.get("ink_volume").asText());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			// --- 追加分(JSON)終わり ---
-			
+
 			//変更入力フォームをセッションに保持
 			session.setAttribute("itemForm", itemForm);
 		}
@@ -139,7 +144,7 @@ public class AdminItemUpdateController {
 		}
 
 		model.addAttribute("itemForm", itemForm);
-		
+
 		model.addAttribute("categories", categoryRepository.findAll());
 
 		// 変更入力画面　表示
@@ -157,7 +162,7 @@ public class AdminItemUpdateController {
 	 *   入力値エラーなし："redirect:/admin/item/update/check" 変更確認画面　表示処理
 	 */
 	@RequestMapping(path = "/admin/item/update/check", method = RequestMethod.POST)
-	public String updateInputCheck(@Valid @ModelAttribute ItemForm form, BindingResult result) {
+	public String updateInputCheck(@Valid @ModelAttribute ItemForm form, BindingResult result, Model model) {
 		System.out.println("送信されてきた商品名: " + form.getName());
 
 		//直前のセッション情報を取得
@@ -174,8 +179,16 @@ public class AdminItemUpdateController {
 			// 入力値にエラーがあった場合、エラー情報をセッションに保持し、変更入力画面を表示
 			session.setAttribute("result", result);
 			return "redirect:/admin/item/update/input";
-
 		}
+
+		// 画像サイズチェック
+		long maxSize = 1024 * 1024; // 1MB
+
+		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
+			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+			return "redirect:/admin/ad/update/input";
+		}
+
 		//ファイルアップロード処理呼び出す 戻り値 成功時:ファイル名、失敗時:null
 		String imageName = upfileService.saveUploadFile(form.getImageFile());
 		if (imageName != null) {
@@ -247,26 +260,26 @@ public class AdminItemUpdateController {
 
 		// 入力フォーム情報を変更用エンティティにコピー
 		item = beanTools.copyItemFormToEntity(itemForm);
-		
+
 		// --- 追加分(JSON) ---
 		try {
-		    com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-		    com.fasterxml.jackson.databind.node.ObjectNode root = mapper.createObjectNode();
+			com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+			com.fasterxml.jackson.databind.node.ObjectNode root = mapper.createObjectNode();
 
-		    // フォームから値を詰め込む
-		    root.put("var_Number", itemForm.getVarNumber());
-		    root.put("color_pattern", itemForm.getColorPattern());
-		    root.put("nib_diameter", itemForm.getNibDiameter());
-		    root.put("lead_diameter", itemForm.getLeadDiameter());
-		    root.put("ink_volume", itemForm.getInkVolume());
+			// フォームから値を詰め込む
+			root.put("var_Number", itemForm.getVarNumber());
+			root.put("color_pattern", itemForm.getColorPattern());
+			root.put("nib_diameter", itemForm.getNibDiameter());
+			root.put("lead_diameter", itemForm.getLeadDiameter());
+			root.put("ink_volume", itemForm.getInkVolume());
 
-		    // EntityのJSONカラムにセット
-		    item.setVariationJson(root.toString());
+			// EntityのJSONカラムにセット
+			item.setVariationJson(root.toString());
 		} catch (Exception e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 		// --- 追加分(JSON)終わり ---
-		
+
 		// 入力値以外の情報をエンティティに設定
 		item.setDeleteFlag(deleteFlag);
 		item.setInsertDate(insertDate);
