@@ -1,58 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
 
 <head>
-    <title>景品変更確認 | [[#{shop.title}]]</title>
-    <meta charset="UTF-8" />
+	<title>景品変更確認 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
 </head>
 
 <body class="admin prize_update_check">
+	<div id="adminPrizeCheck">
+		<h2 class="title">景品変更確認</h2>
+		<p class="check_message">以下の内容で更新します。</p>
 
-    <h2 class="title">景品変更確認</h2>
-<div id ="adminItemUpdateCheck">
-    <div class="user_info_form_area">
-    <p class="check_message">以下の内容で更新します。</p>
+		<div class="user_info_form_area">
+			<ul class="input_list">
 
-        <ul class="input_list">
+				<li>
+					<span class="input_title">景品名</span>
+					<span class="input_value" th:text="${prizeForm.name}"></span>
+				</li>
 
-            <li>
-                <span class="input_title">景品名</span>
-                <span class="input_value" th:text="${prizeForm.name}"></span>
-            </li>
+				<li>
+					<span class="input_title">必要ポイント</span>
+					<span class="input_value"
+						th:text="${#numbers.formatInteger(prizeForm.requiredPoint, 0, 'COMMA')} + ' pt'"></span>
+				</li>
 
-            <li>
-                <span class="input_title">必要ポイント</span>
-                <span class="input_value" th:text="${#numbers.formatInteger(prizeForm.requiredPoint, 0, 'COMMA')} + ' pt'"></span>
-            </li>
+				<li>
+					<span class="input_title">画像</span>
+					<span class="input_value">
+						<img th:if="${prizeForm.image != null}" th:src="@{/images/{image}(image=${prizeForm.image})}" />
 
-            <li>
-                <span class="input_title">画像</span>
-                <span class="input_value">
-                    <img th:if="${prizeForm.image != null}"
-                         th:src="@{/images/{image}(image=${prizeForm.image})}" />
+						<img th:if="${prizeForm.image == null}" th:src="@{/images/common/no_image.jpg}" />
+					</span>
+				</li>
 
-                    <img th:if="${prizeForm.image == null}"
-                         th:src="@{/images/common/no_image.jpg}" />
-                </span>
-            </li>
+				<li>
+					<span class="input_title">説明</span>
+					<span class="input_value" th:text="${prizeForm.description}"></span>
+				</li>
 
-            <li>
-                <span class="input_title">説明</span>
-                <span class="input_value" th:text="${prizeForm.description}"></span>
-            </li>
+			</ul>
 
-        </ul>
+			<form th:action="@{/admin/prize/update/complete}" method="post" class="user_info_form">
+				<input type="submit" value="登録" class="send_button" />
+			</form>
 
-        <form th:action="@{/admin/prize/update/complete}" method="post" class="user_info_form">
-            <input type="submit" value="登録" class="send_button" />
-        </form>
+			<form th:action="@{/admin/prize/update/input}" method="get">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
 
-        <form th:action="@{/admin/prize/update/input}" method="get">
-            <input type="submit" value="戻る" class="back_button" />
-        </form>
-
-    </div>
-</div>
+		</div>
+	</div>
 </body>
+
 </html>

@@ -37,11 +37,8 @@ public class AdminPrizeRegistController {
     @RequestMapping(path="/admin/prize/regist/input", method=RequestMethod.POST)
     public String registInput() {
 
-        PrizeForm prizeForm = (PrizeForm) session.getAttribute("prizeForm");
-
-        if(prizeForm == null) {
-            session.setAttribute("prizeForm", new PrizeForm());
-        }
+    	session.removeAttribute("result");
+        session.setAttribute("prizeForm", new PrizeForm());
 
         return "redirect:/admin/prize/regist/input";
     }
