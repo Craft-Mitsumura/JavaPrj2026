@@ -232,7 +232,12 @@ public class ClientUserShowController {
 		session.removeAttribute("registUser");
 
 		// 会員登録完了画面へ遷移
-		return "client/user/regist_complete";
+		return "redirect:/client/user/regist/complete";
+	}
+	
+	@GetMapping("/client/user/regist/complete")
+	public String completePage() {
+	    return "client/user/regist_complete";
 	}
 	
 	/**
@@ -263,7 +268,6 @@ public class ClientUserShowController {
 		return "client/user/update_input";
 	}
 
-	/*saga*/
 	/**
 	 * 会員情報編集確認画面（重複チェックの論理削除バグ修正、空欄回避対応版）
 	 * @author 手塚
@@ -279,8 +283,9 @@ public class ClientUserShowController {
 			BindingResult result,
 			@RequestParam(value = "oldEmail", required = false) String oldEmail,
 			@RequestParam(value = "oldPassword", required = false) String oldPassword,
-			@RequestParam(value = "newEmail", required = false) String newEmail,
+			@RequestParam(value = "newEmail", required = true) String newEmail,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
+			@RequestParam(value= "postalCode", required = true) String postalCode,
 			Model model,
 			HttpSession session) {
 
@@ -289,13 +294,37 @@ public class ClientUserShowController {
 
 		boolean hasError = false;
 
+		
+		
+		
 		// 旧メールアドレスと旧パスワードの未入力チェック
 		if (oldEmail == null || oldEmail.trim().isEmpty()) {
 			model.addAttribute("oldEmailErrorMessage", "メールアドレスを入力してください。");
 			hasError = true;
 		}
+		
+		
+		 
+		if (newPassword == null || newPassword.trim().isEmpty()) {
+			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
+			hasError = true;
+		}
+		if (newEmail == null || newEmail.trim().isEmpty()) {
+			model.addAttribute("newEmailErrorMessage", "新しいメールは必須項目です。");
+			hasError = true;
+		}
 		if (oldPassword == null || oldPassword.trim().isEmpty()) {
 			model.addAttribute("oldPasswordErrorMessage", "パスワードを入力してください。");
+			hasError = true;
+		}
+		if(postalCode == null || postalCode.trim().isEmpty() ) {
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
+			hasError = true;
+		}else if(!postalCode.matches("^\\d{7}$")) {
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
+			hasError = true;
+		}else if(postalCode.length() != 7) {
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は7文字で入力してください。。");
 			hasError = true;
 		}
 
@@ -309,14 +338,30 @@ public class ClientUserShowController {
 		    }
 
 		    // ★形式が正しい場合だけ重複チェック
-		    if (!hasError && !newEmail.equals(pastUser.getEmail())) {
+			/*
+			 * if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser
+			 * = userRepository.findByEmail(newEmail);
+			 * 
+			 * if (duplicateUser != null) { model.addAttribute("authErrorMessage",
+			 * "入力された新しいメールアドレスは既に登録されています。"); hasError = true; } }
+			 */
+		    
+		 // ★形式が正しい場合だけ重複チェック
+		    if(!hasError && !newEmail.equals(pastUser.getEmail())) {
 		    	User duplicateUser = userRepository.findByEmail(newEmail);
-		        if (duplicateUser != null) {
-		            model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
-		            hasError = true;
-		        }
-		    }
-
+		    	int authority = 2; // 一般会員の権限値
+		        
+		    	if(duplicateUser == null) {
+		    		
+		    		hasError =false;
+		    	}
+		    	else
+		         if( duplicateUser.getAuthority() == authority   ) {
+		        	 model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
+		             hasError = true;
+		         }
+		    
+		    } 
 			userBean.setEmail(newEmail);
 		} else {
 			userBean.setEmail(pastUser.getEmail()); 
@@ -358,6 +403,7 @@ public class ClientUserShowController {
 			result.rejectValue("name", "msg.regist.input");
 			hasError = true;
 		}
+		
 		if (userBean.getPostalCode() == null || userBean.getPostalCode().trim().isEmpty()) {
 			result.rejectValue("postalCode", "msg.regist.input");
 			hasError = true;
@@ -383,6 +429,7 @@ public class ClientUserShowController {
 		// 編集後の会員情報を一時保存して確認画面へ
 		session.setAttribute("updateUser", userBean);
 		model.addAttribute("userForm", userBean);
+		System.out.println("postalCode = " + postalCode);
 		
 		return "client/user/update_check";
 	}
@@ -491,13 +538,25 @@ public class ClientUserShowController {
 	}
 	
 
-
+    /**
+     * お問い合わせフォーム表示
+     * @author sagar
+     * 
+     * @return
+     */
 	    @GetMapping("/client/review/form")
 	    public String showReviewForm() {
 	    
 	        return "client/review/reviewForm";
 	    }
-
+/**
+ * お問い合わせフォーム送信処理
+ * @param name お客様の名前
+ * @param email お客様のメールアドレス
+ * @param subject お問い合わせの件名
+ * @param message お問い合わせの内容
+ * @return リダイレクト先のURL
+ */
 	    @PostMapping("/client/review/input")
 	    public String review(
 	            @RequestParam String name,
