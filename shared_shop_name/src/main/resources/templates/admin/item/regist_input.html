@@ -104,7 +104,7 @@
 						var allowedCategories = field.getAttribute('data-category').split(',');
 						// 文字列としての比較にするため、categoryIdをそのまま比較
 						if (allowedCategories.includes(categoryId)) {
-							field.style.display = 'block';
+							field.style.display = 'grid';
 						} else {
 							field.style.display = 'none';
 							// 非表示時は値を空にする（不要なデータを送らないため）
