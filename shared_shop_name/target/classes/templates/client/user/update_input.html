@@ -58,7 +58,7 @@
 				</li>
 
 				<li>
-					<div th:if="${#fields.hasErrors('name')}" th:text="#{msg.regist.input}"
+					<div th:if="${#fields.hasErrors('name')}" th:text="${postalCodeErrorMessage}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title" th:text="#{userForm.name}"></span></label>
@@ -68,6 +68,7 @@
 					<div th:if="${#fields.hasErrors('postalCode')}" th:text="#{msg.regist.input}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
+					
 					<label><span class="input_title" th:text="#{userForm.postalCode}"></span></label>
 					<input type="text" th:field="*{postalCode}" />
 				</li>

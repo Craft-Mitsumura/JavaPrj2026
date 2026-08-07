@@ -285,6 +285,7 @@ public class ClientUserShowController {
 			@RequestParam(value = "oldPassword", required = false) String oldPassword,
 			@RequestParam(value = "newEmail", required = true) String newEmail,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
+			@RequestParam(value= "postalCode", required = true) String postalCode,
 			Model model,
 			HttpSession session) {
 
@@ -295,11 +296,15 @@ public class ClientUserShowController {
 
 		
 		
+		
 		// 旧メールアドレスと旧パスワードの未入力チェック
 		if (oldEmail == null || oldEmail.trim().isEmpty()) {
 			model.addAttribute("oldEmailErrorMessage", "メールアドレスを入力してください。");
 			hasError = true;
 		}
+		
+		
+		 
 		if (newPassword == null || newPassword.trim().isEmpty()) {
 			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
 			hasError = true;
@@ -310,6 +315,16 @@ public class ClientUserShowController {
 		}
 		if (oldPassword == null || oldPassword.trim().isEmpty()) {
 			model.addAttribute("oldPasswordErrorMessage", "パスワードを入力してください。");
+			hasError = true;
+		}
+		if(postalCode == null || postalCode.trim().isEmpty() ) {
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
+			hasError = true;
+		}else if(!postalCode.matches("^\\d{7}$")) {
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
+			hasError = true;
+		}else if(postalCode.length() != 7) {
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は7文字で入力してください。。");
 			hasError = true;
 		}
 
@@ -414,6 +429,7 @@ public class ClientUserShowController {
 		// 編集後の会員情報を一時保存して確認画面へ
 		session.setAttribute("updateUser", userBean);
 		model.addAttribute("userForm", userBean);
+		System.out.println("postalCode = " + postalCode);
 		
 		return "client/user/update_check";
 	}
