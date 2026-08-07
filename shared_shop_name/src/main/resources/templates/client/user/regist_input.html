@@ -42,7 +42,7 @@
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title">[[#{userForm.postalCode}]]</span></label>
-					<input type="text" th:field="*{postalCode}" />
+					<input type="number" th:field="*{postalCode}" />
 				</li>
 				<li>
 					<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
@@ -56,7 +56,7 @@
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title">[[#{userForm.phoneNumber}]]</span></label>
-					<input type="text" th:field="*{phoneNumber}" />
+					<input type="number" th:field="*{phoneNumber}" />
 				</li>
 			</ul>
 			<input type="hidden" name="authority" value="2" />
