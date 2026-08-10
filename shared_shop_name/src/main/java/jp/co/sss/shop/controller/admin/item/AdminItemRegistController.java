@@ -161,7 +161,7 @@ public class AdminItemRegistController {
 
 		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
 			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-			return "redirect:/admin/ad/update/input";
+			return "redirect:/admin/item/update/input";
 		}
 
 		//ファイルアップロード処理呼び出す 戻り値 成功時:ファイル名、失敗時:null
