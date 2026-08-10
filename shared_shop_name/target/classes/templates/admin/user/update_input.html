@@ -20,9 +20,9 @@
 				</ul>
 				<br />
 			</th:block>
-			<th:block th:if="${authErrorMessage}">
+		<!-- 	<th:block th:if="${authErrorMessage}">
 				<p class="error_message" th:text="${authErrorMessage}" style="color: red;"></p>
-			</th:block>
+			</th:block> -->
 			<ul class="input_list">
 				<li><label><span class="input_title">[[#{userForm.email}]]</span></label>
 					<input type="text" th:field="*{email}" /></li>
