@@ -215,9 +215,9 @@ p {
 .user_info_form_area,
 .detail_area {
 	display: block;
-	width: 70%;
+	width: 100%;
 
-	margin-left: 50px;
+	margin-left: 0;
 }
 
 .info_form_area {
@@ -3032,6 +3032,20 @@ p.link_center {
     transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 
+#adminItemInput .input_list li {
+	display: grid;
+	grid-template-columns: 220px 1fr; 
+	column-gap: 30px;                 
+	width: 100%;
+	padding: 18px 0;
+}
+
+#adminItemInput .input_list li input,
+#adminItemInput .input_list li select,
+#adminItemInput .input_list li textarea {
+    width: 100%;
+}
+
 #adminItemInput:hover{
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
     transform: translateY(-2px);
@@ -3042,6 +3056,14 @@ p.link_center {
     margin-bottom: 10px;
 }
 
+#adminItemInput .input_list li > input,
+#adminItemInput .input_list li > select,
+#adminItemInput .input_list li > textarea {
+    flex-grow: 1;
+    flex-basis: 0;
+    width: auto;
+}
+
 #adminItemInput .input_message{
     text-align: center;
     margin-bottom: 25px;
@@ -3050,7 +3072,8 @@ p.link_center {
 
 #adminItemInput .input_list{
     list-style: none;
-    padding: 0;
+    padding: 0 30px;
+	box-sizing: border-box;
     margin: 0;
 }
 
