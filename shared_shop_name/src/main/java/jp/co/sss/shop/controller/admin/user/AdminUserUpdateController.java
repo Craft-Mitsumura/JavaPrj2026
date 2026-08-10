@@ -1,6 +1,8 @@
 package jp.co.sss.shop.controller.admin.user;
 
 import java.sql.Date;
+import java.util.Objects;
+import java.util.Optional;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
@@ -26,13 +29,13 @@ import jp.co.sss.shop.util.Constant;
  *
  * @author SystemShared
  * 
- * TIPS: 一般会員向けの会員変更機能に類似した処理です。
+ *         TIPS: 一般会員向けの会員変更機能に類似した処理です。
  */
 @Controller
 public class AdminUserUpdateController {
 
 	/**
-	 * 会員情報　リポジトリ
+	 * 会員情報 リポジトリ
 	 */
 	@Autowired
 	UserRepository userRepository;
@@ -44,15 +47,15 @@ public class AdminUserUpdateController {
 	HttpSession session;
 
 	/**
-	 * 入力画面　初期表示処理(POST)
+	 * 入力画面 初期表示処理(POST)
 	 * 
 	 * @param id 変更対象ID
-	 * @return "redirect:/admin/user/update/input" 入力録画面　表示処理
+	 * @return "redirect:/admin/user/update/input" 入力録画面 表示処理
 	 */
 	@RequestMapping(path = "/admin/user/update/input/{id}", method = RequestMethod.POST)
 	public String updateInputInit(@PathVariable Integer id) {
 
-		//セッションスコープより入力情報を取り出す
+		// セッションスコープより入力情報を取り出す
 		UserForm userForm = (UserForm) session.getAttribute("userForm");
 		if (userForm == null) {
 
@@ -62,26 +65,26 @@ public class AdminUserUpdateController {
 
 			if (user == null) {
 				// 対象が無い場合、エラー
-				return "redirect:/syserror" ;
+				return "redirect:/syserror";
 			}
 
 			// 初期表示用フォーム情報の生成
 			userForm = new UserForm();
-			//変更対象の情報をuserFormにコピー
+			// 変更対象の情報をuserFormにコピー
 			BeanUtils.copyProperties(user, userForm);
 
-			//変更入力フォームをセッションに保持
+			// 変更入力フォームをセッションに保持
 			session.setAttribute("userForm", userForm);
 
 		}
 
-		//変更入力画面　表示処理
+		// 変更入力画面 表示処理
 		return "redirect:/admin/user/update/input";
 
 	}
 
 	/**
-	 * 入力画面　表示処理
+	 * 入力画面 表示処理
 	 *
 	 * @param model Viewとの値受渡し
 	 * @return "admin/user/update_input" 変更入力画面 表示
@@ -89,7 +92,7 @@ public class AdminUserUpdateController {
 	@RequestMapping(path = "/admin/user/update/input", method = RequestMethod.GET)
 	public String updateInput(Model model) {
 
-		//セッションから入力フォーム取得
+		// セッションから入力フォーム取得
 		UserForm userForm = (UserForm) session.getAttribute("userForm");
 		if (userForm == null) {
 			// セッション情報がない場合、エラー
@@ -100,12 +103,12 @@ public class AdminUserUpdateController {
 
 		BindingResult result = (BindingResult) session.getAttribute("result");
 		if (result != null) {
-			//セッションにエラー情報がある場合、エラー情報を画面表示設定
+			// セッションにエラー情報がある場合、エラー情報を画面表示設定
 			model.addAttribute("org.springframework.validation.BindingResult.userForm", result);
 			session.removeAttribute("result");
 		}
 
-		//変更入力画面　表示
+		// 変更入力画面 表示
 		return "admin/user/update_input";
 
 	}
@@ -113,75 +116,91 @@ public class AdminUserUpdateController {
 	/**
 	 * 変更確認処理
 	 *
-	 * @param form 入力フォーム
+	 * @param form   入力フォーム
 	 * @param result 入力チェック結果
-	 * @return 
-	 *   入力値エラーあり："redirect:/admin/user/update/input" 変更入力画面へ 
-	 *   入力値エラーなし："redirect:/admin/user/update/check" 変更確認画面へ
+	 * @return 入力値エラーあり："redirect:/admin/user/update/input" 変更入力画面へ
+	 *         入力値エラーなし："redirect:/admin/user/update/check" 変更確認画面へ
 	 */
 	@RequestMapping(path = "/admin/user/update/check", method = RequestMethod.POST)
-	public String updateInputCheck(@Valid @ModelAttribute UserForm form, BindingResult result) {
+	public String updateInputCheck(@Valid @ModelAttribute UserForm form, BindingResult result,
 
-		//直前のセッション情報を取得
+			@RequestParam(value = "email", required = false) String email,
+			@RequestParam(value = "authority", required = true) Integer authority, Model model) {
+
+		// 直前のセッション情報を取得
 		UserForm lastUserForm = (UserForm) session.getAttribute("userForm");
 		if (lastUserForm == null) {
 			// セッション情報が無い場合、エラー
 			return "redirect:/syserror";
 		}
-		if(form.getAuthority()==null) {
-			//権限情報がない場合、セッション情報から値をセット
+
+		// 権限情報がない場合（読み取り専用表示の場合）、セッション情報から値をセット
+		if (form.getAuthority() == null) {
 			form.setAuthority(lastUserForm.getAuthority());
 		}
-		
+
+		// メールアドレスが変更された場合、または権限が変更された場合、重複チェック
+		boolean emailChanged = !Objects.equals(email, lastUserForm.getEmail());
+		boolean authorityChanged = !Objects.equals(form.getAuthority(), lastUserForm.getAuthority());
+
+		if (emailChanged || authorityChanged) {
+			// メールアドレスまたは権限が変更された場合、email+authority の組み合わせで重複チェック
+			Optional<User> duplicateUser = userRepository.findByEmailAndAuthority(email, form.getAuthority());
+
+			// 重複が存在し、かつ現在のユーザではない場合、エラー
+			if (duplicateUser.isPresent() && !Objects.equals(duplicateUser.get().getId(), lastUserForm.getId())) {
+				model.addAttribute("authErrorMessage", "入力されたメールアドレスは同じ権限で既に登録されています。");
+				result.rejectValue("email", "error.email");
+			}
+		}
+
+		form.setEmail(email);
+
 		// 入力フォーム情報をセッションに保持
 		session.setAttribute("userForm", form);
 
 		// 入力値にエラーがあった場合、入力画面に戻る
 		if (result.hasErrors()) {
-
 			session.setAttribute("result", result);
-
-			//変更入力画面　表示処理
+			// 変更入力画面 表示処理
 			return "redirect:/admin/user/update/input";
-
 		}
 
-		//変更確認画面　表示処理
+		// 変更確認画面 表示処理
 		return "redirect:/admin/user/update/check";
 	}
 
 	/**
-	 * 確認画面　表示処理
+	 * 確認画面 表示処理
 	 *
 	 * @param model Viewとの値受渡し
 	 * @return "admin/user/update_check" 確認画面表示
 	 */
 	@RequestMapping(path = "/admin/user/update/check", method = RequestMethod.GET)
 	public String updateCheck(Model model) {
-		//セッションから入力フォーム情報取得
+		// セッションから入力フォーム情報取得
 		UserForm userForm = (UserForm) session.getAttribute("userForm");
 		if (userForm == null) {
 			// セッション情報がない場合、エラー
 			return "redirect:/syserror";
 		}
-		//入力フォーム情報をスコープへ設定
+		// 入力フォーム情報をスコープへ設定
 		model.addAttribute("userForm", userForm);
 
-		// 変更確認画面　表示
+		// 変更確認画面 表示
 		return "admin/user/update_check";
 
 	}
 
-
 	/**
 	 * 変更登録、完了画面表示処理
 	 *
-	 * @return "redirect:/admin/user/update/complete" 変更完了画面　表示へ
+	 * @return "redirect:/admin/user/update/complete" 変更完了画面 表示へ
 	 */
 	@RequestMapping(path = "/admin/user/update/complete", method = RequestMethod.POST)
 	public String updateComplete() {
 
-		//セッション保持情報から入力値再取得
+		// セッション保持情報から入力値再取得
 		UserForm userForm = (UserForm) session.getAttribute("userForm");
 		if (userForm == null) {
 			// セッション情報がない場合、エラー
@@ -192,7 +211,7 @@ public class AdminUserUpdateController {
 		User user = userRepository.findByIdAndDeleteFlag(userForm.getId(), Constant.NOT_DELETED);
 		if (user == null) {
 			// 対象が無い場合、エラー
-			return "redirect:/syserror" ;
+			return "redirect:/syserror";
 		}
 
 		Integer deleteFlag = user.getDeleteFlag();
@@ -209,28 +228,28 @@ public class AdminUserUpdateController {
 		userRepository.save(user);
 
 		// ログインユーザ情報変更の場合、セッション保存ユーザ情報を更新
-		UserBean loginUser = (UserBean)session.getAttribute("user") ; 
+		UserBean loginUser = (UserBean) session.getAttribute("user");
 		if (loginUser.getId() == userForm.getId()) {
-			loginUser.setName(userForm.getName()) ;
+			loginUser.setName(userForm.getName());
 		}
-		session.setAttribute("user", loginUser) ;
-		
-		//セッション情報の削除
+		session.setAttribute("user", loginUser);
+
+		// セッション情報の削除
 		session.removeAttribute("userForm");
 
-		// 変更完了画面　表示処理
-		//二重送信防止のためリダイレクトを行う
+		// 変更完了画面 表示処理
+		// 二重送信防止のためリダイレクトを行う
 		return "redirect:/admin/user/update/complete";
 	}
 
 	/**
-	 * 変更完了画面　表示
+	 * 変更完了画面 表示
 	 * 
 	 * @return "admin/user/update_complete"
 	 */
 	@RequestMapping(path = "/admin/user/update/complete", method = RequestMethod.GET)
 	public String updateCompleteFinish() {
-		
+
 		return "admin/user/update_complete";
 	}
 
