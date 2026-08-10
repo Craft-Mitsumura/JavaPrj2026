@@ -12,14 +12,14 @@
 	<div id="adminUserUpdateInput">
 		<p th:class="input_message" th:text="#{msg.update.input}"></p>
 		<div class="user_info_form_area" th:object="${userForm}">
-			<form th:action="@{/admin/user/update/check}" method="post" class="user_info_form">
+			<form th:action="@{/admin/user/update/check}" method="post" th:object="${userForm}" class="user_info_form">
 				<!-- ▼ エラーの順序をコントロールする -->
 				<th:block th:if="${#fields.hasErrors()}">
 					<ul class="error_list">
 						<!-- 1. フィールドに紐づかないエラーを表示 -->
 						<li th:each="err : ${#fields.globalDetailedErrors()}" th:text="${err.message}"></li>
 						<!-- 2. 各フィールドのエラーを指定順に表示 -->
-						<li th:each="err : ${#fields.detailedErrors('email')}" th:text="${err.message}"></li>
+						<li th:each="err : ${#fields.detailedErrors('email')}"th:text="${err.message}"></li>
 						<li th:each="err : ${#fields.detailedErrors('password')}" th:text="${err.message}"></li>
 						<li th:each="err : ${#fields.detailedErrors('name')}" th:text="${err.message}"></li>
 						<li th:each="err : ${#fields.detailedErrors('postalCode')}" th:text="${err.message}"></li>
@@ -31,7 +31,6 @@
 					<br />
 				</th:block>
 				<!-- ▲ ここまで -->
-				</th:block>
 				<ul class="input_list">
 					<li>
 						<label><span class="input_title">[[#{userForm.email}]]</span></label>
@@ -62,12 +61,12 @@
 						<label><span class="input_title">[[#{data.authority}]]</span></label>
 						<div class="radio_label"
 							th:if="${session.user.authority == 0 and session.user.id!=userForm.id}">
-							<input type="radio" name="authority" value="0"
-								th:checked="*{authority == 0}" />[[#{auth.system.str}]]
-							<input type="radio" name="authority" value="1"
-								th:checked="*{authority == 1}" />[[#{auth.admin.str}]]
-							<input type="radio" name="authority" value="2"
-								th:checked="*{authority == 2}" />[[#{auth.client.str}]]
+							<input type="radio" th:field="*{authority}" value="0"
+								/>[[#{auth.system.str}]]
+							<input type="radio" th:field="*{authority}" value="1"
+								/>[[#{auth.admin.str}]]
+							<input type="radio" th:field="*{authority}" value="2"
+								/>[[#{auth.client.str}]]
 						</div>
 						<th:block th:if="${session.user.authority == 1 or session.user.id==userForm.id}">
 							<th:block th:switch="*{authority}">
@@ -75,6 +74,8 @@
 								<span class="input_value" th:case="1">[[#{auth.admin.str}]]</span>
 								<span class="input_value" th:case="2">[[#{auth.client.str}]]</span>
 							</th:block>
+							<input type="hidden" th:field="*{authority}" />
+						</th:block>
 					</li>
 				</ul>
 				<input type="hidden" th:field="*{id}" />

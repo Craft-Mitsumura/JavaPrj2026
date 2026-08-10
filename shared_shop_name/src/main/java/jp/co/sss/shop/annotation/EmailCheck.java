@@ -64,4 +64,10 @@ public @interface EmailCheck {
 	 */
 	String fieldId() default "id";
 
+	/**
+	 * 権限の取得
+	 * @return 権限フィールド名
+	 */
+	String fieldAuthority() default "authority";
+
 }

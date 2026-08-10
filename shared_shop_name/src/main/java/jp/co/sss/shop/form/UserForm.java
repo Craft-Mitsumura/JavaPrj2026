@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -71,6 +72,7 @@ public class UserForm implements Serializable {
 	/**
 	 * 権限
 	 */
+	@NotNull(message = "権限は必須です")
 	private Integer authority;
 
 	

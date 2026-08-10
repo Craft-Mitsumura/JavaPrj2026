@@ -1,5 +1,8 @@
 package jp.co.sss.shop.validator;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -18,8 +21,9 @@ import jp.co.sss.shop.repository.UserRepository;
  * @author System Shared
  */
 public class EmailValidator implements ConstraintValidator<EmailCheck, Object> {
-	private String email;
-	private String id;
+	private String emailField;
+	private String idField;
+	private String authorityField;
 
 	@Autowired
 	UserRepository userRepository;
@@ -29,27 +33,36 @@ public class EmailValidator implements ConstraintValidator<EmailCheck, Object> {
 
 	@Override
 	public void initialize(EmailCheck annotation) {
-		this.email = annotation.fieldEmail();
-		this.id = annotation.fieldId();
+		this.emailField = annotation.fieldEmail();
+		this.idField = annotation.fieldId();
+		this.authorityField = annotation.fieldAuthority();
 	}
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		BeanWrapper beanWrapper = new BeanWrapperImpl(value);
-		boolean isValidFlg = false;
 
-		String emailProp = (String) beanWrapper.getPropertyValue(this.email);
-		Integer idProp = (Integer) beanWrapper.getPropertyValue(this.id);
-		User user = userRepository.findByEmail(emailProp);
+		String emailProp = (String) beanWrapper.getPropertyValue(this.emailField);
+		Integer idProp = (Integer) beanWrapper.getPropertyValue(this.idField);
+		Integer authorityProp = (Integer) beanWrapper.getPropertyValue(this.authorityField);
 
-		if (user == null || user.getId() == idProp) {
-			//会員が存在していないもしくは、メールアドレス利用者と会員IDが一致の場合 有効
-			isValidFlg = true;
-		} else {
-			//会員が存在している、
-			isValidFlg = false;
+		// emailまたはauthorityが未入力の場合はスキップ（他のバリデーションに委ねる）
+		if (emailProp == null || emailProp.isBlank() || authorityProp == null) {
+			return true;
 		}
-		return isValidFlg;
+
+		// email + authority の組み合わせで重複チェック
+		Optional<User> existingUser = userRepository.findByEmailAndAuthority(emailProp, authorityProp);
+
+		if (!existingUser.isPresent()) {
+			// 同じemail+authorityのユーザが存在しない → 有効
+			return true;
+		}
+
+		// 同じemail+authorityのユーザが存在する場合、自分自身かチェック
+		// （更新時：idPropが一致すれば自分のレコード → 有効）
+		return Objects.equals(existingUser.get().getId(), idProp);
 	}
 
 }
+
