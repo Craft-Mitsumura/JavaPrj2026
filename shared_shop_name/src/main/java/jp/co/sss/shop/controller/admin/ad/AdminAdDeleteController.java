@@ -50,7 +50,7 @@ public class AdminAdDeleteController {
 	 * @param id 削除対象のID
 	 * @return "/delete_check"
 	 */
-	@RequestMapping(path = "/delete_check/{id}", method = RequestMethod.POST)
+	@RequestMapping(path = "/check/{id}", method = RequestMethod.POST)
 	public String deleteCheckInit(@PathVariable("id") Integer id) {
 		// 該当データを取得
 		Promotions promo = promotionsRepository.findById(id).orElse(null);
@@ -70,7 +70,7 @@ public class AdminAdDeleteController {
 
 		session.setAttribute("deleteform", deleteform);
 
-		return "redirect:/admin/ad/delete/delete_check";
+		return "redirect:/admin/ad/delete/check";
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class AdminAdDeleteController {
 	 * @param model モデル
 	 * @return "admin/ad/delete_check"
 	 */
-	@RequestMapping(path = "/delete_check", method = RequestMethod.GET)
+	@RequestMapping(path = "/check", method = RequestMethod.GET)
 	public String deleteCheck(Model model) {
 		// 該当データを取得
 		PromotionsForm deleteform = (PromotionsForm) session.getAttribute("deleteform");
