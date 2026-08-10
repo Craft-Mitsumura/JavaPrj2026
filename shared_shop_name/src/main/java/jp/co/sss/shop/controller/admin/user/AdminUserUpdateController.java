@@ -107,6 +107,13 @@ public class AdminUserUpdateController {
 			model.addAttribute("org.springframework.validation.BindingResult.userForm", result);
 			session.removeAttribute("result");
 		}
+		
+		String authErrorMessage = (String) session.getAttribute("authErrorMessage");
+		if (authErrorMessage != null) {
+			// セッションにエラーメッセージがある場合、エラーメッセージを画面表示設定
+			model.addAttribute("authErrorMessage", authErrorMessage);
+			session.removeAttribute("authErrorMessage");
+		}
 
 		// 変更入力画面 表示
 		return "admin/user/update_input";
@@ -149,8 +156,9 @@ public class AdminUserUpdateController {
 
 			// 重複が存在し、かつ現在のユーザではない場合、エラー
 			if (duplicateUser.isPresent() && !Objects.equals(duplicateUser.get().getId(), lastUserForm.getId())) {
-				model.addAttribute("authErrorMessage", "入力されたメールアドレスは同じ権限で既に登録されています。");
-				result.rejectValue("email", "error.email");
+				String errorMessage = "入力されたメールアドレスは同じ権限で既に登録されています。";
+				session.setAttribute("authErrorMessage", errorMessage);
+				result.rejectValue("email", "error.email", errorMessage);
 			}
 		}
 
