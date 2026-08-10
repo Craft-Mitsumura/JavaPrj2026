@@ -51,7 +51,7 @@
 				</form>
 
 				<!-- 一覧画面（または戻る）フォーム -->
-				<form th:action="@{/admin/ad/list}" method="get">
+				<form th:action="@{/admin/ad/details/{id}(id=*{id})}" method="get" th:object="${deleteform}">
 					<input type="submit" value="戻る" class="back_button" />
 				</form>
 			</div>

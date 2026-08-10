@@ -102,8 +102,8 @@ public class AdminPrizeUpdateController {
 		long maxSize = 1024 * 1024; // 1MB
 
 		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
-			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-			return "redirect:/admin/ad/update/input";
+		    model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+		    return "redirect:/admin/prize/update/input";
 		}
 
 		// 画像アップロード
