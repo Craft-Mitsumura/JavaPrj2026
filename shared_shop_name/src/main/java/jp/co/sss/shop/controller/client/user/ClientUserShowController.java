@@ -146,7 +146,9 @@ public class ClientUserShowController {
 	        @Valid @ModelAttribute("userForm") UserBean userBean,
 	        BindingResult result,
 	        Model model,
-	        HttpSession session) {
+	        HttpSession session
+	        
+	        ) {
 
 	    // バリデーションエラーがあるかどうか
 	    boolean hasError = result.hasErrors();

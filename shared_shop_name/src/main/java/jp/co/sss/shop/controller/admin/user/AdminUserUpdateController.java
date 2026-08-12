@@ -132,7 +132,10 @@ public class AdminUserUpdateController {
 	public String updateInputCheck(@Valid @ModelAttribute UserForm form, BindingResult result,
 
 			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "authority", required = true) Integer authority, Model model) {
+			@RequestParam(value = "authority", required = false)Integer authority, Model model
+		
+			
+			) {
 
 		// 直前のセッション情報を取得
 		UserForm lastUserForm = (UserForm) session.getAttribute("userForm");
@@ -140,7 +143,8 @@ public class AdminUserUpdateController {
 			// セッション情報が無い場合、エラー
 			return "redirect:/syserror";
 		}
-
+		
+        
 		// 権限情報がない場合（読み取り専用表示の場合）、セッション情報から値をセット
 		if (form.getAuthority() == null) {
 			form.setAuthority(lastUserForm.getAuthority());
