@@ -160,10 +160,19 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping(path = "/client/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(
+<<<<<<< HEAD
+	        @Valid @ModelAttribute("userForm") UserBean userBean,
+	        BindingResult result,
+	        Model model,
+	        HttpSession session
+	        
+	        ) {
+=======
 			@Valid @ModelAttribute("userForm") UserBean userBean,
 			BindingResult result,
 			Model model,
 			HttpSession session) {
+>>>>>>> 575d3f9461136ab5a062a48a8211df82cd6a4db6
 
 		// バリデーションエラーがあるかどうか
 		boolean hasError = result.hasErrors();

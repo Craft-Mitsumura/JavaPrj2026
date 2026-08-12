@@ -72,7 +72,7 @@ public class UserForm implements Serializable {
 	/**
 	 * 権限
 	 */
-	@NotNull(message = "権限は必須です")
+
 	private Integer authority;
 
 	
