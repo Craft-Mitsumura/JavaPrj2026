@@ -55,6 +55,7 @@ public class ClientUserShowController {
 	ClientUserShowController(MailService mailService) {
 		this.mailService = mailService;
 	}
+
 	/**
 	 * 会員情報詳細画面
 	 * @param model リクエストスコープ
@@ -111,21 +112,37 @@ public class ClientUserShowController {
 	}
 
 	/**
+	 * 会員情報登録入力画面 初期化処理
+	 * 
+	 * @author 金城
+	 * @param session セッションスコープ
+	 * @return "redirect:/client/user/regist/input" 入力画面へのリダイレクト
+	 */
+	@RequestMapping(path = "/client/user/regist/input/init", method =  RequestMethod.POST )
+	public String registInputInit(HttpSession session) {
+
+		// メニューなど新しく会員登録へ入ってきたときに古い入力セッションを破棄
+		session.removeAttribute("registUser");
+
+		// 登録入力画面のGET表示処理へリダイレクト
+		return "redirect:/client/user/regist/input";
+	}
+
+	/**
 	 * 会員情報登録入力画面
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @return client/user/regist_input 会員情報登録入力画面を表示
 	 */
 	@RequestMapping("/client/user/regist/input")
-	public String registInput(Model model ,
-		HttpSession session	) {
+	public String registInput(Model model,
+			HttpSession session) {
 
 		// 入力フォーム用の会員情報を作成
 		UserBean userBean = (UserBean) session.getAttribute("registUser");
-		if(userBean == null) {
+		if (userBean == null) {
 			userBean = new UserBean();
 		}
-		
 
 		model.addAttribute("userForm", userBean);
 
@@ -143,51 +160,59 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping(path = "/client/user/regist/check", method = RequestMethod.POST)
 	public String registCheck(
+<<<<<<< HEAD
 	        @Valid @ModelAttribute("userForm") UserBean userBean,
 	        BindingResult result,
 	        Model model,
 	        HttpSession session
 	        
 	        ) {
+=======
+			@Valid @ModelAttribute("userForm") UserBean userBean,
+			BindingResult result,
+			Model model,
+			HttpSession session) {
+>>>>>>> 575d3f9461136ab5a062a48a8211df82cd6a4db6
 
-	    // バリデーションエラーがあるかどうか
-	    boolean hasError = result.hasErrors();
+		// バリデーションエラーがあるかどうか
+		boolean hasError = result.hasErrors();
 
-	    // メールアドレス重複チェック（論理削除済みも含む）
-	    User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+		// メールアドレス重複チェック（論理削除済みも含む）
+		User duplicateUser = userRepository.findByEmail(userBean.getEmail());
 
-	    if (duplicateUser != null) {
+		if (duplicateUser != null) {
 
-	        // 現役会員ならエラー
-	        if (duplicateUser.getDeleteFlag() == 0) {
-	            result.rejectValue("email", "msg.regist.email.duplicate");
-	            hasError = true;
-	        }
+			// 現役会員ならエラー
+			if (duplicateUser.getDeleteFlag() == 0) {
+				result.rejectValue("email", "msg.regist.email.duplicate");
+				hasError = true;
+			}
 
-	        // 退会済み会員ならIDを引き継ぐ
-	        if (duplicateUser.getDeleteFlag() == 1) {
-	            userBean.setId(duplicateUser.getId());
-	        }
+			// 退会済み会員ならIDを引き継ぐ
+			if (duplicateUser.getDeleteFlag() == 1) {
+				userBean.setId(duplicateUser.getId());
+			}
 
-	    } else {
-	        // 完全新規
-	        userBean.setId(null);
-	    }
+		} else {
+			// 完全新規
+			userBean.setId(null);
+		}
 
-	    // エラーが1つでもあれば入力画面へ戻る
-	    if (hasError) {
-	        return "client/user/regist_input";
-	    }
+		// エラーが1つでもあれば入力画面へ戻る
+		if (hasError) {
+			return "client/user/regist_input";
+		}
 
-	    // 登録する会員情報をセッションに保存
-	    session.setAttribute("registUser", userBean);
+		// 登録する会員情報をセッションに保存
+		session.setAttribute("registUser", userBean);
 
-	    // 確認画面へ渡す
-	    model.addAttribute("userForm", userBean);
+		// 確認画面へ渡す
+		model.addAttribute("userForm", userBean);
 
-	    // 確認画面へ
-	    return "client/user/regist_check";
+		// 確認画面へ
+		return "client/user/regist_check";
 	}
+
 	/**
 	 * 会員情報登録完了処理（新規追加 ＆ 既存データの復活UPDATE対応版）
 	 * @author 手塚
@@ -236,12 +261,12 @@ public class ClientUserShowController {
 		// 会員登録完了画面へ遷移
 		return "redirect:/client/user/regist/complete";
 	}
-	
+
 	@GetMapping("/client/user/regist/complete")
 	public String completePage() {
-	    return "client/user/regist_complete";
+		return "client/user/regist_complete";
 	}
-	
+
 	/**
 	 * 会員情報編集画面
 	 * @author 手塚
@@ -257,7 +282,7 @@ public class ClientUserShowController {
 
 		// 各項目をセット
 		userBean.setEmail(pastUser.getEmail());
-		userBean.setPassword(pastUser.getPassword()); 
+		userBean.setPassword(pastUser.getPassword());
 		userBean.setName(pastUser.getName());
 		userBean.setPostalCode(pastUser.getPostalCode());
 		userBean.setAddress(pastUser.getAddress());
@@ -287,8 +312,8 @@ public class ClientUserShowController {
 			@RequestParam(value = "oldPassword", required = false) String oldPassword,
 			@RequestParam(value = "newEmail", required = true) String newEmail,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
-			@RequestParam(value= "postalCode", required = true) String postalCode,
-			@RequestParam(value="name", required = true) String name,
+			@RequestParam(value = "postalCode", required = true) String postalCode,
+			@RequestParam(value = "name", required = true) String name,
 			Model model,
 			HttpSession session) {
 
@@ -297,20 +322,17 @@ public class ClientUserShowController {
 
 		boolean hasError = false;
 
-		
-		
-		
 		// 旧メールアドレスと旧パスワードの未入力チェック
 		if (oldEmail == null || oldEmail.trim().isEmpty()) {
 			model.addAttribute("oldEmailErrorMessage", "メールアドレスを入力してください。");
 			hasError = true;
 		}
-		
-		if(name == null || name.trim().isEmpty()) {
-			model.addAttribute("nameErrorMessage", "名前は必須項目です。");
+
+		if (name == null || name.trim().isEmpty()) {
+			model.addAttribute("nameErrorMessage", "氏名は必須項目です。");
 			hasError = true;
 		}
-		 
+
 		if (newPassword == null || newPassword.trim().isEmpty()) {
 			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
 			hasError = true;
@@ -323,13 +345,13 @@ public class ClientUserShowController {
 			model.addAttribute("oldPasswordErrorMessage", "パスワードを入力してください。");
 			hasError = true;
 		}
-		if(postalCode == null || postalCode.trim().isEmpty() ) {
+		if (postalCode == null || postalCode.trim().isEmpty()) {
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
 			hasError = true;
-		}else if(!postalCode.matches("^\\d{7}$")) {
+		} else if (!postalCode.matches("^\\d{7}$")) {
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
 			hasError = true;
-		}else if(postalCode.length() != 7) {
+		} else if (postalCode.length() != 7) {
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は7文字で入力してください。。");
 			hasError = true;
 		}
@@ -337,13 +359,13 @@ public class ClientUserShowController {
 		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
 		if (newEmail != null && !newEmail.trim().isEmpty()) {
 
-		    // ★メールアドレス形式チェック
-		    if (!newEmail.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-		        model.addAttribute("newEmailErrorMessage", "メールアドレスの形式が正しくありません。");
-		        hasError = true;
-		    }
+			// ★メールアドレス形式チェック
+			if (!newEmail.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+				model.addAttribute("newEmailErrorMessage", "メールアドレスの形式が正しくありません。");
+				hasError = true;
+			}
 
-		    // ★形式が正しい場合だけ重複チェック
+			// ★形式が正しい場合だけ重複チェック
 			/*
 			 * if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser
 			 * = userRepository.findByEmail(newEmail);
@@ -351,65 +373,63 @@ public class ClientUserShowController {
 			 * if (duplicateUser != null) { model.addAttribute("authErrorMessage",
 			 * "入力された新しいメールアドレスは既に登録されています。"); hasError = true; } }
 			 */
-		    
-		 // ★形式が正しい場合だけ重複チェック
-		    if(!hasError && !newEmail.equals(pastUser.getEmail())) {
-		    	User duplicateUser = userRepository.findByEmail(newEmail);
-		    	int authority = 2; // 一般会員の権限値
-		        
-		    	if(duplicateUser == null) {
-		    		
-		    		hasError =false;
-		    	}
-		    	else
-		         if( duplicateUser.getAuthority() == authority   ) {
-		        	 model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
-		             hasError = true;
-		         }
-		    
-		    } 
+
+			// ★形式が正しい場合だけ重複チェック
+			if (!hasError && !newEmail.equals(pastUser.getEmail())) {
+				User duplicateUser = userRepository.findByEmail(newEmail);
+				int authority = 2; // 一般会員の権限値
+
+				if (duplicateUser == null) {
+
+					hasError = false;
+				} else if (duplicateUser.getAuthority() == authority) {
+					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
+					hasError = true;
+				}
+
+			}
 			userBean.setEmail(newEmail);
 		} else {
-			userBean.setEmail(pastUser.getEmail()); 
+			userBean.setEmail(pastUser.getEmail());
 		}
 
 		// 新しいパスワードが入力されていたら上書き、空欄なら元のパスワードをそのまま引き継ぐ
 		if (newPassword != null && !newPassword.trim().isEmpty()) {
 
-		    // 8～16文字チェック
-		    if (newPassword.length() < 8 || newPassword.length() > 16) {
-		        model.addAttribute("newPasswordErrorMessage",
-		                "パスワードは8～16文字で入力してください。");
-		        hasError = true;
-		    }
+			// 8～16文字チェック
+			if (newPassword.length() < 8 || newPassword.length() > 16) {
+				model.addAttribute("newPasswordErrorMessage",
+						"パスワードは8～16文字で入力してください。");
+				hasError = true;
+			}
 
-		    userBean.setPassword(newPassword);
+			userBean.setPassword(newPassword);
 
 		} else {
-		    userBean.setPassword(pastUser.getPassword());
+			userBean.setPassword(pastUser.getPassword());
 		}
 
 		// 旧メールアドレスと旧パスワードの確認
 		if (!hasError) {
 
-		    if (!oldEmail.equals(pastUser.getEmail())) {
-		        model.addAttribute("oldEmailErrorMessage",
-		                "登録されているメールアドレスと一致しません。");
-		        hasError = true;
-		    }
+			if (!oldEmail.equals(pastUser.getEmail())) {
+				model.addAttribute("oldEmailErrorMessage",
+						"登録されているメールアドレスと一致しません。");
+				hasError = true;
+			}
 
-		    if (!oldPassword.equals(pastUser.getPassword())) {
-		        model.addAttribute("oldPasswordErrorMessage",
-		                "登録されているパスワードと一致しません。");
-		        hasError = true;
-		    }
+			if (!oldPassword.equals(pastUser.getPassword())) {
+				model.addAttribute("oldPasswordErrorMessage",
+						"登録されているパスワードと一致しません。");
+				hasError = true;
+			}
 		}
 		// 名前、郵便番号、住所、電話番号の個別必須チェック
 		if (userBean.getName() == null || userBean.getName().trim().isEmpty()) {
 			result.rejectValue("name", "msg.regist.input");
 			hasError = true;
 		}
-		
+
 		if (userBean.getPostalCode() == null || userBean.getPostalCode().trim().isEmpty()) {
 			result.rejectValue("postalCode", "msg.regist.input");
 			hasError = true;
@@ -436,7 +456,7 @@ public class ClientUserShowController {
 		session.setAttribute("updateUser", userBean);
 		model.addAttribute("userForm", userBean);
 		System.out.println("postalCode = " + postalCode);
-		
+
 		return "client/user/update_check";
 	}
 
@@ -536,45 +556,43 @@ public class ClientUserShowController {
 	 */
 	@RequestMapping(path = "/client/user/delete/complete", method = RequestMethod.GET)
 	public String deleteCompleteInit(HttpSession session) {
-		
+
 		// 画面表示時に安全にセッションを無効化（ログアウト）
 		session.invalidate();
- 
+
 		return "client/user/delete_complete";
 	}
-	
 
-    /**
-     * お問い合わせフォーム表示
-     * @author sagar
-     * 
-     * @return
-     */
-	    @GetMapping("/client/review/form")
-	    public String showReviewForm() {
-	    
-	        return "client/review/reviewForm";
-	    }
-/**
- * お問い合わせフォーム送信処理
- * @param name お客様の名前
- * @param email お客様のメールアドレス
- * @param subject お問い合わせの件名
- * @param message お問い合わせの内容
- * @return リダイレクト先のURL
- */
-	    @PostMapping("/client/review/input")
-	    public String review(
-	            @RequestParam String name,
-	            @RequestParam String email,
-	            @RequestParam String subject,
-	            @RequestParam String message
-	           ) {
+	/**
+	 * お問い合わせフォーム表示
+	 * @author sagar
+	 * 
+	 * @return
+	 */
+	@GetMapping("/client/review/form")
+	public String showReviewForm() {
 
-	        mailService.sendMail(name, email, subject , message);
-      
-	        return "redirect:/";
-	    }
-	    
+		return "client/review/reviewForm";
 	}
-	
+
+	/**
+	 * お問い合わせフォーム送信処理
+	 * @param name お客様の名前
+	 * @param email お客様のメールアドレス
+	 * @param subject お問い合わせの件名
+	 * @param message お問い合わせの内容
+	 * @return リダイレクト先のURL
+	 */
+	@PostMapping("/client/review/input")
+	public String review(
+			@RequestParam String name,
+			@RequestParam String email,
+			@RequestParam String subject,
+			@RequestParam String message) {
+
+		mailService.sendMail(name, email, subject, message);
+
+		return "redirect:/";
+	}
+
+}

@@ -184,9 +184,11 @@
 
 			<div class="guest-buttons" th:if="${session.user==null}">
 
-				<a class="login-btn" th:href="@{/login}" th:text="#{login}"> </a> <a
-					class="signup-btn" th:href="@{/client/user/regist/input}"
-					th:text="#{client.regist}"> </a>
+				<a class="login-btn" th:href="@{/login}" th:text="#{login}"> </a>
+				<!-- 新規登録ボタンをPOSTでセッションクリア用の初期化パスへ飛ばす -->
+				<form th:action="@{/client/user/regist/input/init}" method="post" style="display: inline;">
+					<button type="submit" class="signup-btn" th:text="#{client.regist}"></button>
+				</form>
 
 			</div>
 
