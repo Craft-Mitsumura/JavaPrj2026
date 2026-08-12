@@ -13,33 +13,27 @@
 		<p th:class="input_message" th:text="#{msg.regist.input}"></p>
 		<div class="user_info_form_area">
 			<form th:action="@{/admin/user/regist/check}" method="post" class="user_info_form" th:object="${userForm}">
-				<!-- ▼ エラーの順序をコントロールする -->
-				<th:block th:if="${#fields.hasErrors()}">
-					<ul class="error_list">
-						<!-- 1. フィールドに紐づかないエラーを表示 -->
-						<li th:each="err : ${#fields.globalDetailedErrors()}" th:text="${err.message}"></li>
-						<!-- 2. 各フィールドのエラーを指定順に表示 -->
-						<li th:each="err : ${#fields.detailedErrors('email')}" th:text="${err.message}"></li>
-						<li th:each="err : ${#fields.detailedErrors('password')}" th:text="${err.message}"></li>
-						<li th:each="err : ${#fields.detailedErrors('name')}" th:text="${err.message}"></li>
-						<li th:each="err : ${#fields.detailedErrors('postalCode')}" th:text="${err.message}"></li>
-						<li th:each="err : ${#fields.detailedErrors('address')}" th:text="${err.message}"></li>
-						<li th:each="err : ${#fields.detailedErrors('phoneNumber')}" th:text="${err.message}"></li>
-						<li th:each="err : ${#fields.detailedErrors('authority')}" th:text="${err.message}"></li>
-
+				<!-- エラーメッセージ表示エリア -->
+				<th:block th:if="${errorMessages != null and !errorMessages.isEmpty()}">
+					<ul class="error_list" style="color: red;  padding: 15px; margin-bottom: 15px;">
+						<li th:if="${errorMessages.containsKey('email')}" th:text="${errorMessages.get('email')}"></li>
+						<li th:if="${errorMessages.containsKey('password')}" th:text="${errorMessages.get('password')}"></li>
+						<li th:if="${errorMessages.containsKey('name')}" th:text="${errorMessages.get('name')}"></li>
+						<li th:if="${errorMessages.containsKey('postalCode')}" th:text="${errorMessages.get('postalCode')}"></li>
+						<li th:if="${errorMessages.containsKey('address')}" th:text="${errorMessages.get('address')}"></li>
+						<li th:if="${errorMessages.containsKey('phoneNumber')}" th:text="${errorMessages.get('phoneNumber')}"></li>
 					</ul>
-					<br />
 				</th:block>
-				<!-- ▲ ここまで -->
-				<ul class="input_list">
+				
+				<ul  class="input_list">
 					<li>
 						<label><span class="input_title">[[#{userForm.email}]]</span></label>
-
 						<input type="text" th:field="*{email}" />
 					</li>
+					
 					<li>
 						<label><span class="input_title">[[#{userForm.password}]]</span></label>
-						<input type="password" th:field="*{password}" />
+						<input type="password" name="password"  th:field="*{password}" />
 					</li>
 					<li>
 						<label><span class="input_title">[[#{userForm.name}]]</span></label>
