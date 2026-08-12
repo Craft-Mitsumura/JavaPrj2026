@@ -132,7 +132,8 @@ public class AdminUserUpdateController {
 	public String updateInputCheck(@Valid @ModelAttribute UserForm form, BindingResult result,
 
 			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "authority", required = false)Integer authority, Model model
+			@RequestParam(value = "authority", required = false)Integer authority, Model model ,
+			@RequestParam(value="password", required=false) String password
 		
 			
 			) {
@@ -150,6 +151,10 @@ public class AdminUserUpdateController {
 			form.setAuthority(lastUserForm.getAuthority());
 		}
 
+		if(form.getPassword()== null) {
+			form.setPassword(lastUserForm.getPassword());
+		}
+		
 		// メールアドレスが変更された場合、または権限が変更された場合、重複チェック
 		boolean emailChanged = !Objects.equals(email, lastUserForm.getEmail());
 		boolean authorityChanged = !Objects.equals(form.getAuthority(), lastUserForm.getAuthority());
