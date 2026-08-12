@@ -23,6 +23,7 @@
 					<ul class="error_list">
 						<li th:each="err:${#fields.detailedErrors()}"
 							th:text="${err.message}">
+							
 						</li>
 					</ul>
 				</th:block>
