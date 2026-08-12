@@ -3,6 +3,9 @@ package jp.co.sss.shop.controller.admin.user;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
@@ -86,6 +90,14 @@ public class AdminUserRegistController {
 			session.removeAttribute("result");
 		}
 
+		// カスタムエラー情報をセッションから取得してモデルに追加
+		@SuppressWarnings("unchecked")
+		Map<String, String> errorMessages = (Map<String, String>) session.getAttribute("errorMessages");
+		if (errorMessages != null && !errorMessages.isEmpty()) {
+			model.addAttribute("errorMessages", errorMessages);
+			session.removeAttribute("errorMessages");
+		}
+
 		// 入力フォーム情報をスコープに設定
 		model.addAttribute("userForm", userForm);
 
@@ -97,42 +109,123 @@ public class AdminUserRegistController {
 	/**
 	 * 登録入力確認　処理
 	 *
-	 * @param form 入力フォーム
-	 * @param result 入力値チェックの結果
+	 * @param email メールアドレス
+	 * @param password パスワード
+	 * @param name 会員名
+	 * @param postalCode 郵便番号
+	 * @param address 住所
+	 * @param phoneNumber 電話番号
+	 * @param model Modelオブジェクト
 	 * @return 
-	 * 	入力値エラーあり："redirect:/admin/user/regist/input" 入力録画面　表示処理
+	 * 	入力値エラーあり："redirect:/admin/user/regist/input" 入力画面　表示処理
 	 * 	入力値エラーなし："redirect:/admin/user/regist/check" 登録確認画面　表示処理
 	 */
 	@RequestMapping(path = "/admin/user/regist/check", method = RequestMethod.POST)
-	public String registInputCheck(@Valid @ModelAttribute UserForm form, BindingResult result) {
-
-		//直前のセッション情報を取得
-		UserForm lastUserForm = (UserForm) session.getAttribute("userForm");
-		if (lastUserForm == null) {
+	public String Registcheck(
+			@RequestParam(value="email", required = false) String email,
+			@RequestParam(value="password", required = false) String password,
+			@RequestParam(value="name", required = false) String name,
+			@RequestParam(value="postalCode", required = false) String postalCode,
+			@RequestParam(value="address", required = false) String address,
+			@RequestParam(value="phoneNumber", required = false) String phoneNumber,
+			Model model
+	
+			){
+		
+		
+		boolean hasError = false;
+		Map<String, String> errorMessages = new HashMap<>();
+		UserForm lastUserForm =(UserForm) session.getAttribute("userForm");
+		
+		if(lastUserForm == null) {
 			// セッション情報が無い場合、エラー
 			return "redirect:/syserror";
 		}
-		if (form.getAuthority() == null) {
+		if(lastUserForm.getAuthority() == null) {
 			//権限情報がない場合、セッション情報から値をセット
-			form.setAuthority(lastUserForm.getAuthority());
+			lastUserForm.setAuthority(((UserBean) session.getAttribute("user")).getAuthority());
 		}
-
-		// 入力フォーム情報をセッションに保持
-		session.setAttribute("userForm", form);
-
-		if (result.hasErrors()) {
-			// 入力値にエラーがあった場合、エラー情報をセッションに保持
-			session.setAttribute("result", result);
-			// 登録入力画面　表示処理
+		
+		// ユーザー入力値をフォームに保存（バリデーション前に設定）
+		lastUserForm.setEmail(email);
+		lastUserForm.setPassword(password);
+		lastUserForm.setName(name);
+		lastUserForm.setPostalCode(postalCode);
+		lastUserForm.setAddress(address);
+		lastUserForm.setPhoneNumber(phoneNumber);
+		
+		// バリデーション処理開始
+		if(email == null || email.isEmpty()) {
+	 errorMessages.put("email", "メールアドレスは必須項目です。");
+	 
+      hasError = true;	 
+		}else if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+			errorMessages.put("email", "メールアドレスの形式が正しくありません。");
+			hasError = true;
+		}
+		
+		if(password == null || password.isEmpty()) {
+			errorMessages.put("password", "パスワードは必須項目です。");
+			hasError = true;
+		}else if(!password.matches("^[a-zA-Z0-9]+$")) {
+			errorMessages.put("password", "パスワードは半角英数字で入力してください。");
+			hasError = true;
+		}else if(password.length() < 8 || password.length() > 15) {
+			errorMessages.put("password", "パスワードは8文字以上15文字以内で入力してください。");
+			hasError = true;
+		}
+		
+		if(name == null || name.isEmpty()) {
+			errorMessages.put("name", "会員名は必須項目です。");
+			hasError = true;
+		}else if (name.length() > 15)  {
+			errorMessages.put("name", "会員名は15文字以内で入力してください。");
+			hasError = true;
+		}
+		if(postalCode == null || postalCode.isEmpty()) {
+			errorMessages.put("postalCode", "郵便番号は必須項目です。");
+			hasError = true;
+		}else if(!postalCode.matches("^[0-9]+$")) {
+			errorMessages.put("postalCode", "郵便番号は半角数字で入力してください。");
+			hasError = true;
+		}else if(postalCode.length() != 7) {
+			errorMessages.put("postalCode", "郵便番号は7桁で入力してください。");
+			hasError = true;
+		}
+		
+		if(address == null || address.isEmpty()) {
+			errorMessages.put("address", "住所は必須項目です。");
+			hasError = true;
+		}else if(address.length() > 150) {
+			errorMessages.put("address", "住所は150文字以内で入力してください。");
+			hasError = true;
+		}
+		
+		if(phoneNumber == null || phoneNumber.isEmpty()) {
+			errorMessages.put("phoneNumber", "電話番号は必須項目です。");
+			hasError = true;
+		}else if(!phoneNumber.matches("^[0-9]+$")) {
+			errorMessages.put("phoneNumber", "電話番号は半角数字で入力してください。");
+			hasError = true;
+		}
+		
+		if(hasError) {
+			// エラー情報をセッションに保存（redirect後も保持するため）
+			session.setAttribute("errorMessages", errorMessages);
+			// 入力フォーム情報をセッションに保持
+			session.setAttribute("userForm", lastUserForm);
+			// 登録入力画面 表示処理
 			return "redirect:/admin/user/regist/input";
 		}
-
-		// 登録確認画面　表示処理 
-		return "redirect:/admin/user/regist/check";
+		
+		// エラーがない場合、セッションに保存
+		session.setAttribute("userForm", lastUserForm);
+		
+		return"redirect:/admin/user/regist/check";
 	}
 
 	/**
-	 * 確認画面　表示処理
+	 * 確認画面　表示処理 
 	 *
 	 * @param model Viewとの値受渡し
 	 * @return "admin/user/regist_check" 確認画面　表示
