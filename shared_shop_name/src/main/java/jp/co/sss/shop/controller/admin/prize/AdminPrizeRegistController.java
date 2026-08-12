@@ -57,7 +57,7 @@ public class AdminPrizeRegistController {
 					"org.springframework.validation.BindingResult.prizeForm",
 					result);
 
-			session.removeAttribute("result");
+		//	session.removeAttribute("result");
 		}
 
 		model.addAttribute("prizeForm", prizeForm);
@@ -114,6 +114,7 @@ public class AdminPrizeRegistController {
 		model.addAttribute("prizeForm", prizeForm);
 
 		return "admin/prize/regist_check";
+		
 	}
 
 	// 登録処理
