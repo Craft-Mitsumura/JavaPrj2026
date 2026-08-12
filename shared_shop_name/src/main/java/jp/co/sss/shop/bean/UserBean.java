@@ -21,14 +21,14 @@ public class UserBean {
 	/**
 	 * 会員メールアドレス
 	 */
-	@NotBlank(message = "メールアドレスは必須入力です。")
+	@NotBlank(message = "メールアドレスは必須項目です。")
 	@Email(message = "メールアドレスは正しい形式で入力してください。")
 	private String email;
 
 	/**
 	 * パスワード
 	 */
-	@NotBlank(message = "パスワードは必須入力です。")
+	@NotBlank(message = "パスワードは必須項目です。")
 	@NotNull
 	@Size(min = 8, max = 16)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$")
