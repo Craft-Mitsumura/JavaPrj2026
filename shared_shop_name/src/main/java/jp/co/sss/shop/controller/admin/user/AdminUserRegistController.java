@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,7 +133,9 @@ public class AdminUserRegistController {
 	
 			){
 		
-		
+		int authority = ((UserBean) session.getAttribute("user")).getAuthority();
+	Optional<User> hasEmail =userRepository.findByEmailAndAuthority(email , authority);
+	
 		boolean hasError = false;
 		Map<String, String> errorMessages = new HashMap<>();
 		UserForm lastUserForm =(UserForm) session.getAttribute("userForm");
@@ -160,8 +163,12 @@ public class AdminUserRegistController {
 	 
       hasError = true;	 
 		}else if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-			errorMessages.put("email", "メールアドレスの形式が正しくありません。");
+			errorMessages.put("email", "メールアドレスは正しい形式で入力してください。");
 			hasError = true;
+		}else if(hasEmail.isPresent()) {
+			errorMessages.put("email", "このメールアドレスは既に登録されています。");
+			hasError = true;
+			
 		}
 		
 		if(password == null || password.isEmpty()) {
@@ -179,7 +186,7 @@ public class AdminUserRegistController {
 			errorMessages.put("name", "会員名は必須項目です。");
 			hasError = true;
 		}else if (name.length() > 15)  {
-			errorMessages.put("name", "会員名は15文字以内で入力してください。");
+			errorMessages.put("name", "氏名は15文字以内で入力してください。");
 			hasError = true;
 		}
 		if(postalCode == null || postalCode.isEmpty()) {
@@ -207,6 +214,9 @@ public class AdminUserRegistController {
 		}else if(!phoneNumber.matches("^[0-9]+$")) {
 			errorMessages.put("phoneNumber", "電話番号は半角数字で入力してください。");
 			hasError = true;
+		}else if(phoneNumber.length() < 10 || phoneNumber.length() > 11) {
+			errorMessages.put("phoneNumber", "電話番号は10文字以上11文字以内で入力してください。");
+			hasError = true;
 		}
 		
 		if(hasError) {
@@ -217,7 +227,7 @@ public class AdminUserRegistController {
 			// 登録入力画面 表示処理
 			return "redirect:/admin/user/regist/input";
 		}
-		
+	
 		// エラーがない場合、セッションに保存
 		session.setAttribute("userForm", lastUserForm);
 		
