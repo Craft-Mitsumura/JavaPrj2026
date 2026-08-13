@@ -289,21 +289,29 @@ public class ClientUserShowController {
 	public String updateInput(@ModelAttribute("userForm") UserBean userBean, Model model, HttpSession session) {
 
 		// ログイン中の会員情報を取得
+		UserBean updateUser = (UserBean) session.getAttribute("updateUser");
 		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
 
+		UserBean targetUser = (updateUser != null) ? updateUser : pastUser;
+
 		// 各項目をセット
-		userBean.setEmail(pastUser.getEmail());
-		userBean.setPassword(pastUser.getPassword());
-		userBean.setName(pastUser.getName());
-		userBean.setPostalCode(pastUser.getPostalCode());
-		userBean.setAddress(pastUser.getAddress());
-		userBean.setPhoneNumber(pastUser.getPhoneNumber());
-		userBean.setId(pastUser.getId());
-		userBean.setAuthority(pastUser.getAuthority());
-		userBean.setPoint(pastUser.getPoint());
+		userBean.setEmail(targetUser.getEmail());
+		userBean.setPassword(targetUser.getPassword());
+		userBean.setName(targetUser.getName());
+		userBean.setPostalCode(targetUser.getPostalCode());
+		userBean.setAddress(targetUser.getAddress());
+		userBean.setPhoneNumber(targetUser.getPhoneNumber());
+		userBean.setId(targetUser.getId());
+		userBean.setAuthority(targetUser.getAuthority());
+		userBean.setPoint(targetUser.getPoint());
 
 		if (!model.containsAttribute("oldEmail")) {
 			model.addAttribute("oldEmail", pastUser.getEmail());
+		}
+		if (!model.containsAttribute("newEmail")) {
+			// updateUser が存在する場合（確認画面から戻った等）は入力されたメールアドレス、なければ空文字
+			String newEmailValue = (updateUser != null) ? updateUser.getEmail() : "";
+			model.addAttribute("newEmail", newEmailValue);
 		}
 
 		// 編集画面へ遷移
