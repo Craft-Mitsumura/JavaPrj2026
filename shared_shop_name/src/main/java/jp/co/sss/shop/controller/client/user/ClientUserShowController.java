@@ -381,11 +381,6 @@ public class ClientUserShowController {
 				hasError = true;
 			}
 
-			//★形式が正しい場合だけ重複チェック
-			if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser= userRepository.findByEmail(newEmail);
-			 if (duplicateUser != null) { model.addAttribute("authErrorMessage",
-			 "入力された新しいメールアドレスは既に登録されています。"); hasError = true; } }
-
 			// ★形式が正しい場合だけ重複チェック
 			if (!hasError && !newEmail.equals(pastUser.getEmail())) {
 				User duplicateUser = userRepository.findByEmail(newEmail);
