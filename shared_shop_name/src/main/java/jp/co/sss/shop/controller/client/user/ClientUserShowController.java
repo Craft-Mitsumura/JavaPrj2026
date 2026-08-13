@@ -382,7 +382,7 @@ public class ClientUserShowController {
 			}
 
 			//★形式が正しい場合だけ重複チェック
-			if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser= userRepository.findByEmail(newEmail);
+			if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser= userRepository.findByEmailAndAuthority(newEmail, form.getAuthority());
 			 if (duplicateUser != null) { model.addAttribute("authErrorMessage",
 			 "入力された新しいメールアドレスは既に登録されています。"); hasError = true; } }
 
@@ -456,7 +456,7 @@ public class ClientUserShowController {
 			// 1．必須チェック
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
 			hasError = true;
-		} else if (!postalCode.matches("^[0-9]+$")) {
+		} else if (!postalCode.matches("^[a-zA-Z0-9]+$")) {
 			// 3．半角数字チェック（数字以外の文字が含まれている場合）
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
 			hasError = true;
@@ -489,7 +489,7 @@ public class ClientUserShowController {
 			// 1．必須チェック
 			model.addAttribute("phoneNumberErrorMessage", "電話番号は必須項目です。");
 			hasError = true;
-		} else if (!userBean.getPhoneNumber().matches("^[0-9]+$")) {
+		} else if (!userBean.getPhoneNumber().matches("^[a-zA-Z0-9]+$")) {
 			// 2．半角数字チェック（数字以外の文字が含まれている場合）
 			model.addAttribute("phoneNumberErrorMessage", "電話番号は半角数字で入力してください。");
 			hasError = true;
