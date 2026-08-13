@@ -58,14 +58,14 @@
 				</li>
 
 				<li>
-					<div th:if="${#fields.hasErrors('name')}" th:text="${postalCodeErrorMessage}"
+					<div th:if="${#fields.hasErrors('name')}" th:text="${nameErrorMessage}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					<label><span class="input_title" th:text="#{userForm.name}"></span></label>
 					<input type="text" th:field="*{name}" />
 				</li>
 				<li>
-					<div th:if="${#fields.hasErrors('postalCode')}" th:text="${nameErrorMessage}"
+					<div th:if="${#fields.hasErrors('postalCode')}" th:text="${postalCodeErrorMessage}"
 						style="color: red; font-size: 0.9em; font-weight: bold; display: block; margin-bottom: 4px;">
 					</div>
 					

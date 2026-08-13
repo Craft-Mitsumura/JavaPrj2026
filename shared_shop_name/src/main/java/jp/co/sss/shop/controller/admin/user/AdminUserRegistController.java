@@ -1,18 +1,16 @@
 package jp.co.sss.shop.controller.admin.user;
 
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -185,8 +183,8 @@ public class AdminUserRegistController {
 		if(name == null || name.isEmpty()) {
 			errorMessages.put("name", "会員名は必須項目です。");
 			hasError = true;
-		}else if (name.length() > 15)  {
-			errorMessages.put("name", "氏名は15文字以内で入力してください。");
+		}else if (name.length() > 30)  {
+			errorMessages.put("name", "氏名は30文字以内で入力してください。");
 			hasError = true;
 		}
 		if(postalCode == null || postalCode.isEmpty()) {

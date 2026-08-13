@@ -17,23 +17,27 @@
 				<th:block th:if="${errorMessages != null and !errorMessages.isEmpty()}">
 					<ul class="error_list" style="color: red;  padding: 15px; margin-bottom: 15px;">
 						<li th:if="${errorMessages.containsKey('email')}" th:text="${errorMessages.get('email')}"></li>
-						<li th:if="${errorMessages.containsKey('password')}" th:text="${errorMessages.get('password')}"></li>
+						<li th:if="${errorMessages.containsKey('password')}" th:text="${errorMessages.get('password')}">
+						</li>
 						<li th:if="${errorMessages.containsKey('name')}" th:text="${errorMessages.get('name')}"></li>
-						<li th:if="${errorMessages.containsKey('postalCode')}" th:text="${errorMessages.get('postalCode')}"></li>
-						<li th:if="${errorMessages.containsKey('address')}" th:text="${errorMessages.get('address')}"></li>
-						<li th:if="${errorMessages.containsKey('phoneNumber')}" th:text="${errorMessages.get('phoneNumber')}"></li>
+						<li th:if="${errorMessages.containsKey('postalCode')}"
+							th:text="${errorMessages.get('postalCode')}"></li>
+						<li th:if="${errorMessages.containsKey('address')}" th:text="${errorMessages.get('address')}">
+						</li>
+						<li th:if="${errorMessages.containsKey('phoneNumber')}"
+							th:text="${errorMessages.get('phoneNumber')}"></li>
 					</ul>
 				</th:block>
-				
-				<ul  class="input_list">
+
+				<ul class="input_list">
 					<li>
 						<label><span class="input_title">[[#{userForm.email}]]</span></label>
 						<input type="text" th:field="*{email}" />
 					</li>
-					
+
 					<li>
 						<label><span class="input_title">[[#{userForm.password}]]</span></label>
-						<input type="password" name="password"  th:field="*{password}" />
+						<input type="password" name="password" th:field="*{password}" />
 					</li>
 					<li>
 						<label><span class="input_title">[[#{userForm.name}]]</span></label>
