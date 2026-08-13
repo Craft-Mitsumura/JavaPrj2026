@@ -37,30 +37,30 @@ public class UserBean {
 	/**
 	 * 会員名
 	 */
-	@NotBlank(message = "会員名は必須入力です。")
-	@Size(min = 1, max = 15, message = "{text.maxsize.message}")
+	@NotBlank(message = "会員名は必須項目です。")
+	@Size(min = 1, max = 30, message = "{text.maxsize.message}")
 	private String	name;
 
 	
 	/**
 	 * 郵便番号
 	 */
-	@NotBlank(message = "郵便番号は必須入力です。")
-	@Size(min = 7, max = 7)
+	@NotBlank(message = "郵便番号は必須項目です。")
+	@Size(min = 7, max = 7, message = "{text.fixsize.message}")
 	@Pattern(regexp = "^[0-9]+$", message = "{userRegist.numberpattern.message}")
 	private String	postalCode;
 	
 	/**
 	 * 住所
 	 */
-	@NotBlank(message = "住所は必須入力です。")
+	@NotBlank(message = "住所は必須項目です。")
 	@Size(min = 1, max = 150, message = "{text.maxsize.message}")
 	private String	address;
 	
 	/**
 	 * 電話番号
 	 */
-	@NotBlank(message = "電話番号は必須入力です。")
+	@NotBlank(message = "電話番号は必須項目です。")
 	@Size(min = 10, max = 11)
 	@Pattern(regexp = "^[0-9]+$", message = "電話番号は半角で入力してください")
 	private String	phoneNumber;

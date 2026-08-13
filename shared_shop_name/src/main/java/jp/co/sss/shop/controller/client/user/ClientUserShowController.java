@@ -118,7 +118,7 @@ public class ClientUserShowController {
 	 * @param session セッションスコープ
 	 * @return "redirect:/client/user/regist/input" 入力画面へのリダイレクト
 	 */
-	@RequestMapping(path = "/client/user/regist/input/init", method =  RequestMethod.POST )
+	@RequestMapping(path = "/client/user/regist/input/init", method = RequestMethod.POST)
 	public String registInputInit(HttpSession session) {
 
 		// メニューなど新しく会員登録へ入ってきたときに古い入力セッションを破棄
@@ -159,13 +159,13 @@ public class ClientUserShowController {
 	 * @return client/user/regist_check 会員情報登録確認画面を表示
 	 */
 	@RequestMapping(path = "/client/user/regist/check", method = RequestMethod.POST)
-	public String registCheck(	     
+	public String registCheck(
 			@Valid @ModelAttribute("userForm") UserBean userBean,
-	        BindingResult result,
-	        Model model,
-	        HttpSession session
-	        
-	        ) {
+			BindingResult result,
+			Model model,
+			HttpSession session
+
+	) {
 
 		// バリデーションエラーがあるかどうか
 		boolean hasError = result.hasErrors();
@@ -261,7 +261,25 @@ public class ClientUserShowController {
 	}
 
 	/**
-	 * 会員情報編集画面
+	 * 会員情報変更画面 初期化処理(POST)
+	 * マイページ等から新しく変更画面へ入ってきたときに古い一時セッションを破棄する
+	 * 
+	 * @author 金城
+	 * @param session セッションスコープ
+	 * @return "redirect:/client/user/update/input" 変更入力画面へのリダイレクト
+	 */
+	@RequestMapping(path = "/client/user/update/input/init", method = RequestMethod.POST)
+	public String updateInputInit(HttpSession session) {
+
+		// マイページ等から新しく変更画面へ入ってきた場合は、古い編集用セッションを破棄
+		session.removeAttribute("updateUser");
+
+		// 変更入力画面のGET表示処理へリダイレクト
+		return "redirect:/client/user/update/input";
+	}
+
+	/**
+	 * 会員情報変更画面
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
@@ -283,6 +301,10 @@ public class ClientUserShowController {
 		userBean.setId(pastUser.getId());
 		userBean.setAuthority(pastUser.getAuthority());
 		userBean.setPoint(pastUser.getPoint());
+
+		if (!model.containsAttribute("oldEmail")) {
+			model.addAttribute("oldEmail", pastUser.getEmail());
+		}
 
 		// 編集画面へ遷移
 		return "client/user/update_input";
@@ -317,36 +339,29 @@ public class ClientUserShowController {
 
 		// 旧メールアドレスと旧パスワードの未入力チェック
 		if (oldEmail == null || oldEmail.trim().isEmpty()) {
-			model.addAttribute("oldEmailErrorMessage", "メールアドレスを入力してください。");
+			model.addAttribute("oldEmailErrorMessage", "メールアドレスは必須項目です。");
 			hasError = true;
 		}
 
-		if (name == null || name.trim().isEmpty()) {
-			model.addAttribute("nameErrorMessage", "氏名は必須項目です。");
-			hasError = true;
-		}
-
-		if (newPassword == null || newPassword.trim().isEmpty()) {
-			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
-			hasError = true;
-		}
-		if (newEmail == null || newEmail.trim().isEmpty()) {
-			model.addAttribute("newEmailErrorMessage", "新しいメールは必須項目です。");
-			hasError = true;
-		}
 		if (oldPassword == null || oldPassword.trim().isEmpty()) {
-			model.addAttribute("oldPasswordErrorMessage", "パスワードを入力してください。");
+			model.addAttribute("oldPasswordErrorMessage", "パスワードは必須項目です。");
 			hasError = true;
 		}
-		if (postalCode == null || postalCode.trim().isEmpty()) {
-			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
-			hasError = true;
-		} else if (!postalCode.matches("^\\d{7}$")) {
-			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
-			hasError = true;
-		} else if (postalCode.length() != 7) {
-			model.addAttribute("postalCodeErrorMessage", "郵便番号は7文字で入力してください。。");
-			hasError = true;
+
+		// 旧メールアドレスと旧パスワードの確認
+		if (!hasError) {
+
+			if (!oldEmail.equals(pastUser.getEmail())) {
+				model.addAttribute("oldEmailErrorMessage",
+						"登録されているメールアドレスと一致しません。");
+				hasError = true;
+			}
+
+			if (!oldPassword.equals(pastUser.getPassword())) {
+				model.addAttribute("oldPasswordErrorMessage",
+						"登録されているパスワードと一致しません。");
+				hasError = true;
+			}
 		}
 
 		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
@@ -402,37 +417,78 @@ public class ClientUserShowController {
 			userBean.setPassword(pastUser.getPassword());
 		}
 
-		// 旧メールアドレスと旧パスワードの確認
-		if (!hasError) {
-
-			if (!oldEmail.equals(pastUser.getEmail())) {
-				model.addAttribute("oldEmailErrorMessage",
-						"登録されているメールアドレスと一致しません。");
-				hasError = true;
-			}
-
-			if (!oldPassword.equals(pastUser.getPassword())) {
-				model.addAttribute("oldPasswordErrorMessage",
-						"登録されているパスワードと一致しません。");
-				hasError = true;
-			}
-		}
-		// 名前、郵便番号、住所、電話番号の個別必須チェック
-		if (userBean.getName() == null || userBean.getName().trim().isEmpty()) {
-			result.rejectValue("name", "msg.regist.input");
+		// ==========================================
+		// 氏名のバリデーション
+		// ==========================================
+		if (name == null || name.trim().isEmpty()) {
+			// 1．必須チェック
+			model.addAttribute("nameErrorMessage", "氏名は必須項目です。");
 			hasError = true;
+		} else if (name.length() > 30) {
+			// 2．文字数チェック（30文字超えの場合）
+			model.addAttribute("nameErrorMessage", "氏名は30文字以内で入力してください。");
+			hasError = true;
+		} else {
+			// すべてクリアした場合は、確実にBeanに正しい氏名をセットする
+			userBean.setName(name);
 		}
 
-		if (userBean.getPostalCode() == null || userBean.getPostalCode().trim().isEmpty()) {
-			result.rejectValue("postalCode", "msg.regist.input");
+		//		if (newPassword == null || newPassword.trim().isEmpty()) {
+		//			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
+		//			hasError = true;
+		//		}
+		//		if (newEmail == null || newEmail.trim().isEmpty()) {
+		//			model.addAttribute("newEmailErrorMessage", "新しいメールは必須項目です。");
+		//			hasError = true;
+		//		}
+
+		// ==========================================
+		// 郵便番号のバリデーション
+		// ==========================================
+		if (postalCode == null || postalCode.trim().isEmpty()) {
+			// 1．必須チェック
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
 			hasError = true;
+		} else if (!postalCode.matches("^[0-9]+$")) {
+			// 3．半角数字チェック（数字以外の文字が含まれている場合）
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
+			hasError = true;
+		} else if (postalCode.length() != 7) {
+			// 2．文字数チェック（7文字以外の場合）
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は7文字で入力してください。");
+			hasError = true;
+		} else {
+			// すべてクリアした場合は、確実にBeanに正しい郵便番号をセットする
+			userBean.setPostalCode(postalCode);
 		}
+
+		// ==========================================
+		// 住所のバリデーション
+		// ==========================================
 		if (userBean.getAddress() == null || userBean.getAddress().trim().isEmpty()) {
-			result.rejectValue("address", "msg.regist.input");
+			// 1．必須チェック
+			model.addAttribute("addressErrorMessage", "住所は必須項目です。");
+			hasError = true;
+		} else if (userBean.getAddress().length() > 150) {
+			// 2．文字数チェック（150文字超えの場合）
+			model.addAttribute("addressErrorMessage", "住所は150文字以内で入力してください。");
 			hasError = true;
 		}
+
+		// ==========================================
+		// 電話番号のバリデーション
+		// ==========================================
 		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().trim().isEmpty()) {
-			result.rejectValue("phoneNumber", "msg.regist.input");
+			// 1．必須チェック
+			model.addAttribute("phoneNumberErrorMessage", "電話番号は必須項目です。");
+			hasError = true;
+		} else if (!userBean.getPhoneNumber().matches("^[0-9]+$")) {
+			// 2．半角数字チェック（数字以外の文字が含まれている場合）
+			model.addAttribute("phoneNumberErrorMessage", "電話番号は半角数字で入力してください。");
+			hasError = true;
+		} else if (userBean.getPhoneNumber().length() < 10 || userBean.getPhoneNumber().length() > 11) {
+			// 3．桁数チェック（10文字未満、または11文字超えの場合）
+			model.addAttribute("phoneNumberErrorMessage", "電話番号は10文字以上11文字以内で入力してください。");
 			hasError = true;
 		}
 
