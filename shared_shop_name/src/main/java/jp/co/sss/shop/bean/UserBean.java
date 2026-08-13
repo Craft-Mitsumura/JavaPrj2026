@@ -62,7 +62,7 @@ public class UserBean {
 	 */
 	@NotBlank(message = "電話番号は必須項目です。")
 	@Size(min = 10, max = 11)
-	@Pattern(regexp = "^[0-9]+$", message = "電話番号は半角で入力してください")
+	@Pattern(regexp = "^[0-9]+$", message = "電話番号は半角数字で入力してください")
 	private String	phoneNumber;
 	/**
 	 * 権限
