@@ -173,7 +173,7 @@ public class AdminUserRegistController {
 			errorMessages.put("password", "パスワードは必須項目です。");
 			hasError = true;
 		}else if(!password.matches("^[a-zA-Z0-9]+$")) {
-			errorMessages.put("password", "パスワードは半角英数字で入力してください。");
+			errorMessages.put("password", "パスワードは正しい形式で入力してください。");
 			hasError = true;
 		}else if(password.length() < 8 || password.length() > 15) {
 			errorMessages.put("password", "パスワードは8文字以上15文字以内で入力してください。");

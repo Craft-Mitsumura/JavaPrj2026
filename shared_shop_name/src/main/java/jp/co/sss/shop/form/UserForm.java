@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -34,7 +35,10 @@ public class UserForm implements Serializable {
 	 * パスワード
 	 */
 	 
-	
+	@NotBlank(message = "パスワードは必須項目です。")
+	@NotNull
+	@Size(min = 8, max = 16)
+	@Pattern(regexp = "^[a-zA-Z0-9]+$",message = "パスワードは正しい形式で入力してください。")
 	private String	password;
 
 	/**
