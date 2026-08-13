@@ -23,6 +23,7 @@ import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.PrizeRepository;
 import jp.co.sss.shop.repository.UserRepository;
+import jp.co.sss.shop.service.MailService;
 
 /**
  * 会員情報詳細のコントローラクラス
@@ -30,7 +31,7 @@ import jp.co.sss.shop.repository.UserRepository;
  * @author Hirai Toshiki / 手塚
  */
 @Controller
-public class ClientUserShowController {
+public class ClientUserShowControllerOriginal {
 
 	private final MailService mailService;
 	/**
@@ -51,9 +52,10 @@ public class ClientUserShowController {
 	@Autowired
 	OrderRepository orderRepository;
 
-	ClientUserShowController(MailService mailService) {
+	ClientUserShowControllerOriginal(MailService mailService) {
 		this.mailService = mailService;
 	}
+
 	/**
 	 * 会員情報詳細画面
 	 * @param model リクエストスコープ
@@ -110,18 +112,38 @@ public class ClientUserShowController {
 	}
 
 	/**
+	 * 会員情報登録入力画面 初期化処理
+	 * 
+	 * @author 金城
+	 * @param session セッションスコープ
+	 * @return "redirect:/client/user/regist/input" 入力画面へのリダイレクト
+	 */
+	@RequestMapping(path = "/client/user/regist/input/init", method = RequestMethod.POST)
+	public String registInputInit(HttpSession session) {
+
+		// メニューなど新しく会員登録へ入ってきたときに古い入力セッションを破棄
+		session.removeAttribute("registUser");
+
+		// 登録入力画面のGET表示処理へリダイレクト
+		return "redirect:/client/user/regist/input";
+	}
+
+	/**
 	 * 会員情報登録入力画面
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @return client/user/regist_input 会員情報登録入力画面を表示
 	 */
-	@RequestMapping("/client/user/regist/input/init")
-	public String registInput(Model model) {
+	@RequestMapping("/client/user/regist/input")
+	public String registInput(Model model,
+			HttpSession session) {
 
 		// 入力フォーム用の会員情報を作成
-		UserBean userBean = new UserBean();
+		UserBean userBean = (UserBean) session.getAttribute("registUser");
+		if (userBean == null) {
+			userBean = new UserBean();
+		}
 
-		// リクエストスコープに保存 
 		model.addAttribute("userForm", userBean);
 
 		// 会員登録入力画面へ遷移
@@ -141,31 +163,37 @@ public class ClientUserShowController {
 			@Valid @ModelAttribute("userForm") UserBean userBean,
 			BindingResult result,
 			Model model,
-			HttpSession session) {
+			HttpSession session
 
-		// 必須項目が未入力のとき
-		if (result.hasErrors()) {
-			return "client/user/regist_input";
-		}
-		
-		// 1. 現役会員(delete_flag=0)の中に同じメールアドレスがいるか重複チェック
-		User activeUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 0);
+	) {
 
-		if (activeUser != null) {
-			// 現役会員が存在する場合は、完全に重複しているためエラー
-			result.rejectValue("email", "msg.regist.email.duplicate");
-			return "client/user/regist_input";
-		}
+		// バリデーションエラーがあるかどうか
+		boolean hasError = result.hasErrors();
 
-		// 2. 退会済み会員(delete_flag=1)の中に同じメールアドレスがいるかチェック
-		User deletedUser = userRepository.findByEmailAndDeleteFlag(userBean.getEmail(), 1);
+		// メールアドレス重複チェック（論理削除済みも含む）
+		User duplicateUser = userRepository.findByEmail(userBean.getEmail());
 
-		if (deletedUser != null) {
-			// 退会済み会員が見つかった場合、そのIDをBeanに退避させておく（復活処理の目印になります）
-			userBean.setId(deletedUser.getId());
+		if (duplicateUser != null) {
+
+			// 現役会員ならエラー
+			if (duplicateUser.getDeleteFlag() == 0) {
+				result.rejectValue("email", "msg.regist.email.duplicate");
+				hasError = true;
+			}
+
+			// 退会済み会員ならIDを引き継ぐ
+			if (duplicateUser.getDeleteFlag() == 1) {
+				userBean.setId(duplicateUser.getId());
+			}
+
 		} else {
-			// 完全にご新規さんの場合は、IDを明確にnullにしておく
+			// 完全新規
 			userBean.setId(null);
+		}
+
+		// エラーが1つでもあれば入力画面へ戻る
+		if (hasError) {
+			return "client/user/regist_input";
 		}
 
 		// 登録する会員情報をセッションに保存
@@ -174,7 +202,7 @@ public class ClientUserShowController {
 		// 確認画面へ渡す
 		model.addAttribute("userForm", userBean);
 
-		// 会員登録確認画面へ遷移
+		// 確認画面へ
 		return "client/user/regist_check";
 	}
 
@@ -192,9 +220,9 @@ public class ClientUserShowController {
 
 		User user;
 
-		// セッションのBeanにIDが入っているかで、新規INSERTか復活UPDATEかを自動分岐
+		// セッションのBeanにIDが入っているかで、新規か再登録かを自動分岐
 		if (userBean.getId() != null) {
-			// 既存の退会済みデータをデータベースから取得して上書き対象にする
+			// 既存の退会済みデータをデータベースから取得して上書き対象にする（再登録）
 			user = userRepository.findById(userBean.getId()).orElse(new User());
 		} else {
 			// 完全な新規エンティティを作成し、新規登録時のみ初期ポイントを付与
@@ -203,7 +231,7 @@ public class ClientUserShowController {
 			user.setPoint(0);
 		}
 
-		// 共通の項目設定（新規・更新どちらの場合も上書き）
+		// 上書き保存
 		user.setEmail(userBean.getEmail());
 		user.setPassword(userBean.getPassword());
 		user.setName(userBean.getName());
@@ -217,18 +245,41 @@ public class ClientUserShowController {
 		// 重要：削除フラグを 0 (未削除・現役) に戻する
 		user.setDeleteFlag(0);
 
-		// DBへ保存（idがある場合は自動UPDATE文、nullの場合はINSERT文が走ります）
+		// DBへ保存
 		userRepository.save(user);
 
 		// 登録情報をセッションから削除
 		session.removeAttribute("registUser");
 
 		// 会員登録完了画面へ遷移
+		return "redirect:/client/user/regist/complete";
+	}
+
+	@GetMapping("/client/user/regist/complete")
+	public String completePage() {
 		return "client/user/regist_complete";
 	}
-	
+
 	/**
-	 * 会員情報編集画面
+	 * 会員情報変更画面 初期化処理(POST)
+	 * マイページ等から新しく変更画面へ入ってきたときに古い一時セッションを破棄する
+	 * 
+	 * @author 金城
+	 * @param session セッションスコープ
+	 * @return "redirect:/client/user/update/input" 変更入力画面へのリダイレクト
+	 */
+	@RequestMapping(path = "/client/user/update/input/init", method = RequestMethod.POST)
+	public String updateInputInit(HttpSession session) {
+
+		// マイページ等から新しく変更画面へ入ってきた場合は、古い編集用セッションを破棄
+		session.removeAttribute("updateUser");
+
+		// 変更入力画面のGET表示処理へリダイレクト
+		return "redirect:/client/user/update/input";
+	}
+
+	/**
+	 * 会員情報変更画面
 	 * @author 手塚
 	 * @param model リクエストスコープ
 	 * @param session セッションスコープ
@@ -238,18 +289,30 @@ public class ClientUserShowController {
 	public String updateInput(@ModelAttribute("userForm") UserBean userBean, Model model, HttpSession session) {
 
 		// ログイン中の会員情報を取得
+		UserBean updateUser = (UserBean) session.getAttribute("updateUser");
 		UserBean pastUser = (UserBean) session.getAttribute("pastUser");
 
+		UserBean targetUser = (updateUser != null) ? updateUser : pastUser;
+
 		// 各項目をセット
-		userBean.setEmail(pastUser.getEmail());
-		userBean.setPassword(pastUser.getPassword()); 
-		userBean.setName(pastUser.getName());
-		userBean.setPostalCode(pastUser.getPostalCode());
-		userBean.setAddress(pastUser.getAddress());
-		userBean.setPhoneNumber(pastUser.getPhoneNumber());
-		userBean.setId(pastUser.getId());
-		userBean.setAuthority(pastUser.getAuthority());
-		userBean.setPoint(pastUser.getPoint());
+		userBean.setEmail(targetUser.getEmail());
+		userBean.setPassword(targetUser.getPassword());
+		userBean.setName(targetUser.getName());
+		userBean.setPostalCode(targetUser.getPostalCode());
+		userBean.setAddress(targetUser.getAddress());
+		userBean.setPhoneNumber(targetUser.getPhoneNumber());
+		userBean.setId(targetUser.getId());
+		userBean.setAuthority(targetUser.getAuthority());
+		userBean.setPoint(targetUser.getPoint());
+
+		if (!model.containsAttribute("oldEmail")) {
+			model.addAttribute("oldEmail", pastUser.getEmail());
+		}
+		if (!model.containsAttribute("newEmail")) {
+			// updateUser が存在する場合（確認画面から戻った等）は入力されたメールアドレス、なければ空文字
+			String newEmailValue = (updateUser != null) ? updateUser.getEmail() : "";
+			model.addAttribute("newEmail", newEmailValue);
+		}
 
 		// 編集画面へ遷移
 		return "client/user/update_input";
@@ -270,8 +333,10 @@ public class ClientUserShowController {
 			BindingResult result,
 			@RequestParam(value = "oldEmail", required = false) String oldEmail,
 			@RequestParam(value = "oldPassword", required = false) String oldPassword,
-			@RequestParam(value = "newEmail", required = false) String newEmail,
+			@RequestParam(value = "newEmail", required = true) String newEmail,
 			@RequestParam(value = "newPassword", required = false) String newPassword,
+			@RequestParam(value = "postalCode", required = true) String postalCode,
+			@RequestParam(value = "name", required = true) String name,
 			Model model,
 			HttpSession session) {
 
@@ -281,61 +346,151 @@ public class ClientUserShowController {
 		boolean hasError = false;
 
 		// 旧メールアドレスと旧パスワードの未入力チェック
-		if (oldEmail == null || oldEmail.trim().isEmpty()) {
-			model.addAttribute("oldEmailErrorMessage", "メールアドレスを入力してください。");
-			hasError = true;
-		}
-		if (oldPassword == null || oldPassword.trim().isEmpty()) {
-			model.addAttribute("oldPasswordErrorMessage", "パスワードを入力してください。");
+		if (oldEmail == null || oldEmail.isEmpty()) {
+			model.addAttribute("oldEmailErrorMessage", "メールアドレスは必須項目です。");
 			hasError = true;
 		}
 
-		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
-		if (newEmail != null && !newEmail.trim().isEmpty()) {
-			// 他の人が使っていないか重複チェック
-			if (!newEmail.equals(pastUser.getEmail())) {
-				// 【修正】退会済みデータを除外するため、現役会員(delete_flag=0)のみを対象に重複確認を行う
-				User duplicateUser = userRepository.findByEmailAndDeleteFlag(newEmail, 0);
-				if (duplicateUser != null) {
-					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
-					hasError = true;
-				}
-			}
-			userBean.setEmail(newEmail);
-		} else {
-			userBean.setEmail(pastUser.getEmail()); 
+		if (oldPassword == null || oldPassword.isEmpty()) {
+			model.addAttribute("oldPasswordErrorMessage", "パスワードは必須項目です。");
+			hasError = true;
 		}
 
-		// 新しいパスワードが入力されていたら上書き、空欄なら元のパスワードをそのまま引き継ぐ
-		if (newPassword != null && !newPassword.trim().isEmpty()) {
-			userBean.setPassword(newPassword);
-		} else {
-			userBean.setPassword(pastUser.getPassword()); 
-		}
-
-		// 旧メールアドレスと旧パスワードの本人確認
+		// 旧メールアドレスと旧パスワードの確認
 		if (!hasError) {
-			if (!oldEmail.equals(pastUser.getEmail()) || !oldPassword.equals(pastUser.getPassword())) {
-				model.addAttribute("authErrorMessage", "旧メールアドレスまたは旧パスワードが正しくありません。");
+
+			if (!oldEmail.equals(pastUser.getEmail())) {
+				model.addAttribute("oldEmailErrorMessage",
+						"登録されているメールアドレスと一致しません。");
+				hasError = true;
+			}
+
+			if (!oldPassword.equals(pastUser.getPassword())) {
+				model.addAttribute("oldPasswordErrorMessage",
+						"登録されているパスワードと一致しません。");
 				hasError = true;
 			}
 		}
 
-		// 名前、郵便番号、住所、電話番号の個別必須チェック
-		if (userBean.getName() == null || userBean.getName().trim().isEmpty()) {
-			result.rejectValue("name", "msg.regist.input");
+		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
+		if (newEmail != null && !newEmail.isEmpty()) {
+
+			// ★メールアドレス形式チェック
+			if (!newEmail.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+				model.addAttribute("newEmailErrorMessage", "メールアドレスの形式が正しくありません。");
+				hasError = true;
+			}
+
+			// ★形式が正しい場合だけ重複チェック
+			if (!hasError && !newEmail.equals(pastUser.getEmail())) {
+				User duplicateUser = userRepository.findByEmail(newEmail);
+				int authority = 2; // 一般会員の権限値
+
+				if (duplicateUser == null) {
+
+					hasError = false;
+				} else if (duplicateUser.getAuthority() == authority) {
+					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
+					hasError = true;
+				}
+
+			}
+			userBean.setEmail(newEmail);
+		} else {
+			userBean.setEmail(pastUser.getEmail());
+		}
+
+		// 新しいパスワードが入力されていたら上書き、空欄なら元のパスワードをそのまま引き継ぐ
+		if (newPassword != null && !newPassword.isEmpty()) {
+
+			// 8～16文字チェック
+			if (newPassword.length() < 8 || newPassword.length() > 16) {
+				model.addAttribute("newPasswordErrorMessage",
+						"パスワードは8～16文字で入力してください。");
+				hasError = true;
+			} else if (!newPassword.matches("^[a-zA-Z0-9]+$")) {
+				model.addAttribute("newPasswordErrorMessage", "パスワードは正しい形式で入力してください。");
+				hasError = true;
+			}
+
+			userBean.setPassword(newPassword);
+
+		} else {
+			userBean.setPassword(pastUser.getPassword());
+		}
+
+		// ==========================================
+		// 氏名のバリデーション
+		// ==========================================
+		if (name == null || name.isEmpty()) {
+			// 1．必須チェック
+			model.addAttribute("nameErrorMessage", "氏名は必須項目です。");
+			hasError = true;
+		} else if (name.length() > 30) {
+			// 2．文字数チェック（30文字超えの場合）
+			model.addAttribute("nameErrorMessage", "氏名は30文字以内で入力してください。");
+			hasError = true;
+		} else {
+			// すべてクリアした場合は、確実にBeanに正しい氏名をセットする
+			userBean.setName(name);
+		}
+
+		//		if (newPassword == null || newPassword.trim().isEmpty()) {
+		//			model.addAttribute("newPasswordErrorMessage", "パスワードは必須項目です。");
+		//			hasError = true;
+		//		}
+		//		if (newEmail == null || newEmail.trim().isEmpty()) {
+		//			model.addAttribute("newEmailErrorMessage", "新しいメールは必須項目です。");
+		//			hasError = true;
+		//		}
+
+		// ==========================================
+		// 郵便番号のバリデーション
+		// ==========================================
+		if (postalCode == null || postalCode.isEmpty()) {
+			// 1．必須チェック
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
+			hasError = true;
+		} else if (!postalCode.matches("^[0-9]+$")) {
+			// 3．半角数字チェック（数字以外の文字が含まれている場合）
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は半角数字で入力してください。");
+			hasError = true;
+		} else if (postalCode.length() != 7) {
+			// 2．文字数チェック（7文字以外の場合）
+			model.addAttribute("postalCodeErrorMessage", "郵便番号は7文字で入力してください。");
+			hasError = true;
+		} else {
+			// すべてクリアした場合は、確実にBeanに正しい郵便番号をセットする
+			userBean.setPostalCode(postalCode);
+		}
+
+		// ==========================================
+		// 住所のバリデーション
+		// ==========================================
+		if (userBean.getAddress() == null || userBean.getAddress().isEmpty()) {
+			// 1．必須チェック
+			model.addAttribute("addressErrorMessage", "住所は必須項目です。");
+			hasError = true;
+		} else if (userBean.getAddress().length() > 150) {
+			// 2．文字数チェック（150文字超えの場合）
+			model.addAttribute("addressErrorMessage", "住所は150文字以内で入力してください。");
 			hasError = true;
 		}
-		if (userBean.getPostalCode() == null || userBean.getPostalCode().trim().isEmpty()) {
-			result.rejectValue("postalCode", "msg.regist.input");
+
+		// ==========================================
+		// 電話番号のバリデーション
+		// ==========================================
+		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().isEmpty()) {
+			// 1．必須チェック
+			model.addAttribute("phoneNumberErrorMessage", "電話番号は必須項目です。");
 			hasError = true;
-		}
-		if (userBean.getAddress() == null || userBean.getAddress().trim().isEmpty()) {
-			result.rejectValue("address", "msg.regist.input");
+		} else if (!userBean.getPhoneNumber().matches("^[0-9]+$")) {
+			// 2．半角数字チェック（数字以外の文字が含まれている場合）
+			model.addAttribute("phoneNumberErrorMessage", "電話番号は半角数字で入力してください。");
 			hasError = true;
-		}
-		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().trim().isEmpty()) {
-			result.rejectValue("phoneNumber", "msg.regist.input");
+		} else if (userBean.getPhoneNumber().length() < 10 || userBean.getPhoneNumber().length() > 11) {
+			// 3．桁数チェック（10文字未満、または11文字超えの場合）
+			model.addAttribute("phoneNumberErrorMessage", "電話番号は10文字以上11文字以内で入力してください。");
 			hasError = true;
 		}
 
@@ -351,7 +506,8 @@ public class ClientUserShowController {
 		// 編集後の会員情報を一時保存して確認画面へ
 		session.setAttribute("updateUser", userBean);
 		model.addAttribute("userForm", userBean);
-		
+		System.out.println("postalCode = " + postalCode);
+
 		return "client/user/update_check";
 	}
 
@@ -364,15 +520,15 @@ public class ClientUserShowController {
 	@RequestMapping(path = "/client/user/update/complete", method = RequestMethod.POST)
 	public String updateComplete(HttpSession session) {
 
-		// 1. セッションから確認画面で一時保存した編集後の会員情報を取得
+		// セッションから確認画面で一時保存した編集後の会員情報を取得
 		UserBean userBean = (UserBean) session.getAttribute("updateUser");
 
 		if (userBean != null) {
-			// 2. データベースから現在の会員情報をIDをキーに取得
+			// データベースから現在の会員情報をIDをキーに取得
 			User user = userRepository.findById(userBean.getId()).orElse(null);
 
 			if (user != null) {
-				// 3. 各項目を画面からの新しい入力値で上書き
+				// 各項目を画面からの新しい入力値で上書き
 				user.setEmail(userBean.getEmail());
 				user.setPassword(userBean.getPassword());
 				user.setName(userBean.getName());
@@ -380,19 +536,19 @@ public class ClientUserShowController {
 				user.setAddress(userBean.getAddress());
 				user.setPhoneNumber(userBean.getPhoneNumber());
 
-				// 4. DBへ上書き保存（UPDATE）
+				// 上書き保存
 				userRepository.save(user);
 
-				// 5. 現在ログイン中であるセッション情報（user）も、新しい情報に更新する
+				// 新しい情報に更新する
 				session.setAttribute("user", userBean);
 			}
 		}
 
-		// 6. 編集用の一時セッションをきれいに削除
+		// 編集用の一時セッションをきれいに削除
 		session.removeAttribute("updateUser");
 
 		// 二重送信を防ぐため、完了画面の表示URLへリダイレクト
-		return "redirect:/client/user/update/complete/init";
+		return "redirect:/client/user/update/complete";
 	}
 
 	/**
@@ -400,7 +556,7 @@ public class ClientUserShowController {
 	 * @author 手塚
 	 * @return client/user/update_complete 編集完了画面を表示
 	 */
-	@RequestMapping(path = "/client/user/update/complete/init", method = RequestMethod.GET)
+	@RequestMapping(path = "/client/user/update/complete", method = RequestMethod.GET)
 	public String updateCompleteInit() {
 		return "client/user/update_complete";
 	}
@@ -441,7 +597,7 @@ public class ClientUserShowController {
 			userRepository.save(user);
 		}
 
-		return "redirect:/client/user/delete/complete/init";
+		return "redirect:/client/user/delete/complete";
 	}
 
 	/**
@@ -449,35 +605,45 @@ public class ClientUserShowController {
 	 * @param session セッションスコープ
 	 * @return client/user/delete_complete 削除完了画面
 	 */
-	@RequestMapping(path = "/client/user/delete/complete/init", method = RequestMethod.GET)
+	@RequestMapping(path = "/client/user/delete/complete", method = RequestMethod.GET)
 	public String deleteCompleteInit(HttpSession session) {
-		
+
 		// 画面表示時に安全にセッションを無効化（ログアウト）
 		session.invalidate();
- 
+
 		return "client/user/delete_complete";
 	}
-	
 
+	/**
+	 * お問い合わせフォーム表示
+	 * @author sagar
+	 * 
+	 * @return
+	 */
+	@GetMapping("/client/review/form")
+	public String showReviewForm() {
 
-	    @GetMapping("/client/review/form")
-	    public String showReviewForm() {
-	    	System.out.println("triggred");
-	        return "client/review/reviewForm";
-	    }
-
-	    @PostMapping("/client/review/input")
-	    public String review(
-	            @RequestParam String name,
-	            @RequestParam String email,
-	            @RequestParam String subject,
-	            @RequestParam String message
-	           ) {
-
-	        mailService.sendMail(name, email, subject , message);
-
-	        return "redirect:/";
-	    }
+		return "client/review/reviewForm";
 	}
-	
 
+	/**
+	 * お問い合わせフォーム送信処理
+	 * @param name お客様の名前
+	 * @param email お客様のメールアドレス
+	 * @param subject お問い合わせの件名
+	 * @param message お問い合わせの内容
+	 * @return リダイレクト先のURL
+	 */
+	@PostMapping("/client/review/input")
+	public String review(
+			@RequestParam String name,
+			@RequestParam String email,
+			@RequestParam String subject,
+			@RequestParam String message) {
+
+		mailService.sendMail(name, email, subject, message);
+
+		return "redirect:/";
+	}
+
+}
