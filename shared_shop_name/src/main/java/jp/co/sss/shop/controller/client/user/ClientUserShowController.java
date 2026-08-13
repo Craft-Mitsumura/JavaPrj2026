@@ -346,12 +346,12 @@ public class ClientUserShowController {
 		boolean hasError = false;
 
 		// 旧メールアドレスと旧パスワードの未入力チェック
-		if (oldEmail == null || oldEmail.trim().isEmpty()) {
+		if (oldEmail == null || oldEmail.isEmpty()) {
 			model.addAttribute("oldEmailErrorMessage", "メールアドレスは必須項目です。");
 			hasError = true;
 		}
 
-		if (oldPassword == null || oldPassword.trim().isEmpty()) {
+		if (oldPassword == null || oldPassword.isEmpty()) {
 			model.addAttribute("oldPasswordErrorMessage", "パスワードは必須項目です。");
 			hasError = true;
 		}
@@ -373,7 +373,7 @@ public class ClientUserShowController {
 		}
 
 		// 新しいメールアドレスが入力されていたら上書き、空欄なら元のメールアドレスをそのまま引き継ぐ
-		if (newEmail != null && !newEmail.trim().isEmpty()) {
+		if (newEmail != null && !newEmail.isEmpty()) {
 
 			// ★メールアドレス形式チェック
 			if (!newEmail.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
@@ -381,14 +381,10 @@ public class ClientUserShowController {
 				hasError = true;
 			}
 
-			// ★形式が正しい場合だけ重複チェック
-			/*
-			 * if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser
-			 * = userRepository.findByEmail(newEmail);
-			 * 
-			 * if (duplicateUser != null) { model.addAttribute("authErrorMessage",
-			 * "入力された新しいメールアドレスは既に登録されています。"); hasError = true; } }
-			 */
+			//★形式が正しい場合だけ重複チェック
+			if (!hasError && !newEmail.equals(pastUser.getEmail())) { User duplicateUser= userRepository.findByEmail(newEmail);
+			 if (duplicateUser != null) { model.addAttribute("authErrorMessage",
+			 "入力された新しいメールアドレスは既に登録されています。"); hasError = true; } }
 
 			// ★形式が正しい場合だけ重複チェック
 			if (!hasError && !newEmail.equals(pastUser.getEmail())) {
@@ -410,12 +406,15 @@ public class ClientUserShowController {
 		}
 
 		// 新しいパスワードが入力されていたら上書き、空欄なら元のパスワードをそのまま引き継ぐ
-		if (newPassword != null && !newPassword.trim().isEmpty()) {
+		if (newPassword != null && !newPassword.isEmpty()) {
 
 			// 8～16文字チェック
 			if (newPassword.length() < 8 || newPassword.length() > 16) {
 				model.addAttribute("newPasswordErrorMessage",
 						"パスワードは8～16文字で入力してください。");
+				hasError = true;
+			} else if (!newPassword.matches("^[a-zA-Z0-9]+$")) {
+				model.addAttribute("newPasswordErrorMessage", "パスワードは正しい形式で入力してください。");
 				hasError = true;
 			}
 
@@ -428,7 +427,7 @@ public class ClientUserShowController {
 		// ==========================================
 		// 氏名のバリデーション
 		// ==========================================
-		if (name == null || name.trim().isEmpty()) {
+		if (name == null || name.isEmpty()) {
 			// 1．必須チェック
 			model.addAttribute("nameErrorMessage", "氏名は必須項目です。");
 			hasError = true;
@@ -453,7 +452,7 @@ public class ClientUserShowController {
 		// ==========================================
 		// 郵便番号のバリデーション
 		// ==========================================
-		if (postalCode == null || postalCode.trim().isEmpty()) {
+		if (postalCode == null || postalCode.isEmpty()) {
 			// 1．必須チェック
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
 			hasError = true;
@@ -473,7 +472,7 @@ public class ClientUserShowController {
 		// ==========================================
 		// 住所のバリデーション
 		// ==========================================
-		if (userBean.getAddress() == null || userBean.getAddress().trim().isEmpty()) {
+		if (userBean.getAddress() == null || userBean.getAddress().isEmpty()) {
 			// 1．必須チェック
 			model.addAttribute("addressErrorMessage", "住所は必須項目です。");
 			hasError = true;
@@ -486,7 +485,7 @@ public class ClientUserShowController {
 		// ==========================================
 		// 電話番号のバリデーション
 		// ==========================================
-		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().trim().isEmpty()) {
+		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().isEmpty()) {
 			// 1．必須チェック
 			model.addAttribute("phoneNumberErrorMessage", "電話番号は必須項目です。");
 			hasError = true;
