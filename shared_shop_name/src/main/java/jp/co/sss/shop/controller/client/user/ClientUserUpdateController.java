@@ -32,7 +32,7 @@ public class ClientUserUpdateController {
 	 * @param session セッションスコープ
 	 * @return "redirect:/client/user/update/input" 変更入力画面へのリダイレクト
 	 */
-	@RequestMapping(path = "/client/user/update/input/init", method = RequestMethod.POST)
+	@RequestMapping(path = "/client/user/update/input_init", method = RequestMethod.POST)
 	public String updateInputInit(HttpSession session) {
 
 		session.removeAttribute("updateUser");
@@ -66,8 +66,15 @@ public class ClientUserUpdateController {
 		if (!model.containsAttribute("oldEmail")) {
 			model.addAttribute("oldEmail", pastUser.getEmail());
 		}
+		// newEmailの初期値設定
 		if (!model.containsAttribute("newEmail")) {
-			String newEmailValue = (updateUser != null) ? updateUser.getEmail() : "";
+			String newEmailValue = "";
+			// updateUserが存在し、メールアドレスが保持されており、かつ元のメールアドレスと異なる場合のみ有効値とする
+			if (updateUser != null && updateUser.getEmail() != null && !updateUser.getEmail().isBlank()) {
+				if (!updateUser.getEmail().equals(pastUser.getEmail())) {
+					newEmailValue = updateUser.getEmail();
+				}
+			}
 			model.addAttribute("newEmail", newEmailValue);
 		}
 
