@@ -160,7 +160,12 @@ public class AdminUserRegistController {
 	 errorMessages.put("email", "メールアドレスは必須項目です。");
 	 
       hasError = true;	 
-		}else if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+		}else if(email.trim().length()== 0) {
+			errorMessages.put("email", "メールアドレスは必須項目です。");
+			hasError = true;
+			
+		}
+			else if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
 			errorMessages.put("email", "メールアドレスは正しい形式で入力してください。");
 			hasError = true;
 		}else if(hasEmail.isPresent()) {
@@ -172,6 +177,10 @@ public class AdminUserRegistController {
 		if(password == null || password.isEmpty()) {
 			errorMessages.put("password", "パスワードは必須項目です。");
 			hasError = true;
+		}else if(password.trim().length()== 0) {
+			errorMessages.put("password", "パスワードは必須項目です。");
+			hasError = true;
+			
 		}else if(!password.matches("^[a-zA-Z0-9]+$")) {
 			errorMessages.put("password", "パスワードは正しい形式で入力してください。");
 			hasError = true;
@@ -181,7 +190,7 @@ public class AdminUserRegistController {
 		}
 		
 		if(name == null || name.isEmpty()) {
-			errorMessages.put("name", "会員名は必須項目です。");
+			errorMessages.put("name", "氏名は必須項目です。");
 			hasError = true;
 		}else if (name.length() > 30)  {
 			errorMessages.put("name", "氏名は30文字以内で入力してください。");
@@ -194,13 +203,17 @@ public class AdminUserRegistController {
 			errorMessages.put("postalCode", "郵便番号は半角数字で入力してください。");
 			hasError = true;
 		}else if(postalCode.length() != 7) {
-			errorMessages.put("postalCode", "郵便番号は7桁で入力してください。");
+			errorMessages.put("postalCode", "郵便番号は7文字で入力してください。");
 			hasError = true;
 		}
 		
 		if(address == null || address.isEmpty()) {
 			errorMessages.put("address", "住所は必須項目です。");
 			hasError = true;
+		}else if(address.trim().length()== 0) {
+			errorMessages.put("address", "住所は必須項目です。");
+			hasError = true;
+			
 		}else if(address.length() > 150) {
 			errorMessages.put("address", "住所は150文字以内で入力してください。");
 			hasError = true;
@@ -209,6 +222,11 @@ public class AdminUserRegistController {
 		if(phoneNumber == null || phoneNumber.isEmpty()) {
 			errorMessages.put("phoneNumber", "電話番号は必須項目です。");
 			hasError = true;
+		}
+		else if(phoneNumber.trim().length()== 0) {
+			errorMessages.put("phoneNumber", "電話番号は必須項目です。");
+			hasError = true;
+			
 		}else if(!phoneNumber.matches("^[0-9]+$")) {
 			errorMessages.put("phoneNumber", "電話番号は半角数字で入力してください。");
 			hasError = true;
