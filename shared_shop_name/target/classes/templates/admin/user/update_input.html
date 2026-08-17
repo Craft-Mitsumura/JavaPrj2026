@@ -11,6 +11,7 @@
 <body th:object="${userForm}" class="admin user_update_input_admin">
 	<h2 th:class="title" th:text="#{user}+#{title.update.input}"></h2>
 	<p th:class="input_message" th:text="#{msg.update.input}"></p>
+	<div id="adminUserRegistInput">
 	<div class="user_info_form_area" th:object="${userForm}">
 		<form th:action="@{/admin/user/update/check}" method="post" class="user_info_form">
 			<th:block th:if="${#fields.hasErrors()}">
@@ -63,6 +64,7 @@
 		<form th:action="@{/admin/user/detail/{id}(id=*{id})}" method="post">
 			<input type="submit" value="戻る" class="back_button" />
 		</form>
+	</div>
 	</div>
 </body>
 
