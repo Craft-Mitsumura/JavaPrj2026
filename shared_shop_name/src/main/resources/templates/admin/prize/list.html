@@ -14,10 +14,9 @@
 	<h2 class="title">景品一覧</h2>
 	
 	<!--新規景品追加-->
-	<form th:action="@{/admin/prize/regist/input}" method="post" class="sign_up_form">
+	<form th:action="@{/admin/prize/regist}" method="post" class="sign_up_form">
 	    <input type="submit" value="景品新規登録" class="menu_button">
 	</form>
-
 	<!-- 景品が0件 -->
 	<div th:if="${#lists.isEmpty(prizes)}">
 		<p>景品が登録されていません。</p>
