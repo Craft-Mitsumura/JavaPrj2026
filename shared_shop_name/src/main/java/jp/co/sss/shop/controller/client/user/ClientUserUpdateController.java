@@ -32,7 +32,7 @@ public class ClientUserUpdateController {
 	 * @param session セッションスコープ
 	 * @return "redirect:/client/user/update/input" 変更入力画面へのリダイレクト
 	 */
-	@RequestMapping(path = "/client/user/update/input/init", method = RequestMethod.POST)
+	@RequestMapping(path = "/client/user/update/input_init", method = RequestMethod.POST)
 	public String updateInputInit(HttpSession session) {
 
 		session.removeAttribute("updateUser");
@@ -66,8 +66,15 @@ public class ClientUserUpdateController {
 		if (!model.containsAttribute("oldEmail")) {
 			model.addAttribute("oldEmail", pastUser.getEmail());
 		}
+		// newEmailの初期値設定
 		if (!model.containsAttribute("newEmail")) {
-			String newEmailValue = (updateUser != null) ? updateUser.getEmail() : "";
+			String newEmailValue = "";
+			// updateUserが存在し、メールアドレスが保持されており、かつ元のメールアドレスと異なる場合のみ有効値とする
+			if (updateUser != null && updateUser.getEmail() != null && !updateUser.getEmail().isBlank()) {
+				if (!updateUser.getEmail().equals(pastUser.getEmail())) {
+					newEmailValue = updateUser.getEmail();
+				}
+			}
 			model.addAttribute("newEmail", newEmailValue);
 		}
 
@@ -99,7 +106,7 @@ public class ClientUserUpdateController {
 		boolean hasError = false;
 
 		// 旧メールアドレスの必須・一致チェック
-		if (oldEmail == null || oldEmail.isEmpty()) {
+		if (oldEmail == null || oldEmail.isBlank()) {
 			model.addAttribute("oldEmailErrorMessage", "メールアドレスは必須項目です。");
 			hasError = true;
 		} else if (!oldEmail.equals(pastUser.getEmail())) {
@@ -108,7 +115,7 @@ public class ClientUserUpdateController {
 		}
 
 		// 旧パスワードの必須・一致チェック
-		if (oldPassword == null || oldPassword.isEmpty()) {
+		if (oldPassword == null || oldPassword.isBlank()) {
 			model.addAttribute("oldPasswordErrorMessage", "パスワードは必須項目です。");
 			hasError = true;
 		} else if (!oldPassword.equals(pastUser.getPassword())) {
@@ -117,17 +124,15 @@ public class ClientUserUpdateController {
 		}
 
 		// 新しいメールアドレスの形式・重複チェック
-		if (newEmail != null && !newEmail.isEmpty()) {
+		if (newEmail != null && !newEmail.isBlank()) {
 			if (!newEmail.matches("^[\\w.-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
 				model.addAttribute("newEmailErrorMessage", "メールアドレスの形式が正しくありません。");
 				hasError = true;
 			}
 
 			if (!hasError && !newEmail.equals(pastUser.getEmail())) {
-				User duplicateUser = userRepository.findByEmail(newEmail);
-				int authority = 2;
-
-				if (duplicateUser != null && duplicateUser.getAuthority() == authority) {
+				User duplicateUser = userRepository.findByEmailAndDeleteFlag(newEmail, 0);
+				if (duplicateUser != null) {
 					model.addAttribute("authErrorMessage", "入力された新しいメールアドレスは既に登録されています。");
 					hasError = true;
 				}
@@ -138,7 +143,7 @@ public class ClientUserUpdateController {
 		}
 
 		// 新しいパスワードのチェック
-		if (newPassword != null && !newPassword.isEmpty()) {
+		if (newPassword != null && !newPassword.isBlank()) {
 			if (newPassword.length() < 8 || newPassword.length() > 16) {
 				model.addAttribute("newPasswordErrorMessage", "パスワードは8～16文字で入力してください。");
 				hasError = true;
@@ -152,7 +157,7 @@ public class ClientUserUpdateController {
 		}
 
 		// 氏名
-		if (name == null || name.isEmpty()) {
+		if (name == null || name.isBlank()) {
 			model.addAttribute("nameErrorMessage", "氏名は必須項目です。");
 			hasError = true;
 		} else if (name.length() > 30) {
@@ -163,7 +168,7 @@ public class ClientUserUpdateController {
 		}
 
 		// 郵便番号
-		if (postalCode == null || postalCode.isEmpty()) {
+		if (postalCode == null || postalCode.isBlank()) {
 			model.addAttribute("postalCodeErrorMessage", "郵便番号は必須項目です。");
 			hasError = true;
 		} else if (!postalCode.matches("^[0-9]+$")) {
@@ -177,7 +182,7 @@ public class ClientUserUpdateController {
 		}
 
 		// 住所
-		if (userBean.getAddress() == null || userBean.getAddress().isEmpty()) {
+		if (userBean.getAddress() == null || userBean.getAddress().isBlank()) {
 			model.addAttribute("addressErrorMessage", "住所は必須項目です。");
 			hasError = true;
 		} else if (userBean.getAddress().length() > 150) {
@@ -186,7 +191,7 @@ public class ClientUserUpdateController {
 		}
 
 		// 電話番号
-		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().isEmpty()) {
+		if (userBean.getPhoneNumber() == null || userBean.getPhoneNumber().isBlank()) {
 			model.addAttribute("phoneNumberErrorMessage", "電話番号は必須項目です。");
 			hasError = true;
 		} else if (!userBean.getPhoneNumber().matches("^[0-9]+$")) {
