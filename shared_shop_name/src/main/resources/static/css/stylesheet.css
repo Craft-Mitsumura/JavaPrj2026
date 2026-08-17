@@ -3875,6 +3875,7 @@ p.link_center {
     flex: 1;
     color: #333;
     word-break: break-word;
+    text-align: left;
 }
 
 #adminUserRegistCheck .user_info_form{

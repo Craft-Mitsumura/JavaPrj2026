@@ -20,8 +20,12 @@
 						<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
 					</ul>
 				</th:block>
-				<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
-				
+
+				<th:block th:if="${errorMessage}">
+					<ul class="error_list">
+						<li th:text="${errorMessage}"></li>
+					</ul>
+				</th:block>
 				<ul class="input_list">
 					<!-- ★これが無いと更新時にIDがnullになります -->
 					<input type="hidden" th:field="*{id}" />
