@@ -3454,6 +3454,7 @@ p.link_center {
     color: #1976d2;
     font-weight: 600;
     text-decoration: none;
+    word-break: break-word;
 }
 
 #adminOrderList .list_table a:hover{
