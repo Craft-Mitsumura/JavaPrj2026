@@ -3,6 +3,7 @@ package jp.co.sss.shop.form;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,18 +13,18 @@ public class PrizeForm {
 
 
     @NotBlank(message = "{prize.name.required}")
+    @Size(max = 20, message = "{prize.name.size}")
     private String name;
 
-    @NotNull(message = "{prize.requiredPoint.required}")
-    @Min(value = 1, message = "{prize.requiredPoint.min}")
-    private Integer requiredPoint;
-
     @NotBlank(message = "{prize.description.required}")
+    @Size(max = 50, message = "{prize.description.size}")
     private String description;
 
     private String image;
-
     private MultipartFile imageFile;
+    @NotNull(message = "{prize.requiredPoint.required}")
+    @Min(value = 1, message = "{prize.requiredPoint.min}")
+    private Integer requiredPoint;
     
     
 	public Integer getId() {
