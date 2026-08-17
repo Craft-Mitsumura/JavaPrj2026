@@ -35,14 +35,17 @@ public class UserForm implements Serializable {
 	 * パスワード
 	 */
 	 
-	
+	@NotBlank(message = "パスワードは必須項目です。")
+	@NotNull
+	@Size(min = 8, max = 16)
+	@Pattern(regexp = "^[a-zA-Z0-9]+$",message = "パスワードは正しい形式で入力してください。")
 	private String	password;
 
 	/**
 	 * 会員名
 	 */
 	@NotBlank
-	@Size(min = 1, max = 15, message = "{text.maxsize.message}")
+	@Size(min = 1, max = 30, message = "{text.maxsize.message}")
 	private String	name;
 
 	/**
