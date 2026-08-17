@@ -34,19 +34,19 @@ public class AdminPrizeRegistController {
 	@RequestMapping(path = "/admin/prize/regist", method = RequestMethod.POST)
 	public String registStart() {
 
-	    session.removeAttribute("result");
-	    session.setAttribute("prizeForm", new PrizeForm());
+		session.removeAttribute("result");
+		session.setAttribute("prizeForm", new PrizeForm());
 
-	    return "redirect:/admin/prize/regist/input";
+		return "redirect:/admin/prize/regist/input";
 	}
 
 	// 確認画面から戻る
 	@RequestMapping(path = "/admin/prize/regist/input", method = RequestMethod.POST)
 	public String registInput() {
 
-	    session.removeAttribute("result");
+		session.removeAttribute("result");
 
-	    return "redirect:/admin/prize/regist/input";
+		return "redirect:/admin/prize/regist/input";
 	}
 
 	// 入力画面
@@ -67,7 +67,15 @@ public class AdminPrizeRegistController {
 					"org.springframework.validation.BindingResult.prizeForm",
 					result);
 
-		//	session.removeAttribute("result");
+			session.removeAttribute("result");
+		}
+
+		// ファイルサイズエラーをセッションから取得
+		String errorMessage = (String) session.getAttribute("errorMessage");
+
+		if (errorMessage != null) {
+			model.addAttribute("errorMessage", errorMessage);
+			session.removeAttribute("errorMessage");
 		}
 
 		model.addAttribute("prizeForm", prizeForm);
@@ -83,18 +91,28 @@ public class AdminPrizeRegistController {
 
 		session.setAttribute("prizeForm", form);
 
-		if (result.hasErrors()) {
+		session.setAttribute("prizeForm", form);
 
-			session.setAttribute("result", result);
-
-			return "redirect:/admin/prize/regist/input";
-		}
+		boolean hasError = result.hasErrors();
 
 		// 画像サイズチェック
 		long maxSize = 1024 * 1024; // 1MB
 
-		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
-			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+		if (form.getImageFile() != null
+				&& !form.getImageFile().isEmpty()
+				&& form.getImageFile().getSize() > maxSize) {
+
+			session.setAttribute(
+					"errorMessage",
+					"画像は1MB以内のものを選択してください。");
+
+			hasError = true;
+		}
+
+		if (hasError) {
+			session.setAttribute("result", result);
+			session.setAttribute("prizeForm", form);
+
 			return "redirect:/admin/prize/regist/input";
 		}
 
@@ -124,7 +142,7 @@ public class AdminPrizeRegistController {
 		model.addAttribute("prizeForm", prizeForm);
 
 		return "admin/prize/regist_check";
-		
+
 	}
 
 	// 登録処理

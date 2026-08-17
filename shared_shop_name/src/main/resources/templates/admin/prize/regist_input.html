@@ -13,21 +13,21 @@
 		<p class="input_message">景品情報を入力してください。</p>
 
 		<div class="user_info_form_area">
-			<form th:action="@{/admin/prize/regist/check}"
-			      method="post"
-			      enctype="multipart/form-data"
-			      class="user_info_form"
-			      th:object="${prizeForm}">
+			<form th:action="@{/admin/prize/regist/check}" method="post" enctype="multipart/form-data"
+				class="user_info_form" th:object="${prizeForm}">
 
 				<th:block th:if="${#fields.hasErrors()}">
 					<ul class="error_list">
-						<li th:each="err:${#fields.detailedErrors()}"
-							th:text="${err.message}">
-							
+						<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}">
 						</li>
 					</ul>
 				</th:block>
-				<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
+
+				<th:block th:if="${errorMessage}">
+					<ul class="error_list">
+						<li th:text="${errorMessage}"></li>
+					</ul>
+				</th:block>
 
 				<ul class="input_list">
 					<li>
@@ -56,9 +56,7 @@
 							<span class="input_title">画像</span>
 						</label>
 						<input type="file" th:field="*{imageFile}" id="imageFile" />
-						<img id="preview"
-						     class="preview-image"
-						     th:src="@{/images/common/no_image.jpg}" />
+						<img id="preview" class="preview-image" th:src="@{/images/common/no_image.jpg}" />
 					</li>
 				</ul>
 
@@ -73,12 +71,12 @@
 	</div>
 
 	<script>
-		document.getElementById("imageFile").addEventListener("change", function(e) {
-		    const file = e.target.files[0];
+		document.getElementById("imageFile").addEventListener("change", function (e) {
+			const file = e.target.files[0];
 
-		    if (file) {
-		        document.getElementById("preview").src = URL.createObjectURL(file);
-		    }
+			if (file) {
+				document.getElementById("preview").src = URL.createObjectURL(file);
+			}
 		});
 	</script>
 

@@ -73,6 +73,14 @@ public class AdminPrizeUpdateController {
 			session.removeAttribute("result");
 		}
 
+		// ファイルサイズエラーをセッションから取得
+		String errorMessage = (String) session.getAttribute("errorMessage");
+
+		if (errorMessage != null) {
+			model.addAttribute("errorMessage", errorMessage);
+			session.removeAttribute("errorMessage");
+		}
+
 		model.addAttribute("prizeForm", prizeForm);
 
 		return "admin/prize/update_input";
@@ -93,17 +101,28 @@ public class AdminPrizeUpdateController {
 		session.setAttribute("prizeForm", form);
 
 		// 入力エラー
-		if (result.hasErrors()) {
-			session.setAttribute("result", result);
-			return "redirect:/admin/prize/update/input";
-		}
+		boolean hasError = result.hasErrors();
 
 		// 画像サイズチェック
 		long maxSize = 1024 * 1024; // 1MB
 
-		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
-		    model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-		    return "redirect:/admin/prize/update/input";
+		if (form.getImageFile() != null
+				&& !form.getImageFile().isEmpty()
+				&& form.getImageFile().getSize() > maxSize) {
+
+			session.setAttribute(
+					"errorMessage",
+					"画像は1MB以内のものを選択してください。");
+
+			hasError = true;
+		}
+
+		// エラーがある場合
+		if (hasError) {
+			session.setAttribute("result", result);
+			session.setAttribute("prizeForm", form);
+
+			return "redirect:/admin/prize/update/input";
 		}
 
 		// 画像アップロード

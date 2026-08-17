@@ -19,10 +19,16 @@
 
 				<th:block th:if="${#fields.hasErrors()}">
 					<ul class="error_list">
-						<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+						<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}">
+						</li>
 					</ul>
 				</th:block>
-				<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
+
+				<th:block th:if="${errorMessage}">
+					<ul class="error_list">
+						<li th:text="${errorMessage}"></li>
+					</ul>
+				</th:block>
 
 				<input type="hidden" th:field="*{id}" />
 
