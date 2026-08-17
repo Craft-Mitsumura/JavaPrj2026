@@ -1,5 +1,7 @@
 package jp.co.sss.shop.controller.client.user;
 
+import java.util.Optional;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -73,17 +75,15 @@ public class ClientUserRegistController {
 
 		boolean hasError = result.hasErrors();
 
-		User duplicateUser = userRepository.findByEmail(userBean.getEmail());
+		int targetAuthority = 2;
+		Optional<User> duplicateUserOpt = userRepository.findByEmailAndAuthority(userBean.getEmail(), targetAuthority);
 
-		if (duplicateUser != null) {
-			if (duplicateUser.getDeleteFlag() == 0) {
-				result.rejectValue("email", "msg.regist.email.duplicate");
-				hasError = true;
-			}
-			if (duplicateUser.getDeleteFlag() == 1) {
-				userBean.setId(duplicateUser.getId());
-			}
+		if (duplicateUserOpt.isPresent()) {
+			// デリートフラグのON/OFFに関わらず、同権限・同メアドが存在する場合はエラーとする
+			result.rejectValue("email", "msg.regist.email.duplicate");
+			hasError = true;
 		} else {
+			// 新規登録なのでIDは必ずクリアしておく
 			userBean.setId(null);
 		}
 
