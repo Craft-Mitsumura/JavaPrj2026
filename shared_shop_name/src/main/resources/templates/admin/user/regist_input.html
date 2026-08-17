@@ -57,19 +57,22 @@
 					</li>
 					<li th:if="${session.user.authority == 0 or session.user.authority == 1}">
 						<label><span class="input_title">[[#{data.authority}]]</span></label>
-						<div th:if="${session.user.authority == 0}" class="radio_label">
+						<!-- <div th:if="${session.user.authority == 0}" class="radio_label">
 							<input type="radio" name="authority" value="0"
 								th:checked="*{authority == 0}" />[[#{auth.system.str}]]
 							<input type="radio" name="authority" value="1"
 								th:checked="*{authority == 1}" />[[#{auth.admin.str}]]
 							<input type="radio" name="authority" value="2"
 								th:checked="*{authority == 2}" />[[#{auth.client.str}]]
-							<!--/* TIPS ラジオボタンの処理の記述について 
+							/* TIPS ラジオボタンの処理の記述について 
 					     th:objectとth:fieldを組み合わせて下記のように、*{authority}の値とvalueの値が一致する場合checked属性も自動生成されます。
 						<input type="radio" th:field="*{authority}" value="0" />[[#{auth.system.str}]]
-					 */-->
-						</div>
+					 */
+						</div> -->
 						<th:block th:if="${session.user.authority == 1}">
+							<span class="input_value">[[#{auth.admin.str}]]</span>
+						</th:block>
+						<th:block th:if="${session.user.authority == 0}">
 							<span class="input_value">[[#{auth.admin.str}]]</span>
 						</th:block>
 					</li>
