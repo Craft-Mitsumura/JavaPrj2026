@@ -193,6 +193,10 @@ public class AdminUserRegistController {
 		if(name == null || name.isEmpty()) {
 			errorMessages.put("name", "氏名は必須項目です。");
 			hasError = true;
+		}else if(name.trim().length()== 0) {
+			errorMessages.put("name", "氏名は必須項目です。");
+			hasError = true;
+			
 		}else if (name.length() > 30)  {
 			errorMessages.put("name", "氏名は30文字以内で入力してください。");
 			hasError = true;
@@ -200,7 +204,12 @@ public class AdminUserRegistController {
 		if(postalCode == null || postalCode.isEmpty()) {
 			errorMessages.put("postalCode", "郵便番号は必須項目です。");
 			hasError = true;
-		}else if(!postalCode.matches("^[0-9]+$")) {
+		}else if(postalCode.trim().length()== 0) {
+			errorMessages.put("postalCode", "郵便番号は必須項目です。");
+			hasError = true;
+			
+		}
+		else if(!postalCode.matches("^[0-9]+$")) {
 			errorMessages.put("postalCode", "郵便番号は半角数字で入力してください。");
 			hasError = true;
 		}else if(postalCode.length() != 7) {
