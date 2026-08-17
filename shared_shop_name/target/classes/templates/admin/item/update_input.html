@@ -14,7 +14,8 @@
 
 		<div class="user_info_form_area">
 			<form th:action="@{/admin/item/update/check}" enctype="multipart/form-data" method="post"
-				th:object="${itemForm}">
+				class="user_info_form" th:object="${itemForm}">
+
 				<th:block th:if="${#fields.hasErrors()}">
 					<ul class="error_list">
 						<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
@@ -43,10 +44,10 @@
 					</li>
 					<li>
 						<label><span class="input_title">[[#{data.category}]]</span></label>
-						<!-- ▼ 登録画面と同じように id と onchange を追加 -->
 						<select name="categoryId" id="categoryId" onchange="toggleFields()">
 							<option th:each="category: ${categories}" th:value="${category.id}"
-								th:selected="${category.id == itemForm.categoryId}" th:text="${category.name}"></option>
+								th:text="${category.name}" th:selected="${category.id} == *{categoryId}">
+							</option>
 						</select>
 					</li>
 
@@ -84,12 +85,12 @@
 					<li>
 						<label>
 							<span class="input_title">[[#{itemForm.description}]]</span>
-							<textarea style="width:100%;" th:field="*{description}"></textarea>
 						</label>
+						<textarea rows="6" th:field="*{description}"></textarea>
 					</li>
 					<li>
 						<label><span class="input_title">[[#{data.item.image}]]</span></label>
-						<input type="file" id="upload_file" th:field="*{imageFile}" onchange="previewImage(this);" />
+						<input type="file" id="upload_file" name="imageFile" onchange="previewImage(this);" />
 						<span th:unless="*{#strings.isEmpty(image)}">
 							<img id="preview" th:src="@{/images/{image}(image=*{image})}"></img>
 						</span>
@@ -115,10 +116,12 @@
 
 			fields.forEach(function (field) {
 				var allowedCategories = field.getAttribute('data-category').split(',');
+				// 文字列としての比較にするため、categoryIdをそのまま比較
 				if (allowedCategories.includes(categoryId)) {
-					field.style.display = 'block';
+					field.style.display = 'grid';
 				} else {
 					field.style.display = 'none';
+					// 非表示時は値を空にする（不要なデータを送らないため）
 					var input = field.querySelector('input');
 					if (input) input.value = '';
 				}
@@ -135,7 +138,7 @@
 			}
 		}
 
-		// ページ読み込み時（すでに選択されているカテゴリを反映）と、カテゴリ変更時に実行
+		// ページ読み込み時と、カテゴリ変更時に実行
 		document.addEventListener('DOMContentLoaded', toggleFields);
 	</script>
 </body>

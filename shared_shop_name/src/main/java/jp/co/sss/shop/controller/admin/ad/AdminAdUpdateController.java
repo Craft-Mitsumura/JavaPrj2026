@@ -158,6 +158,13 @@ public class AdminAdUpdateController {
 	@RequestMapping(path = "/check", method = RequestMethod.POST)
 	public String check(@Valid @ModelAttribute("updateForm") PromotionsForm form,
 			BindingResult result, Model model) {
+		// セッションから既存のフォーム（画像名を含む）を取得
+		PromotionsForm sessionForm = (PromotionsForm) session.getAttribute("updateForm");
+		// フォームの画像名が空で、かつセッションに既存の画像名があるなら、それを維持する
+		if ((form.getImageName() == null || form.getImageName().isEmpty()) && sessionForm != null) {
+			form.setTempImageName(sessionForm.getTempImageName());
+		}
+		
 		boolean hasError = result.hasErrors();
 
 		// 画像サイズチェック

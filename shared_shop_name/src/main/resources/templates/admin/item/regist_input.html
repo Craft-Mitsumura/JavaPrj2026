@@ -9,7 +9,7 @@
 
 <body class="admin item_regist_input">
 	<div id="adminItemInput">
-		<h2 th:class="title" th:text="#{item}+#{title.input}"></h2>
+		<h2 th:class="title" th:text="#{item}+#{title.regist.input}"></h2>
 		<p th:class="input_message" th:text="#{msg.regist.input}"></p>
 
 		<div class="user_info_form_area">
@@ -50,10 +50,7 @@
 							</option>
 						</select>
 					</li>
-					<li>
-						<label><span class="input_title">[[#{itemForm.description}]]</span></label>
-						<textarea rows="6" th:field="*{description}"></textarea>
-					</li>
+
 					<!-- 追加分(JSON) -->
 					<li class="dynamic-field" data-category="1,2,3,4,5,6">
 						<label><span class="input_title">[[#{itemForm.varNumber}]]</span></label>
@@ -76,6 +73,7 @@
 						<input type="text" th:field="*{inkVolume}" />
 					</li>
 					<!-- 追加分(JSON)終わり -->
+					
 					<!-- 追加分(刻印機能） -->
 					<li class="input_field">
 						<label class="input_title">刻印サービス</label>
@@ -84,6 +82,12 @@
 						</div>
 					</li>
 					<!-- 追加分(刻印機能）終わり -->
+					<li>
+						<label>
+							<span class="input_title">[[#{itemForm.description}]]</span>
+						</label>
+						<textarea rows="6" th:field="*{description}"></textarea>
+					</li>
 					<li>
 						<label><span class="input_title">[[#{data.item.image}]]</span></label>
 						<input type="file" id="upload_file" name="imageFile" onchange="previewImage(this);" />

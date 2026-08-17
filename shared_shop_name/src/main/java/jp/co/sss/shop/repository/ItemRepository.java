@@ -157,7 +157,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	 * @param name
 	 * @return
 	 */
-	List<Item> findByName(String name);
+	@Query("SELECT i FROM Item i WHERE i.name = :name AND i.deleteFlag = :deleteFlag")
+	List<Item> findSameNameItems(@Param("name") String name, @Param("deleteFlag") Integer deleteFlag);
 	List<Item> findByNameContainingIgnoreCaseAndDeleteFlag(String item, Integer deleteFlag);
 	
 	/**
