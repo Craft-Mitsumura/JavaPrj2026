@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title th:text="'カテゴリカルーセル変更入力 | '+ #{shop.title}"> </title>
+	<title th:text="'カルーセル式カテゴリ変更入力 | '+ #{shop.title}"> </title>
 </head>
 
 <body class="admin ad_update_input">
@@ -20,61 +20,69 @@
 					<input type="hidden" th:field="*{id}" />
 
 					<!-- エラーメッセージ表示 -->
+
 					<th:block th:if="${#fields.hasErrors()}">
 						<ul class="error_list">
-							<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+							<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}">
+							</li>
 						</ul>
 					</th:block>
-					<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
+
+					<th:block th:if="${errorMessage}">
+						<ul class="error_list">
+							<li th:text="${errorMessage}"></li>
+						</ul>
+					</th:block>
 
 					<ul class="input_list">
-						<!-- 1. 管理名 -->
-						<li>
-							<label><span class="input_title">管理名</span></label>
-							<input type="text" th:field="*{pageName}" placeholder="例: TOPページ用カテゴリバナー1" />
-						</li>
+						<ul class="input_list">
+							<!-- 1. 管理名 -->
+							<li>
+								<label><span class="input_title">管理名</span></label>
+								<input type="text" th:field="*{pageName}" placeholder="例: TOPページ用カテゴリバナー1" />
+							</li>
 
-						<!-- 2. 画像ファイルアップロード & プレビュー -->
-						<li>
-							<label><span class="input_title">画像</span></label>
-							<input type="file" id="upload_file" th:field="*{imageName}"
-								onchange="previewImage(this, 'preview-imageName')" />
-							<input type="hidden" th:field="*{tempImageName}" />
+							<!-- 2. 画像ファイルアップロード & プレビュー -->
+							<li>
+								<label><span class="input_title">画像</span></label>
+								<input type="file" id="upload_file" th:field="*{imageName}"
+									onchange="previewImage(this, 'preview-imageName')" />
+								<input type="hidden" th:field="*{tempImageName}" />
 
-							<span th:if="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
-								<img id="preview-imageName" th:src="@{'/images/uploads/' + *{tempImageName}}" />
-							</span>
-							<span th:unless="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
-								<img id="preview-imageName" th:src="@{/images/common/no_image.jpg}" />
-							</span>
-						</li>
+								<span th:if="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
+									<img id="preview-imageName" th:src="@{'/images/uploads/' + *{tempImageName}}" />
+								</span>
+								<span th:unless="*{tempImageName != null and !#strings.isEmpty(tempImageName)}">
+									<img id="preview-imageName" th:src="@{/images/common/no_image.jpg}" />
+								</span>
+							</li>
 
-						<!-- 3. 遷移先カテゴリ -->
-						<li>
-							<label><span class="input_title">遷移先カテゴリ</span></label>
-							<select th:field="*{categoryId}">
-								<option value="">選択してください</option>
-								<option th:each="category : ${categoryList}" th:value="${category.id}"
-									th:text="${category.name}">
-								</option>
-							</select>
-						</li>
+							<!-- 3. 遷移先カテゴリ -->
+							<li>
+								<label><span class="input_title">遷移先カテゴリ</span></label>
+								<select th:field="*{categoryId}">
+									<option value="">選択してください</option>
+									<option th:each="category : ${categoryList}" th:value="${category.id}"
+										th:text="${category.name}">
+									</option>
+								</select>
+							</li>
 
-						<!-- 4. 有効/無効 -->
-						<li class="input_field">
-							<label class="input_title">有効/無効</label>
-							<div class="checkbox_container">
-								<input type="checkbox" th:field="*{isActive}" value="1" />
-							</div>
-						</li>
-					</ul>
+							<!-- 4. 有効/無効 -->
+							<li class="input_field">
+								<label class="input_title">有効/無効</label>
+								<div class="checkbox_container">
+									<input type="checkbox" th:field="*{isActive}" value="1" />
+								</div>
+							</li>
+						</ul>
 
-					<input type="submit" value="確認" class="send_button" />
+						<input type="submit" value="確認" class="send_button" />
 				</form>
 
 				<!-- 詳細画面へ戻るフォーム（GETメソッドでIDを渡す） -->
 				<form th:action="@{/admin/ad/details/{id}(id=*{id})}" method="get" th:object="${updateForm}">
-				    <input type="submit" value="戻る" class="back_button" />
+					<input type="submit" value="戻る" class="back_button" />
 				</form>
 
 				<!-- 画像プレビュー用スクリプト -->

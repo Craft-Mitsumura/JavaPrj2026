@@ -127,6 +127,7 @@ public class AdminUserRegistController {
 			@RequestParam(value="postalCode", required = false) String postalCode,
 			@RequestParam(value="address", required = false) String address,
 			@RequestParam(value="phoneNumber", required = false) String phoneNumber,
+	
 			Model model
 	
 			){

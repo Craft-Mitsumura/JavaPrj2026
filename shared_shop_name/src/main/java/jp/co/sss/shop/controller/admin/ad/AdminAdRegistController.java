@@ -120,48 +120,85 @@ public class AdminAdRegistController {
 	 */
 	@RequestMapping(path = "/check", method = RequestMethod.POST)
 	public String check(
-			@Valid @ModelAttribute("registForm") PromotionsForm form,
+			@Valid
+			@ModelAttribute("registForm") PromotionsForm form,
 			BindingResult result,
-			Model model) throws IOException {
+			Model model)
+			throws IOException {
 
-		// バリデーションチェック
-		if (result.hasErrors()) {
-			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
-			model.addAttribute("registForm", form);
-			return "admin/ad/regist_input";
-		}
+			    boolean hasError = result.hasErrors();
+			    System.out.println("=== バリデーションエラー数 ===");
+			    System.out.println(result.getErrorCount());
 
-		// 画像サイズチェック
-		long maxSize = 1024 * 1024; // 1MB
+			    result.getAllErrors().forEach(error -> {
+			        System.out.println(error.getDefaultMessage());
+			    });
 
-		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
-			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-			return "admin/ad/regist_input";
-		}
+			    // バリデーションエラーがある場合
+			    if (result.hasErrors()) {
+			        model.addAttribute("categoryList",
+			                categoryRepository.findByDeleteFlagOrderByIdAsc(0));
+			    }
 
-		try {
-			// カルーセル画像の一時保存
-			if (form.getImageName() != null && !form.getImageName().isEmpty()) {
-				String fileName = form.getImageName().getOriginalFilename();
-				if (form.getTempImageName() == null || !form.getTempImageName().equals(fileName)) {
-					form.getImageName().transferTo(new File(TMP_DIR + fileName));
-					form.setTempImageName(fileName);
-				}
+			    // 画像サイズチェック
+			    long maxSize = 1024 * 1024; // 1MB
+
+			    if (form.getImageName() != null
+			            && !form.getImageName().isEmpty()
+			            && form.getImageName().getSize() > maxSize) {
+
+			        model.addAttribute("errorMessage",
+			                "画像は1MB以内のものを選択してください。");
+
+			        hasError = true;
+			    }
+
+			    // エラーがある場合は、全部のエラーを確認してから戻る
+			    if (hasError) {
+			        model.addAttribute("categoryList",
+			                categoryRepository.findByDeleteFlagOrderByIdAsc(0));
+			        model.addAttribute("registForm", form);
+			        return "admin/ad/regist_input";
+			    }
+
+			    try {
+			        // カルーセル画像の一時保存
+			        if (form.getTempImageName() != null
+			                && !form.getTempImageName().isEmpty()) {
+
+			            String fileName = form.getTempImageName();
+
+			            if (form.getImageName() != null
+			                    && !form.getImageName().equals(fileName)) {
+
+			                form.getImageName().transferTo(
+			                        new File(TMP_DIR + fileName));
+
+			                form.setTempImageName(fileName);
+			            }
+			        }
+
+			        Category selectedCategory =
+			                categoryRepository.findById(form.getCategoryId())
+			                        .orElse(null);
+
+			        model.addAttribute("selectedCategory", selectedCategory);
+			        model.addAttribute("registForm", form);
+
+			        return "admin/ad/regist_check";
+
+			    } catch (IOException e) {
+			        e.printStackTrace();
+
+			        model.addAttribute("errorMessage",
+			                "ファイルのアップロード処理がタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
+			        model.addAttribute("categoryList",
+			                categoryRepository.findByDeleteFlagOrderByIdAsc(0));
+			        model.addAttribute("registForm", form);
+
+			        return "admin/ad/regist_input";
+			    }
 			}
-			Category selectedCategory = categoryRepository.findById(form.getCategoryId()).orElse(null);
-			model.addAttribute("selectedCategory", selectedCategory);
-			model.addAttribute("registForm", form);
-
-			return "admin/ad/regist_check";
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "ファイルのアップロードセッションがタイムアウトしました。お手数ですが、再度ファイルを選択してください。");
-			model.addAttribute("categoryList", categoryRepository.findByDeleteFlagOrderByIdAsc(0));
-			model.addAttribute("registForm", form);
-			return "admin/ad/regist_input";
-		}
-	}
 
 	/**
 	 * 登録完了処理

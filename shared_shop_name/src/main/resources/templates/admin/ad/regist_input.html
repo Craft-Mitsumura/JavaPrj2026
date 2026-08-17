@@ -4,7 +4,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title th:text="'カテゴリカルーセル登録入力 | '+ #{shop.title}"> </title>
+	<title th:text="'カルーセル式カテゴリ登録入力 | '+ #{shop.title}"> </title>
 </head>
 
 <body class="admin ad_regist_input">
@@ -17,15 +17,16 @@
 				<form th:action="@{/admin/ad/regist/check}" enctype="multipart/form-data" method="post"
 					class="user_info_form" th:object="${registForm}">
 
-					<!-- エラーメッセージ表示 -->
 					<th:block th:if="${#fields.hasErrors()}">
 						<ul class="error_list">
-							<li th:each="err:${#fields.detailedErrors()}" th:text="${err.message}"></li>
+							<li th:each="err : ${#fields.detailedErrors()}" th:text="${err.message}">
+							</li>
 						</ul>
-						<br />
 					</th:block>
-					<div th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></div>
 
+					<ul class="error_list" th:if="${errorMessage != null}">
+						<li th:text="${errorMessage}"></li>
+					</ul>
 					<ul class="input_list">
 						<!-- 1. 管理名 -->
 						<li>

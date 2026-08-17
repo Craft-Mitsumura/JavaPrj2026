@@ -125,9 +125,20 @@ public class AdminAdUpdateController {
 
 		// バリデーションエラー情報があれば復元
 		BindingResult result = (BindingResult) session.getAttribute("result");
+
 		if (result != null) {
-			model.addAttribute("org.springframework.validation.BindingResult.updateForm", result);
+			model.addAttribute(
+					"org.springframework.validation.BindingResult.updateForm",
+					result);
 			session.removeAttribute("result");
+		}
+
+		// ファイルサイズエラーがあれば復元
+		String errorMessage = (String) session.getAttribute("errorMessage");
+
+		if (errorMessage != null) {
+			model.addAttribute("errorMessage", errorMessage);
+			session.removeAttribute("errorMessage");
 		}
 
 		model.addAttribute("updateForm", updateForm);
@@ -147,17 +158,26 @@ public class AdminAdUpdateController {
 	@RequestMapping(path = "/check", method = RequestMethod.POST)
 	public String check(@Valid @ModelAttribute("updateForm") PromotionsForm form,
 			BindingResult result, Model model) {
-
-		if (result.hasErrors()) {
-			session.setAttribute("result", result);
-			return "redirect:/admin/ad/update/input";
-		}
+		boolean hasError = result.hasErrors();
 
 		// 画像サイズチェック
 		long maxSize = 1024 * 1024; // 1MB
 
-		if (form.getImageName() != null && form.getImageName().getSize() > maxSize) {
-			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
+		if (form.getImageName() != null
+				&& !form.getImageName().isEmpty()
+				&& form.getImageName().getSize() > maxSize) {
+
+			session.setAttribute("errorMessage",
+					"画像は1MB以内のものを選択してください。");
+
+			hasError = true;
+		}
+
+		// エラーがある場合
+		if (hasError) {
+			session.setAttribute("result", result);
+			session.setAttribute("updateForm", form);
+
 			return "redirect:/admin/ad/update/input";
 		}
 
