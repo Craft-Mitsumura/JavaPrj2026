@@ -2964,6 +2964,7 @@ p.link_center {
 #adminCategoryConfirm .input_value{
     flex: 1;
     color: #333;
+    word-break: break-word;
 }
 #adminCategoryConfirm .delete:hover{
 		background: #d32f2f;
@@ -3062,6 +3063,7 @@ p.link_center {
     flex-grow: 1;
     flex-basis: 0;
     width: auto;
+    word-break: break-word;
 }
 
 #adminItemInput .input_message{

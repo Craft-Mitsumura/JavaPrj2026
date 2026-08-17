@@ -351,7 +351,7 @@ public class ClientOrderRegistController {
 	@RequestMapping(path = "/client/order/payment/back", method = RequestMethod.POST)
 	public String backView() {
 
-		return "redirect:/client/order/address/input";
+		return "redirect:/client/order/payment/input";
 	}
 
 	/**
