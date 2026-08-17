@@ -98,26 +98,41 @@ public class AdminItemRegistController {
 	 */
 	@RequestMapping(path = "/admin/item/regist/input", method = RequestMethod.GET)
 	public String registInput(Model model) {
-		//セッションから入力フォーム情報取得
+
+		// セッションから入力フォーム情報取得
 		ItemForm itemForm = (ItemForm) session.getAttribute("itemForm");
+
 		if (itemForm == null) {
 			// セッション情報がない場合、エラー
 			return "redirect:/syserror";
 		}
-		//セッションから入力チェックエラー情報取得
+
+		// セッションから入力チェックエラー情報取得
 		BindingResult result = (BindingResult) session.getAttribute("result");
+
 		if (result != null) {
-			//セッションにエラー情報がある場合、エラー情報をリクエストスコープに設定
-			model.addAttribute("org.springframework.validation.BindingResult.itemForm", result);
-			//セッションからエラー情報を削除
+			// エラー情報をリクエストスコープに設定
+			model.addAttribute(
+					"org.springframework.validation.BindingResult.itemForm",
+					result);
+
+			// セッションからエラー情報を削除
 			session.removeAttribute("result");
 		}
+
+		// ★ファイルサイズエラーをセッションから取得
+		String errorMessage = (String) session.getAttribute("errorMessage");
+
+		if (errorMessage != null) {
+			model.addAttribute("errorMessage", errorMessage);
+			session.removeAttribute("errorMessage");
+		}
+
 		// 入力フォーム情報をスコープに設定
 		model.addAttribute("itemForm", itemForm);
 
-		// 入力画面　表示
+		// 入力画面 表示
 		return "admin/item/regist_input";
-
 	}
 
 	/**
@@ -149,19 +164,27 @@ public class AdminItemRegistController {
 		// 入力フォームをセッションに保持
 		session.setAttribute("itemForm", form);
 
-		if (result.hasErrors()) {
-			// 入力値にエラーがあった場合、エラー情報をセッションに保持
-			session.setAttribute("result", result);
-			// 登録入力画面　表示処理
-			return "redirect:/admin/item/regist/input";
-		}
-		
+		boolean hasError = result.hasErrors();
+
 		// 画像サイズチェック
 		long maxSize = 1024 * 1024; // 1MB
 
-		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
-			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-			return "redirect:/admin/item/update/input";
+		if (form.getImageFile() != null
+				&& !form.getImageFile().isEmpty()
+				&& form.getImageFile().getSize() > maxSize) {
+
+			session.setAttribute("errorMessage",
+					"画像は1MB以内のものを選択してください。");
+
+			hasError = true;
+		}
+
+		// エラーがある場合
+		if (hasError) {
+			session.setAttribute("result", result);
+			session.setAttribute("itemForm", form);
+
+			return "redirect:/admin/item/regist/input";
 		}
 
 		//ファイルアップロード処理呼び出す 戻り値 成功時:ファイル名、失敗時:null
