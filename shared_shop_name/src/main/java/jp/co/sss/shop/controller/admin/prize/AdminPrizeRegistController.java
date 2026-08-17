@@ -30,13 +30,23 @@ public class AdminPrizeRegistController {
 	UploadFileService upfileService;
 
 	// 登録ボタン押下
+	// 新規登録開始
+	@RequestMapping(path = "/admin/prize/regist", method = RequestMethod.POST)
+	public String registStart() {
+
+	    session.removeAttribute("result");
+	    session.setAttribute("prizeForm", new PrizeForm());
+
+	    return "redirect:/admin/prize/regist/input";
+	}
+
+	// 確認画面から戻る
 	@RequestMapping(path = "/admin/prize/regist/input", method = RequestMethod.POST)
 	public String registInput() {
 
-		session.removeAttribute("result");
-		session.setAttribute("prizeForm", new PrizeForm());
+	    session.removeAttribute("result");
 
-		return "redirect:/admin/prize/regist/input";
+	    return "redirect:/admin/prize/regist/input";
 	}
 
 	// 入力画面
@@ -85,7 +95,7 @@ public class AdminPrizeRegistController {
 
 		if (form.getImageFile() != null && form.getImageFile().getSize() > maxSize) {
 			model.addAttribute("errorMessage", "画像は1MB以内のものを選択してください。");
-			return "redirect:/admin/ad/update/input";
+			return "redirect:/admin/prize/regist/input";
 		}
 
 		// 画像アップロード
