@@ -61,7 +61,7 @@ public class ClientOrderShowController {
 		model.addAttribute("order", orderBean);
 		model.addAttribute("orderItemBeans", orderItemBeanList);
 		model.addAttribute("total", total);
-
+    System.out.println("★デバッグ: total=" + total);
 		return "client/order/detail";
 	}
 }
