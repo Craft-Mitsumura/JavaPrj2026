@@ -167,7 +167,7 @@ public class AdminUserUpdateController {
 			if (duplicateUser.isPresent() && !Objects.equals(duplicateUser.get().getId(), lastUserForm.getId())) {
 				String errorMessage = "入力されたメールアドレスは同じ権限で既に登録されています。";
 				session.setAttribute("authErrorMessage", errorMessage);
-				result.rejectValue("email", "error.email", errorMessage);
+			//	result.rejectValue("email", "error.email", errorMessage);
 			}
 		}
 
