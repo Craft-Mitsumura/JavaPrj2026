@@ -122,21 +122,18 @@
 
 						<!-- 購入数 -->
 						<td>
-							<div th:each="orderItem : ${order.orderItemsList}">
-								<span th:text="${orderItem.quantity}"></span>個
-							</div>
+						    <span th:text="${#aggregates.sum(order.orderItemsList.![quantity])}"></span>個
 						</td>
 
 						<!-- 購入金額 -->
 						<td>
-							<div th:each="orderItem : ${order.orderItemsList}">
-								<span th:text="${#numbers.formatDecimal((orderItem.price * orderItem.quantity), 0, 'COMMA', 0, 'POINT')}"></span>円
-							</div>
+						    <span th:text="${#numbers.formatDecimal(#aggregates.sum(order.orderItemsList.![price * quantity]), 0, 'COMMA', 0, 'POINT')}"></span>円
 						</td>
 
 					</tr>
 				</tbody>
 			</table>
+				<h1 th:text="${total}" >hello</h1>
 
 			<!-- 注文がない場合 -->
 			<p  th:if="${orderList == null or orderList.isEmpty()}" style = "margin:auto; text-align:center;">
