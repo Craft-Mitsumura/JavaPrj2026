@@ -157,8 +157,21 @@ public class ClientBasketController {
 		UserBean loginUser = (UserBean) session.getAttribute("user");
 
 		if (loginUser != null) {
-			List<Favorite> favoriteList = favoriteService.getFavoriteList(loginUser.getId());
-			session.setAttribute("favoriteBeans", favoriteList);
+		    List<Favorite> favoriteList = favoriteService.getFavoriteList(loginUser.getId());
+		    session.setAttribute("favoriteBeans", favoriteList);
+
+		    List<Integer> favoriteItemIds = new ArrayList<>();
+
+		    for (Favorite favorite : favoriteList) {
+		        if (favorite.getItem() != null) {
+		            favoriteItemIds.add(favorite.getItem().getId());
+		        }
+		    }
+
+		    model.addAttribute("favoriteItemIds", favoriteItemIds);
+
+		} else {
+		    model.addAttribute("favoriteItemIds", new ArrayList<Integer>());
 		}
 		
 		int totalPrice = 0;
