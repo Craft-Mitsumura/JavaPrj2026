@@ -115,7 +115,7 @@ body.prize .container {
 /* 景品一覧 */
 .prize_list{
     display:grid;
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(4,1fr);
     gap:30px;
     justify-items:center;
     margin:60px auto;
@@ -170,7 +170,7 @@ body.prize .container {
 
 /* 注意事項 */
 .notice {
-	width: 100%;
+/* 	width: 100%; */
 	margin: 60px auto;
 	padding: 35px 55px;
 	background: #17365d;
