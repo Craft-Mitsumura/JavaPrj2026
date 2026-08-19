@@ -131,11 +131,16 @@ public class ClientFavoriteController {
 		    return "detached";
 
 		} else {
+			
+		    System.out.println("★ お気に入り登録 ユーザーID = " + loginUser.getId());
+		    System.out.println("★ お気に入り登録 商品ID = " + itemId);
 
 		    favoriteService.addFavorite(loginUser.getId(), itemId);
 
 		    List<Favorite> favorites =
 		            favoriteService.getFavoriteList(loginUser.getId());
+		    
+		    System.out.println("★ お気に入り追加後 = " + favorites);
 
 		    session.setAttribute("favoriteBeans", favorites);
 

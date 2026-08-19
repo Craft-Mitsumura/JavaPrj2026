@@ -157,8 +157,33 @@ public class ClientBasketController {
 		UserBean loginUser = (UserBean) session.getAttribute("user");
 
 		if (loginUser != null) {
-			List<Favorite> favoriteList = favoriteService.getFavoriteList(loginUser.getId());
-			session.setAttribute("favoriteBeans", favoriteList);
+
+		    System.out.println("★ 買い物かご ユーザーID = " + loginUser.getId());
+
+		    List<Favorite> favoriteList =
+		            favoriteService.getFavoriteList(loginUser.getId());
+
+		    System.out.println("★ 買い物かご お気に入り件数 = " + favoriteList.size());
+
+		    session.setAttribute("favoriteBeans", favoriteList);
+
+		    List<Integer> favoriteItemIds = new ArrayList<>();
+
+		    for (Favorite favorite : favoriteList) {
+
+		        if (favorite.getItem() != null) {
+		            favoriteItemIds.add(favorite.getItem().getId());
+		        }
+		    }
+
+		    System.out.println("★ お気に入り商品ID = " + favoriteItemIds);
+
+		    model.addAttribute("favoriteItemIds", favoriteItemIds);
+
+		} else {
+
+		    model.addAttribute("favoriteItemIds", new ArrayList<Integer>());
+
 		}
 		
 		int totalPrice = 0;
@@ -201,6 +226,12 @@ public class ClientBasketController {
 				List<Item> randomItems = itemRepository.findByCategoryIdAndDeleteFlag(
 						randomCategoryId,
 						Constant.NOT_DELETED);
+				
+			    // ★ここを追加
+			    for (Item item : randomItems) {
+			        System.out.println("★ おすすめ商品ID = " + item.getId()
+			                + " / 商品名 = " + item.getName());
+			    }
 				model.addAttribute("items", randomItems);
 			} else {
 				model.addAttribute("items", new ArrayList<Item>());

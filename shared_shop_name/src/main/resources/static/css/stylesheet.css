@@ -2318,18 +2318,21 @@ p.link_center {
 }
 
 .ecommerce-section .heart-icon {
-	width: 18px;
-	height: 18px;
-	stroke: #ff4757;
-	fill: transparent;
-	transition: fill 0.2s;
+    width: 18px;
+    height: 18px;
+    stroke: #ff4757;
+    transition: fill 0.2s;
+}
+
+.ecommerce-section .btn-favorite.favorite .heart-icon {
+    fill: #ff4757;
 }
 
 .ecommerce-section .btn-favorite:hover .heart-icon {
-	fill: #ff4757;
+    fill: #ff4757;
 }
 
-
+ 
 .ecommerce-section .item-info {
 	padding: 15px;
 	display: flex;
