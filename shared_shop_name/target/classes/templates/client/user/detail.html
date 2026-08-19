@@ -52,7 +52,7 @@
 
 				<div class="next_prize" th:if="${nextPrizeName != null}">
 					<a style="margin-bottom:2%;" th:href="@{/client/prize/list}">
-						<p   class="title">次の景品</p>
+						<h3 class="next-prize-title">次の景品</h3>
                       <div id="next_price"> 
 						<img style="height:190px;" id="nextPrizeImg" th:src="@{/images/{file}(file=${nextPrizeImage})}" alt="景品画像">
 

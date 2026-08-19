@@ -111,8 +111,8 @@
 
 											<!-- サイズ情報 -->
 											<span th:if="${v.nibDiameter != null}" th:text="${v.nibDiameter}"></span>
-											<span
-												th:text="${v.leadDiameter != null and !#strings.isEmpty(v.leadDiameter)} ? ${v.leadDiameter} + 'mm' : '&nbsp;'"></span>
+											<span th:if="${!#strings.isEmpty(v.leadDiameter)}"
+												th:text="${v.leadDiameter} + 'mm'"></span>
 											<span th:if="${v.inkVolume != null}" th:text="${v.inkVolume}"></span>
 										</div>
 									</div>

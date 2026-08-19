@@ -52,23 +52,23 @@
 					</li>
 
 					<!-- ▼ 登録画面と同じ動的フィールドの記述に統一 -->
-					<li class="dynamic-field" data-category="1,2,3,4,5,6">
+					<li class="dynamic-field" data-category="1,2,3,4,5,6"><!--個体識別ID-->
 						<label><span class="input_title">[[#{itemForm.varNumber}]]</span></label>
 						<input type="text" th:field="*{varNumber}" />
 					</li>
-					<li class="dynamic-field" data-category="1,2,3,4,6">
+					<li class="dynamic-field" data-category="1,2,3,4,5,6"><!--色-->
 						<label><span class="input_title">[[#{itemForm.colorPattern}]]</span></label>
 						<input type="text" th:field="*{colorPattern}" />
 					</li>
-					<li class="dynamic-field" data-category="1,3">
+					<li class="dynamic-field" data-category="1,2,6"><!--ペン先の太さ-->
 						<label><span class="input_title">[[#{itemForm.nibDiameter}]]</span></label>
 						<input type="text" th:field="*{nibDiameter}" />
 					</li>
-					<li class="dynamic-field" data-category="2,6">
+					<li class="dynamic-field" data-category="3,6"><!--芯の太さ-->
 						<label><span class="input_title">[[#{itemForm.leadDiameter}]]</span></label>
 						<input type="text" th:field="*{leadDiameter}" />
 					</li>
-					<li class="dynamic-field" data-category="5">
+					<li class="dynamic-field" data-category="5"><!--インク容量-->
 						<label><span class="input_title">[[#{itemForm.inkVolume}]]</span></label>
 						<input type="text" th:field="*{inkVolume}" />
 					</li>

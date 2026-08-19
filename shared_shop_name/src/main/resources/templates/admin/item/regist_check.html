@@ -9,77 +9,78 @@
 
 <body class="admin item_regist_check">
 	<h2 th:class="title" th:text="#{item}+#{title.input.check}"></h2>
-<div id="adminCategoryConfirm">
-	<p th:class="check_message" th:text="#{msg.regist.check}"></p>
-	<div class="user_info_form_area">
-		<ul class="input_list" th:object="${itemForm}">
-			<li>
-				<span class="input_title">[[#{itemForm.name}]]</span>
-				<span class="input_value" th:text="*{name}"></span>
-			</li>
-			<li>
-				<span class="input_title">[[#{itemForm.price}]]</span>
-				<span class="input_value"  th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span>
-			</li>
-			<li>
-				<span class="input_title">[[#{data.category}]]</span>
-				<span class="input_value" th:text="*{categoryName}"></span>
-			</li>
-			<li>
-				<span class="input_title">[[#{itemForm.stock}]]</span>
-				<span class="input_value"  th:text="*{#numbers.formatDecimal(stock, 0, 'COMMA', 0, 'POINT')}"></span>
-			</li>
-			<!-- カテゴリごとのJSON項目表示 -->
-			<li
-				th:if="${itemForm.categoryId == 1 or itemForm.categoryId == 2 or itemForm.categoryId == 3 or itemForm.categoryId == 4 or itemForm.categoryId == 5 or itemForm.categoryId == 6}">
-				<span class="input_title">[[#{itemForm.varNumber}]]</span>
-				<span class="input_value" th:text="*{varNumber}"></span>
-			</li>
-			<li
-				th:if="${itemForm.categoryId == 1 or itemForm.categoryId == 2 or itemForm.categoryId == 3 or itemForm.categoryId == 4 or itemForm.categoryId == 6}">
-				<span class="input_title">[[#{itemForm.colorPattern}]]</span>
-				<span class="input_value" th:text="*{colorPattern}"></span>
-			</li>
-			<li th:if="${itemForm.categoryId == 1 or itemForm.categoryId == 3}">
-				<span class="input_title">[[#{itemForm.nibDiameter}]]</span>
-				<span class="input_value" th:text="*{nibDiameter}"></span>
-			</li>
-			<li th:if="${itemForm.categoryId == 2 or itemForm.categoryId == 6}">
-				<span class="input_title">[[#{itemForm.leadDiameter}]]</span>
-				<span class="input_value" th:text="*{leadDiameter}"></span>
-			</li>
-			<li th:if="${itemForm.categoryId == 5}">
-				<span class="input_title">[[#{itemForm.inkVolume}]]</span>
-				<span class="input_value" th:text="*{inkVolume}"></span>
-			</li>
-			<!-- カテゴリごとのJSON項目表示：ここまで -->
-			<!-- 追加分(刻印機能） -->
-			<li>
-				<span class="input_title">刻印サービス</span>
-				<span class="input_value" th:text="*{isEngravable == 1 ? '利用可能' : '利用不可'}"></span>
-			</li>
-			<!-- 追加分(刻印機能）終わり -->
-			<li>
-				<span class="input_title">[[#{itemForm.description}]]</span>
-				<span class="input_value" th:text="*{description}"></span>
-			</li>
-			<li>
-				<span class="input_title">[[#{data.item.image}]]</span>
-				<span class="input_value">
-					<img th:src="@{/images/{itemFileName}(itemFileName=*{image})}"
-					    th:unless="*{#strings.isEmpty(image)}"></img>
-					<img th:src="@{/images/common/no_image.jpg}" th:if="*{#strings.isEmpty(image)}"></img>
-				</span>
-			</li>
-		</ul>
+	<div id="adminCategoryConfirm">
+		<p th:class="check_message" th:text="#{msg.regist.check}"></p>
+		<div class="user_info_form_area">
+			<ul class="input_list" th:object="${itemForm}">
+				<li>
+					<span class="input_title">[[#{itemForm.name}]]</span>
+					<span class="input_value" th:text="*{name}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{itemForm.price}]]</span>
+					<span class="input_value" th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{data.category}]]</span>
+					<span class="input_value" th:text="*{categoryName}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{itemForm.stock}]]</span>
+					<span class="input_value" th:text="*{#numbers.formatDecimal(stock, 0, 'COMMA', 0, 'POINT')}"></span>
+				</li>
+				<!-- カテゴリごとのJSON項目表示 -->
+				<li th:if="${#lists.contains({1, 2, 3, 4, 5, 6}, itemForm.categoryId)}">
+					<span class="input_title">[[#{itemForm.varNumber}]]</span>
+					<span class="input_value" th:text="*{varNumber}"></span>
+				</li>
+				<li th:if="${#lists.contains({1, 2, 3, 4, 5, 6}, itemForm.categoryId)}">
+					<span class="input_title">[[#{itemForm.colorPattern}]]</span>
+					<span class="input_value" th:text="*{colorPattern}"></span>
+				</li>
+				<!-- ペン先の太さ (category: 1, 2, 6) -->
+				<li th:if="${#lists.contains({1, 2, 6}, itemForm.categoryId)}">
+					<span class="input_title">[[#{itemForm.nibDiameter}]]</span>
+					<span class="input_value" th:text="*{nibDiameter}"></span>
+				</li>
+				<!-- 芯の太さ (category: 3, 6) -->
+				<li th:if="${#lists.contains({3, 6}, itemForm.categoryId)}">
+					<span class="input_title">[[#{itemForm.leadDiameter}]]</span>
+					<span class="input_value" th:text="*{leadDiameter}"></span>
+				</li>
+				<!-- インク容量 (category: 5) -->
+				<li th:if="${itemForm.categoryId == 5}">
+					<span class="input_title">[[#{itemForm.inkVolume}]]</span>
+					<span class="input_value" th:text="*{inkVolume}"></span>
+				</li>
+				<!-- カテゴリごとのJSON項目表示：ここまで -->
+				<!-- 追加分(刻印機能） -->
+				<li>
+					<span class="input_title">刻印サービス</span>
+					<span class="input_value" th:text="*{isEngravable == 1 ? '利用可能' : '利用不可'}"></span>
+				</li>
+				<!-- 追加分(刻印機能）終わり -->
+				<li>
+					<span class="input_title">[[#{itemForm.description}]]</span>
+					<span class="input_value" th:text="*{description}"></span>
+				</li>
+				<li>
+					<span class="input_title">[[#{data.item.image}]]</span>
+					<span class="input_value">
+						<img th:src="@{/images/{itemFileName}(itemFileName=*{image})}"
+							th:unless="*{#strings.isEmpty(image)}"></img>
+						<img th:src="@{/images/common/no_image.jpg}" th:if="*{#strings.isEmpty(image)}"></img>
+					</span>
+				</li>
+			</ul>
 
-		<form th:action="@{/admin/item/regist/complete}" method="post" class="user_info_form">
-			<input type="submit" value="登録" class="send_button" />
-		</form>
-		<form th:action="@{/admin/item/regist/input}" method="post">
-			<input type="submit" value="戻る" class="back_button" />
-		</form>
-	</div>
+			<form th:action="@{/admin/item/regist/complete}" method="post" class="user_info_form">
+				<input type="submit" value="登録" class="send_button" />
+			</form>
+			<form th:action="@{/admin/item/regist/input}" method="post">
+				<input type="submit" value="戻る" class="back_button" />
+			</form>
+		</div>
 	</div>
 </body>
 
