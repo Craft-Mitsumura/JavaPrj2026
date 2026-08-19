@@ -27,8 +27,11 @@ public class UserForm implements Serializable {
 	/**
 	 * 会員メールアドレス
 	 */
-	@NotBlank
-	@Email
+	
+	  @NotBlank
+	  
+	  @Email
+	 
 	private String	email;
 
 	/**

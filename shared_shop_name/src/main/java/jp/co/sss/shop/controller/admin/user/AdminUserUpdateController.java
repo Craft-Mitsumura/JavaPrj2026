@@ -107,7 +107,7 @@ public class AdminUserUpdateController {
 			model.addAttribute("org.springframework.validation.BindingResult.userForm", result);
 			session.removeAttribute("result");
 		}
-		
+		 
 		String authErrorMessage = (String) session.getAttribute("authErrorMessage");
 		if (authErrorMessage != null) {
 			// セッションにエラーメッセージがある場合、エラーメッセージを画面表示設定
@@ -158,18 +158,49 @@ public class AdminUserUpdateController {
 		// メールアドレスが変更された場合、または権限が変更された場合、重複チェック
 		boolean emailChanged = !Objects.equals(email, lastUserForm.getEmail());
 		boolean authorityChanged = !Objects.equals(form.getAuthority(), lastUserForm.getAuthority());
-
-		if (emailChanged || authorityChanged) {
-			// メールアドレスまたは権限が変更された場合、email+authority の組み合わせで重複チェック
-			Optional<User> duplicateUser = userRepository.findByEmailAndAuthority(email, form.getAuthority());
-
-			// 重複が存在し、かつ現在のユーザではない場合、エラー
-			if (duplicateUser.isPresent() && !Objects.equals(duplicateUser.get().getId(), lastUserForm.getId())) {
-				String errorMessage = "入力されたメールアドレスは既に登録されています。";
-				session.setAttribute("authErrorMessage", errorMessage);
-				result.rejectValue("email", "error.email", errorMessage);
+		boolean passwordChanged = !Objects.equals(form.getPassword(), lastUserForm.getPassword());
+        
+		// Case: 何も変更されていない場合はそのままpass
+		if(!emailChanged && !authorityChanged && !passwordChanged) {
+			form.setEmail(lastUserForm.getEmail());
+			form.setAuthority(lastUserForm.getAuthority());
+			form.setPassword(lastUserForm.getPassword());
+		}
+		// Case: 何か変更された場合、重複チェック
+		else {
+			// Check 1: Email + Authority の組み合わせチェック（同じ権限レベルでの重複防止）
+			if(emailChanged || authorityChanged) {
+				System.out.println("Check 1: email or authority changed - checking email+authority duplicate");
+				Optional<User> duplicateEmailAuth = userRepository.findByEmailAndAuthority(
+					form.getEmail(), form.getAuthority());
+				
+				// 他のユーザが同じ email + authority の組み合わせを持っている場合、エラー
+				if(duplicateEmailAuth.isPresent() && !Objects.equals(duplicateEmailAuth.get().getId(), lastUserForm.getId())) {
+					String errorMessage = "入力されたメールアドレスと権限の組み合わせは既に登録されています。";
+					session.setAttribute("authErrorMessage", errorMessage);
+					result.rejectValue("email", "error.email", errorMessage);
+					System.out.println("duplicate email+authority found - rejected");
+				}
+			}
+			
+			// Check 2: Email + Password の組み合わせチェック（ログイン競合防止）
+			// 異なる権限でも同じemail+passwordは許可しない（ログイン時に識別不可になるため）
+			if(emailChanged || passwordChanged) {
+				System.out.println("Check 2: email or password changed - checking email+password duplicate");
+				Optional<User> duplicateEmailPass = userRepository.findByEmailAndPassword(
+					form.getEmail(), form.getPassword());
+				
+				// 他のユーザが同じ email + password の組み合わせを持っている場合、エラー
+				// Note: 権限が異なっていてもログイン競合を防ぐためエラーとする
+				if(duplicateEmailPass.isPresent() && !Objects.equals(duplicateEmailPass.get().getId(), lastUserForm.getId())) {
+					String errorMessage = "入力されたメールアドレスとパスワードの組み合わせは既に登録されています。";
+					session.setAttribute("authErrorMessage", errorMessage);
+					result.rejectValue("email", "error.email", errorMessage);
+					System.out.println("duplicate email+password found - rejected (login conflict prevention)");
+				}
 			}
 		}
+		
 
 		form.setEmail(email);
 
@@ -186,7 +217,7 @@ public class AdminUserUpdateController {
 		// 変更確認画面 表示処理
 		return "redirect:/admin/user/update/check";
 	}
-
+ 
 	/**
 	 * 確認画面 表示処理
 	 *
