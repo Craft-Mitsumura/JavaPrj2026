@@ -64,7 +64,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByEmailAndDeleteFlag(String email, Integer deleteFlag);
 	
 	Optional<User> findByEmailAndAuthority(String email, int authority);
-	
+
+	Optional<User> findByEmailAndAuthorityAndPassword(String email, Integer authority, String password);
+    Optional<User> findByAuthorityAndPassword(Integer authority, String password);
+	//Optional<User> findByAuthorityAndPassword(String string, Integer authority);
+	Optional<User> findByEmailAndPassword(String email, String password);
 
 
 }
