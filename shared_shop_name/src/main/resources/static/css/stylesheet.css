@@ -1918,6 +1918,14 @@ p.link_center {
 /*=========================================
           会員詳細
 =========================================*/
+
+#details .next-prize-title {
+    font-weight: bold;
+    margin: 2% 2%;
+    text-align: center;
+    font-size: 42px;
+}
+
 #details .detail_area {
 	border: 1px solid #cccc;
 	width: 40%;
