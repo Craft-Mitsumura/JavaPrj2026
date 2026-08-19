@@ -9,48 +9,9 @@
 
 <body class="user favorite_list">
 
-	<style>
-		.list_table td a {
-			font-size: 22px !important;
-		}
 
-		/* ページのデザイン */
-		.pagination_area {
-			text-align: center;
-			margin-top: 30px;
-			margin-bottom: 50px;
-		}
 
-		.page_btn {
-			display: inline-block;
-			padding: 8px 16px;
-			margin: 0 4px;
-			border: 1px solid #ccc;
-			background-color: #fff;
-			color: #333;
-			text-decoration: none;
-			border-radius: 4px;
-			font-size: 16px;
-		}
-
-		.page_btn.current {
-			background-color: #333;
-			color: #fff;
-			font-weight: bold;
-			border-color: #333;
-		}
-
-		.page_btn:hover:not(.current) {
-			background-color: #eee;
-		}
-
-		h2 {
-			font-weight: bold;
-
-		}
-	</style>
-
-	<h2 class="title">お気に入り一覧</h2>
+	<h2 class="title favorite-title">お気に入り一覧</h2>
 
 	<div th:if="${#lists.isEmpty(favoriteList)}" class="sorted_by">
 		<p id="favoritep" >お気に入りに登録されている商品はありません。</p>
