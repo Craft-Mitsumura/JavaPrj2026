@@ -1,8 +1,16 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
 body {
 	color: #12526d;
 	font-size: 14px;
+	margin: 0;
+	padding: 0;
 }
 
 /* ---- テキスト系 ---- */
@@ -964,6 +972,12 @@ p.link_center {
 	display: show;
 }
 
+#header {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
 #mainLogo {
 	height: 100px;
 	width: 110px;
@@ -1221,6 +1235,7 @@ p.link_center {
 	box-shadow: 0 3px 15px rgba(0, 0, 0, .18);
 	position: relative;
 	z-index: 999;
+	margin: 0;
 }
 
 /* ==========================================
@@ -2419,19 +2434,20 @@ p.link_center {
 .footer {
 	background: #000;
 	color: #fff;
-	margin-top: 60px;
-
+	margin: 0;
+	padding: 10px 0 0 0;
+	width: 100%;
 }
 
 .footer-container {
 	max-width: 1200px;
-	margin: auto;
+	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
-	flex-wrap: nowrap;
-	gap: 40px;
+	flex-wrap: wrap;
+	
 	align-items: flex-start;
-
+	padding: 0 20px 30px 20px;
 }
 
 .footer-section {
@@ -2451,18 +2467,21 @@ p.link_center {
 .footer-section p {
 	color: #cfcfcf;
 	line-height: 1.8;
+	text-align: left;
 }
 
 .footer-section ul {
-	list-style: none;
-	padding: 0;
-	margin: auto;
-	margin-top: 6%;
-	margin-bottom: 3%;
-	display: flex;
-	flex-wrap: nowrap;
-	gap: 20px;
-	align-items: center;
+	    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    gap: 30px;
+    margin-left: 30px;
+
 }
 
 .footer-section li {
@@ -2484,6 +2503,7 @@ p.link_center {
 	display: flex;
 	gap: 18px;
 	margin-bottom: 10px;
+	justify-content: center;
 }
 
 .social-icons a {
@@ -2496,7 +2516,6 @@ p.link_center {
 	align-items: center;
 	color: #fff;
 	transition: .3s;
-	margin: auto;
 }
 
 .social-icons a:hover {
@@ -2516,6 +2535,7 @@ p.link_center {
 	padding: 18px;
 	color: #b5b5b5;
 	font-size: 14px;
+	width: 100%;
 }
 
 #favoritep {

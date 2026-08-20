@@ -8,19 +8,19 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
 <title th:replace="${title}"></title>
 </head>
-<body th:classappend="${(session.user != null and (session.user.authority == 0 or session.user.authority == 1)) ? 'admin' : 'user' }">
+<body th:classappend="${(session.user != null and (session.user.authority == 0 or session.user.authority == 1)) ? 'admin' : 'user' }" style="margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column;">
 	<!--/* ヘッダー */-->
-	<header >
+	<header style="margin: 0; padding: 0;">
 		<div th:replace="~{common/header :: layout-header}"></div>
 	</header>
 
 	<!--/* メイン */-->
-	<article class="container content">
+	<article class="container content" style="flex: 1;">
 		<div th:replace="${body}"></div>
 	</article>
 
 	<!--/* フッター */-->
-	<footer>
+	<footer style="margin-top: auto;">
 		<div th:replace="~{common/footer :: layout-footer}"></div>
 	</footer>
 </body>
