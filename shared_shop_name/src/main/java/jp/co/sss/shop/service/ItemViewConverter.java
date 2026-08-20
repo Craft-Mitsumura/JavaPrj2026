@@ -65,6 +65,7 @@ public class ItemViewConverter {
 			break;
 		case 5: // インク
 			form.setVarNumber(root.path("var_Number").asInt(0));
+			form.setColorPattern(root.path("color_pattern").asText(""));
 			form.setInkVolume(root.path("ink_volume").asText(""));
 			break;
 		case 6: // その他
