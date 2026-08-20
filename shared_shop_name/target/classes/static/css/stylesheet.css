@@ -2297,40 +2297,6 @@ p.link_center {
 	right: 12px;
 	z-index: 10;
 }
-<<<<<<< HEAD
-=======
-.ecommerce-section .btn-favorite {
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: background 0.2s, transform 0.2s;
-}
- .ecommerce-section .btn-favorite:hover {
-    background: #fff;
-    transform: scale(1.1);
-} 
-.ecommerce-section .heart-icon {
-    width: 18px;
-    height: 18px;
-    stroke: #ff4757;
-    transition: fill 0.2s;
-}
-
-.ecommerce-section .btn-favorite.favorite .heart-icon {
-    fill: #ff4757;
-}
-
-.ecommerce-section .btn-favorite:hover .heart-icon {
-    fill: #ff4757;
-}
->>>>>>> 9af04bf9acf9dfaa6ccbc5d600ef7fd0355503af
 
 .ecommerce-section .btn-favorite {
 	background: rgba(255, 255, 255, 0.9);
@@ -2352,18 +2318,21 @@ p.link_center {
 }
 
 .ecommerce-section .heart-icon {
-	width: 18px;
-	height: 18px;
-	stroke: #ff4757;
-	fill: transparent;
-	transition: fill 0.2s;
+    width: 18px;
+    height: 18px;
+    stroke: #ff4757;
+    transition: fill 0.2s;
+}
+
+.ecommerce-section .btn-favorite.favorite .heart-icon {
+    fill: #ff4757;
 }
 
 .ecommerce-section .btn-favorite:hover .heart-icon {
-	fill: #ff4757;
+    fill: #ff4757;
 }
 
-
+ 
 .ecommerce-section .item-info {
 	padding: 15px;
 	display: flex;
