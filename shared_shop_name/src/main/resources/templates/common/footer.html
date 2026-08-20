@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 </head>
-<body><footer th:fragment="layout-footer" class="footer">
+<body style="margin: 0; padding: 0;">
+<footer th:fragment="layout-footer" class="footer">
 
     <div class="footer-container">
 <th:block th:if="${session.user == null or session.user.authority == 2}">
@@ -68,8 +69,7 @@
             </div>
         </div>
 
-    </div>
-  </block>
+    </th:block>
     <div class="footer-bottom">
         <small>
             © 2026 avoir Shop. All Rights Reserved.
