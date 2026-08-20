@@ -9,9 +9,9 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/carousel.css}" />
 <title  th:replace="${title}"></title>
 </head>
-<body class="user">
+<body class="user" style="margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column;">
 	<!--/* ヘッダー */-->
-	<header>
+	<header style="margin: 0; padding: 0;">
 		<div th:replace="~{common/header :: layout-header}"></div>
 	</header>
 	<!--/* ナビゲーションバー */-->
@@ -20,14 +20,14 @@
 	</nav>
 	 <!--/* カルーセル広告 */-->
 	<!-- <div th:replace="~{common/carousel :: layout-carousel}"></div> -->
-	<div class="container">
+	<div class="container" style="flex: 1;">
 		<!--/* メイン */-->
 		<article class="main" style="margin-left:115px;">
 			<div th:replace="${body}"></div>
 		</article>
 	</div>
 	<!--/* フッター */-->
-	<footer>
+	<footer style="margin-top: auto;">
 		<div th:replace="~{common/footer :: layout-footer}"></div>
 	</footer>
 </body>
