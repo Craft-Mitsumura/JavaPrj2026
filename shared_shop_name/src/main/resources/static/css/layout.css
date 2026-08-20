@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 
 /* ---- 共通 ---- */
 /* スキルアップテクニック1-1
@@ -19,9 +19,12 @@ html {
  * paddingプロパティの値0は、body要素が持つ枠の領域を取り消します。
  */
 body {
-
+	margin: 0;
 	padding: 0;
 	background: #0000;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 h2,
@@ -66,6 +69,7 @@ li {
 	width: 960px;
 	margin: 0 auto;
 	justify-content: space-between;
+	flex: 1;
 }
 
 body>.container {
@@ -74,6 +78,7 @@ body>.container {
 
 .content {
 	padding: 30px 0 60px;
+	flex: 1;
 }
 
 /* ---- ヘッダー ---- */
@@ -85,7 +90,8 @@ header .container {
 header {
 	background: #111827;
 	color: white;
-	margin-bottom: 2%;
+	margin: 0;
+	padding: 0;
 	height: 140px;
 }
 
@@ -352,10 +358,8 @@ aside.admin_menu {
 footer {
 	background-color: black;
 	text-align: center;
-	/* position:fixed;
-	bottom: 0; */
 	width: 100%;
-	bottom:0;
+	margin-top: auto;
 }
 
 small {
