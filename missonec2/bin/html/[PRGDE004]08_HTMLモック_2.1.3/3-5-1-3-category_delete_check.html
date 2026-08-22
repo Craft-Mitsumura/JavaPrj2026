@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)http://localhost:55000/shared_shop/admin/category/delete/check -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>カテゴリ削除確認 | シェアードショップ</title>
+</head>
+<body class="admin">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/admin/user/detail/2">運用管理二郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+</div>
+	</header>
+	<div class="container">
+		
+		<aside class="admin_menu">
+	
+	
+
+	
+	<div>
+
+		<h2 class="title">管理者用メニュー</h2>
+		<ul class="menu">
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/user/list" class="display_list">会員一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/order/list" class="display_list">注文一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/item/list" class="display_list">商品一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/category/list" class="display_list">カテゴリ一覧表示</a>
+			</li>
+		</ul>
+	</div>
+</aside>
+		
+		<article class="main">
+			
+	<h2 class="title">カテゴリ削除確認</h2>
+	<p class="check_message">以下の内容を削除します。 </p>
+
+	<div class="user_info_form_area">
+		<ul class="input_list">
+			<li>
+				<span class="input_title">カテゴリ名</span>
+				<span class="input_value">化粧品</span>
+			</li>
+			<li>
+				<span class="input_title">説明文</span>
+				<span class="input_value">スキンケア用品などを扱います</span>
+			</li>
+		</ul>
+		<form action="http://localhost:55000/shared_shop/admin/category/delete/complete" method="post">
+			<input type="submit" value="削除" class="delete">
+		</form>
+		<form action="http://localhost:55000/shared_shop/admin/category/detail/6" method="post">
+			<input type="submit" value="戻る" class="back_button">
+		</form>
+	</div>
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>

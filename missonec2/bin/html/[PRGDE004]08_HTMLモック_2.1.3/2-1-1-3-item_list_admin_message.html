@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)http://localhost:55000/shared_shop/admin/item/list -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>商品一覧 | シェアードショップ</title>
+</head>
+<body class="admin">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/admin/user/detail/2">運用管理二郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+</div>
+	</header>
+	<div class="container">
+		
+		<aside class="admin_menu">
+	
+	
+
+	
+	<div>
+
+		<h2 class="title">管理者用メニュー</h2>
+		<ul class="menu">
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/user/list" class="display_list">会員一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/order/list" class="display_list">注文一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/item/list" class="display_list">商品一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/category/list" class="display_list">カテゴリ一覧表示</a>
+			</li>
+		</ul>
+	</div>
+</aside>
+		
+		<article class="main">
+			
+<div class="item_list_admin">
+	<h2 class="title">商品一覧</h2>
+		<!-- /*追加登録不可メッセージ */-->
+	
+	
+	<div>
+		<p>商品情報は登録されていません。 </p>
+	</div>
+	<form action="http://localhost:55000/shared_shop/admin/item/regist/input" method="post" class="sign_up_form">
+		<input type="submit" value="商品新規登録" class="menu_button">
+	</form>
+
+	
+	<div class="item_list_table">
+	
+	</div>
+	
+	
+
+</div>
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>

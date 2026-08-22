@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title,body)">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
+
+	<link rel="stylesheet" th:href="@{/css/prize.css}" />
+	<title th:replace="${title}">avoir</title>
+
+</head>
+
+<body class="admin" style="margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column;">
+	<header style="margin: 0; padding: 0;">
+		<div th:replace="~{common/header :: layout-header}"></div>
+	</header>
+	
+	<div class="container" style="position: relative; min-height: 80vh; flex: 1;">
+
+		<aside th:unless="${session.user != null and session.user.authority == 0}" class="admin_sidebar" style="position: absolute; left: 0; top: 20px; width: 200px; z-index: 10;">
+			<div class="border border-gray-200 rounded-md p-5 mr-9">
+				<h2 class="font-bold text-lg" th:text="#{admin.menu}">運用メニュー</h2><br>
+				
+				<ul class="flex flex-col min-h-12 justify-between" style="list-style: none; padding: 0; margin: 0;">
+					<li class="flex items-center" style="margin-bottom: 12px;">
+						<img th:src="@{/images/common/account.png}" alt="" class="w-5 h-5">
+						<a th:href="@{/admin/user/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.user.list}">ユーザー管理</a>
+					</li>
+					<li class="flex items-center" style="margin-bottom: 12px;">
+						<img th:src="@{/images/common/document.png}" alt="" class="w-5 h-5">
+						<a th:href="@{/admin/order/list}" class="disabled px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.order.list}">受注管理</a>
+					</li>
+					<li class="flex items-center" style="margin-bottom: 12px;">
+						<img th:src="@{/images/common/box.png}" alt="" class="w-5 h-5">
+						<a th:href="@{/admin/item/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.item.list}">商品管理</a>
+					</li>
+					<li class="flex items-center" style="margin-bottom: 12px;">
+						<img th:src="@{/images/common/folder.png}" alt="" class="w-5 h-5">
+						<a th:href="@{/admin/category/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.category.list}">カテゴリ管理</a>
+					</li>
+					<li class="flex items-center" style="margin-bottom: 12px;">
+						<img th:src="@{/images/common/document.png}" alt="" class="w-5 h-5">
+						<a th:href="@{/admin/ad/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.ad.category.list}"  >カルーセル式カテゴリ一覧</a>
+					</li>
+					<li class="flex items-center" style="margin-bottom: 12px;">
+					    <img th:src="@{/images/common/gift.png}" alt="" class="w-5 h-5">
+					    <a th:href="@{/admin/prize/list}" class="px-5 py-2 text-sm hover:bg-gray-200 rounded-xl" th:text="#{admin.menu.prize.list}" > 景品管理</a>
+					</li>
+
+					<li><hr style="border: 0; border-top: 1px solid #ccc; margin: 15px 0;" /></li>
+					<li class="flex items-center">
+						<a th:href="@{/admin/menu}" class="text-sm" style="color: #666; text-decoration: none;">メインメニューへ戻る</a>
+					</li>
+				</ul>
+			</div>
+		</aside>
+
+		<article class="main" style="margin-left: 220px;">
+			<div th:replace="${body}"></div>
+		</article>
+	</div>
+	
+	<footer style="margin-top: auto;">
+		<div th:replace="~{common/footer :: layout-footer}"></div>
+	</footer>
+	
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+
+	    // 現在のURL
+	    const currentPath = window.location.pathname;
+
+	    // メニュー内のリンクを取得
+	    document.querySelectorAll(".admin_sidebar a").forEach(link => {
+
+	        // hrefを取得
+	        const href = link.getAttribute("href");
+
+	        // 一致したら非活性
+	        if (href === currentPath) {
+	            link.classList.add("menu-disabled");
+	            link.removeAttribute("href");
+	        }
+	    });
+
+	});
+	</script>
+	
+</body>
+
+</html>

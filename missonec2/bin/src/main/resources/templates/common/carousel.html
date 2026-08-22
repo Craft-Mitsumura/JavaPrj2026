@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="layout-carousel" class="carousel-container">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize-css@2.3.1/normalize.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+
+		<style>
+			/* 蜈ｱ騾夊ｨｭ螳� */
+			:root {
+				--swiper-theme-color: #D4AF37;
+			}
+
+			.wrapper {
+				overflow-x: hidden;
+				width: 100%;
+				padding-bottom: 5px;
+			}
+
+			/* .swiper 縺ｫ繧ｯ繝ｩ繧ｹ蜷阪ｒ邨ｱ荳�縺励�｛verflow: visible 縺ｧ蟾ｦ蜿ｳ縺ｮ繧ｹ繝ｩ繧､繝峨′隕九∴繧九ｈ縺�縺ｫ縺励∪縺� */
+			.sample-swiper-coverflow .swiper {
+				position: relative;
+				overflow: visible;
+				width: 100%;
+				max-width: 1000px;
+				height: 250px;
+				margin: 0 auto;
+				padding-bottom: 40px;
+			}
+
+			/* 鬟帙�ｳ蜃ｺ縺溘せ繝ｩ繧､繝峨�ｮ蟇ｾ遲� */
+			.sample-swiper-coverflow {
+				overflow: visible;
+				width: 100%;
+			}
+
+			/* 繧ｹ繝ｩ繧､繝牙��隕∫ｴ�縺ｮ驟咲ｽｮ */
+			.swiper-slide {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.carousel-item {
+				width: 100%;
+				height: 100%;
+			}
+
+			.carousel-item a,
+			.carousel-item img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				/* object-fit: cover; */
+				object-position: center;
+				background-color: #f5f5f5;
+				overflow: hidden;
+			}
+
+			/* 繝壹�ｼ繧ｸ繝阪�ｼ繧ｷ繝ｧ繝ｳ�ｼ壹さ繝ｳ繝�繝� */
+			.sample-swiper-coverflow .swiper-pagination {
+				background-color: transparent;
+				border: 2px solid var(--swiper-theme-color);
+				padding: 5px 15px;
+				border-radius: 20px;
+				width: auto;
+				left: 50%;
+				transform: translateX(-50%);
+				bottom: -5px;
+			}
+
+			/* 繝壹�ｼ繧ｸ繝阪�ｼ繧ｷ繝ｧ繝ｳ�ｼ壹ラ繝�繝� */
+			.sample-swiper-coverflow .swiper-pagination-bullet {
+				background: var(--swiper-theme-color);
+				opacity: 0.5;
+				border: 1px solid #ffffff;
+			}
+
+			.sample-swiper-coverflow .swiper-pagination-bullet-active {
+				opacity: 1;
+			}
+		</style>
+
+		<div class="wrapper">
+			<div class="sample-swiper-coverflow">
+				<!-- Slider main container -->
+				<div class="swiper">
+					<!-- Additional required wrapper -->
+					<div class="swiper-wrapper">
+						<!-- Slides -->
+						<div class="swiper-slide" th:each="ad : ${adList}">
+							<div class="carousel-item">
+
+								<a th:if="${ad.imageName != null}"
+									th:href="@{/client/ad/page/{id}(id=${ad.category.id})}">
+									<img th:src="@{/images/uploads/{image}(image=${ad.imageName})}" alt="蠎�蜻顔判蜒�" />
+								</a>
+
+								<img th:if="${ad.imageName == null}" th:src="@{/images/common/no_image.jpg}"
+									alt="逕ｻ蜒上↑縺�" />
+
+							</div>
+						</div>
+						<div class="swiper-slide" th:if="${#lists.isEmpty(adList)}">
+							<div class="carousel-item">
+								<img th:src="@{/images/common/no_image.jpg}" alt="繝�繝ｼ繧ｿ縺後≠繧翫∪縺帙ｓ" />
+							</div>
+						</div>
+					</div>
+
+					<!-- If we need pagination -->
+					<div class="swiper-pagination"></div>
+					<!-- If we need navigation buttons -->
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+		<script type="text/javascript">
+			const defaultOptions = {
+				// 繝峨ャ繝医う繝ｳ繧ｸ繧ｱ繝ｼ繧ｿ繝ｼ縺ｮ陦ｨ遉ｺ
+				pagination: {
+					el: ".swiper-pagination",
+					clickable: true,
+				},
+
+				loop: true,// 繝ｫ繝ｼ繝励�ｮ譛牙柑蛹�
+
+				autoplay: {
+					delay: 4000,             // 3000繝溘Μ遘抵ｼ�3遘抵ｼ峨＃縺ｨ縺ｫ繧ｹ繝ｩ繧､繝�
+					disableOnInteraction: false, // 繝ｦ繝ｼ繧ｶ繝ｼ縺梧桃菴懊＠縺ｦ繧り�ｪ蜍募�咲函繧呈ｭ｢繧√↑縺�
+				},
+			}
+
+			// 繧ｫ繝舌�ｼ繝輔Ο繝ｼ繧ｨ繝輔ぉ繧ｯ繝�
+			// 繧ｻ繝ｬ繧ｯ繧ｿ繧� .swiper 縺ｫ蜷医ｏ縺帙※縲，overFlow 縺ｮ繧ｪ繝励す繝ｧ繝ｳ繧定ｨｭ螳�
+			const swiper = new Swiper(".sample-swiper-coverflow .swiper", {
+				...defaultOptions,
+				slidesPerView: 1.3,      /* 陦ｨ遉ｺ縺吶ｋ繧ｹ繝ｩ繧､繝峨�ｮ譫壽焚 */
+				centeredSlides: true,    /* 繧ｹ繝ｩ繧､繝峨�ｮ荳ｭ螟ｮ謠�縺医��譛牙柑蛹� */
+				spaceBetween: 20,
+				effect: "coverflow",     /* 繧ｫ繝舌�ｼ繝輔Ο繝ｼ繧ｨ繝輔ぉ繧ｯ繝医ｒ譛牙柑蛹� */
+				coverflowEffect: {
+					rotate: 0,           /* 繧ｹ繝ｩ繧､繝峨�ｮ蝗櫁ｻ｢隗貞ｺｦ */
+					stretch: 0,         /* 繧ｹ繝ｩ繧､繝峨�ｮ髢馴囈�ｼ�px蜊倅ｽ搾ｼ� */
+					depth: 150,          /* 螂･陦後″諢滂ｼ亥ｷｦ蜿ｳ縺ｮ逕ｻ蜒上ｒ縺ｩ繧後□縺大･･縺ｫ蠑輔▲霎ｼ繧√ｋ縺具ｼ� */
+					scale: 1,
+					slideShadows: true,  /* 蜈磯�ｭ繧ｹ繝ｩ繧､繝峨�ｮ蠖ｱ繧呈怏蜉ｹ蛹� */
+				},
+			});
+		</script>
+	</div>
+</body>
+
+</html>

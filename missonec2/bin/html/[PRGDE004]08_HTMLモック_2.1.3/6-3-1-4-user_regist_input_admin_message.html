@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://localhost:55000/shared_shop/admin/user/regist/input -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>会員登録入力 | シェアードショップ</title>
+</head>
+<body class="admin">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/admin/user/detail/1">システム管理太郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+</div>
+	</header>
+	<div class="container">
+		
+		<aside class="admin_menu">
+	
+	
+
+	
+	<div>
+
+		<h2 class="title">管理者用メニュー</h2>
+		<ul class="menu">
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/user/list" class="display_list">会員一覧表示</a>
+			</li>
+			
+			
+			
+		</ul>
+	</div>
+</aside>
+		
+		<article class="main">
+			
+	<h2 class="title">会員登録入力</h2>
+	<p class="input_message">登録する情報を入力してください。 </p>
+
+	<div class="user_info_form_area">
+		<form action="http://localhost:55000/shared_shop/admin/user/regist/check" method="post" class="user_info_form">
+			
+				<ul class="error_list">
+					<li>電話番号は必須項目です。</li>
+					<li>電話番号は10文字以上11文字以内で入力してください。</li>
+					<li>住所は必須項目です。</li>
+					<li>パスワードは必須項目です。</li>
+					<li>パスワードは正しい形式で入力してください。</li>
+					<li>郵便番号は必須項目です。</li>
+					<li>住所は150文字以内で入力してください。</li>
+					<li>郵便番号は7文字で入力してください。</li>
+					<li>電話番号は半角数字で入力してください。</li>
+					<li>パスワードは8文字以上16文字以内で入力してください。</li>
+					<li>郵便番号は半角数字で入力してください。</li>
+					<li>氏名は必須項目です。</li>
+					<li>氏名は30文字以内で入力してください。</li>
+					<li>メールアドレスは必須項目です。</li>
+				</ul>
+				<br>
+			
+
+			<ul class="input_list">
+				<li>
+					<label><span class="input_title">メールアドレス</span></label>
+					<input type="text" id="email" name="email" value="">
+				</li>
+				<li>
+					<label><span class="input_title">パスワード</span></label>
+					<input type="password" id="password" name="password" value="">
+				</li>
+				<li>
+					<label><span class="input_title">氏名</span></label>
+					<input type="text" id="name" name="name" value="">
+				</li>
+				<li>
+					<label><span class="input_title">郵便番号</span></label>
+					<input type="text" id="postalCode" name="postalCode" value="">
+				</li>
+				<li>
+					<label><span class="input_title">住所</span></label>
+					<textarea rows="6" id="address" name="address"></textarea>
+				</li>
+				<li>
+					<label><span class="input_title">電話番号</span></label>
+					<input type="text" id="phoneNumber" name="phoneNumber" value="">
+				</li>
+				<li>
+					<label><span class="input_title">権限</span></label>
+					<div class="radio_label">
+						<input type="radio" name="authority" value="0" checked="checked">システム管理者
+						<input type="radio" name="authority" value="1">運用管理者
+						<input type="radio" name="authority" value="2">一般会員
+					
+					</div>
+					
+				</li>
+			</ul>
+			<input type="submit" value="確認" class="send_button">
+		</form>
+		<form action="http://localhost:55000/shared_shop/admin/user/list" method="post">
+			<input type="submit" value="戻る" class="back_button">
+		</form>
+	</div>
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>

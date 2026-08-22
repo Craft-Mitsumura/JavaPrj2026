@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title th:text="'カルーセル式カテゴリ詳細 | '+ #{shop.title}">カルーセル式カテゴリ詳細</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin item_detail_admin">
+
+	<div id="adminAdDetail" th:fragment="content">
+
+		<h2 class="title">カルーセル式カテゴリ詳細</h2>
+
+		<div class="info_form_area" th:object="${promotion}">
+			<div class="item_detail_area">
+
+				<div class="item_image_area">
+					<span th:if="*{imageName != null}">
+						<img th:src="@{/images/uploads/{image}(image=*{imageName})}"></img>
+					</span>
+					<span th:if="*{imageName == null}">
+						<img th:src="@{/images/common/no_image.jpg}"></img>
+					</span>
+				</div>
+
+				<dl class="item_detail_list">
+					<dt>[[#{ad.pageName}]]</dt>
+					<dd th:text="*{pageName}"></dd>
+
+					<dt>[[#{ad.category}]]</dt>
+					<dd th:text="*{category != null ? category.name : ''}"></dd>
+
+					<dt>[[#{ad.isActive}]]</dt>
+					<dd th:text="*{isActive == 1 ? '有効' : '無効'}"></dd>
+				</dl>
+
+			</div>
+
+			<div class="detail_button_area">
+				<form th:action="@{/admin/ad/list}" method="get">
+					<input type="submit" value="戻る" class="back_button" />
+				</form>
+
+				<form th:action="@{/admin/ad/update/input/{id}(id=*{id})}" method="post">
+					<input type="submit" class="changeBtn" value="変更" />
+				</form>
+
+				<form th:action="@{/admin/ad/delete/check/{id}(id=*{id})}" method="post" style="display:inline;">
+					<input type="submit" value="削除" id="deleteBtn" />
+				</form>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

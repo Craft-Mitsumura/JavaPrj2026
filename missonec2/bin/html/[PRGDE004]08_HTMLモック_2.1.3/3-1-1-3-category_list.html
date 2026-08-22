@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://localhost:55000/shared_shop/admin/category/list -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>カテゴリ一覧 | シェアードショップ</title>
+</head>
+<body class="admin">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/admin/user/detail/2">運用管理二郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+</div>
+	</header>
+	<div class="container">
+		
+		<aside class="admin_menu">
+	
+	
+
+	
+	<div>
+
+		<h2 class="title">管理者用メニュー</h2>
+		<ul class="menu">
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/user/list" class="display_list">会員一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/order/list" class="display_list">注文一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/item/list" class="display_list">商品一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/category/list" class="display_list">カテゴリ一覧表示</a>
+			</li>
+		</ul>
+	</div>
+</aside>
+		
+		<article class="main">
+			
+
+	<h2 class="title">カテゴリ一覧</h2>
+	
+	
+	
+	
+	<form action="http://localhost:55000/shared_shop/admin/category/regist/input" method="post" class="sign_up_form">
+		<input type="submit" value="カテゴリ新規登録" class="menu_button">
+	</form>
+	
+	<table class="list_table category_list">
+		<tbody><tr>
+			<th>ID</th>
+			<th>カテゴリ名</th>
+			<th>操作</th>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td>
+				<a href="http://localhost:55000/shared_shop/admin/category/detail/5">飲み物</a>
+			</td>
+			<td>
+				<form action="http://localhost:55000/shared_shop/admin/category/update/input/5" method="post">
+					<input type="submit" value="変更">
+				</form>
+				<form action="http://localhost:55000/shared_shop/admin/category/delete/check/5" method="post">
+					<input type="submit" value="削除" class="delete">
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>
+				<a href="http://localhost:55000/shared_shop/admin/category/detail/4">文房具</a>
+			</td>
+			<td>
+				<form action="http://localhost:55000/shared_shop/admin/category/update/input/4" method="post">
+					<input type="submit" value="変更">
+				</form>
+				<form action="http://localhost:55000/shared_shop/admin/category/delete/check/4" method="post">
+					<input type="submit" value="削除" class="delete">
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>
+				<a href="http://localhost:55000/shared_shop/admin/category/detail/2">書籍</a>
+			</td>
+			<td>
+				<form action="http://localhost:55000/shared_shop/admin/category/update/input/2" method="post">
+					<input type="submit" value="変更">
+				</form>
+				<form action="http://localhost:55000/shared_shop/admin/category/delete/check/2" method="post">
+					<input type="submit" value="削除" class="delete">
+				</form>
+			</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>
+				<a href="http://localhost:55000/shared_shop/admin/category/detail/1">食料品</a>
+			</td>
+			<td>
+				<form action="http://localhost:55000/shared_shop/admin/category/update/input/1" method="post">
+					<input type="submit" value="変更">
+				</form>
+				<form action="http://localhost:55000/shared_shop/admin/category/delete/check/1" method="post">
+					<input type="submit" value="削除" class="delete">
+				</form>
+			</td>
+		</tr>
+	</tbody></table>
+	
+	<ul class="paging">
+		<!-- 先頭のページリンク表示処理 --> 
+		<!--1ページ目の場合はクラスの名前をdisabledに設定-->
+		<li class="disabled">
+			<!--1ページ目の場合は<<を表示-->
+			<span>&lt;&lt;</span>
+			<!-- 1ページ目ではない場合、１ページ目のリンクを表示-->
+			
+		</li>
+		<!--ページ番号指定のリンク表示処理--> 
+		<!-- #numbersのsequence()メソッドを使用して配列を作成し、被繰り返し変数として利用 -->
+		<li class="active">
+			<span>1</span>
+			
+		</li>
+		<!-- 末尾ページのリンク --> 
+		<!--1ページ目の場合はクラスの名前をdisabledに設定--> 
+		<li class="disabled">
+			<!--末尾のページの場合は>>を表示-->
+			<span>&gt;&gt;</span>
+			<!-- 末尾ページではない場合、末尾ページへのリンクを表示-->
+			
+		</li>
+	</ul>
+
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>

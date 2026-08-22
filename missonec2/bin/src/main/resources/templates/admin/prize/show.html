@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<title>景品詳細 | [[#{shop.title}]]</title>
+	<meta charset="UTF-8" />
+</head>
+
+<body class="admin prize_detail">
+
+<div id="adminPrizeDetail">
+
+	<h2 class="title">景品詳細</h2>
+
+	<div class="info_form_area" th:object="${prize}">
+
+		<div class="prize_detail_area">
+
+		    <div class="prize_image_area">
+		        <img th:if="*{image != null}"
+		             th:src="@{/images/{image}(image=*{image})}" />
+
+		        <img th:if="*{image == null}"
+		             th:src="@{/images/common/no_image.jpg}" />
+		    </div>
+
+		    <ul class="input_list">
+
+		        <li>
+		            <span class="input_title">景品名</span>
+		            <span class="input_value" th:text="*{name}"></span>
+		        </li>
+
+		        <li>
+		            <span class="input_title">必要ポイント</span>
+		            <span class="input_value" th:text="*{#numbers.formatInteger(requiredPoint, 0, 'COMMA')} + ' pt'"></span>
+		        </li>
+
+		        <li>
+		            <span class="input_title">説明</span>
+		            <span class="input_value" th:text="*{description}"></span>
+		        </li>
+
+		    </ul>
+
+		    <div class="detail_button_area">
+
+		        <form th:action="@{/admin/prize/list}" method="get">
+		            <input type="submit" value="戻る" class="back_button">
+		        </form>
+
+		        <form th:action="@{/admin/prize/update/input/{id}(id=*{id})}" method="post">
+		            <input type="submit" value="変更" class="changeBtn">
+		        </form>
+
+				<form th:action="@{/admin/prize/delete/check}" method="post">
+
+				    <input type="hidden" name="id" th:value="*{id}">
+				    <input type="submit" value="削除" id="deleteBtn">
+
+				</form>
+		    </div>
+
+		</div>
+
+	</div>
+
+</div>
+
+</body>
+</html>

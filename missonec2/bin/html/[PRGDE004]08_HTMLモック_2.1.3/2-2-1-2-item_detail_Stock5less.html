@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://localhost:55000/shared_shop/client/item/detail/1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>商品詳細 | シェアードショップ</title>
+</head>
+<body class="user">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/client/user/detail">一般三郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+	
+</div>
+	</header>
+	
+	<nav class="navi_area">
+		<ul class="navi_menu">
+		<li><a href="http://localhost:55000/shared_shop/">トップ</a></li>
+		<li><a href="http://localhost:55000/shared_shop/client/item/list/1">商品一覧</a></li>
+		<li><a href="http://localhost:55000/shared_shop/client/basket/list">買い物かご</a></li>
+		
+			<li><a href="http://localhost:55000/shared_shop/client/order/list">注文一覧</a></li>
+		
+	</ul>
+	</nav>
+	<div class="container">
+		
+		<aside class="search">
+	
+	<div class="search_area">
+		<h2 class="title">カテゴリ検索</h2>
+		<div class="form">
+			<!-- 商品一覧画面以外で表示 -->
+			<form action="http://localhost:55000/shared_shop/client/item/list/1">
+				<select name="categoryId">
+					<option value="0">--指定なし--</option>
+					<option value="2">書籍</option>
+					<option value="1">食料品</option>
+				</select> <input type="submit" value="検索">
+			</form>
+			<!-- 商品一覧画面上で表示 -->
+			
+		</div>
+	</div>
+
+	
+	
+</aside>
+		
+		<article class="main">
+			
+
+	<h2 class="title">商品詳細</h2>
+
+	<div class="info_form_area">
+		<div class="item_detail_area">
+			<div class="item_image_area">
+				<img src="./images/apple.jpg">
+				
+			</div>
+			<dl class="item_detail_list">
+				<dt>商品名</dt>
+				<dd>りんご</dd>
+				<dt>価格</dt>
+				<dd>100</dd>
+				<dt>在庫数</dt>
+				
+				<dd>4</dd>
+				
+				<dt>カテゴリ</dt>
+				<dd>食料品</dd>
+				<dt>説明</dt>
+				<dd>青森県産のりんごです。とってもみずみずしい！</dd>
+			</dl>
+		</div>
+		<div class="detail_button_area">
+			<form action="http://localhost:55000/shared_shop/client/basket/add" method="post" class="user_info_form">
+				<input type="hidden" id="id" name="id" value="1">
+				<input type="submit" value="買い物かごに入れる" class="send_button">
+			</form>
+			<form action="http://localhost:55000/shared_shop/client/item/list/1" method="post">
+				<input type="submit" value="戻る" class="back_button">
+			</form>
+		</div>
+	</div>
+
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>

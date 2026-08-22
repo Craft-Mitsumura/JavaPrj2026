@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://localhost:55000/shared_shop/admin/order/detail/3 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/stylesheet.css">
+<title>注文詳細 | シェアードショップ</title>
+</head>
+<body class="admin">
+	
+	<header>
+		<div class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	
+	<div class="user_info">
+		<a href="http://localhost:55000/shared_shop/admin/user/detail/2">運用管理二郎</a>さん | <a href="http://localhost:55000/shared_shop/logout">ログアウト</a>
+	</div>
+	
+</div>
+	</header>
+	<div class="container">
+		
+		<aside class="admin_menu">
+	
+	
+
+	
+	<div>
+
+		<h2 class="title">管理者用メニュー</h2>
+		<ul class="menu">
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/user/list" class="display_list">会員一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/order/list" class="display_list">注文一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/item/list" class="display_list">商品一覧表示</a>
+			</li>
+			<li>
+				<a href="http://localhost:55000/shared_shop/admin/category/list" class="display_list">カテゴリ一覧表示</a>
+			</li>
+		</ul>
+	</div>
+</aside>
+		
+		<article class="main">
+			
+	<h2 class="title">注文詳細</h2>
+
+	<div class="info_form_area">
+		<table class="detail_table payment">
+			<tbody><tr>
+				<th>会員氏名</th>
+				<td>一般三郎</td>
+			</tr>
+			<tr>
+				<th>注文日</th>
+				<td>2023-11-01</td>
+			</tr>
+			<tr>
+				<th>支払い方法</th>
+				<td>
+					
+					<span>銀行振込</span>
+					
+					
+					
+				</td>
+			</tr>
+			<tr>
+				<th>お届け先郵便番号</th>
+				<td>1111111</td>
+			</tr>
+			<tr>
+				<th>お届け先住所</th>
+				<td>東京都台東区4-5-6 ABCマンション5階</td>
+			</tr>
+			<tr>
+				<th>お届け先氏名</th>
+				<td class="value">一般三郎</td>
+			</tr>
+			<tr>
+				<th>お届け先電話番号</th>
+				<td class="value">0123456789</td>
+			</tr>
+		</tbody></table>
+
+		<table class="list_table detail">
+			<tbody><tr>
+				<th>商品名</th>
+				<th>単価</th>
+				<th>数量</th>
+				<th>小計</th>
+			</tr>
+			<tr>
+				<td>りんご</td>
+				<td>100</td>
+				<td>4</td>
+				<td>400</td>
+			</tr>
+			<tr>
+				<td colspan="2"></td>
+				<td class="total">合計</td>
+				<td>400</td>
+			</tr>
+		</tbody></table>
+		<form action="http://localhost:55000/shared_shop/admin/order/list" method="post" class="detail_button_area">
+			<input type="submit" value="戻る" class="back_button">
+		</form>
+	</div>
+
+		</article>
+	</div>
+	
+	<footer>
+		<small class="copyright">
+	
+	Copyright(C) System Shared co., ltd, ALL Rights Reserved
+</small>
+	</footer>
+
+</body></html>

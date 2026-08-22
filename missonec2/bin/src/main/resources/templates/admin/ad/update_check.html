@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_4block :: layout(~{::title},~{::body/content()})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="'カルーセル式カテゴリ変更確認 | '+ #{shop.title}"> </title>
+</head>
+
+<body class="admin ad_update_check">
+	<div th:fragment="content" class="admin ad_list">
+		<div id="adminAdUpdateCheck">
+			<h2 class="title">カルーセル式カテゴリ変更確認</h2>
+			<p class="check_message">以下の内容に変更します。</p>
+
+			<div class="user_info_form_area">
+				<ul class="input_list" th:object="${updateForm}">
+					<input type="hidden" th:field="*{id}" />
+
+					<!-- 1. 管理名 -->
+					<li>
+						<span class="input_title">管理名</span>
+						<span class="input_value" th:text="*{pageName}"></span>
+					</li>
+
+					<!-- 2. 画像プレビュー -->
+					<!-- 2. 画像プレビュー -->
+					<li>
+						<span class="input_title">画像</span>
+						<span class="input_value">
+							<img th:src="@{${imagePath}}" />
+						</span>
+					</li>
+
+					<!-- 3. 遷移先カテゴリ名 -->
+					<li>
+						<span class="input_title">遷移先カテゴリ</span>
+						<span class="input_value"
+							th:text="${selectedCategory != null ? selectedCategory.name : ''}"></span>
+					</li>
+
+					<!-- 4. 有効/無効 -->
+					<li>
+						<span class="input_title">有効/無効</span>
+						<span class="input_value" th:text="*{isActive == 1 ? '有効' : '無効'}"></span>
+					</li>
+				</ul>
+
+				<!-- 更新実行フォーム -->
+				<form th:action="@{/admin/ad/update/complete}" method="post" class="user_info_form"
+					th:object="${updateForm}">
+					<input type="hidden" th:field="*{id}" />
+					<input type="hidden" th:field="*{pageName}" />
+					<input type="hidden" th:field="*{tempImageName}" />
+					<input type="hidden" th:field="*{categoryId}" />
+					<input type="hidden" name="isActive" th:value="*{isActive != null ? isActive : 0}" />
+
+					<input type="submit" value="更新" class="send_button" />
+				</form>
+
+				<!-- 入力画面へ戻るフォーム -->
+				<form th:action="@{/admin/ad/update/input}" method="get">
+					<input type="submit" value="戻る" class="back_button" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
