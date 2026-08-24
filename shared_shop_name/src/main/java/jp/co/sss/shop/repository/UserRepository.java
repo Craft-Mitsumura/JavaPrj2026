@@ -17,7 +17,7 @@ import jp.co.sss.shop.entity.User;
  *
  * @author System Shared
  */
-@Repository
+@Repository  
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	/**
